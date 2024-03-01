@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    tools:context=".fragments.WelcomeFragment">
+
+    <ImageView
+        android:id="@+id/welcome_image"
+        android:layout_width="50dp"
+        android:layout_marginTop="16dp"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        android:src="@drawable/elder_person"
+        android:layout_height="50dp"/>
+
+    <TextView
+        android:id="@+id/heading"
+        app:layout_constraintTop_toBottomOf="@id/welcome_image"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        android:text="PROXY"
+        android:layout_marginTop="16dp"
+        android:textSize="36sp"
+        android:textStyle="bold"/>
+
+    <TextView
+        android:id="@+id/elder_care_text"
+        app:layout_constraintTop_toBottomOf="@id/heading"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        android:text="Elder Care"
+        android:layout_marginTop="16dp"
+        android:textStyle="bold"/>
+
+    <TextView
+        android:id="@+id/description"
+        android:layout_width="match_parent"
+        android:textSize="16sp"
+        android:layout_margin="16dp"
+        app:layout_constraintBottom_toTopOf="@id/cancel_button"
+        android:text="@string/terms_and_conditions"
+        android:layout_height="wrap_content"/>
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/cancel_button"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        android:layout_margin="16dp"
+        android:text="CANCEL"
+        style="?attr/materialButtonOutlinedStyle"
+        app:layout_constraintRight_toLeftOf="@id/agree_button"
+        android:layout_width="0dp"
+        android:layout_height="60dp"/>
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/agree_button"
+        app:layout_constraintLeft_toRightOf="@id/cancel_button"
+        android:layout_width="0dp"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        android:layout_margin="16dp"
+        android:text="AGREE"
+        android:layout_height="60dp"/>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

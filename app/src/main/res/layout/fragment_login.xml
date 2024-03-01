@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    tools:context=".fragments.LoginFragment">
+
+    <TextView
+        android:id="@+id/login_page_heading"
+        android:text="Login"
+        android:textSize="32sp"
+        android:layout_width="wrap_content"
+        android:textStyle="bold"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        android:layout_margin="16dp"
+        android:layout_height="wrap_content"/>
+
+    <com.google.android.material.textfield.TextInputLayout
+        app:layout_constraintTop_toBottomOf="@id/login_page_heading"
+        android:id="@+id/email_layout"
+        app:layout_constraintVertical_chainStyle="packed"
+        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+        android:layout_width="0dp"
+        app:boxCornerRadiusTopStart="10dp"
+        app:boxCornerRadiusBottomStart="10dp"
+        app:boxCornerRadiusBottomEnd="10dp"
+        app:boxCornerRadiusTopEnd="10dp"
+        app:layout_constraintBottom_toTopOf="@id/password_layout"
+        app:layout_constraintRight_toRightOf="parent"
+        app:errorEnabled="true"
+        app:layout_constraintLeft_toLeftOf="parent"
+        android:layout_margin="16dp"
+        android:layout_height="wrap_content">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/email_input_field"
+            android:layout_width="match_parent"
+            android:inputType="textEmailAddress"
+            android:layout_height="wrap_content"
+            android:hint="Username" />
+
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <com.google.android.material.textfield.TextInputLayout
+        app:layout_constraintTop_toBottomOf="@id/email_layout"
+        android:id="@+id/password_layout"
+        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+        android:layout_width="0dp"
+        app:errorEnabled="true"
+        app:boxCornerRadiusTopStart="10dp"
+        app:boxCornerRadiusBottomStart="10dp"
+        app:boxCornerRadiusBottomEnd="10dp"
+        app:boxCornerRadiusTopEnd="10dp"
+        app:layout_constraintBottom_toTopOf="@id/login"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        android:layout_margin="16dp"
+        app:passwordToggleEnabled="true"
+        android:layout_height="wrap_content">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/password_input_field"
+            android:layout_width="match_parent"
+            android:inputType="textPassword"
+            android:layout_height="wrap_content"
+            android:hint="Password" />
+
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/login"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/password_layout"
+        app:layout_constraintVertical_chainStyle="packed"
+        android:text="Login"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:cornerRadius="10dp"
+        android:layout_width="0dp"
+        android:layout_margin="16dp"
+        android:layout_height="60dp"/>
+
+    <TextView
+        android:id="@+id/forgotPassword"
+        android:layout_width="wrap_content"
+        android:text="Forgot Password"
+        app:layout_constraintRight_toRightOf="@id/email_layout"
+        app:layout_constraintTop_toBottomOf="@id/email_layout"
+        android:layout_height="wrap_content"/>
+
+    <TextView
+        android:id="@+id/signupText"
+        android:layout_width="wrap_content"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        android:text="Don't have an account, signup?"
+        android:layout_margin="16dp"
+        android:layout_height="wrap_content"/>
+
+</androidx.constraintlayout.widget.ConstraintLayout>
