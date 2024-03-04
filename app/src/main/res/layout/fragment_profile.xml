@@ -1,0 +1,136 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    tools:context=".fragments.ProfileFragment">
+
+    <TextView
+        android:id="@+id/profileHeader"
+        android:text="Profile"
+        android:textSize="32sp"
+        android:layout_width="wrap_content"
+        android:textStyle="bold"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        android:layout_margin="16dp"
+        android:layout_height="wrap_content"/>
+
+    <!-- Name Row -->
+    <LinearLayout
+        app:layout_constraintTop_toBottomOf="@id/profileHeader"
+        android:id="@+id/linearLayoutName"
+        android:layout_width="0dp"
+        app:layout_constraintVertical_chainStyle="packed"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintBottom_toTopOf="@id/linearLayoutBirthdate"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Name"
+            android:layout_weight="1"/>
+
+        <EditText
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:hint="Your Name"
+            android:inputType="textPersonName"
+            android:layout_weight="3"/>
+    </LinearLayout>
+
+    <!-- Birthdate Row -->
+    <LinearLayout
+        android:id="@+id/linearLayoutBirthdate"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintBottom_toTopOf="@id/linearLayoutGender"
+        app:layout_constraintTop_toBottomOf="@id/linearLayoutName"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_marginTop="16dp">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Birthdate"
+            android:layout_weight="1"/>
+
+        <EditText
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:hint="MM/DD/YYYY"
+            android:inputType="date"
+            android:layout_weight="3"/>
+    </LinearLayout>
+
+    <!-- Gender Row -->
+    <LinearLayout
+        android:id="@+id/linearLayoutGender"
+        android:layout_width="0dp"
+        app:layout_constraintBottom_toTopOf="@id/linearLayoutPhone"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintTop_toBottomOf="@id/linearLayoutBirthdate"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_marginTop="16dp">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Gender"
+            android:layout_weight="1"/>
+
+        <EditText
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:hint="Your Gender"
+            android:inputType="text"
+            android:layout_weight="3"/>
+    </LinearLayout>
+
+    <!-- Phone Row -->
+    <LinearLayout
+        android:id="@+id/linearLayoutPhone"
+        android:layout_width="0dp"
+        app:layout_constraintBottom_toTopOf="@id/submit"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintTop_toBottomOf="@id/linearLayoutGender"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_marginTop="16dp">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Phone"
+            android:layout_weight="1"/>
+
+        <EditText
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:hint="Your Phone Number"
+            android:inputType="phone"
+            android:layout_weight="3"/>
+    </LinearLayout>
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/submit"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintVertical_chainStyle="packed"
+        android:text="Submit"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:cornerRadius="10dp"
+        android:layout_width="0dp"
+        android:layout_margin="16dp"
+        android:layout_height="60dp"/>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

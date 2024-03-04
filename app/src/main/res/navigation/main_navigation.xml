@@ -39,10 +39,31 @@
         android:label="fragment_login"
         tools:layout="@layout/fragment_login" >
         <action
-            android:id="@+id/action_loginFragment3_to_dashboardFragment"
-            app:destination="@id/dashboardFragment" />
-        <action
             android:id="@+id/action_loginFragment3_to_signupFragment"
             app:destination="@id/signupFragment" />
+        <action
+            android:id="@+id/action_loginFragment3_to_chooseRoleFragment"
+            app:destination="@id/chooseRoleFragment" />
+        <action
+            android:id="@+id/action_loginFragment3_to_profileFragment"
+            app:destination="@id/profileFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/chooseRoleFragment"
+        android:name="app.android.heartrate.phoneapp.fragments.ChooseRoleFragment"
+        android:label="fragment_choose_role"
+        tools:layout="@layout/fragment_choose_role" >
+        <action
+            android:id="@+id/action_chooseRoleFragment_to_profileFragment"
+            app:destination="@id/profileFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/profileFragment"
+        android:name="app.android.heartrate.phoneapp.fragments.ProfileFragment"
+        android:label="fragment_profile"
+        tools:layout="@layout/fragment_profile" >
+        <action
+            android:id="@+id/action_profileFragment_to_dashboardFragment"
+            app:destination="@id/dashboardFragment" />
     </fragment>
 </navigation>
