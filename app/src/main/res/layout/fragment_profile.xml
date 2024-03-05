@@ -18,117 +18,141 @@
         android:layout_margin="16dp"
         android:layout_height="wrap_content"/>
 
-    <!-- Name Row -->
-    <LinearLayout
+    <com.google.android.material.textfield.TextInputLayout
         app:layout_constraintTop_toBottomOf="@id/profileHeader"
-        android:id="@+id/linearLayoutName"
-        android:layout_width="0dp"
+        android:id="@+id/first_name_layout"
         app:layout_constraintVertical_chainStyle="packed"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        app:layout_constraintBottom_toTopOf="@id/linearLayoutBirthdate"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent">
+        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+        android:layout_width="0dp"
+        app:boxCornerRadiusTopStart="10dp"
+        app:boxCornerRadiusBottomStart="10dp"
+        app:boxCornerRadiusBottomEnd="10dp"
+        app:boxCornerRadiusTopEnd="10dp"
+        app:layout_constraintBottom_toTopOf="@id/last_name_layout"
+        app:layout_constraintRight_toRightOf="parent"
+        app:errorEnabled="true"
+        app:layout_constraintLeft_toLeftOf="parent"
+        android:layout_margin="16dp"
+        android:layout_height="wrap_content">
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Name"
-            android:layout_weight="1"/>
-
-        <EditText
-            android:id="@+id/nameEditText"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:hint="Your Name"
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/first_name_input_field"
+            android:layout_width="match_parent"
             android:inputType="textPersonName"
-            android:layout_weight="3"/>
-    </LinearLayout>
+            android:layout_height="wrap_content"
+            android:hint="FirstName" />
 
-    <!-- Birthdate Row -->
-    <LinearLayout
-        android:id="@+id/linearLayoutBirthdate"
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <com.google.android.material.textfield.TextInputLayout
+        app:layout_constraintTop_toBottomOf="@id/first_name_layout"
+        android:id="@+id/last_name_layout"
+        app:layout_constraintVertical_chainStyle="packed"
+        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
         android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        app:layout_constraintBottom_toTopOf="@id/linearLayoutGender"
-        app:layout_constraintTop_toBottomOf="@id/linearLayoutName"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        android:layout_marginTop="16dp">
+        app:boxCornerRadiusTopStart="10dp"
+        app:boxCornerRadiusBottomStart="10dp"
+        app:boxCornerRadiusBottomEnd="10dp"
+        app:boxCornerRadiusTopEnd="10dp"
+        app:layout_constraintBottom_toTopOf="@id/dob_layout"
+        app:layout_constraintRight_toRightOf="parent"
+        app:errorEnabled="true"
+        app:layout_constraintLeft_toLeftOf="parent"
+        android:layout_margin="16dp"
+        android:layout_height="wrap_content">
 
-        <TextView
-            android:layout_width="wrap_content"
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/last_name_input_field"
+            android:layout_width="match_parent"
+            android:inputType="textPersonName"
             android:layout_height="wrap_content"
-            android:text="Birthdate"
-            android:layout_weight="1"/>
+            android:hint="LastName" />
 
-        <EditText
-            android:id="@+id/birthdateEditText"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:hint="MM/DD/YYYY"
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <com.google.android.material.textfield.TextInputLayout
+        app:layout_constraintTop_toBottomOf="@id/last_name_layout"
+        android:id="@+id/dob_layout"
+        app:layout_constraintVertical_chainStyle="packed"
+        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+        android:layout_width="0dp"
+        app:boxCornerRadiusTopStart="10dp"
+        app:boxCornerRadiusBottomStart="10dp"
+        app:boxCornerRadiusBottomEnd="10dp"
+        app:boxCornerRadiusTopEnd="10dp"
+        app:layout_constraintBottom_toTopOf="@id/gender_layout"
+        app:layout_constraintRight_toRightOf="parent"
+        app:errorEnabled="true"
+        app:layout_constraintLeft_toLeftOf="parent"
+        android:layout_margin="16dp"
+        android:layout_height="wrap_content">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/dob_input_field"
+            android:layout_width="match_parent"
             android:inputType="date"
-            android:layout_weight="3"/>
-    </LinearLayout>
+            android:layout_height="wrap_content"
+            android:hint="Date of Birth (yyyy/mm/dd)" />
 
-    <!-- Gender Row -->
-    <LinearLayout
-        android:id="@+id/linearLayoutGender"
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <com.google.android.material.textfield.TextInputLayout
+        app:layout_constraintTop_toBottomOf="@id/dob_layout"
+        android:id="@+id/gender_layout"
+        app:layout_constraintVertical_chainStyle="packed"
+        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
         android:layout_width="0dp"
-        app:layout_constraintBottom_toTopOf="@id/linearLayoutPhone"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        app:layout_constraintTop_toBottomOf="@id/linearLayoutBirthdate"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        android:layout_marginTop="16dp">
+        app:boxCornerRadiusTopStart="10dp"
+        app:boxCornerRadiusBottomStart="10dp"
+        app:boxCornerRadiusBottomEnd="10dp"
+        app:boxCornerRadiusTopEnd="10dp"
+        app:layout_constraintBottom_toTopOf="@id/phone_layout"
+        app:layout_constraintRight_toRightOf="parent"
+        app:errorEnabled="true"
+        app:layout_constraintLeft_toLeftOf="parent"
+        android:layout_margin="16dp"
+        android:layout_height="wrap_content">
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Gender"
-            android:layout_weight="1"/>
-
-        <EditText
-            android:id="@+id/genderEditText"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:hint="Your Gender"
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/gender_input_field"
+            android:layout_width="match_parent"
             android:inputType="text"
-            android:layout_weight="3"/>
-    </LinearLayout>
+            android:layout_height="wrap_content"
+            android:hint="Gender (M/F)" />
 
-    <!-- Phone Row -->
-    <LinearLayout
-        android:id="@+id/linearLayoutPhone"
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <com.google.android.material.textfield.TextInputLayout
+        app:layout_constraintTop_toBottomOf="@id/gender_layout"
+        android:id="@+id/phone_layout"
+        app:layout_constraintVertical_chainStyle="packed"
+        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
         android:layout_width="0dp"
+        app:boxCornerRadiusTopStart="10dp"
+        app:boxCornerRadiusBottomStart="10dp"
+        app:boxCornerRadiusBottomEnd="10dp"
+        app:boxCornerRadiusTopEnd="10dp"
         app:layout_constraintBottom_toTopOf="@id/submit"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        app:layout_constraintTop_toBottomOf="@id/linearLayoutGender"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        android:layout_marginTop="16dp">
+        app:layout_constraintRight_toRightOf="parent"
+        app:errorEnabled="true"
+        app:layout_constraintLeft_toLeftOf="parent"
+        android:layout_margin="16dp"
+        android:layout_height="wrap_content">
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Phone"
-            android:layout_weight="1"/>
-
-        <EditText
-            android:id="@+id/phoneEditText"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:hint="Your Phone Number"
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/phone_input_field"
+            android:layout_width="match_parent"
             android:inputType="phone"
-            android:layout_weight="3"/>
-    </LinearLayout>
+            android:layout_height="wrap_content"
+            android:hint="Phone Number" />
+
+    </com.google.android.material.textfield.TextInputLayout>
+
     <com.google.android.material.button.MaterialButton
         android:id="@+id/submit"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/phone_layout"
         app:layout_constraintVertical_chainStyle="packed"
         android:text="Submit"
         app:layout_constraintBottom_toBottomOf="parent"
