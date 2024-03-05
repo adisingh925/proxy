@@ -6,6 +6,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.navigation.fragment.findNavController
 import app.android.heartrate.phoneapp.R
 import app.android.heartrate.phoneapp.databinding.FragmentChooseRoleBinding
 import app.android.heartrate.phoneapp.model.SignupResponse
@@ -57,6 +58,8 @@ class ChooseRoleFragment : Fragment() {
                                 "Role updated successfully",
                                 Toast.LENGTH_SHORT
                             ).show()
+
+                            findNavController().navigate(R.id.action_chooseRoleFragment_to_profileFragment)
                         } else {
                             Toast.makeText(
                                 requireContext(),

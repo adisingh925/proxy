@@ -37,6 +37,7 @@
             android:layout_weight="1"/>
 
         <EditText
+            android:id="@+id/nameEditText"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:hint="Your Name"
@@ -63,6 +64,7 @@
             android:layout_weight="1"/>
 
         <EditText
+            android:id="@+id/birthdateEditText"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:hint="MM/DD/YYYY"
@@ -89,6 +91,7 @@
             android:layout_weight="1"/>
 
         <EditText
+            android:id="@+id/genderEditText"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:hint="Your Gender"
@@ -115,6 +118,7 @@
             android:layout_weight="1"/>
 
         <EditText
+            android:id="@+id/phoneEditText"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:hint="Your Phone Number"

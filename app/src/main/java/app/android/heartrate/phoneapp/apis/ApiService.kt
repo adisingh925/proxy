@@ -4,6 +4,7 @@ import app.android.heartrate.phoneapp.model.GetRoleResponse
 import app.android.heartrate.phoneapp.model.LoginRequest
 import app.android.heartrate.phoneapp.model.LoginSuccessResponse
 import app.android.heartrate.phoneapp.model.SignupResponse
+import app.android.heartrate.phoneapp.model.UpdateProfileRequest
 import app.android.heartrate.phoneapp.model.UpdateRoleRequest
 import retrofit2.Call
 import retrofit2.http.Body
@@ -29,4 +30,10 @@ interface ApiService {
     fun getRole(
         @Header("Authorization") bearerToken: String,
     ): Call<GetRoleResponse>
+
+    @POST("updateProfile")
+    fun updateProfile(
+        @Header("Authorization") bearerToken: String,
+        @Body updateProfileRequest: UpdateProfileRequest
+    ): Call<SignupResponse>
 }
