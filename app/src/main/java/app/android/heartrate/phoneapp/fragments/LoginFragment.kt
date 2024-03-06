@@ -16,6 +16,7 @@ import app.android.heartrate.phoneapp.databinding.FragmentLoginBinding
 import app.android.heartrate.phoneapp.model.GetRoleResponse
 import app.android.heartrate.phoneapp.model.LoginRequest
 import app.android.heartrate.phoneapp.model.LoginSuccessResponse
+import app.android.heartrate.phoneapp.model.SignupResponse
 import app.android.heartrate.phoneapp.retrofit.ApiClient
 import app.android.heartrate.phoneapp.sharedpreferences.SharedPreferences
 import retrofit2.Call
@@ -83,28 +84,59 @@ class LoginFragment : Fragment() {
                             Log.d("LoginFragment", "onResponse: ${response.body()}")
                             if (body.code == 1) {
                                 SharedPreferences.write("token", body.token)
-                                val getRoleCall = ApiClient.apiService.getRole(SharedPreferences.read("token", "").toString())
+                                val getRoleCall = ApiClient.apiService.getRole(
+                                    SharedPreferences.read("token", "").toString()
+                                )
 
-                                getRoleCall.enqueue(object : Callback<GetRoleResponse>{
+                                getRoleCall.enqueue(object : Callback<GetRoleResponse> {
                                     override fun onResponse(
                                         call: Call<GetRoleResponse>,
                                         response: Response<GetRoleResponse>
                                     ) {
                                         val body = response.body()
-                                        if(body != null){
-                                            if(response.isSuccessful){
-                                                if(body.code == 1){
-                                                    if(body.role_id.equals(null)){
-                                                        findNavController().navigate(R.id.action_loginFragment3_to_chooseRoleFragment)
-                                                    }else{
-                                                        findNavController().navigate(R.id.action_loginFragment3_to_profileFragment)
-                                                    }
+                                        Log.d("LoginFragment", "onResponse: ${response.body()}")
+                                        if (body != null) {
+                                            if (response.isSuccessful) {
+                                                if (body.code == 1) {
+                                                    Log.d("LoginFragment", "role success")
+                                                    val profileCheck = ApiClient.apiService.checkProfile(
+                                                        SharedPreferences.read("token", "").toString()
+                                                    )
+                                                    profileCheck.enqueue(object : Callback<SignupResponse>{
+                                                        override fun onResponse(
+                                                            call: Call<SignupResponse>,
+                                                            response: Response<SignupResponse>
+                                                        ) {
+                                                            if(response.isSuccessful){
+                                                                val body = response.body()
+                                                                Log.d("Profile Check", "onResponse: ${response}")
+                                                                if(body != null){
+                                                                    if(body.code == 1){
+                                                                        findNavController().navigate(R.id.action_loginFragment3_to_dashboardFragment)
+                                                                    }else{
+                                                                        findNavController().navigate(R.id.action_loginFragment3_to_profileFragment)
+                                                                    }
+                                                                }else{
+                                                                    findNavController().navigate(R.id.action_loginFragment3_to_profileFragment)
+                                                                }
+                                                            }else{
+                                                                findNavController().navigate(R.id.action_loginFragment3_to_profileFragment)
+                                                            }
+                                                        }
+
+                                                        override fun onFailure(
+                                                            call: Call<SignupResponse>,
+                                                            t: Throwable
+                                                        ) {
+                                                            findNavController().navigate(R.id.action_loginFragment3_to_profileFragment)
+                                                        }
+                                                    })
                                                 }
-                                            }else{
-                                                if(body.code == -1){
-                                                    findNavController().navigate(R.id.action_loginFragment3_to_chooseRoleFragment)
-                                                }
+                                            } else {
+                                                findNavController().navigate(R.id.action_loginFragment3_to_chooseRoleFragment)
                                             }
+                                        }else{
+                                            findNavController().navigate(R.id.action_loginFragment3_to_chooseRoleFragment)
                                         }
                                     }
 

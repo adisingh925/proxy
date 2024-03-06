@@ -47,6 +47,12 @@
         <action
             android:id="@+id/action_loginFragment3_to_profileFragment"
             app:destination="@id/profileFragment" />
+        <action
+            android:id="@+id/action_loginFragment3_to_dashboardFragment"
+            app:destination="@id/dashboardFragment" />
+        <action
+            android:id="@+id/action_loginFragment3_to_allPatientDashboard"
+            app:destination="@id/allPatientDashboard" />
     </fragment>
     <fragment
         android:id="@+id/chooseRoleFragment"
@@ -66,4 +72,9 @@
             android:id="@+id/action_profileFragment_to_dashboardFragment"
             app:destination="@id/dashboardFragment" />
     </fragment>
+    <fragment
+        android:id="@+id/allPatientDashboard"
+        android:name="app.android.heartrate.phoneapp.fragments.AllPatientDashboard"
+        android:label="fragment_all_patient_dashboard"
+        tools:layout="@layout/fragment_all_patient_dashboard" />
 </navigation>

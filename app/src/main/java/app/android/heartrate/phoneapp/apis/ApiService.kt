@@ -36,4 +36,9 @@ interface ApiService {
         @Header("Authorization") bearerToken: String,
         @Body updateProfileRequest: UpdateProfileRequest
     ): Call<SignupResponse>
+
+    @GET("checkProfile")
+    fun checkProfile(
+        @Header("Authorization") bearerToken: String,
+    ): Call<SignupResponse>
 }
