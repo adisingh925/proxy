@@ -16,4 +16,13 @@
         <item name="android:navigationBarColor">#fef7ff</item>
         <item name="android:windowLightNavigationBar">true</item>
     </style>
+
+    <style name="Theme.PhoneApp.NoActionBar">
+        <item name="windowActionBar">false</item>
+        <item name="windowNoTitle">true</item>
+    </style>
+
+    <style name="Theme.PhoneApp.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
+
+    <style name="Theme.PhoneApp.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
 </resources>

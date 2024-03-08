@@ -1,5 +1,6 @@
 package app.android.heartrate.phoneapp.fragments
 
+import android.content.Intent
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
@@ -7,6 +8,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.ArrayAdapter
 import android.widget.Toast
+import app.android.heartrate.phoneapp.HomeActivity
 import app.android.heartrate.phoneapp.R
 import app.android.heartrate.phoneapp.databinding.FragmentProfileBinding
 import app.android.heartrate.phoneapp.model.SignupResponse
@@ -21,9 +23,10 @@ import retrofit2.Response
 
 class ProfileFragment : Fragment() {
 
-    private val binding by lazy{
+    private val binding by lazy {
         FragmentProfileBinding.inflate(layoutInflater)
     }
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -32,27 +35,27 @@ class ProfileFragment : Fragment() {
 
         binding.submit.setOnClickListener {
 
-            if(binding.firstNameInputField.text.toString().isEmpty()){
+            if (binding.firstNameInputField.text.toString().isEmpty()) {
                 binding.firstNameInputField.error = "FirstName is required"
                 return@setOnClickListener
             }
 
-            if(binding.lastNameInputField.text.toString().isEmpty()){
+            if (binding.lastNameInputField.text.toString().isEmpty()) {
                 binding.lastNameInputField.error = "LastName is required"
                 return@setOnClickListener
             }
 
-            if(binding.dobInputField.text.toString().isEmpty()){
+            if (binding.dobInputField.text.toString().isEmpty()) {
                 binding.dobInputField.error = "Birthdate is required"
                 return@setOnClickListener
             }
 
-            if(binding.genderInputField.text.toString().isEmpty()) {
+            if (binding.genderInputField.text.toString().isEmpty()) {
                 binding.genderInputField.error = "Gender is Required"
                 return@setOnClickListener
             }
 
-            if(binding.phoneInputField.text.toString().isEmpty()){
+            if (binding.phoneInputField.text.toString().isEmpty()) {
                 binding.phoneInputField.error = "Phone Number is required"
                 return@setOnClickListener
             }
@@ -74,11 +77,7 @@ class ProfileFragment : Fragment() {
                     response: Response<SignupResponse>
                 ) {
                     if (response.isSuccessful) {
-                        Toast.makeText(
-                            requireContext(),
-                            "Profile updated successfully",
-                            Toast.LENGTH_SHORT
-                        ).show()
+                        proceedToHomeActivity()
                     } else {
                         Toast.makeText(
                             requireContext(),
@@ -99,5 +98,16 @@ class ProfileFragment : Fragment() {
 
         }
         return binding.root
+    }
+
+    private fun proceedToHomeActivity() {
+        Toast.makeText(
+            requireContext(),
+            "Profile updated successfully",
+            Toast.LENGTH_SHORT
+        ).show()
+        val intent = Intent(requireContext(), HomeActivity::class.java)
+        startActivity(intent)
+
     }
 }

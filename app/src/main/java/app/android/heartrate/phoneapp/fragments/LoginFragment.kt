@@ -1,5 +1,6 @@
 package app.android.heartrate.phoneapp.fragments
 
+import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import android.util.Patterns
@@ -11,6 +12,7 @@ import android.widget.Toast
 import androidx.core.os.bundleOf
 import androidx.core.view.isVisible
 import androidx.navigation.fragment.findNavController
+import app.android.heartrate.phoneapp.HomeActivity
 import app.android.heartrate.phoneapp.R
 import app.android.heartrate.phoneapp.databinding.FragmentLoginBinding
 import app.android.heartrate.phoneapp.model.GetRoleResponse
@@ -99,27 +101,35 @@ class LoginFragment : Fragment() {
                                             if (response.isSuccessful) {
                                                 if (body.code == 1) {
                                                     Log.d("LoginFragment", "role success")
-                                                    val profileCheck = ApiClient.apiService.checkProfile(
-                                                        SharedPreferences.read("token", "").toString()
-                                                    )
-                                                    profileCheck.enqueue(object : Callback<SignupResponse>{
+                                                    val profileCheck =
+                                                        ApiClient.apiService.checkProfile(
+                                                            SharedPreferences.read("token", "")
+                                                                .toString()
+                                                        )
+                                                    profileCheck.enqueue(object :
+                                                        Callback<SignupResponse> {
                                                         override fun onResponse(
                                                             call: Call<SignupResponse>,
                                                             response: Response<SignupResponse>
                                                         ) {
-                                                            if(response.isSuccessful){
+                                                            if (response.isSuccessful) {
                                                                 val body = response.body()
-                                                                Log.d("Profile Check", "onResponse: ${response}")
-                                                                if(body != null){
-                                                                    if(body.code == 1){
-                                                                        findNavController().navigate(R.id.action_loginFragment3_to_dashboardFragment)
-                                                                    }else{
-                                                                        findNavController().navigate(R.id.action_loginFragment3_to_profileFragment)
+                                                                Log.d(
+                                                                    "Profile Check",
+                                                                    "onResponse: ${response}"
+                                                                )
+                                                                if (body != null) {
+                                                                    if (body.code == 1) {
+                                                                        proceedToHomeActivity()
+                                                                    } else {
+                                                                        findNavController().navigate(
+                                                                            R.id.action_loginFragment3_to_profileFragment
+                                                                        )
                                                                     }
-                                                                }else{
+                                                                } else {
                                                                     findNavController().navigate(R.id.action_loginFragment3_to_profileFragment)
                                                                 }
-                                                            }else{
+                                                            } else {
                                                                 findNavController().navigate(R.id.action_loginFragment3_to_profileFragment)
                                                             }
                                                         }
@@ -135,7 +145,7 @@ class LoginFragment : Fragment() {
                                             } else {
                                                 findNavController().navigate(R.id.action_loginFragment3_to_chooseRoleFragment)
                                             }
-                                        }else{
+                                        } else {
                                             findNavController().navigate(R.id.action_loginFragment3_to_chooseRoleFragment)
                                         }
                                     }
@@ -169,5 +179,11 @@ class LoginFragment : Fragment() {
         }
 
         return binding.root
+    }
+
+    private fun proceedToHomeActivity() {
+//         findNavController().navigate(R.id.action_loginFragment3_to_dashboardFragment)
+        val intent = Intent(requireContext(), HomeActivity::class.java)
+        startActivity(intent)
     }
 }
