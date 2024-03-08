@@ -131,7 +131,8 @@
             android:exported="false" />
         <activity
             android:name=".fragments.wellness.fitness.FitnessActivity"
-            android:exported="false" />
+            android:exported="false"
+            />
         <activity
             android:name=".MainActivity"
             android:exported="false"
@@ -140,7 +141,7 @@
         <activity
             android:name=".HomeActivity"
             android:exported="true"
-            android:theme="@style/AppTheme">
+          >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
