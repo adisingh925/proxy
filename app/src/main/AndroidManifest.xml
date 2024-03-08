@@ -22,7 +22,8 @@
             android:theme="@style/Theme.PhoneApp.NoActionBar" />
         <activity
             android:name=".HomeActivity"
-            android:exported="true">
+            android:exported="true"
+            android:theme="@style/AppTheme">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
