@@ -6,12 +6,17 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import app.android.heartrate.phoneapp.R
+import app.android.heartrate.phoneapp.databinding.ActivityAboutUsBinding
+import app.android.heartrate.phoneapp.databinding.ActivityFqaBinding
 
 class FqaActivity : AppCompatActivity() {
+
+    private lateinit var binding: ActivityFqaBinding
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        binding = ActivityFqaBinding.inflate(layoutInflater)
         enableEdgeToEdge()
-        setContentView(R.layout.activity_fqa)
+        setContentView(binding.root)
         ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main)) { v, insets ->
             val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom)
