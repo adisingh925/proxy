@@ -16,6 +16,123 @@
         android:usesCleartextTraffic="true"
         tools:targetApi="31">
         <activity
+            android:name=".fragments.appointments.my_appointment.MyAppointmentActivity"
+            android:exported="false" />
+        <activity
+            android:name=".fragments.health.bp.BpActivity"
+            android:exported="false" />
+        <activity
+            android:name=".fragments.health.ekg.EkgActivity"
+            android:exported="false" />
+        <activity
+            android:name=".fragments.health.pulse.PulseActivity"
+            android:exported="false" />
+        <activity
+            android:name=".fragments.health.resp_rate.RespRateActivity"
+            android:exported="false" />
+        <activity
+            android:name=".fragments.health.sp02.Sp02Activity"
+            android:exported="false" />
+        <activity
+            android:name=".fragments.health.sugar.SugarActivity"
+            android:exported="false" />
+        <activity
+            android:name=".fragments.health.temp.TemperatureActivity"
+            android:exported="false" />
+        <activity
+            android:name=".fragments.medication.add.AddMedicationActivity"
+            android:exported="false" />
+        <activity
+            android:name=".fragments.record.add.AddRecordActivity"
+            android:exported="false" />
+        <activity
+            android:name=".fragments.safety.location_awareness.LocationAwarenessActivity"
+            android:exported="false" />
+        <activity
+            android:name=".fragments.safety.home_invasion.HomeInvasionActivity"
+            android:exported="false" />
+        <activity
+            android:name=".fragments.safety.geo_fencing.GeoFenchingActivity"
+            android:exported="false" />
+        <activity
+            android:name=".fragments.safety.fall_detection.FallDetectionActivity"
+            android:exported="false" />
+        <activity
+            android:name=".fragments.safety.emergency_call.EmergencyCallActivity"
+            android:exported="false" />
+        <activity
+            android:name=".fragments.safety.car_crash.CarCrashActivity"
+            android:exported="false" />
+        <activity
+            android:name=".fragments.services.yoga_instructor.YogaInstructorActivity"
+            android:exported="false" />
+        <activity
+            android:name=".fragments.services.psychological_therapy.PsychologicalTherapyActivity"
+            android:exported="false" />
+        <activity
+            android:name=".fragments.services.online_utility_payment.OnlineUtilityActivity"
+            android:exported="false" />
+        <activity
+            android:name=".fragments.services.mental_health.MentalHealthActivity"
+            android:exported="false" />
+        <activity
+            android:name=".fragments.services.chiropractor.ChiropractorActivity"
+            android:exported="false" />
+        <activity
+            android:name=".fragments.services.care_giver.CareGiverActivity"
+            android:exported="false" />
+        <activity
+            android:name=".fragments.services.accu_pressure.AccuPressureActivity"
+            android:exported="false" />
+        <activity
+            android:name=".fragments.settings.security.SecurityActivity"
+            android:exported="false" />
+        <activity
+            android:name=".fragments.settings.preferences.PreferencesActivity"
+            android:exported="false" />
+        <activity
+            android:name=".fragments.settings.logout.LogoutActivity"
+            android:exported="false" />
+        <activity
+            android:name=".fragments.settings.link_family.LinkFamilyActivity"
+            android:exported="false" />
+        <activity
+            android:name=".fragments.support.terms_condition.TermsConditionsActivity"
+            android:exported="false" />
+        <activity
+            android:name=".fragments.support.share.ShareActivity"
+            android:exported="false" />
+        <activity
+            android:name=".fragments.support.privacy_policy.PrivacyPolicyActivity"
+            android:exported="false" />
+        <activity
+            android:name=".fragments.support.help_center_screen.HelpCenterActivity"
+            android:exported="false" />
+        <activity
+            android:name=".fragments.support.feedback.FeedbackActivity"
+            android:exported="false" />
+        <activity
+            android:name=".fragments.support.faq.FqaActivity"
+            android:exported="false" />
+        <activity
+            android:name=".fragments.support.about_us.AboutUsActivity"
+            android:exported="false" />
+        <activity
+            android:name=".fragments.wellness.cal_burns.CalBurnsActivity"
+            android:exported="false" />
+        <activity
+            android:name=".fragments.wellness.stress.StressActivity"
+            android:exported="false" />
+        <activity
+            android:name=".fragments.wellness.steps.StepsActivity"
+            android:exported="false" />
+        <activity
+            android:name=".fragments.wellness.sleep.SleepActivity"
+            android:exported="false" />
+        <activity
+            android:name=".fragments.wellness.fitness.FitnessActivity"
+            android:exported="false" />
+        <activity
             android:name=".MainActivity"
             android:exported="false"
             android:label="@string/title_activity_home"
