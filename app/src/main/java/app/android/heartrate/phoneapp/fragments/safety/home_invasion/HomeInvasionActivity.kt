@@ -8,23 +8,23 @@ import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import app.android.heartrate.phoneapp.R
 import app.android.heartrate.phoneapp.databinding.ActivityHomeBinding
+import app.android.heartrate.phoneapp.databinding.ActivityHomeInvasionBinding
 import app.android.heartrate.phoneapp.fragments.base.BaseActivity
 import app.android.heartrate.phoneapp.fragments.safety.geo_fencing.GeoFenchingActivity
 import app.android.heartrate.phoneapp.utils.CommonUtils
 
 class HomeInvasionActivity : BaseActivity() {
-    private lateinit var binding: ActivityHomeBinding
+    private lateinit var binding: ActivityHomeInvasionBinding
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        binding = ActivityHomeBinding.inflate(layoutInflater)
-        enableEdgeToEdge()
+        binding = ActivityHomeInvasionBinding.inflate(layoutInflater)
+//        enableEdgeToEdge()
         setContentView(binding.root)
         ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main)) { v, insets ->
             val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom)
             insets
         }
-
         init()
     }
 
