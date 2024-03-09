@@ -8,12 +8,14 @@
     tools:context=".fragments.wellness.fitness.FitnessActivity">
 
     <com.google.android.material.appbar.AppBarLayout
+        android:id="@+id/appBar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:layout_constraintStart_toStartOf="parent"
+        android:theme="@style/Theme.PhoneApp.AppBarOverlay"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        android:theme="@style/Theme.PhoneApp.AppBarOverlay">
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintBottom_toTopOf="@+id/nav_fitness_fragment"
+        app:layout_constraintTop_toTopOf="parent">
 
         <androidx.appcompat.widget.Toolbar
             android:id="@+id/toolbar"
@@ -23,5 +25,18 @@
             app:popupTheme="@style/Theme.PhoneApp.PopupOverlay" />
 
     </com.google.android.material.appbar.AppBarLayout>
+
+
+    <fragment
+        android:id="@+id/nav_fitness_fragment"
+        android:name="androidx.navigation.fragment.NavHostFragment"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        app:defaultNavHost="true"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/appBar"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:navGraph="@navigation/nav_fitness" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

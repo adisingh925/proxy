@@ -1,6 +1,24 @@
 <?xml version="1.0" encoding="utf-8"?>
 <navigation xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:id="@+id/nav_fitness">
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main_navigation"
+    app:startDestination="@id/measureFitnessFragment">
+    <fragment
+        android:id="@+id/measureFitnessFragment"
+        android:name="app.android.heartrate.phoneapp.fragments.wellness.fitness.subs.measure.MeasureFitnessFragment"
+        android:label="Measure Fitness"
+        tools:layout="@layout/fragment_measure_fitness" >
+        <action
+            android:id="@+id/action_measureFitnessFragment_to_analyticsFitnessFragment"
+            app:destination="@id/analyticsFitnessFragment" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/analyticsFitnessFragment"
+        android:name="app.android.heartrate.phoneapp.fragments.wellness.fitness.subs.analytics.AnalyticsFitnessFragment"
+        android:label="Analytics Fitness"
+        tools:layout="@layout/fragment_analytics_fitness" />
+
 
 </navigation>

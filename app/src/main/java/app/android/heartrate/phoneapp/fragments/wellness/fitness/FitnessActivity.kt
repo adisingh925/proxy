@@ -4,8 +4,14 @@ import android.os.Bundle
 import android.view.MenuItem
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
+import androidx.appcompat.widget.Toolbar
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
+import androidx.navigation.Navigation.findNavController
+import androidx.navigation.findNavController
+import androidx.navigation.ui.AppBarConfiguration
+import androidx.navigation.ui.navigateUp
+import androidx.navigation.ui.setupWithNavController
 import app.android.heartrate.phoneapp.R
 import app.android.heartrate.phoneapp.databinding.ActivityFitnessBinding
 import app.android.heartrate.phoneapp.fragments.base.BaseActivity
@@ -14,6 +20,7 @@ import app.android.heartrate.phoneapp.utils.CommonUtils
 class FitnessActivity : BaseActivity() {
 
     private lateinit var binding: ActivityFitnessBinding
+    private lateinit var appBarConfiguration: AppBarConfiguration
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityFitnessBinding.inflate(layoutInflater)
@@ -28,7 +35,8 @@ class FitnessActivity : BaseActivity() {
     }
 
     private fun init() {
-        CommonUtils.setupActionBar(binding.toolbar, this, "Fitness", true)
+        CommonUtils.setupActionBar(binding.toolbar, this, "Measure Fitness", true)
+//        setNavController()
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
@@ -42,4 +50,16 @@ class FitnessActivity : BaseActivity() {
             else -> return super.onOptionsItemSelected(item)
         }
     }
+
+//    private fun setNavController() {
+//        val navController = findNavController(R.id.nav_fitness_fragment)
+//        appBarConfiguration = AppBarConfiguration(navController.graph)
+//        findViewById<Toolbar>(R.id.toolbar)
+//            .setupWithNavController(navController, appBarConfiguration)
+//    }
+//
+//    override fun onSupportNavigateUp(): Boolean {
+//        val navController = findNavController(R.id.nav_fitness_fragment)
+//        return navController.navigateUp(appBarConfiguration) || super.onSupportNavigateUp()
+//    }
 }
