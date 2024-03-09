@@ -30,7 +30,7 @@ class Sp02Activity : BaseActivity() {
 
 
     private fun init() {
-        CommonUtils.setupActionBar(binding.toolbar, this, "Sp02", true)
+        CommonUtils.setupActionBar(binding.toolbar, this, "Measure Sp02", true)
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {

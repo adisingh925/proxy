@@ -29,7 +29,7 @@ class TemperatureActivity : BaseActivity() {
     }
 
     private fun init() {
-        CommonUtils.setupActionBar(binding.toolbar, this, "Temperature", true)
+        CommonUtils.setupActionBar(binding.toolbar, this, "Measure Temperature", true)
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {

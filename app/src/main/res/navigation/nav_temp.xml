@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main_navigation"
+    app:startDestination="@id/measureTempFragment">
+    <fragment
+        android:id="@+id/measureTempFragment"
+        android:name="app.android.heartrate.phoneapp.fragments.health.temp.subs.measure.MeasureTempFragment"
+        android:label="Measure Temp"
+        tools:layout="@layout/fragment_measure_temp">
+        <action
+            android:id="@+id/action_measureTempFragment_to_analyticsTempFragment"
+            app:destination="@id/analyticsTempFragment" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/analyticsTempFragment"
+        android:name="app.android.heartrate.phoneapp.fragments.health.temp.subs.analytics.AnalyticsTempFragment"
+        android:label="Analytics Temp"
+        tools:layout="@layout/fragment_analytics_temp" />
+
+
+</navigation>

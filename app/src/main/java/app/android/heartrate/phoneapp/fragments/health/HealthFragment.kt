@@ -12,6 +12,7 @@ import app.android.heartrate.phoneapp.fragments.base.BaseFragment
 import app.android.heartrate.phoneapp.fragments.health.bp.BpActivity
 import app.android.heartrate.phoneapp.fragments.health.ekg.EkgActivity
 import app.android.heartrate.phoneapp.fragments.health.pulse.PulseActivity
+import app.android.heartrate.phoneapp.fragments.health.resp_rate.RespRateActivity
 import app.android.heartrate.phoneapp.fragments.health.sp02.Sp02Activity
 import app.android.heartrate.phoneapp.fragments.health.sugar.SugarActivity
 import app.android.heartrate.phoneapp.fragments.health.temp.TemperatureActivity
@@ -56,6 +57,10 @@ class HealthFragment : BaseFragment() {
         }
         binding.cvEkg.setOnClickListener {
             startActivity(EkgActivity::class.java)
+        }
+
+        binding.cvResp.setOnClickListener {
+            startActivity(RespRateActivity::class.java)
         }
 
     }

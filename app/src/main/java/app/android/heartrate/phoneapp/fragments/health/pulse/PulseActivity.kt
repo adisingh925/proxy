@@ -29,7 +29,7 @@ class PulseActivity : BaseActivity() {
     }
 
     private fun init() {
-        CommonUtils.setupActionBar(binding.toolbar, this, "Pulse", true)
+        CommonUtils.setupActionBar(binding.toolbar, this, "Measure Pulse", true)
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {

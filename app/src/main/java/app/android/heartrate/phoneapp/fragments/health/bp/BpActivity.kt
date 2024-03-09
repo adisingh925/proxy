@@ -28,7 +28,7 @@ class BpActivity : BaseActivity() {
     }
 
     private fun init() {
-        CommonUtils.setupActionBar(binding.toolbar, this, "BP", true)
+        CommonUtils.setupActionBar(binding.toolbar, this, "Measure BP", true)
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {

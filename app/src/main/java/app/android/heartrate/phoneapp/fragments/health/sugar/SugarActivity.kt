@@ -29,7 +29,7 @@ class SugarActivity : BaseActivity() {
     }
 
     private fun init() {
-        CommonUtils.setupActionBar(binding.toolbar, this, "Sugar", true)
+        CommonUtils.setupActionBar(binding.toolbar, this, "Measure Sugar", true)
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {

@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main_navigation"
+    app:startDestination="@id/measureBpFragment">
+    <fragment
+        android:id="@+id/measureBpFragment"
+        android:name="app.android.heartrate.phoneapp.fragments.health.bp.subs.measure.MeasureBpFragment"
+        android:label="Measure BP"
+        tools:layout="@layout/fragment_measure_bp">
+        <action
+            android:id="@+id/action_measureBpFragment_to_analyticsBpFragment"
+            app:destination="@id/analyticsBpFragment" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/analyticsBpFragment"
+        android:name="app.android.heartrate.phoneapp.fragments.health.bp.subs.analytics.AnalyticsBpFragment"
+        android:label="Analytics BP"
+        tools:layout="@layout/fragment_analytics_bp" />
+
+
+</navigation>

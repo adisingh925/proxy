@@ -29,7 +29,7 @@ class RespRateActivity : BaseActivity() {
     }
 
     private fun init() {
-        CommonUtils.setupActionBar(binding.toolbar, this, "Resp. Rate", true)
+        CommonUtils.setupActionBar(binding.toolbar, this, "Measure Resp. Rate", true)
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {

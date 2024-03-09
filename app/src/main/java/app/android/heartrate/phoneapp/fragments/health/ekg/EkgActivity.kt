@@ -28,7 +28,7 @@ class EkgActivity : BaseActivity() {
     }
 
     private fun init() {
-        CommonUtils.setupActionBar(binding.toolbar, this, "EKG", true)
+        CommonUtils.setupActionBar(binding.toolbar, this, "Measure EKG", true)
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {

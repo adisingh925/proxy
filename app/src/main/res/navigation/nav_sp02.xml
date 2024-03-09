@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main_navigation"
+    app:startDestination="@id/measureSp02Fragment">
+    <fragment
+        android:id="@+id/measureSp02Fragment"
+        android:name="app.android.heartrate.phoneapp.fragments.health.sp02.subs.measure.MeasureSp02Fragment"
+        android:label="Measure Sp02"
+        tools:layout="@layout/fragment_measure_sp02">
+        <action
+            android:id="@+id/action_measureSp02Fragment_to_analyticsSp02Fragment"
+            app:destination="@id/analyticsSp02Fragment" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/analyticsSp02Fragment"
+        android:name="app.android.heartrate.phoneapp.fragments.health.sp02.subs.analytics.AnalyticsSp02Fragment"
+        android:label="Analytics Sp02"
+        tools:layout="@layout/fragment_analytics_spo2" />
+
+
+</navigation>
