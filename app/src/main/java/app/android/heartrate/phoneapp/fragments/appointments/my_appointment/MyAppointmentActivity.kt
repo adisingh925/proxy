@@ -29,7 +29,7 @@ class MyAppointmentActivity : BaseActivity() {
     }
 
     private fun init() {
-        CommonUtils.setupActionBar(binding.toolbar, this, "My Appointments", true)
+        CommonUtils.setupActionBar(binding.toolbar, this, "New Appointments", true)
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
