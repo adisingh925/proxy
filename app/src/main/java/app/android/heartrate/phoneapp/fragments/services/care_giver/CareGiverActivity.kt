@@ -31,7 +31,7 @@ class CareGiverActivity : BaseActivity() {
 
 
     private fun init() {
-        CommonUtils.setupActionBar(binding.toolbar, this, "Cal. Burned", true)
+        CommonUtils.setupActionBar(binding.toolbar, this, "Care Giver", true)
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {

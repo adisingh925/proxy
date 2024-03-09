@@ -17,7 +17,7 @@ class LocationAwarenessActivity : BaseActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityLocationAwarenessBinding.inflate(layoutInflater)
-        enableEdgeToEdge()
+//        enableEdgeToEdge()
         setContentView(binding.root)
         ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main)) { v, insets ->
             val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
@@ -29,7 +29,7 @@ class LocationAwarenessActivity : BaseActivity() {
     }
 
     private fun init() {
-        CommonUtils.setupActionBar(binding.toolbar, this, "Cal. Burned", true)
+        CommonUtils.setupActionBar(binding.toolbar, this, "Location Awareness", true)
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {

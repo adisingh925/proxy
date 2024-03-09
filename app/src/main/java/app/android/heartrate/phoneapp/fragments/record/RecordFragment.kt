@@ -1,5 +1,6 @@
 package app.android.heartrate.phoneapp.fragments.record
 
+import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -8,6 +9,8 @@ import androidx.fragment.app.Fragment
 import app.android.heartrate.phoneapp.databinding.FragmentRecordBinding
 import app.android.heartrate.phoneapp.databinding.FragmentWellnessBinding
 import app.android.heartrate.phoneapp.fragments.base.BaseFragment
+import app.android.heartrate.phoneapp.fragments.medication.add.AddMedicationActivity
+import app.android.heartrate.phoneapp.fragments.record.add.AddRecordActivity
 
 class RecordFragment : BaseFragment() {
 
@@ -24,9 +27,21 @@ class RecordFragment : BaseFragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        init()
     }
 
-    private fun init(){
 
+    private fun init(){
+        handleClicks()
+    }
+
+    private fun handleClicks(){
+        binding.cvAddRecord.setOnClickListener {
+            startActivity(AddRecordActivity::class.java)
+        }
+    }
+
+    private fun startActivity(cls: Class<*>) {
+        startActivity(Intent(requireContext(), cls))
     }
 }

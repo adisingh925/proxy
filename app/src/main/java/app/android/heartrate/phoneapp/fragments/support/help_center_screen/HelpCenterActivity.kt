@@ -30,7 +30,7 @@ class HelpCenterActivity : BaseActivity() {
 
 
     private fun init() {
-        CommonUtils.setupActionBar(binding.toolbar, this, "Cal. Burned", true)
+        CommonUtils.setupActionBar(binding.toolbar, this, "Help Center Screen", true)
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {

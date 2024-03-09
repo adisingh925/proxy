@@ -29,7 +29,7 @@ class LinkFamilyActivity : BaseActivity() {
 
 
     private fun init() {
-        CommonUtils.setupActionBar(binding.toolbar, this, "Cal. Burned", true)
+        CommonUtils.setupActionBar(binding.toolbar, this, "Link Family", true)
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {

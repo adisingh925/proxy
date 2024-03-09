@@ -28,7 +28,7 @@ class YogaInstructorActivity : BaseActivity() {
     }
 
     private fun init() {
-        CommonUtils.setupActionBar(binding.toolbar, this, "Cal. Burned", true)
+        CommonUtils.setupActionBar(binding.toolbar, this, "Yoga Instructor", true)
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {

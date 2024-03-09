@@ -30,7 +30,7 @@ class AccuPressureActivity : BaseActivity() {
 
 
     private fun init() {
-        CommonUtils.setupActionBar(binding.toolbar, this, "Cal. Burned", true)
+        CommonUtils.setupActionBar(binding.toolbar, this, "Accu Pressure", true)
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {

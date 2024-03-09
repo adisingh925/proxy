@@ -32,7 +32,7 @@ class AboutUsActivity : BaseActivity() {
 
 
     private fun init() {
-        CommonUtils.setupActionBar(binding.toolbar, this, "Cal. Burned", true)
+        CommonUtils.setupActionBar(binding.toolbar, this, "About Us", true)
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {

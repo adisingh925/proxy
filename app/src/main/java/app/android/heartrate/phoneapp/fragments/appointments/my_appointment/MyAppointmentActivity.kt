@@ -29,7 +29,7 @@ class MyAppointmentActivity : BaseActivity() {
     }
 
     private fun init() {
-        CommonUtils.setupActionBar(binding.toolbar, this, "Cal. Burned", true)
+        CommonUtils.setupActionBar(binding.toolbar, this, "My Appointments", true)
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
