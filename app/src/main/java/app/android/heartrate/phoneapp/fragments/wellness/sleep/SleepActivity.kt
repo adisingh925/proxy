@@ -31,7 +31,7 @@ class SleepActivity : BaseActivity() {
 
 
     private fun init() {
-        CommonUtils.setupActionBar(binding.toolbar, this, "Sleep", true)
+        CommonUtils.setupActionBar(binding.toolbar, this, "Measure Sleep", true)
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
@@ -45,4 +45,6 @@ class SleepActivity : BaseActivity() {
             else -> return super.onOptionsItemSelected(item)
         }
     }
+
+
 }

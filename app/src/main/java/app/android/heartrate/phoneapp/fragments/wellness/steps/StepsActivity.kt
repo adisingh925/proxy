@@ -30,7 +30,7 @@ class StepsActivity : BaseActivity() {
 
 
     private fun init() {
-        CommonUtils.setupActionBar(binding.toolbar, this, "Steps", true)
+        CommonUtils.setupActionBar(binding.toolbar, this, "Measure Steps", true)
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {

@@ -1,6 +1,24 @@
 <?xml version="1.0" encoding="utf-8"?>
 <navigation xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:id="@+id/nav_sleep">
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main_navigation"
+    app:startDestination="@id/measureSleepFragment">
+    <fragment
+        android:id="@+id/measureSleepFragment"
+        android:name="app.android.heartrate.phoneapp.fragments.wellness.sleep.subs.measure.MeasureSleepFragment"
+        android:label="Measure Sleep"
+        tools:layout="@layout/fragment_measure_sleep" >
+        <action
+            android:id="@+id/action_measureSleepFragment_to_analyticsSleepFragment"
+            app:destination="@id/analyticsSleepFragment" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/analyticsSleepFragment"
+        android:name="app.android.heartrate.phoneapp.fragments.wellness.sleep.subs.analytics.AnalyticsSleepFragment"
+        android:label="Analytics Sleep"
+        tools:layout="@layout/fragment_analytics_sleep" />
+
 
 </navigation>

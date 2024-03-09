@@ -28,9 +28,8 @@ class CalBurnsActivity : BaseActivity() {
     }
 
 
-
     private fun init() {
-        CommonUtils.setupActionBar(binding.toolbar, this, "Cal. Burned", true)
+        CommonUtils.setupActionBar(binding.toolbar, this, "Measure Cal. Burned", true)
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {

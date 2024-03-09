@@ -36,7 +36,6 @@ class FitnessActivity : BaseActivity() {
 
     private fun init() {
         CommonUtils.setupActionBar(binding.toolbar, this, "Measure Fitness", true)
-//        setNavController()
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
@@ -51,15 +50,4 @@ class FitnessActivity : BaseActivity() {
         }
     }
 
-//    private fun setNavController() {
-//        val navController = findNavController(R.id.nav_fitness_fragment)
-//        appBarConfiguration = AppBarConfiguration(navController.graph)
-//        findViewById<Toolbar>(R.id.toolbar)
-//            .setupWithNavController(navController, appBarConfiguration)
-//    }
-//
-//    override fun onSupportNavigateUp(): Boolean {
-//        val navController = findNavController(R.id.nav_fitness_fragment)
-//        return navController.navigateUp(appBarConfiguration) || super.onSupportNavigateUp()
-//    }
 }

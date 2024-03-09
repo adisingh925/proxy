@@ -1,6 +1,25 @@
 <?xml version="1.0" encoding="utf-8"?>
 <navigation xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:id="@+id/nav_cal_burns">
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main_navigation"
+    app:startDestination="@id/measureCalsFragment">
+    <fragment
+        android:id="@+id/measureCalsFragment"
+        android:name="app.android.heartrate.phoneapp.fragments.wellness.cal_burns.subs.measure.MeasureCalBurnsFragment"
+        android:label="Measure Cal Burns"
+        tools:layout="@layout/fragment_measure_cals">
+
+        <action
+            android:id="@+id/action_measureCalsFragment_to_analyticsCalsFragment"
+            app:destination="@id/analyticsCalsFragment" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/analyticsCalsFragment"
+        android:name="app.android.heartrate.phoneapp.fragments.wellness.cal_burns.subs.analytics.AnalyticsCalBurnsFragment"
+        android:label="Analytics Cal Burned"
+        tools:layout="@layout/fragment_analytics_cals" />
+
 
 </navigation>

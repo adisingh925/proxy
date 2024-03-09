@@ -31,7 +31,7 @@ class StressActivity : BaseActivity() {
 
 
     private fun init() {
-        CommonUtils.setupActionBar(binding.toolbar, this, "Stress", true)
+        CommonUtils.setupActionBar(binding.toolbar, this, "Measure Stress", true)
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {

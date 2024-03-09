@@ -1,4 +1,4 @@
-package app.android.heartrate.phoneapp.fragments.wellness.fitness.subs.measure
+package app.android.heartrate.phoneapp.fragments.wellness.steps.subs.measure
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -6,19 +6,20 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.navigation.fragment.findNavController
 import app.android.heartrate.phoneapp.R
-import app.android.heartrate.phoneapp.databinding.FragmentMeasureFitnessBinding
+import app.android.heartrate.phoneapp.databinding.FragmentMeasureStepsBinding
+import app.android.heartrate.phoneapp.databinding.FragmentMeasureStressBinding
 import app.android.heartrate.phoneapp.fragments.base.BaseFragment
 import app.android.heartrate.phoneapp.utils.CommonUtils
 
-class MeasureFitnessFragment : BaseFragment() {
+class MeasureStepFragment : BaseFragment() {
 
-    private lateinit var binding: FragmentMeasureFitnessBinding
+    private lateinit var binding: FragmentMeasureStepsBinding
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        binding = FragmentMeasureFitnessBinding.inflate(layoutInflater)
+        binding = FragmentMeasureStepsBinding.inflate(layoutInflater)
         return binding.root
     }
 
@@ -28,13 +29,13 @@ class MeasureFitnessFragment : BaseFragment() {
     }
 
     private fun init() {
-        CommonUtils.updateToolbarTitle("Measure Fitness", requireActivity())
+        CommonUtils.updateToolbarTitle("Measure Steps", requireActivity())
         handleClicks()
     }
 
     private fun handleClicks() {
         binding.btnAnalytics.setOnClickListener {
-            findNavController().navigate(R.id.action_measureFitnessFragment_to_analyticsFitnessFragment)
+            findNavController().navigate(R.id.action_measureStepsFragment_to_analyticsStepsFragment)
         }
     }
 

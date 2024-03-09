@@ -1,6 +1,24 @@
 <?xml version="1.0" encoding="utf-8"?>
 <navigation xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:id="@+id/nav_stress">
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main_navigation"
+    app:startDestination="@id/measureStressFragment">
+    <fragment
+        android:id="@+id/measureStressFragment"
+        android:name="app.android.heartrate.phoneapp.fragments.wellness.stress.subs.measure.MeasureStressFragment"
+        android:label="Measure Stress"
+        tools:layout="@layout/fragment_measure_stress" >
+        <action
+            android:id="@+id/action_measureStressFragment_to_analyticsStressFragment"
+            app:destination="@id/analyticsStressFragment" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/analyticsStressFragment"
+        android:name="app.android.heartrate.phoneapp.fragments.wellness.stress.subs.analytics.AnalyticsStressFragment"
+        android:label="Analytics Stress"
+        tools:layout="@layout/fragment_analytics_stress" />
+
 
 </navigation>
