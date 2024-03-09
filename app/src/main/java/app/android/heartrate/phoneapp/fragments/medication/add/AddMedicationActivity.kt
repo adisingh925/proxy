@@ -28,7 +28,7 @@ class AddMedicationActivity : BaseActivity() {
     }
 
     private fun init() {
-        CommonUtils.setupActionBar(binding.toolbar, this, "Add Medications", true)
+        CommonUtils.setupActionBar(binding.toolbar, this, "Medication Details", true)
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {

@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main_navigation"
+    app:startDestination="@id/medicationDetailsFragment">
+    <fragment
+        android:id="@+id/medicationDetailsFragment"
+        android:name="app.android.heartrate.phoneapp.fragments.medication.add.subs.details.MedicationDetailsFragment"
+        android:label="Medication Details"
+        tools:layout="@layout/fragment_medication_details" />
+
+
+</navigation>

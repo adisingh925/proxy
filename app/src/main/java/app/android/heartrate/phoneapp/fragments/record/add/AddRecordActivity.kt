@@ -30,7 +30,7 @@ class AddRecordActivity : BaseActivity() {
 
 
     private fun init() {
-        CommonUtils.setupActionBar(binding.toolbar, this, "Add Record", true)
+        CommonUtils.setupActionBar(binding.toolbar, this, "Record Details", true)
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
