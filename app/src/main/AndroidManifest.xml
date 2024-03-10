@@ -22,6 +22,9 @@
             android:name=".fragments.health.bp.BpActivity"
             android:exported="false" />
         <activity
+            android:name=".fragments.profile.ProfileActivity"
+            android:exported="false" />
+        <activity
             android:name=".fragments.health.ekg.EkgActivity"
             android:exported="false" />
         <activity
@@ -131,8 +134,7 @@
             android:exported="false" />
         <activity
             android:name=".fragments.wellness.fitness.FitnessActivity"
-            android:exported="false"
-            />
+            android:exported="false" />
         <activity
             android:name=".MainActivity"
             android:exported="false"
@@ -140,8 +142,7 @@
             android:theme="@style/Theme.PhoneApp.NoActionBar" />
         <activity
             android:name=".HomeActivity"
-            android:exported="true"
-          >
+            android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

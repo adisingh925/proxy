@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main_navigation"
+    app:startDestination="@id/securityFragment">
+    <fragment
+        android:id="@+id/securityFragment"
+        android:name="app.android.heartrate.phoneapp.fragments.settings.security.subs.security.SecurityFragment"
+        android:label="Security"
+        tools:layout="@layout/fragment_setting_security">
+        <action
+            android:id="@+id/action_securityFragment_to_changePasswordFragment"
+            app:destination="@id/changePasswordFragment" />
+        <action
+            android:id="@+id/action_securityFragment_to_setEmergencyContactFragment"
+            app:destination="@id/setEmergencyContactFragment" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/changePasswordFragment"
+        android:name="app.android.heartrate.phoneapp.fragments.settings.security.subs.password.ChangePasswordFragment"
+        android:label="Change Password"
+        tools:layout="@layout/fragment_setting_change_password" />
+
+    <fragment
+        android:id="@+id/setEmergencyContactFragment"
+        android:name="app.android.heartrate.phoneapp.fragments.settings.security.subs.contact.EmergencyContactFragment"
+        android:label="Set Emergency Contact"
+        tools:layout="@layout/fragment_setting_emergency_contact" />
+
+</navigation>
