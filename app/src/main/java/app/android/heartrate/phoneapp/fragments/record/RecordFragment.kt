@@ -6,6 +6,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import app.android.heartrate.phoneapp.activities.record.TrackerToolsActivity
 import app.android.heartrate.phoneapp.databinding.FragmentRecordBinding
 import app.android.heartrate.phoneapp.databinding.FragmentWellnessBinding
 import app.android.heartrate.phoneapp.fragments.base.BaseFragment
@@ -38,6 +39,10 @@ class RecordFragment : BaseFragment() {
     private fun handleClicks(){
         binding.cvAddRecord.setOnClickListener {
             startActivity(AddRecordActivity::class.java)
+        }
+
+        binding.cvHealthTracker.setOnClickListener {
+            startActivity(TrackerToolsActivity::class.java)
         }
     }
 

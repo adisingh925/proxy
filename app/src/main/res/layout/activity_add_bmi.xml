@@ -1,0 +1,551 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/bg_color">
+
+    <include
+        android:id="@+id/toolbar_actionbar"
+        layout="@layout/layout_toolbar_add" />
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@+id/toolbar_actionbar"
+        android:layout_marginBottom="@dimen/ad_margin_below">
+
+        <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginLeft="@dimen/app_scroll_view_margin_left"
+            android:layout_marginRight="@dimen/app_scroll_view_margin_right"
+            android:layout_marginBottom="@dimen/app_scroll_view_margin_bottom">
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/add_input_rel_bg"
+                android:padding="@dimen/_5sdp">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/_5sdp"
+                        android:orientation="vertical">
+
+                        <RelativeLayout
+                            android:layout_width="@dimen/profile_spinner_rel_width"
+                            android:layout_height="@dimen/profile_spinner_rel_height"
+                            android:layout_gravity="center_horizontal"
+                            android:background="@drawable/ic_profile_bg">
+
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:gravity="center"
+                                android:orientation="vertical">
+
+                                <Spinner
+                                    android:id="@+id/add_bmi_spinner_profiles"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="match_parent"
+                                    android:backgroundTint="@color/tool_bar_color_dark"
+                                    android:dropDownVerticalOffset="@dimen/_100sdp"
+                                    android:spinnerMode="dropdown" />
+                            </LinearLayout>
+                        </RelativeLayout>
+                    </LinearLayout>
+
+                    <RelativeLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/_50sdp">
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:gravity="center"
+                            android:orientation="horizontal">
+
+                            <LinearLayout
+                                android:id="@+id/add_bmi_lin_metric"
+                                android:layout_width="0dp"
+                                android:layout_height="match_parent"
+                                android:layout_weight="1"
+                                android:background="@drawable/radio_bg_selector"
+                                android:gravity="center_vertical"
+                                android:orientation="vertical">
+
+                                <RelativeLayout
+                                    android:layout_width="@dimen/radio_tab_width"
+                                    android:layout_height="@dimen/radio_tab_height"
+                                    android:layout_gravity="center_horizontal">
+
+                                    <TextView
+                                        android:id="@+id/add_bmi_lbl_metric"
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:layout_centerInParent="true"
+
+                                        android:text="@string/lbl_metric_system"
+                                        android:textAlignment="center"
+                                        android:textColor="@color/bmi_tab_selected_text_color"
+                                        android:textSize="@dimen/_10sdp" />
+                                </RelativeLayout>
+
+                                <View
+                                    android:id="@+id/add_bmi_hr_metric"
+                                    android:layout_width="@dimen/radio_tab_view_line_width"
+                                    android:layout_height="@dimen/radio_tab_view_line_height"
+                                    android:layout_gravity="center_horizontal"
+                                    android:layout_marginTop="@dimen/_5sdp"
+                                    android:background="@drawable/radio_selected_view_line"
+                                    android:visibility="visible" />
+                            </LinearLayout>
+
+                            <LinearLayout
+                                android:id="@+id/add_bmi_lin_imperial"
+                                android:layout_width="0dp"
+                                android:layout_height="match_parent"
+                                android:layout_weight="1"
+                                android:background="@drawable/radio_bg_selector"
+                                android:gravity="center"
+                                android:orientation="vertical">
+
+                                <RelativeLayout
+                                    android:layout_width="@dimen/radio_tab_width"
+                                    android:layout_height="@dimen/radio_tab_height"
+                                    android:background="@drawable/radio_bg_selector">
+
+                                    <TextView
+                                        android:id="@+id/add_bmi_lbl_imperial"
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:layout_centerInParent="true"
+
+                                        android:text="@string/lbl_imperial_system"
+                                        android:textAlignment="center"
+                                        android:textColor="@color/bmi_tab_normal_text_color"
+                                        android:textSize="@dimen/_10sdp" />
+                                </RelativeLayout>
+
+                                <View
+                                    android:id="@+id/add_bmi_hr_imperial"
+                                    android:layout_width="@dimen/radio_tab_view_line_width"
+                                    android:layout_height="@dimen/radio_tab_view_line_height"
+                                    android:layout_gravity="center_horizontal"
+                                    android:layout_marginTop="@dimen/_5sdp"
+                                    android:background="@drawable/radio_selected_view_line"
+                                    android:visibility="invisible" />
+                            </LinearLayout>
+                        </LinearLayout>
+                    </RelativeLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/_5sdp"
+                        android:orientation="horizontal"
+                        android:visibility="visible">
+
+                        <RelativeLayout
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1">
+
+                            <androidx.cardview.widget.CardView
+                                android:layout_width="match_parent"
+                                android:layout_height="@dimen/_50sdp"
+                                android:layout_centerVertical="true"
+                                android:layout_marginTop="@dimen/_5sdp"
+                                android:layout_marginRight="@dimen/_3sdp"
+                                android:visibility="visible"
+                                app:cardBackgroundColor="@color/white"
+                                app:cardCornerRadius="@dimen/_10sdp"
+                                app:cardElevation="0dp">
+
+                                <RelativeLayout
+                                    android:id="@+id/add_bmi_rel_select_date"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="match_parent"
+                                    android:background="@drawable/select_date_rel_selector"
+                                    android:orientation="vertical">
+
+                                    <TextView
+                                        android:id="@+id/add_bmi_lbl_date"
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:layout_marginLeft="@dimen/_10sdp"
+                                        android:layout_marginTop="@dimen/_5sdp"
+                                        android:layout_marginRight="@dimen/_5sdp"
+
+                                        android:singleLine="true"
+                                        android:text="@string/lbl_date"
+                                        android:textAllCaps="false"
+                                        android:textColor="@color/app_text_color"
+                                        android:textSize="@dimen/app_label_text_size" />
+
+                                    <TextView
+                                        android:id="@+id/add_bmi_txt_date"
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:layout_below="@+id/add_bmi_lbl_date"
+                                        android:layout_centerHorizontal="true"
+                                        android:layout_marginLeft="@dimen/_10sdp"
+                                        android:layout_marginTop="@dimen/_5sdp"
+                                        android:layout_marginRight="@dimen/_10sdp"
+
+                                        android:singleLine="true"
+                                        android:text="@string/lbl_dash"
+                                        android:textColor="@color/input_text_color"
+                                        android:textSize="@dimen/app_input_text_size" />
+                                </RelativeLayout>
+                            </androidx.cardview.widget.CardView>
+                        </RelativeLayout>
+
+                        <RelativeLayout
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1">
+
+                            <androidx.cardview.widget.CardView
+                                android:layout_width="match_parent"
+                                android:layout_height="@dimen/_50sdp"
+                                android:layout_centerVertical="true"
+                                android:layout_marginLeft="@dimen/_3sdp"
+                                android:layout_marginTop="@dimen/_5sdp"
+                                android:visibility="visible"
+                                app:cardBackgroundColor="@color/select_time_rel_bg_color"
+                                app:cardCornerRadius="@dimen/_10sdp"
+                                app:cardElevation="0dp">
+
+                                <RelativeLayout
+                                    android:id="@+id/add_bmi_rel_select_time"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="match_parent"
+                                    android:background="@drawable/select_time_rel_selector"
+                                    android:orientation="vertical">
+
+                                    <TextView
+                                        android:id="@+id/add_bmi_lbl_time"
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:layout_marginLeft="@dimen/_10sdp"
+                                        android:layout_marginTop="@dimen/_5sdp"
+                                        android:layout_marginRight="@dimen/_5sdp"
+
+                                        android:singleLine="true"
+                                        android:text="@string/lbl_time"
+                                        android:textAllCaps="false"
+                                        android:textColor="@color/white"
+                                        android:textSize="@dimen/app_label_text_size" />
+
+                                    <TextView
+                                        android:id="@+id/add_bmi_txt_time"
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:layout_below="@+id/add_bmi_lbl_time"
+                                        android:layout_centerHorizontal="true"
+                                        android:layout_marginLeft="@dimen/_10sdp"
+                                        android:layout_marginTop="@dimen/_5sdp"
+                                        android:layout_marginRight="@dimen/_10sdp"
+
+                                        android:singleLine="true"
+                                        android:text="@string/lbl_dash"
+                                        android:textColor="@color/white"
+                                        android:textSize="@dimen/app_input_text_size" />
+                                </RelativeLayout>
+                            </androidx.cardview.widget.CardView>
+                        </RelativeLayout>
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/_5sdp"
+                        android:orientation="horizontal">
+
+                        <RelativeLayout
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1">
+
+                            <androidx.cardview.widget.CardView
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:layout_marginRight="@dimen/_2sdp"
+                                android:visibility="visible"
+                                app:cardBackgroundColor="@color/white"
+                                app:cardCornerRadius="@dimen/_8sdp"
+                                app:cardElevation="0dp">
+
+                                <RelativeLayout
+                                    android:layout_width="match_parent"
+                                    android:layout_height="match_parent"
+                                    android:background="@drawable/select_date_rel_selector"
+                                    android:orientation="vertical"
+                                    android:paddingTop="@dimen/_5sdp"
+                                    android:paddingBottom="@dimen/_5sdp">
+
+                                    <LinearLayout
+                                        android:layout_width="match_parent"
+                                        android:layout_height="wrap_content"
+                                        android:orientation="vertical">
+
+                                        <LinearLayout
+                                            android:layout_width="match_parent"
+                                            android:layout_height="wrap_content"
+                                            android:orientation="horizontal">
+
+                                            <LinearLayout
+                                                android:layout_width="0dp"
+                                                android:layout_height="wrap_content"
+                                                android:layout_weight="1"
+                                                android:orientation="horizontal"
+                                                android:padding="@dimen/_5sdp">
+
+                                                <TextView
+                                                    android:layout_width="wrap_content"
+                                                    android:layout_height="wrap_content"
+                                                    android:layout_marginLeft="@dimen/_5sdp"
+
+                                                    android:singleLine="true"
+                                                    android:text="@string/lbl_age"
+                                                    android:textColor="@color/app_label_text_color"
+                                                    android:textSize="@dimen/app_label_text_size" />
+                                            </LinearLayout>
+
+                                            <LinearLayout
+                                                android:layout_width="0dp"
+                                                android:layout_height="wrap_content"
+                                                android:layout_weight="1"
+                                                android:orientation="horizontal"
+                                                android:padding="@dimen/_5sdp">
+
+                                                <TextView
+                                                    android:id="@+id/add_bmi_txt_age_unit"
+                                                    android:layout_width="match_parent"
+                                                    android:layout_height="wrap_content"
+                                                    android:layout_marginRight="@dimen/_5sdp"
+
+                                                    android:gravity="right"
+                                                    android:singleLine="true"
+                                                    android:text="@string/lbl_dash"
+                                                    android:textColor="@color/app_formula_text_color"
+                                                    android:textSize="@dimen/app_label_text_size" />
+                                            </LinearLayout>
+                                        </LinearLayout>
+
+                                        <EditText
+                                            android:id="@+id/add_bmi_et_age"
+                                            android:layout_width="match_parent"
+                                            android:layout_height="@dimen/_35sdp"
+                                            android:layout_marginLeft="@dimen/_5sdp"
+                                            android:layout_marginTop="@dimen/_5sdp"
+                                            android:layout_marginRight="@dimen/_5sdp"
+                                            android:background="@color/transparent"
+                                            android:backgroundTint="@color/et_base_color"
+
+                                            android:gravity="center"
+                                            android:hint="@string/lbl_hint_age"
+                                            android:inputType="number"
+                                            android:paddingLeft="@dimen/_10sdp"
+                                            android:paddingTop="@dimen/_5sdp"
+                                            android:paddingRight="@dimen/_10sdp"
+                                            android:textColor="@color/app_text_color"
+                                            android:textColorHint="@color/et_hint_text_color"
+                                            android:textCursorDrawable="@drawable/cursor_black"
+                                            android:textSize="@dimen/_12sdp"
+                                            android:theme="@style/Theme.App.Base" />
+
+                                        <View
+                                            android:layout_width="match_parent"
+                                            android:layout_height="@dimen/et_base_hr_height"
+                                            android:layout_marginLeft="@dimen/_5sdp"
+                                            android:layout_marginRight="@dimen/_5sdp"
+                                            android:background="@color/et_base_color" />
+                                    </LinearLayout>
+                                </RelativeLayout>
+                            </androidx.cardview.widget.CardView>
+                        </RelativeLayout>
+
+                        <RelativeLayout
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1">
+
+                            <androidx.cardview.widget.CardView
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:layout_marginLeft="@dimen/_2sdp"
+                                android:visibility="visible"
+                                app:cardBackgroundColor="@color/white"
+                                app:cardCornerRadius="@dimen/_8sdp"
+                                app:cardElevation="0dp">
+
+                                <RelativeLayout
+                                    android:layout_width="match_parent"
+                                    android:layout_height="match_parent"
+                                    android:background="@drawable/select_date_rel_selector"
+                                    android:orientation="vertical"
+                                    android:paddingTop="@dimen/_5sdp"
+                                    android:paddingBottom="@dimen/_5sdp">
+
+                                    <LinearLayout
+                                        android:layout_width="match_parent"
+                                        android:layout_height="wrap_content"
+                                        android:orientation="vertical">
+
+                                        <LinearLayout
+                                            android:layout_width="match_parent"
+                                            android:layout_height="wrap_content"
+                                            android:orientation="horizontal">
+
+                                            <LinearLayout
+                                                android:layout_width="0dp"
+                                                android:layout_height="wrap_content"
+                                                android:layout_weight="1"
+                                                android:orientation="horizontal"
+                                                android:padding="@dimen/_5sdp">
+
+                                                <TextView
+                                                    android:layout_width="wrap_content"
+                                                    android:layout_height="wrap_content"
+                                                    android:layout_marginLeft="@dimen/_5sdp"
+
+                                                    android:singleLine="true"
+                                                    android:text="@string/lbl_weight"
+                                                    android:textColor="@color/app_label_text_color"
+                                                    android:textSize="@dimen/app_label_text_size" />
+                                            </LinearLayout>
+
+                                            <LinearLayout
+                                                android:layout_width="0dp"
+                                                android:layout_height="wrap_content"
+                                                android:layout_weight="1"
+                                                android:orientation="horizontal"
+                                                android:padding="@dimen/_5sdp">
+
+                                                <TextView
+                                                    android:id="@+id/add_bmi_txt_weight_unit"
+                                                    android:layout_width="match_parent"
+                                                    android:layout_height="wrap_content"
+                                                    android:layout_marginRight="@dimen/_5sdp"
+
+                                                    android:gravity="right"
+                                                    android:singleLine="true"
+                                                    android:text="@string/lbl_dash"
+                                                    android:textColor="@color/app_formula_text_color"
+                                                    android:textSize="@dimen/app_label_text_size" />
+                                            </LinearLayout>
+                                        </LinearLayout>
+
+                                        <EditText
+                                            android:id="@+id/add_bmi_et_weight"
+                                            android:layout_width="match_parent"
+                                            android:layout_height="@dimen/_35sdp"
+                                            android:layout_marginLeft="@dimen/_5sdp"
+                                            android:layout_marginTop="@dimen/_5sdp"
+                                            android:layout_marginRight="@dimen/_5sdp"
+                                            android:background="@color/transparent"
+                                            android:backgroundTint="@color/et_base_color"
+
+                                            android:gravity="center"
+                                            android:hint="@string/lbl_hint_weight"
+                                            android:inputType="number"
+                                            android:paddingLeft="@dimen/_10sdp"
+                                            android:paddingTop="@dimen/_5sdp"
+                                            android:paddingRight="@dimen/_10sdp"
+                                            android:textColor="@color/app_text_color"
+                                            android:textColorHint="@color/et_hint_text_color"
+                                            android:textCursorDrawable="@drawable/cursor_black"
+                                            android:textSize="@dimen/_12sdp"
+                                            android:theme="@style/Theme.App.Base" />
+
+                                        <View
+                                            android:layout_width="match_parent"
+                                            android:layout_height="@dimen/et_base_hr_height"
+                                            android:layout_marginLeft="@dimen/_5sdp"
+                                            android:layout_marginRight="@dimen/_5sdp"
+                                            android:background="@color/et_base_color" />
+                                    </LinearLayout>
+                                </RelativeLayout>
+                            </androidx.cardview.widget.CardView>
+                        </RelativeLayout>
+                    </LinearLayout>
+
+                    <androidx.cardview.widget.CardView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="@dimen/_2sdp"
+                        android:layout_marginTop="@dimen/_5sdp"
+                        android:layout_marginRight="@dimen/_3sdp"
+                        android:visibility="visible"
+                        app:cardBackgroundColor="@color/white"
+                        app:cardCornerRadius="@dimen/_8sdp"
+                        app:cardElevation="0dp">
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="vertical"
+                            android:padding="@dimen/_5sdp">
+
+                            <TextView
+                                android:id="@+id/add_bmi_txt_height_unit"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_gravity="center_horizontal"
+                                android:layout_marginLeft="@dimen/_5sdp"
+                                android:layout_marginTop="@dimen/_5sdp"
+
+                                android:singleLine="true"
+                                android:text="@string/lbl_height_meter"
+                                android:textAllCaps="true"
+                                android:textColor="@color/app_text_color"
+                                android:textSize="@dimen/_9sdp" />
+
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="@dimen/_5sdp"
+                                android:gravity="center"
+                                android:orientation="vertical">
+
+                                <EditText
+                                    android:id="@+id/add_bmi_et_height"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="@dimen/_35sdp"
+                                    android:background="@color/transparent"
+
+                                    android:gravity="center"
+                                    android:hint="@string/lbl_hint_height_meter"
+                                    android:inputType="numberDecimal"
+                                    android:paddingLeft="@dimen/_10sdp"
+                                    android:paddingTop="@dimen/_5sdp"
+                                    android:paddingRight="@dimen/_10sdp"
+                                    android:textColor="@color/app_text_color"
+                                    android:textColorHint="@color/et_hint_text_color"
+                                    android:textCursorDrawable="@drawable/cursor_black"
+                                    android:textSize="@dimen/app_input_text_size"
+                                    android:theme="@style/Theme.App.Base" />
+
+                                <View
+                                    android:layout_width="match_parent"
+                                    android:layout_height="@dimen/et_base_hr_height"
+                                    android:layout_marginLeft="@dimen/_5sdp"
+                                    android:layout_marginRight="@dimen/_5sdp"
+                                    android:background="@color/et_base_color" />
+                            </LinearLayout>
+                        </LinearLayout>
+                    </androidx.cardview.widget.CardView>
+                </LinearLayout>
+            </RelativeLayout>
+        </ScrollView>
+    </RelativeLayout>
+</RelativeLayout>

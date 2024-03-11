@@ -6,16 +6,13 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.ArrayAdapter
 import android.widget.Toast
-import app.android.heartrate.phoneapp.HomeActivity
-import app.android.heartrate.phoneapp.R
+import app.android.heartrate.phoneapp.activities.main.HomeActivity
 import app.android.heartrate.phoneapp.databinding.FragmentProfileBinding
 import app.android.heartrate.phoneapp.model.SignupResponse
 import app.android.heartrate.phoneapp.model.UpdateProfileRequest
 import app.android.heartrate.phoneapp.retrofit.ApiClient
 import app.android.heartrate.phoneapp.sharedpreferences.SharedPreferences
-import com.google.android.material.textfield.MaterialAutoCompleteTextView
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response

@@ -3,6 +3,15 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
+    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE"/>
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"/>
+    <uses-permission android:name="android.permission.READ_MEDIA_IMAGES" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
+    <uses-permission android:name="android.permission.CAMERA" />
+    <uses-feature android:name="android.hardware.camera" />
+    <uses-permission android:name="android.hardware.camera.autofocus" />
+    <uses-permission android:name="com.google.android.gms.permission.AD_ID" />
 
     <application
         android:allowBackup="true"
@@ -15,6 +24,11 @@
         android:theme="@style/Theme.PhoneApp"
         android:usesCleartextTraffic="true"
         tools:targetApi="31">
+
+        <meta-data
+            android:name="com.google.android.gms.ads.APPLICATION_ID"
+            android:value="ca-app-pub-3940256099942544~3347511713"/>
+
         <activity
             android:name=".fragments.appointments.my_appointment.MyAppointmentActivity"
             android:exported="false" />
@@ -136,12 +150,89 @@
             android:name=".fragments.wellness.fitness.FitnessActivity"
             android:exported="false" />
         <activity
-            android:name=".MainActivity"
+            android:name=".activities.main.MainActivity"
             android:exported="false"
             android:label="@string/title_activity_home"
             android:theme="@style/Theme.PhoneApp.NoActionBar" />
+
         <activity
-            android:name=".HomeActivity"
+            android:name=".activities.record.BloodCountDataActivity"
+            android:exported="false"
+            android:windowSoftInputMode="adjustUnspecified|stateUnchanged|stateHidden|stateAlwaysHidden|adjustResize|adjustPan|adjustNothing" />
+        <activity
+            android:name=".activities.record.AddBloodCountActivity"
+            android:exported="false"
+            android:windowSoftInputMode="adjustUnspecified|stateUnchanged|stateHidden|stateAlwaysHidden|adjustResize|adjustPan|adjustNothing" />
+        <activity
+            android:name=".activities.record.BloodPressureDataActivity"
+            android:exported="false"
+            android:windowSoftInputMode="adjustUnspecified|stateUnchanged|stateHidden|stateAlwaysHidden|adjustResize|adjustPan|adjustNothing" />
+        <activity
+            android:name=".activities.record.AddBloodPressureActivity"
+            android:exported="false"
+            android:windowSoftInputMode="adjustUnspecified|stateUnchanged|stateHidden|stateAlwaysHidden|adjustResize|adjustPan|adjustNothing" />
+        <activity
+            android:name=".activities.record.BloodSugarDataActivity"
+            android:exported="false"
+            android:windowSoftInputMode="adjustUnspecified|stateUnchanged|stateHidden|stateAlwaysHidden|adjustResize|adjustPan|adjustNothing" />
+        <activity
+            android:name=".activities.record.AddBloodSugarActivity"
+            android:exported="false"
+            android:windowSoftInputMode="adjustUnspecified|stateUnchanged|stateHidden|stateAlwaysHidden|adjustResize|adjustPan|adjustNothing" />
+        <activity
+            android:name=".activities.record.BMIDataActivity"
+            android:exported="false"
+            android:windowSoftInputMode="adjustUnspecified|stateUnchanged|stateHidden|stateAlwaysHidden|adjustResize|adjustPan|adjustNothing" />
+        <activity
+            android:name=".activities.record.BMIResultActivity"
+            android:exported="false"
+            android:windowSoftInputMode="adjustUnspecified|stateUnchanged|stateHidden|stateAlwaysHidden|adjustResize|adjustPan|adjustNothing" />
+        <activity
+            android:name=".activities.record.AddBMIDataActivity"
+            android:exported="false"
+            android:windowSoftInputMode="adjustUnspecified|stateUnchanged|stateHidden|stateAlwaysHidden|adjustResize|adjustPan|adjustNothing" />
+        <activity
+            android:name=".activities.record.BodyTempDataActivity"
+            android:exported="false"
+            android:windowSoftInputMode="adjustUnspecified|stateUnchanged|stateHidden|stateAlwaysHidden|adjustResize|adjustPan|adjustNothing" />
+        <activity
+            android:name=".activities.record.AddBodyTempActivity"
+            android:exported="false"
+            android:windowSoftInputMode="adjustUnspecified|stateUnchanged|stateHidden|stateAlwaysHidden|adjustResize|adjustPan|adjustNothing" />
+        <activity
+            android:name=".activities.record.CholesterolDataActivity"
+            android:exported="false"
+            android:windowSoftInputMode="adjustUnspecified|stateUnchanged|stateHidden|stateAlwaysHidden|adjustResize|adjustPan|adjustNothing" />
+        <activity
+            android:name=".activities.record.AddCholesterolActivity"
+            android:exported="false"
+            android:windowSoftInputMode="adjustUnspecified|stateUnchanged|stateHidden|stateAlwaysHidden|adjustResize|adjustPan|adjustNothing" />
+        <activity
+            android:name=".activities.record.HeartRateDataActivity"
+            android:exported="false"
+            android:windowSoftInputMode="adjustUnspecified|stateUnchanged|stateHidden|stateAlwaysHidden|adjustResize|adjustPan|adjustNothing" />
+        <activity
+            android:name=".activities.record.AddHeartRateActivity"
+            android:exported="false"
+            android:windowSoftInputMode="adjustUnspecified|stateUnchanged|stateHidden|stateAlwaysHidden|adjustResize|adjustPan|adjustNothing" />
+        <activity
+            android:name=".activities.record.WeightDataActivity"
+            android:exported="false"
+            android:windowSoftInputMode="adjustUnspecified|stateUnchanged|stateHidden|stateAlwaysHidden|adjustResize|adjustPan|adjustNothing" />
+        <activity
+            android:name=".activities.record.AddWeightActivity"
+            android:exported="false"
+            android:windowSoftInputMode="adjustUnspecified|stateUnchanged|stateHidden|stateAlwaysHidden|adjustResize|adjustPan|adjustNothing" />
+        <activity
+            android:name=".activities.record.MedicineDataActivity"
+            android:exported="false"
+            android:windowSoftInputMode="adjustUnspecified|stateUnchanged|stateHidden|stateAlwaysHidden|adjustResize|adjustPan|adjustNothing" />
+        <activity
+            android:name=".activities.record.AddMedicinesActivity"
+            android:exported="false"
+            android:windowSoftInputMode="adjustUnspecified|stateUnchanged|stateHidden|stateAlwaysHidden|adjustResize|adjustPan|adjustNothing" />
+        <activity
+            android:name=".activities.main.HomeActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

@@ -58,4 +58,22 @@ dependencies {
     androidTestImplementation("androidx.test.espresso:espresso-core:3.5.1")
     implementation("com.squareup.retrofit2:retrofit:2.9.0")
     implementation("com.squareup.retrofit2:converter-gson:2.9.0")
+
+
+    implementation ("de.hdodenhof:circleimageview:3.1.0")
+    implementation ("com.github.PhilJay:MPAndroidChart:v3.1.0")
+    implementation ("com.github.yehiahd:FastSave-Android:1.0.6")
+    implementation ("com.yalantis:ucrop:2.2.0")
+    implementation ("com.airbnb.android:lottie:6.1.0")
+
+
+    implementation ("io.github.ShawnLin013:number-picker:2.4.13")
+
+    implementation ("io.github.ParkSangGwon:tedpermission-normal:3.3.0")
+
+    implementation ("com.daimajia.androidanimations:library:2.4@aar")
+    implementation ("de.psdev.licensesdialog:licensesdialog:1.8.1")
+    implementation ("com.github.owl-93.Determinate-Progress-View:release:v1.4.4")
+    implementation ("com.intuit.sdp:sdp-android:1.1.0")
+    implementation ("com.google.android.gms:play-services-ads:21.4.0")
 }

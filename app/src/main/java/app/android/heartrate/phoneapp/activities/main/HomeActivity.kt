@@ -1,9 +1,8 @@
-package app.android.heartrate.phoneapp
+package app.android.heartrate.phoneapp.activities.main
 
 import android.content.Intent
 import android.os.Bundle
 import android.view.Menu
-import android.view.View
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.drawerlayout.widget.DrawerLayout
@@ -12,6 +11,7 @@ import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.navigateUp
 import androidx.navigation.ui.setupActionBarWithNavController
 import androidx.navigation.ui.setupWithNavController
+import app.android.heartrate.phoneapp.R
 import app.android.heartrate.phoneapp.databinding.ActivityHomeBinding
 import app.android.heartrate.phoneapp.fragments.profile.ProfileActivity
 import com.google.android.material.navigation.NavigationView
@@ -59,7 +59,7 @@ class HomeActivity : AppCompatActivity() {
         return true
     }
 
-    private fun handleProfileClicks(){
+    private fun handleProfileClicks() {
         val header = binding.navView.getHeaderView(0)
         var editProfile = header.findViewById<TextView>(R.id.tvEditProfile)
         editProfile.setOnClickListener {

@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android" android:background="@color/bg_color" android:layout_width="match_parent" android:layout_height="match_parent">
+    <include android:id="@+id/toolbar_actionbar" layout="@layout/layout_toolbar_data_list"/>
+    <RelativeLayout android:layout_width="match_parent" android:layout_height="match_parent" android:layout_marginBottom="@dimen/ad_margin_below" android:layout_above="@+id/banner1" android:layout_below="@+id/toolbar_actionbar">
+        <LinearLayout android:orientation="vertical" android:id="@+id/medicine_lin_profiles" android:layout_width="match_parent" android:layout_height="wrap_content" android:layout_marginTop="@dimen/_5sdp">
+            <RelativeLayout android:layout_gravity="center_horizontal" android:background="@drawable/ic_profile_bg" android:layout_width="@dimen/profile_spinner_rel_width" android:layout_height="@dimen/profile_spinner_rel_height">
+                <LinearLayout android:gravity="center" android:orientation="vertical" android:layout_width="match_parent" android:layout_height="match_parent">
+                    <Spinner android:id="@+id/medicine_spinner_profiles" android:layout_width="match_parent" android:layout_height="match_parent" android:dropDownVerticalOffset="@dimen/_100sdp" android:spinnerMode="dropdown" android:backgroundTint="@color/tool_bar_color_dark"/>
+                </LinearLayout>
+            </RelativeLayout>
+        </LinearLayout>
+        <RelativeLayout android:layout_width="match_parent" android:layout_height="match_parent" android:layout_below="@+id/medicine_lin_profiles">
+            <androidx.recyclerview.widget.RecyclerView android:id="@+id/medicine_rv_data" android:layout_width="match_parent" android:layout_height="match_parent" android:layout_margin="@dimen/_5sdp"/>
+            <TextView android:textSize="@dimen/app_no_data_text_size" android:textColor="@color/text_color_no_data" android:id="@+id/txt_no_data" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="@string/lbl_empty_medicine_data" android:layout_centerInParent="true"/>
+        </RelativeLayout>
+    </RelativeLayout>
+	 <RelativeLayout
+        android:id="@+id/banner1"
+ 	android:minHeight="50dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+         android:layout_alignParentBottom="true"
+        android:gravity="center">
+        <RelativeLayout
+            android:id="@+id/banner"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:layout_gravity="center"
+
+           android:gravity="center" />
+    </RelativeLayout></RelativeLayout>

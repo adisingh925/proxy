@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.appcompat.widget.Toolbar xmlns:android="http://schemas.android.com/apk/res/android" xmlns:app="http://schemas.android.com/apk/res-auto" android:id="@+id/app_toolbar" android:background="@color/transparent" android:layout_width="match_parent" android:layout_height="@dimen/_45sdp" android:contentInsetStart="0dp" android:contentInsetEnd="0dp" android:contentInsetLeft="0dp" android:contentInsetRight="0dp" app:contentInsetEnd="0dp" app:contentInsetLeft="0dp" app:contentInsetRight="0dp" app:contentInsetStart="0dp" app:popupTheme="@style/ThemeOverlay.AppCompat.Light" app:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar">
+    <TextView android:textSize="@dimen/_15sdp" android:textColor="@color/tool_bar_title_color" android:layout_gravity="center_vertical" android:id="@+id/toolbar_title" android:visibility="gone" android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_marginLeft="@dimen/_8sdp" android:layout_marginRight="@dimen/_5sdp" android:text="@string/app_name" android:lines="1" />
+    <RelativeLayout android:layout_width="match_parent" android:layout_height="match_parent">
+        <RelativeLayout android:gravity="center" android:id="@+id/toolbar_rel_back" android:background="@drawable/tool_bar_item_selector" android:layout_width="@dimen/_45sdp" android:layout_height="match_parent" android:layout_alignParentLeft="true">
+            <ImageView android:id="@+id/toolbar_img_back" android:layout_width="@dimen/_12sdp" android:layout_height="@dimen/_12sdp" android:src="@drawable/ic_tool_back" android:layout_centerInParent="true"/>
+        </RelativeLayout>
+        <RelativeLayout android:gravity="center_vertical" android:layout_width="match_parent" android:layout_height="match_parent" android:layout_toRightOf="@+id/toolbar_rel_back">
+            <TextView android:textSize="@dimen/_16sdp" android:textColor="@color/tool_bar_title_text_color" android:layout_gravity="center" android:id="@+id/toolbar_txt_title_1" android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_marginRight="@dimen/_5sdp" android:text="@string/lbl_add" android:lines="1" android:fontFamily="@font/roboto_light"/>
+            <TextView android:textSize="@dimen/_16sdp" android:textColor="@color/tool_bar_title_text_color" android:layout_gravity="center_vertical" android:id="@+id/toolbar_txt_title_2" android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_marginLeft="@dimen/_2sdp" android:layout_marginRight="@dimen/_5sdp" android:text="@string/lbl_heart_rate" android:lines="1" android:layout_toRightOf="@+id/toolbar_txt_title_1" />
+        </RelativeLayout>
+    </RelativeLayout>
+</androidx.appcompat.widget.Toolbar>

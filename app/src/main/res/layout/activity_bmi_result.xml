@@ -1,0 +1,1008 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/bg_color">
+
+    <include
+        android:id="@+id/toolbar_actionbar"
+        layout="@layout/layout_toolbar_transparent" />
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@+id/toolbar_actionbar"
+        android:layout_marginBottom="@dimen/ad_margin_below">
+
+        <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginLeft="@dimen/_10sdp"
+            android:layout_marginRight="@dimen/_10sdp">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <androidx.cardview.widget.CardView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/_5sdp"
+                    android:layout_marginTop="@dimen/_5sdp"
+                    android:layout_marginRight="@dimen/_5sdp"
+                    android:layout_marginBottom="@dimen/_5sdp"
+                    app:cardBackgroundColor="@color/white"
+                    app:cardCornerRadius="@dimen/_10sdp"
+                    app:cardElevation="@dimen/_2sdp">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical"
+                        android:paddingLeft="@dimen/_5sdp"
+                        android:paddingRight="@dimen/_5sdp">
+
+                        <RelativeLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="@dimen/_50sdp">
+
+                            <RelativeLayout
+                                android:id="@+id/bmi_result_rel_result"
+                                android:layout_width="wrap_content"
+                                android:layout_height="match_parent"
+                                android:gravity="center">
+
+                                <TextView
+                                    android:id="@+id/bmi_result_txt_result"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_centerHorizontal="true"
+                                    android:layout_marginLeft="@dimen/_5sdp"
+                                    android:singleLine="true"
+                                    android:text="156.0"
+                                    android:textColor="@color/app_text_color"
+                                    android:textSize="@dimen/_15sdp" />
+
+                                <TextView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_below="@+id/bmi_result_txt_result"
+                                    android:layout_centerHorizontal="true"
+                                    android:layout_marginLeft="@dimen/_5sdp"
+                                    android:layout_marginTop="@dimen/_5sdp"
+                                    android:fontFamily="@font/roboto_regular"
+                                    android:singleLine="true"
+                                    android:text="@string/lbl_current_bmi"
+                                    android:textColor="@color/summery_text_color"
+                                    android:textSize="@dimen/_8sdp" />
+                            </RelativeLayout>
+
+                            <RelativeLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:layout_toLeftOf="@+id/bmi_result_rel_share"
+                                android:layout_toRightOf="@+id/bmi_result_rel_result"
+                                android:gravity="center"
+                                android:orientation="vertical">
+
+                                <TextView
+                                    android:id="@+id/bmi_result_txt_result_text"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_centerHorizontal="true"
+                                    android:layout_marginLeft="@dimen/_10sdp"
+                                    android:layout_marginRight="@dimen/_10sdp"
+                                    android:singleLine="true"
+                                    android:text="@string/app_name"
+                                    android:textColor="@color/bmi_result_text_color"
+                                    android:textSize="@dimen/_12sdp" />
+
+                                <TextView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_below="@+id/bmi_result_txt_result_text"
+                                    android:layout_centerHorizontal="true"
+                                    android:layout_marginTop="@dimen/_5sdp"
+                                    android:fontFamily="@font/roboto_regular"
+                                    android:singleLine="true"
+                                    android:text="@string/lbl_current_bmi_result"
+                                    android:textColor="@color/summery_text_color"
+                                    android:textSize="@dimen/_8sdp" />
+                            </RelativeLayout>
+
+                            <RelativeLayout
+                                android:id="@+id/bmi_result_rel_share"
+                                android:layout_width="@dimen/_30sdp"
+                                android:layout_height="match_parent"
+                                android:layout_alignParentRight="true">
+
+                                <ImageView
+                                    android:id="@+id/bmi_result_img_share"
+                                    android:layout_width="@dimen/_18sdp"
+                                    android:layout_height="@dimen/_18sdp"
+                                    android:layout_centerHorizontal="true"
+                                    android:layout_marginTop="@dimen/_10sdp"
+                                    android:src="@drawable/ic_share_result" />
+                            </RelativeLayout>
+                        </RelativeLayout>
+
+                        <RelativeLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="@dimen/_45sdp"
+                            android:layout_marginLeft="@dimen/_10sdp"
+                            android:layout_marginTop="@dimen/_5sdp"
+                            android:layout_marginRight="@dimen/_10sdp"
+                            android:layout_marginBottom="@dimen/_5sdp"
+                            android:background="@drawable/row_indicator_rounded_bg"
+                            android:paddingLeft="@dimen/_5sdp"
+                            android:paddingTop="@dimen/_5sdp"
+                            android:paddingRight="@dimen/_5sdp"
+                            android:paddingBottom="@dimen/_5sdp">
+
+                            <RelativeLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:background="@drawable/row_indicator_rounded_border_bg"
+                                android:padding="@dimen/_2sdp">
+
+                                <LinearLayout
+                                    android:layout_width="match_parent"
+                                    android:layout_height="match_parent"
+                                    android:orientation="horizontal">
+
+                                    <RelativeLayout
+                                        android:layout_width="0dp"
+                                        android:layout_height="wrap_content"
+                                        android:layout_weight="1"
+                                        android:gravity="center">
+
+                                        <LinearLayout
+                                            android:layout_width="match_parent"
+                                            android:layout_height="match_parent"
+                                            android:gravity="center"
+                                            android:orientation="vertical">
+
+                                            <RelativeLayout
+                                                android:layout_width="match_parent"
+                                                android:layout_height="0dp"
+                                                android:layout_weight="1"
+                                                android:gravity="center_vertical">
+
+                                                <View
+                                                    android:layout_width="match_parent"
+                                                    android:layout_height="match_parent"
+                                                    android:layout_centerHorizontal="true"
+                                                    android:layout_centerVertical="true"
+                                                    android:background="@drawable/status_start_rounded" />
+
+                                                <ImageView
+                                                    android:id="@+id/bmi_result_img_very_severely"
+                                                    android:layout_width="@dimen/row_indicator_arrow_width"
+                                                    android:layout_height="@dimen/row_indicator_arrow_height"
+                                                    android:layout_centerHorizontal="true"
+                                                    android:src="@drawable/ic_row_down_arrow"
+                                                    android:visibility="invisible" />
+                                            </RelativeLayout>
+                                        </LinearLayout>
+                                    </RelativeLayout>
+
+                                    <RelativeLayout
+                                        android:layout_width="0dp"
+                                        android:layout_height="wrap_content"
+                                        android:layout_weight="1">
+
+                                        <LinearLayout
+                                            android:layout_width="match_parent"
+                                            android:layout_height="match_parent"
+                                            android:gravity="center"
+                                            android:orientation="vertical">
+
+                                            <RelativeLayout
+                                                android:layout_width="match_parent"
+                                                android:layout_height="0dp"
+                                                android:layout_weight="1"
+                                                android:gravity="center_vertical">
+
+                                                <View
+                                                    android:layout_width="match_parent"
+                                                    android:layout_height="match_parent"
+                                                    android:layout_centerHorizontal="true"
+                                                    android:layout_centerVertical="true"
+                                                    android:background="@color/row_status_color_2" />
+
+                                                <ImageView
+                                                    android:id="@+id/bmi_result_img_severely"
+                                                    android:layout_width="@dimen/row_indicator_arrow_width"
+                                                    android:layout_height="@dimen/row_indicator_arrow_height"
+                                                    android:layout_centerHorizontal="true"
+                                                    android:src="@drawable/ic_row_down_arrow"
+                                                    android:visibility="invisible" />
+                                            </RelativeLayout>
+                                        </LinearLayout>
+                                    </RelativeLayout>
+
+                                    <RelativeLayout
+                                        android:layout_width="0dp"
+                                        android:layout_height="wrap_content"
+                                        android:layout_weight="1">
+
+                                        <LinearLayout
+                                            android:layout_width="match_parent"
+                                            android:layout_height="match_parent"
+                                            android:gravity="center"
+                                            android:orientation="vertical">
+
+                                            <RelativeLayout
+                                                android:layout_width="match_parent"
+                                                android:layout_height="0dp"
+                                                android:layout_weight="1"
+                                                android:gravity="center_vertical">
+
+                                                <View
+                                                    android:layout_width="match_parent"
+                                                    android:layout_height="match_parent"
+                                                    android:layout_centerHorizontal="true"
+                                                    android:layout_centerVertical="true"
+                                                    android:background="@color/row_status_color_3" />
+
+                                                <ImageView
+                                                    android:id="@+id/bmi_result_img_underweight"
+                                                    android:layout_width="@dimen/row_indicator_arrow_width"
+                                                    android:layout_height="@dimen/row_indicator_arrow_height"
+                                                    android:layout_centerHorizontal="true"
+                                                    android:src="@drawable/ic_row_down_arrow"
+                                                    android:visibility="invisible" />
+                                            </RelativeLayout>
+                                        </LinearLayout>
+                                    </RelativeLayout>
+
+                                    <RelativeLayout
+                                        android:layout_width="0dp"
+                                        android:layout_height="wrap_content"
+                                        android:layout_weight="1">
+
+                                        <LinearLayout
+                                            android:layout_width="match_parent"
+                                            android:layout_height="match_parent"
+                                            android:gravity="center"
+                                            android:orientation="vertical">
+
+                                            <RelativeLayout
+                                                android:layout_width="match_parent"
+                                                android:layout_height="0dp"
+                                                android:layout_weight="1"
+                                                android:gravity="center_vertical">
+
+                                                <View
+                                                    android:layout_width="match_parent"
+                                                    android:layout_height="match_parent"
+                                                    android:layout_centerHorizontal="true"
+                                                    android:layout_centerVertical="true"
+                                                    android:background="@color/row_status_color_4" />
+
+                                                <ImageView
+                                                    android:id="@+id/bmi_result_img_normal"
+                                                    android:layout_width="@dimen/row_indicator_arrow_width"
+                                                    android:layout_height="@dimen/row_indicator_arrow_height"
+                                                    android:layout_centerHorizontal="true"
+                                                    android:src="@drawable/ic_row_down_arrow"
+                                                    android:visibility="invisible" />
+                                            </RelativeLayout>
+                                        </LinearLayout>
+                                    </RelativeLayout>
+
+                                    <RelativeLayout
+                                        android:layout_width="0dp"
+                                        android:layout_height="wrap_content"
+                                        android:layout_weight="1">
+
+                                        <LinearLayout
+                                            android:layout_width="match_parent"
+                                            android:layout_height="match_parent"
+                                            android:gravity="center"
+                                            android:orientation="vertical">
+
+                                            <RelativeLayout
+                                                android:layout_width="match_parent"
+                                                android:layout_height="0dp"
+                                                android:layout_weight="1"
+                                                android:gravity="center_vertical">
+
+                                                <View
+                                                    android:layout_width="match_parent"
+                                                    android:layout_height="match_parent"
+                                                    android:layout_centerHorizontal="true"
+                                                    android:layout_centerVertical="true"
+                                                    android:background="@color/row_status_color_5" />
+
+                                                <ImageView
+                                                    android:id="@+id/bmi_result_img_overweight"
+                                                    android:layout_width="@dimen/row_indicator_arrow_width"
+                                                    android:layout_height="@dimen/row_indicator_arrow_height"
+                                                    android:layout_centerHorizontal="true"
+                                                    android:src="@drawable/ic_row_down_arrow"
+                                                    android:visibility="invisible" />
+                                            </RelativeLayout>
+                                        </LinearLayout>
+                                    </RelativeLayout>
+
+                                    <RelativeLayout
+                                        android:layout_width="0dp"
+                                        android:layout_height="wrap_content"
+                                        android:layout_weight="1">
+
+                                        <LinearLayout
+                                            android:layout_width="match_parent"
+                                            android:layout_height="match_parent"
+                                            android:gravity="center"
+                                            android:orientation="vertical">
+
+                                            <RelativeLayout
+                                                android:layout_width="match_parent"
+                                                android:layout_height="0dp"
+                                                android:layout_weight="1"
+                                                android:gravity="center_vertical">
+
+                                                <View
+                                                    android:layout_width="match_parent"
+                                                    android:layout_height="match_parent"
+                                                    android:layout_centerHorizontal="true"
+                                                    android:layout_centerVertical="true"
+                                                    android:background="@color/row_status_color_6" />
+
+                                                <ImageView
+                                                    android:id="@+id/bmi_result_img_moderately_obese"
+                                                    android:layout_width="@dimen/row_indicator_arrow_width"
+                                                    android:layout_height="@dimen/row_indicator_arrow_height"
+                                                    android:layout_centerHorizontal="true"
+                                                    android:src="@drawable/ic_row_down_arrow"
+                                                    android:visibility="invisible" />
+                                            </RelativeLayout>
+                                        </LinearLayout>
+                                    </RelativeLayout>
+
+                                    <RelativeLayout
+                                        android:layout_width="0dp"
+                                        android:layout_height="wrap_content"
+                                        android:layout_weight="1">
+
+                                        <LinearLayout
+                                            android:layout_width="match_parent"
+                                            android:layout_height="match_parent"
+                                            android:gravity="center"
+                                            android:orientation="vertical">
+
+                                            <RelativeLayout
+                                                android:layout_width="match_parent"
+                                                android:layout_height="0dp"
+                                                android:layout_weight="1"
+                                                android:gravity="center_vertical">
+
+                                                <View
+                                                    android:layout_width="match_parent"
+                                                    android:layout_height="match_parent"
+                                                    android:layout_centerHorizontal="true"
+                                                    android:layout_centerVertical="true"
+                                                    android:background="@color/row_status_color_7" />
+
+                                                <ImageView
+                                                    android:id="@+id/bmi_result_img_severely_obese"
+                                                    android:layout_width="@dimen/row_indicator_arrow_width"
+                                                    android:layout_height="@dimen/row_indicator_arrow_height"
+                                                    android:layout_centerHorizontal="true"
+                                                    android:src="@drawable/ic_row_down_arrow"
+                                                    android:visibility="invisible" />
+                                            </RelativeLayout>
+                                        </LinearLayout>
+                                    </RelativeLayout>
+
+                                    <RelativeLayout
+                                        android:layout_width="0dp"
+                                        android:layout_height="wrap_content"
+                                        android:layout_weight="1">
+
+                                        <LinearLayout
+                                            android:layout_width="match_parent"
+                                            android:layout_height="match_parent"
+                                            android:gravity="center"
+                                            android:orientation="vertical">
+
+                                            <RelativeLayout
+                                                android:layout_width="match_parent"
+                                                android:layout_height="0dp"
+                                                android:layout_weight="1"
+                                                android:gravity="center_vertical">
+
+                                                <View
+                                                    android:layout_width="match_parent"
+                                                    android:layout_height="match_parent"
+                                                    android:layout_centerHorizontal="true"
+                                                    android:layout_centerVertical="true"
+                                                    android:background="@drawable/bmi_status_end_rounded" />
+
+                                                <ImageView
+                                                    android:id="@+id/bmi_result_img_very_severely_obese"
+                                                    android:layout_width="@dimen/row_indicator_arrow_width"
+                                                    android:layout_height="@dimen/row_indicator_arrow_height"
+                                                    android:layout_centerHorizontal="true"
+                                                    android:src="@drawable/ic_row_down_arrow"
+                                                    android:visibility="invisible" />
+                                            </RelativeLayout>
+                                        </LinearLayout>
+                                    </RelativeLayout>
+                                </LinearLayout>
+                            </RelativeLayout>
+                        </RelativeLayout>
+                    </LinearLayout>
+                </androidx.cardview.widget.CardView>
+
+                <androidx.cardview.widget.CardView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/_5sdp"
+                    android:layout_marginTop="@dimen/_5sdp"
+                    android:layout_marginRight="@dimen/_5sdp"
+                    android:layout_marginBottom="@dimen/_5sdp"
+                    app:cardBackgroundColor="@color/white"
+                    app:cardCornerRadius="@dimen/_10sdp"
+                    app:cardElevation="@dimen/_2sdp">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center"
+                            android:layout_margin="@dimen/_5sdp"
+                            android:gravity="left"
+                            android:lineSpacingExtra="@dimen/_4sdp"
+                            android:text="@string/lbl_bmi_detail"
+                            android:textColor="@color/text_color_light"
+                            android:textSize="@dimen/_9sdp" />
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="@dimen/_5sdp"
+                            android:background="@android:color/white"
+                            android:orientation="vertical"
+                            android:paddingBottom="@dimen/_5sdp">
+
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:gravity="center"
+                                android:orientation="horizontal"
+                                android:paddingTop="@dimen/_5sdp">
+
+                                <LinearLayout
+                                    android:layout_width="0dp"
+                                    android:layout_height="wrap_content"
+                                    android:layout_weight="0.5"
+                                    android:gravity="center"
+                                    android:orientation="vertical">
+
+                                    <TextView
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:text="@string/lbl_color"
+                                        android:textColor="@color/app_text_color"
+                                        android:textSize="@dimen/_10sdp" />
+
+                                    <View
+                                        android:layout_width="match_parent"
+                                        android:layout_height="@dimen/_1sdp"
+                                        android:layout_marginLeft="@dimen/_5sdp"
+                                        android:layout_marginTop="@dimen/_5sdp"
+                                        android:layout_marginRight="@dimen/_5sdp"
+                                        android:layout_marginBottom="@dimen/_2sdp"
+                                        android:background="@color/row_hr_view_color" />
+                                </LinearLayout>
+
+                                <LinearLayout
+                                    android:layout_width="0dp"
+                                    android:layout_height="wrap_content"
+                                    android:layout_weight="1"
+                                    android:gravity="center"
+                                    android:orientation="vertical">
+
+                                    <TextView
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:text="@string/lbl_result_bmi"
+                                        android:textColor="@color/app_text_color"
+                                        android:textSize="@dimen/_10sdp" />
+
+                                    <View
+                                        android:layout_width="match_parent"
+                                        android:layout_height="@dimen/_1sdp"
+                                        android:layout_marginLeft="@dimen/_8sdp"
+                                        android:layout_marginTop="@dimen/_5sdp"
+                                        android:layout_marginRight="@dimen/_15sdp"
+                                        android:layout_marginBottom="@dimen/_2sdp"
+                                        android:background="@color/row_hr_view_color" />
+                                </LinearLayout>
+
+                                <LinearLayout
+                                    android:layout_width="0dp"
+                                    android:layout_height="wrap_content"
+                                    android:layout_weight="1"
+                                    android:gravity="center"
+                                    android:orientation="vertical">
+
+                                    <TextView
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:text="@string/lbl_bmi_category"
+                                        android:textColor="@color/app_text_color"
+                                        android:textSize="@dimen/_10sdp" />
+
+                                    <View
+                                        android:layout_width="match_parent"
+                                        android:layout_height="@dimen/_1sdp"
+                                        android:layout_marginLeft="@dimen/_5sdp"
+                                        android:layout_marginTop="@dimen/_5sdp"
+                                        android:layout_marginRight="@dimen/_5sdp"
+                                        android:layout_marginBottom="@dimen/_2sdp"
+                                        android:background="@color/row_hr_view_color" />
+                                </LinearLayout>
+                            </LinearLayout>
+
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="@dimen/_2sdp"
+                                android:layout_marginBottom="@dimen/_2sdp"
+                                android:gravity="center"
+                                android:orientation="horizontal">
+
+                                <RelativeLayout
+                                    android:layout_width="0dp"
+                                    android:layout_height="wrap_content"
+                                    android:layout_weight="0.5"
+                                    android:gravity="center">
+
+                                    <androidx.cardview.widget.CardView
+                                        android:layout_width="@dimen/_10sdp"
+                                        android:layout_height="@dimen/_10sdp"
+                                        android:layout_marginTop="@dimen/_2sdp"
+                                        app:cardBackgroundColor="@color/row_status_color_1"
+                                        app:cardCornerRadius="@dimen/_8sdp"
+                                        app:cardElevation="0dp" />
+                                </RelativeLayout>
+
+                                <RelativeLayout
+                                    android:layout_width="0dp"
+                                    android:layout_height="wrap_content"
+                                    android:layout_weight="1"
+                                    android:gravity="left">
+
+                                    <TextView
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:layout_marginLeft="@dimen/_5sdp"
+                                        android:fontFamily="@font/roboto_regular"
+                                        android:text="@string/lbl_bmi_less_15"
+                                        android:textColor="@color/app_formula_text_color"
+                                        android:textSize="@dimen/_8sdp" />
+                                </RelativeLayout>
+
+                                <RelativeLayout
+                                    android:layout_width="0dp"
+                                    android:layout_height="wrap_content"
+                                    android:layout_weight="1"
+                                    android:gravity="left">
+
+                                    <TextView
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:layout_marginLeft="@dimen/_5sdp"
+                                        android:fontFamily="@font/roboto_regular"
+                                        android:text="@string/lbl_bmi_result_very_severely"
+                                        android:textColor="@color/app_formula_text_color"
+                                        android:textSize="@dimen/_8sdp" />
+                                </RelativeLayout>
+                            </LinearLayout>
+
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="@dimen/_2sdp"
+                                android:layout_marginBottom="@dimen/_2sdp"
+                                android:gravity="center"
+                                android:orientation="horizontal">
+
+                                <RelativeLayout
+                                    android:layout_width="0dp"
+                                    android:layout_height="wrap_content"
+                                    android:layout_weight="0.5"
+                                    android:gravity="center">
+
+                                    <androidx.cardview.widget.CardView
+                                        android:layout_width="@dimen/_10sdp"
+                                        android:layout_height="@dimen/_10sdp"
+                                        android:layout_marginTop="@dimen/_2sdp"
+                                        app:cardBackgroundColor="@color/row_status_color_2"
+                                        app:cardCornerRadius="@dimen/_8sdp"
+                                        app:cardElevation="0dp" />
+                                </RelativeLayout>
+
+                                <RelativeLayout
+                                    android:layout_width="0dp"
+                                    android:layout_height="wrap_content"
+                                    android:layout_weight="1"
+                                    android:gravity="left">
+
+                                    <TextView
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:layout_marginLeft="@dimen/_5sdp"
+                                        android:fontFamily="@font/roboto_regular"
+                                        android:text="@string/lbl_bmi_between_15_and_16"
+                                        android:textColor="@color/app_formula_text_color"
+                                        android:textSize="@dimen/_8sdp" />
+                                </RelativeLayout>
+
+                                <RelativeLayout
+                                    android:layout_width="0dp"
+                                    android:layout_height="wrap_content"
+                                    android:layout_weight="1"
+                                    android:gravity="left">
+
+                                    <TextView
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:layout_marginLeft="@dimen/_5sdp"
+                                        android:fontFamily="@font/roboto_regular"
+                                        android:text="@string/lbl_bmi_result_severely"
+                                        android:textColor="@color/app_formula_text_color"
+                                        android:textSize="@dimen/_8sdp" />
+                                </RelativeLayout>
+                            </LinearLayout>
+
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="@dimen/_2sdp"
+                                android:layout_marginBottom="@dimen/_2sdp"
+                                android:gravity="center"
+                                android:orientation="horizontal">
+
+                                <RelativeLayout
+                                    android:layout_width="0dp"
+                                    android:layout_height="wrap_content"
+                                    android:layout_weight="0.5"
+                                    android:gravity="center">
+
+                                    <androidx.cardview.widget.CardView
+                                        android:layout_width="@dimen/_10sdp"
+                                        android:layout_height="@dimen/_10sdp"
+                                        android:layout_marginTop="@dimen/_2sdp"
+                                        app:cardBackgroundColor="@color/row_status_color_3"
+                                        app:cardCornerRadius="@dimen/_8sdp"
+                                        app:cardElevation="0dp" />
+                                </RelativeLayout>
+
+                                <RelativeLayout
+                                    android:layout_width="0dp"
+                                    android:layout_height="wrap_content"
+                                    android:layout_weight="1"
+                                    android:gravity="left">
+
+                                    <TextView
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:layout_marginLeft="@dimen/_5sdp"
+                                        android:fontFamily="@font/roboto_regular"
+                                        android:text="@string/lbl_bmi_between_16_and_18.5"
+                                        android:textColor="@color/app_formula_text_color"
+                                        android:textSize="@dimen/_8sdp" />
+                                </RelativeLayout>
+
+                                <RelativeLayout
+                                    android:layout_width="0dp"
+                                    android:layout_height="wrap_content"
+                                    android:layout_weight="1"
+                                    android:gravity="left">
+
+                                    <TextView
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:layout_marginLeft="@dimen/_5sdp"
+                                        android:fontFamily="@font/roboto_regular"
+                                        android:text="@string/lbl_bmi_result_underweight"
+                                        android:textColor="@color/app_formula_text_color"
+                                        android:textSize="@dimen/_8sdp" />
+                                </RelativeLayout>
+                            </LinearLayout>
+
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="@dimen/_2sdp"
+                                android:layout_marginBottom="@dimen/_2sdp"
+                                android:gravity="center"
+                                android:orientation="horizontal">
+
+                                <RelativeLayout
+                                    android:layout_width="0dp"
+                                    android:layout_height="wrap_content"
+                                    android:layout_weight="0.5"
+                                    android:gravity="center">
+
+                                    <androidx.cardview.widget.CardView
+                                        android:layout_width="@dimen/_10sdp"
+                                        android:layout_height="@dimen/_10sdp"
+                                        android:layout_marginTop="@dimen/_2sdp"
+                                        app:cardBackgroundColor="@color/row_status_color_4"
+                                        app:cardCornerRadius="@dimen/_8sdp"
+                                        app:cardElevation="0dp" />
+                                </RelativeLayout>
+
+                                <RelativeLayout
+                                    android:layout_width="0dp"
+                                    android:layout_height="wrap_content"
+                                    android:layout_weight="1"
+                                    android:gravity="left">
+
+                                    <TextView
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:layout_marginLeft="@dimen/_5sdp"
+                                        android:fontFamily="@font/roboto_regular"
+                                        android:text="@string/lbl_bmi_between_18.5_and_25"
+                                        android:textColor="@color/app_formula_text_color"
+                                        android:textSize="@dimen/_8sdp" />
+                                </RelativeLayout>
+
+                                <RelativeLayout
+                                    android:layout_width="0dp"
+                                    android:layout_height="wrap_content"
+                                    android:layout_weight="1"
+                                    android:gravity="left">
+
+                                    <TextView
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:layout_marginLeft="@dimen/_5sdp"
+                                        android:fontFamily="@font/roboto_regular"
+                                        android:text="@string/lbl_bmi_result_normal"
+                                        android:textColor="@color/app_formula_text_color"
+                                        android:textSize="@dimen/_8sdp" />
+                                </RelativeLayout>
+                            </LinearLayout>
+
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="@dimen/_2sdp"
+                                android:layout_marginBottom="@dimen/_2sdp"
+                                android:gravity="center"
+                                android:orientation="horizontal">
+
+                                <RelativeLayout
+                                    android:layout_width="0dp"
+                                    android:layout_height="wrap_content"
+                                    android:layout_weight="0.5"
+                                    android:gravity="center">
+
+                                    <androidx.cardview.widget.CardView
+                                        android:layout_width="@dimen/_10sdp"
+                                        android:layout_height="@dimen/_10sdp"
+                                        android:layout_marginTop="@dimen/_2sdp"
+                                        app:cardBackgroundColor="@color/row_status_color_5"
+                                        app:cardCornerRadius="@dimen/_8sdp"
+                                        app:cardElevation="0dp" />
+                                </RelativeLayout>
+
+                                <RelativeLayout
+                                    android:layout_width="0dp"
+                                    android:layout_height="wrap_content"
+                                    android:layout_weight="1"
+                                    android:gravity="left">
+
+                                    <TextView
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:layout_marginLeft="@dimen/_5sdp"
+                                        android:fontFamily="@font/roboto_regular"
+                                        android:text="@string/lbl_bmi_between_25_and_30"
+                                        android:textColor="@color/app_formula_text_color"
+                                        android:textSize="@dimen/_8sdp" />
+                                </RelativeLayout>
+
+                                <RelativeLayout
+                                    android:layout_width="0dp"
+                                    android:layout_height="wrap_content"
+                                    android:layout_weight="1"
+                                    android:gravity="left">
+
+                                    <TextView
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:layout_marginLeft="@dimen/_5sdp"
+                                        android:fontFamily="@font/roboto_regular"
+                                        android:text="@string/lbl_bmi_result_overweight"
+                                        android:textColor="@color/app_formula_text_color"
+                                        android:textSize="@dimen/_8sdp" />
+                                </RelativeLayout>
+                            </LinearLayout>
+
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="@dimen/_2sdp"
+                                android:layout_marginBottom="@dimen/_2sdp"
+                                android:gravity="center"
+                                android:orientation="horizontal">
+
+                                <RelativeLayout
+                                    android:layout_width="0dp"
+                                    android:layout_height="wrap_content"
+                                    android:layout_weight="0.5"
+                                    android:gravity="center">
+
+                                    <androidx.cardview.widget.CardView
+                                        android:layout_width="@dimen/_10sdp"
+                                        android:layout_height="@dimen/_10sdp"
+                                        android:layout_marginTop="@dimen/_2sdp"
+                                        app:cardBackgroundColor="@color/row_status_color_6"
+                                        app:cardCornerRadius="@dimen/_8sdp"
+                                        app:cardElevation="0dp" />
+                                </RelativeLayout>
+
+                                <RelativeLayout
+                                    android:layout_width="0dp"
+                                    android:layout_height="wrap_content"
+                                    android:layout_weight="1"
+                                    android:gravity="left">
+
+                                    <TextView
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:layout_marginLeft="@dimen/_5sdp"
+                                        android:fontFamily="@font/roboto_regular"
+                                        android:text="@string/lbl_bmi_between_30_and_35"
+                                        android:textColor="@color/app_formula_text_color"
+                                        android:textSize="@dimen/_8sdp" />
+                                </RelativeLayout>
+
+                                <RelativeLayout
+                                    android:layout_width="0dp"
+                                    android:layout_height="wrap_content"
+                                    android:layout_weight="1"
+                                    android:gravity="left">
+
+                                    <TextView
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:layout_marginLeft="@dimen/_5sdp"
+                                        android:fontFamily="@font/roboto_regular"
+                                        android:text="@string/lbl_bmi_result_moderately_obese"
+                                        android:textColor="@color/app_formula_text_color"
+                                        android:textSize="@dimen/_8sdp" />
+                                </RelativeLayout>
+                            </LinearLayout>
+
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="@dimen/_2sdp"
+                                android:layout_marginBottom="@dimen/_2sdp"
+                                android:gravity="center"
+                                android:orientation="horizontal">
+
+                                <RelativeLayout
+                                    android:layout_width="0dp"
+                                    android:layout_height="wrap_content"
+                                    android:layout_weight="0.5"
+                                    android:gravity="center">
+
+                                    <androidx.cardview.widget.CardView
+                                        android:layout_width="@dimen/_10sdp"
+                                        android:layout_height="@dimen/_10sdp"
+                                        android:layout_marginTop="@dimen/_2sdp"
+                                        app:cardBackgroundColor="@color/row_status_color_7"
+                                        app:cardCornerRadius="@dimen/_8sdp"
+                                        app:cardElevation="0dp" />
+                                </RelativeLayout>
+
+                                <RelativeLayout
+                                    android:layout_width="0dp"
+                                    android:layout_height="wrap_content"
+                                    android:layout_weight="1"
+                                    android:gravity="left">
+
+                                    <TextView
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:layout_marginLeft="@dimen/_5sdp"
+                                        android:fontFamily="@font/roboto_regular"
+                                        android:text="@string/lbl_bmi_between_35_and_40"
+                                        android:textColor="@color/app_formula_text_color"
+                                        android:textSize="@dimen/_8sdp" />
+                                </RelativeLayout>
+
+                                <RelativeLayout
+                                    android:layout_width="0dp"
+                                    android:layout_height="wrap_content"
+                                    android:layout_weight="1"
+                                    android:gravity="left">
+
+                                    <TextView
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:layout_marginLeft="@dimen/_5sdp"
+                                        android:fontFamily="@font/roboto_regular"
+                                        android:text="@string/lbl_bmi_result_severely_obese"
+                                        android:textColor="@color/app_formula_text_color"
+                                        android:textSize="@dimen/_8sdp" />
+                                </RelativeLayout>
+                            </LinearLayout>
+
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="@dimen/_2sdp"
+                                android:layout_marginBottom="@dimen/_2sdp"
+                                android:gravity="center"
+                                android:orientation="horizontal">
+
+                                <RelativeLayout
+                                    android:layout_width="0dp"
+                                    android:layout_height="wrap_content"
+                                    android:layout_weight="0.5"
+                                    android:gravity="center">
+
+                                    <androidx.cardview.widget.CardView
+                                        android:layout_width="@dimen/_10sdp"
+                                        android:layout_height="@dimen/_10sdp"
+                                        android:layout_marginTop="@dimen/_2sdp"
+                                        app:cardBackgroundColor="@color/row_status_color_8"
+                                        app:cardCornerRadius="@dimen/_8sdp"
+                                        app:cardElevation="0dp" />
+                                </RelativeLayout>
+
+                                <RelativeLayout
+                                    android:layout_width="0dp"
+                                    android:layout_height="wrap_content"
+                                    android:layout_weight="1"
+                                    android:gravity="left">
+
+                                    <TextView
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:layout_marginLeft="@dimen/_5sdp"
+                                        android:text="@string/lbl_bmi_over_40"
+                                        android:textColor="@color/app_formula_text_color"
+                                        android:textSize="@dimen/_8sdp" />
+                                </RelativeLayout>
+
+                                <RelativeLayout
+                                    android:layout_width="0dp"
+                                    android:layout_height="wrap_content"
+                                    android:layout_weight="1"
+                                    android:gravity="left">
+
+                                    <TextView
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:layout_marginLeft="@dimen/_5sdp"
+                                        android:fontFamily="@font/roboto_regular"
+                                        android:text="@string/lbl_bmi_result_very_severely_obese"
+                                        android:textColor="@color/app_formula_text_color"
+                                        android:textSize="@dimen/_8sdp" />
+                                </RelativeLayout>
+                            </LinearLayout>
+                        </LinearLayout>
+                    </LinearLayout>
+                </androidx.cardview.widget.CardView>
+            </LinearLayout>
+        </ScrollView>
+    </RelativeLayout>
+</RelativeLayout>

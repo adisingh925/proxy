@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<notices>
+
+    <notice>
+        <name>Circle Image View</name>
+        <url>https://github.com/hdodenhof/CircleImageView</url>
+        <copyright>Copyright 2014 - 2020 Henning Dodenhof</copyright>
+        <license>Apache Software License 2.0</license>
+    </notice>
+
+    <notice>
+        <name>Google Play Services</name>
+        <url>https://developer.android.com/google/play-services/index.html</url>
+        <copyright>© 2014 Google</copyright>
+        <license>Creative Commons Attribution-NoDerivs 3.0 Unported</license>
+    </notice>
+
+    <notice>
+        <name>Licenses Dialog</name>
+        <url>https://github.com/PSDev/LicensesDialog</url>
+        <copyright>© 2013 Philip Schiffer</copyright>
+        <license>Apache Software License 2.0</license>
+    </notice>
+
+    <notice>
+        <name>MPChart</name>
+        <url>https://github.com/PhilJay/MPAndroidChart</url>
+        <copyright>Copyright 2020 Philipp Jahoda</copyright>
+        <license>Apache Software License 2.0</license>
+    </notice>
+
+    <notice>
+        <name>Ruler Picker</name>
+        <url>https://github.com/kevalpatel2106/android-ruler-picker</url>
+        <copyright>Copyright 2018 Keval Patel</copyright>
+        <license>Apache Software License 2.0</license>
+    </notice>
+
+    <notice>
+        <name>TedPermission</name>
+        <url>https://github.com/ParkSangGwon/TedPermission</url>
+        <copyright>© 2017 Ted Park</copyright>
+        <license>Apache Software License 2.0</license>
+    </notice>
+
+    <notice>
+        <name>uCrop</name>
+        <url>https://github.com/Yalantis/uCrop</url>
+        <copyright>Copyright 2017, Yalantis</copyright>
+        <license>Apache Software License 2.0</license>
+    </notice>
+
+    <notice>
+        <name>Wave Loading View</name>
+        <url>https://github.com/tangqi92/WaveLoadingView</url>
+        <copyright>Copyright 2016 Qi Tang</copyright>
+        <license>Apache Software License 2.0</license>
+    </notice>
+</notices>

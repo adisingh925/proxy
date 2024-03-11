@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android" android:background="@drawable/chart_bubble" android:layout_width="wrap_content" android:layout_height="@dimen/_45sdp">
+    <TextView android:textSize="@dimen/_10sdp" android:textColor="@color/white" android:ellipsize="end" android:id="@+id/txt_marker_text" android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_marginLeft="@dimen/_5sdp" android:layout_marginTop="@dimen/_12sdp" android:layout_marginRight="@dimen/_5sdp" android:text="" android:singleLine="true" android:layout_centerHorizontal="true" />
+</RelativeLayout>

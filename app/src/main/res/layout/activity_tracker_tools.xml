@@ -1,0 +1,501 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/bg_color">
+
+    <include
+        android:id="@+id/toolbar_actionbar"
+        layout="@layout/layout_toolbar_custom" />
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_above="@+id/banner1"
+        android:layout_below="@+id/toolbar_actionbar"
+        android:layout_marginTop="40dp"
+        android:layout_marginBottom="@dimen/ad_margin_below">
+
+        <androidx.cardview.widget.CardView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/_10sdp"
+            app:cardBackgroundColor="@color/tools_card_bg_color"
+            app:cardCornerRadius="@dimen/_10sdp"
+            app:cardElevation="0dp">
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginBottom="@dimen/ad_margin_below">
+
+                <RelativeLayout
+                    android:id="@+id/tracker_tools_rel_menu_1"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/_10sdp"
+                    android:gravity="center_vertical">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/_110sdp"
+                        android:gravity="center"
+                        android:orientation="horizontal">
+
+                        <RelativeLayout
+                            android:layout_width="0dp"
+                            android:layout_height="match_parent"
+                            android:layout_weight="1"
+                            android:gravity="center">
+
+                            <RelativeLayout
+                                android:id="@+id/tracker_tools_rel_blood_count"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_centerInParent="true">
+
+                                <RelativeLayout
+                                    android:id="@+id/tracker_tools_rel_img_blood_count"
+                                    android:layout_width="@dimen/tools_menu_image_bg_width"
+                                    android:layout_height="@dimen/tools_menu_image_bg_height"
+                                    android:layout_centerHorizontal="true"
+                                    android:background="@drawable/ic_tools_image_back"
+                                    android:backgroundTint="#F47C56">
+
+                                    <ImageView
+                                        android:layout_width="@dimen/tools_menu_icon_width"
+                                        android:layout_height="@dimen/tools_menu_icon_height"
+                                        android:layout_centerInParent="true"
+                                        android:src="@drawable/ic_tool_blood_count" />
+                                </RelativeLayout>
+
+                                <TextView
+                                    android:id="@+id/tracker_tools_lbl_blood_count"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_below="@+id/tracker_tools_rel_img_blood_count"
+                                    android:layout_centerHorizontal="true"
+                                    android:layout_marginLeft="@dimen/_5sdp"
+                                    android:layout_marginTop="@dimen/_5sdp"
+                                    android:layout_marginRight="@dimen/_5sdp"
+                                    android:gravity="center"
+                                    android:lineSpacingExtra="@dimen/_2sdp"
+                                    android:text="@string/lbl_blood_count"
+                                    android:textColor="@color/menu_text_color"
+                                    android:textSize="@dimen/tools_menu_text_size" />
+                            </RelativeLayout>
+                        </RelativeLayout>
+
+                        <RelativeLayout
+                            android:layout_width="0dp"
+                            android:layout_height="match_parent"
+                            android:layout_weight="1"
+                            android:gravity="center">
+
+                            <RelativeLayout
+                                android:id="@+id/tracker_tools_rel_bp"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_centerInParent="true">
+
+                                <RelativeLayout
+                                    android:id="@+id/tracker_tools_rel_img_bp"
+                                    android:layout_width="@dimen/tools_menu_image_bg_width"
+                                    android:layout_height="@dimen/tools_menu_image_bg_height"
+                                    android:layout_centerHorizontal="true"
+                                    android:background="@drawable/ic_tools_image_back"
+
+                                    android:backgroundTint="#EA4D82">
+
+                                    <ImageView
+                                        android:layout_width="@dimen/tools_menu_icon_width"
+                                        android:layout_height="@dimen/tools_menu_icon_height"
+                                        android:layout_centerInParent="true"
+                                        android:src="@drawable/ic_tool_blood_pressure" />
+                                </RelativeLayout>
+
+                                <TextView
+                                    android:id="@+id/tracker_tools_lbl_bp"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_below="@+id/tracker_tools_rel_img_bp"
+                                    android:layout_centerHorizontal="true"
+                                    android:layout_marginLeft="@dimen/_5sdp"
+                                    android:layout_marginTop="@dimen/_5sdp"
+                                    android:layout_marginRight="@dimen/_5sdp"
+                                    android:gravity="center"
+                                    android:lineSpacingExtra="@dimen/_2sdp"
+                                    android:text="@string/lbl_blood_pressure"
+                                    android:textColor="@color/menu_text_color"
+                                    android:textSize="@dimen/tools_menu_text_size" />
+                            </RelativeLayout>
+                        </RelativeLayout>
+
+                        <RelativeLayout
+                            android:layout_width="0dp"
+                            android:layout_height="match_parent"
+                            android:layout_weight="1"
+                            android:gravity="center">
+
+                            <RelativeLayout
+                                android:id="@+id/tracker_tools_rel_blood_sugar"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_centerInParent="true">
+
+                                <RelativeLayout
+                                    android:id="@+id/tracker_tools_rel_img_blood_sugar"
+                                    android:layout_width="@dimen/tools_menu_image_bg_width"
+                                    android:layout_height="@dimen/tools_menu_image_bg_height"
+                                    android:layout_centerHorizontal="true"
+                                    android:background="@drawable/ic_tools_image_back"
+                                    android:backgroundTint="#52BD56">
+
+                                    <ImageView
+                                        android:layout_width="@dimen/tools_menu_icon_width"
+                                        android:layout_height="@dimen/tools_menu_icon_height"
+                                        android:layout_centerInParent="true"
+                                        android:src="@drawable/ic_tool_blood_sugar" />
+                                </RelativeLayout>
+
+                                <TextView
+                                    android:id="@+id/tracker_tools_lbl_blood_sugar"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_below="@+id/tracker_tools_rel_img_blood_sugar"
+                                    android:layout_centerHorizontal="true"
+                                    android:layout_marginLeft="@dimen/_5sdp"
+                                    android:layout_marginTop="@dimen/_5sdp"
+                                    android:layout_marginRight="@dimen/_5sdp"
+                                    android:gravity="center"
+                                    android:lineSpacingExtra="@dimen/_2sdp"
+                                    android:text="@string/lbl_blood_sugar"
+                                    android:textColor="@color/menu_text_color"
+                                    android:textSize="@dimen/tools_menu_text_size" />
+                            </RelativeLayout>
+                        </RelativeLayout>
+                    </LinearLayout>
+                </RelativeLayout>
+
+                <RelativeLayout
+                    android:id="@+id/tracker_tools_rel_menu_2"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/tracker_tools_rel_menu_1"
+                    android:gravity="center_vertical">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/_110sdp"
+                        android:gravity="center"
+                        android:orientation="horizontal">
+
+                        <RelativeLayout
+                            android:layout_width="0dp"
+                            android:layout_height="match_parent"
+                            android:layout_weight="1"
+                            android:gravity="center">
+
+                            <RelativeLayout
+                                android:id="@+id/tracker_tools_rel_bmi"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_centerInParent="true">
+
+                                <RelativeLayout
+                                    android:id="@+id/tracker_tools_rel_img_bmi"
+                                    android:layout_width="@dimen/tools_menu_image_bg_width"
+                                    android:layout_height="@dimen/tools_menu_image_bg_height"
+                                    android:layout_centerHorizontal="true"
+                                    android:background="@drawable/ic_tools_image_back"
+
+                                    android:backgroundTint="#8965C8">
+
+                                    <ImageView
+                                        android:layout_width="@dimen/tools_menu_icon_width"
+                                        android:layout_height="@dimen/tools_menu_icon_height"
+                                        android:layout_centerInParent="true"
+                                        android:src="@drawable/ic_tool_bmi" />
+                                </RelativeLayout>
+
+                                <TextView
+                                    android:id="@+id/tracker_tools_lbl_bmi"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_below="@+id/tracker_tools_rel_img_bmi"
+                                    android:layout_centerHorizontal="true"
+                                    android:layout_marginLeft="@dimen/_5sdp"
+                                    android:layout_marginTop="@dimen/_5sdp"
+                                    android:layout_marginRight="@dimen/_5sdp"
+                                    android:gravity="center"
+                                    android:lineSpacingExtra="@dimen/_2sdp"
+                                    android:text="@string/lbl_bmi"
+                                    android:textColor="@color/menu_text_color"
+                                    android:textSize="@dimen/tools_menu_text_size" />
+                            </RelativeLayout>
+                        </RelativeLayout>
+
+                        <RelativeLayout
+                            android:layout_width="0dp"
+                            android:layout_height="match_parent"
+                            android:layout_weight="1"
+                            android:gravity="center">
+
+                            <RelativeLayout
+                                android:id="@+id/tracker_tools_rel_body_temp"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_centerInParent="true">
+
+                                <RelativeLayout
+                                    android:id="@+id/tracker_tools_rel_img_body_temp"
+                                    android:layout_width="@dimen/tools_menu_image_bg_width"
+                                    android:layout_height="@dimen/tools_menu_image_bg_height"
+                                    android:layout_centerHorizontal="true"
+                                    android:background="@drawable/ic_tools_image_back"
+
+                                    android:backgroundTint="#9CA636">
+
+                                    <ImageView
+                                        android:layout_width="@dimen/tools_menu_icon_width"
+                                        android:layout_height="@dimen/tools_menu_icon_height"
+                                        android:layout_centerInParent="true"
+                                        android:src="@drawable/ic_tool_body_temp" />
+                                </RelativeLayout>
+
+                                <TextView
+                                    android:id="@+id/tracker_tools_lbl_body_temp"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_below="@+id/tracker_tools_rel_img_body_temp"
+                                    android:layout_centerHorizontal="true"
+                                    android:layout_marginLeft="@dimen/_5sdp"
+                                    android:layout_marginTop="@dimen/_5sdp"
+                                    android:layout_marginRight="@dimen/_5sdp"
+                                    android:gravity="center"
+                                    android:lineSpacingExtra="@dimen/_2sdp"
+                                    android:text="@string/lbl_body_temp"
+                                    android:textColor="@color/menu_text_color"
+                                    android:textSize="@dimen/tools_menu_text_size" />
+                            </RelativeLayout>
+                        </RelativeLayout>
+
+                        <RelativeLayout
+                            android:layout_width="0dp"
+                            android:layout_height="match_parent"
+                            android:layout_weight="1"
+                            android:gravity="center">
+
+                            <RelativeLayout
+                                android:id="@+id/tracker_tools_rel_cholesterol"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_centerInParent="true">
+
+                                <RelativeLayout
+                                    android:id="@+id/tracker_tools_rel_img_cholesterol"
+                                    android:layout_width="@dimen/tools_menu_image_bg_width"
+                                    android:layout_height="@dimen/tools_menu_image_bg_height"
+                                    android:layout_centerHorizontal="true"
+                                    android:background="@drawable/ic_tools_image_back"
+
+                                    android:backgroundTint="#E3AA55">
+
+                                    <ImageView
+                                        android:layout_width="@dimen/tools_menu_icon_width"
+                                        android:layout_height="@dimen/tools_menu_icon_height"
+                                        android:layout_centerInParent="true"
+                                        android:src="@drawable/ic_tool_cholesterol" />
+                                </RelativeLayout>
+
+                                <TextView
+                                    android:id="@+id/tracker_tools_lbl_cholesterol"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_below="@+id/tracker_tools_rel_img_cholesterol"
+                                    android:layout_centerHorizontal="true"
+                                    android:layout_marginLeft="@dimen/_5sdp"
+                                    android:layout_marginTop="@dimen/_5sdp"
+                                    android:layout_marginRight="@dimen/_5sdp"
+                                    android:gravity="center"
+                                    android:lineSpacingExtra="@dimen/_2sdp"
+                                    android:text="@string/lbl_cholesterol"
+                                    android:textColor="@color/menu_text_color"
+                                    android:textSize="@dimen/tools_menu_text_size" />
+                            </RelativeLayout>
+                        </RelativeLayout>
+                    </LinearLayout>
+                </RelativeLayout>
+
+                <RelativeLayout
+                    android:id="@+id/tracker_tools_rel_menu_3"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/tracker_tools_rel_menu_2"
+                    android:gravity="center_vertical">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/_110sdp"
+                        android:gravity="center"
+                        android:orientation="horizontal">
+
+                        <RelativeLayout
+                            android:layout_width="0dp"
+                            android:layout_height="match_parent"
+                            android:layout_weight="1"
+                            android:gravity="center">
+
+                            <RelativeLayout
+                                android:id="@+id/tracker_tools_rel_heart_rate"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_centerInParent="true">
+
+                                <RelativeLayout
+                                    android:id="@+id/tracker_tools_rel_img_heart_rate"
+                                    android:layout_width="@dimen/tools_menu_image_bg_width"
+                                    android:layout_height="@dimen/tools_menu_image_bg_height"
+                                    android:layout_centerHorizontal="true"
+                                    android:background="@drawable/ic_tools_image_back"
+
+                                    android:backgroundTint="#EA5B5B">
+
+                                    <ImageView
+                                        android:layout_width="@dimen/tools_menu_icon_width"
+                                        android:layout_height="@dimen/tools_menu_icon_height"
+                                        android:layout_centerInParent="true"
+                                        android:src="@drawable/ic_tool_heart_rate" />
+                                </RelativeLayout>
+
+                                <TextView
+                                    android:id="@+id/tracker_tools_lbl_heart_rate"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_below="@+id/tracker_tools_rel_img_heart_rate"
+                                    android:layout_centerHorizontal="true"
+                                    android:layout_marginLeft="@dimen/_5sdp"
+                                    android:layout_marginTop="@dimen/_5sdp"
+                                    android:layout_marginRight="@dimen/_5sdp"
+                                    android:gravity="center"
+                                    android:lineSpacingExtra="@dimen/_2sdp"
+                                    android:text="@string/lbl_heart_rate"
+                                    android:textColor="@color/menu_text_color"
+                                    android:textSize="@dimen/tools_menu_text_size" />
+                            </RelativeLayout>
+                        </RelativeLayout>
+
+                        <RelativeLayout
+                            android:layout_width="0dp"
+                            android:layout_height="match_parent"
+                            android:layout_weight="1"
+                            android:gravity="center">
+
+                            <RelativeLayout
+                                android:id="@+id/tracker_tools_rel_weight"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_centerInParent="true">
+
+                                <RelativeLayout
+                                    android:id="@+id/tracker_tools_rel_img_weight"
+                                    android:layout_width="@dimen/tools_menu_image_bg_width"
+                                    android:layout_height="@dimen/tools_menu_image_bg_height"
+                                    android:layout_centerHorizontal="true"
+
+                                    android:background="@drawable/ic_tools_image_back"
+                                    android:backgroundTint="#4EA4E8">
+
+                                    <ImageView
+                                        android:layout_width="@dimen/tools_menu_icon_width"
+                                        android:layout_height="@dimen/tools_menu_icon_height"
+                                        android:layout_centerInParent="true"
+                                        android:src="@drawable/ic_tool_weight" />
+                                </RelativeLayout>
+
+                                <TextView
+                                    android:id="@+id/tracker_tools_lbl_weight"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_below="@+id/tracker_tools_rel_img_weight"
+                                    android:layout_centerHorizontal="true"
+                                    android:layout_marginLeft="@dimen/_5sdp"
+                                    android:layout_marginTop="@dimen/_5sdp"
+                                    android:layout_marginRight="@dimen/_5sdp"
+                                    android:gravity="center"
+                                    android:lineSpacingExtra="@dimen/_2sdp"
+                                    android:text="@string/lbl_weight"
+                                    android:textColor="@color/menu_text_color"
+                                    android:textSize="@dimen/tools_menu_text_size" />
+                            </RelativeLayout>
+                        </RelativeLayout>
+
+                        <RelativeLayout
+                            android:layout_width="0dp"
+                            android:layout_height="match_parent"
+                            android:layout_weight="1"
+                            android:gravity="center">
+
+                            <RelativeLayout
+                                android:id="@+id/tracker_tools_rel_medicine"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_centerInParent="true">
+
+                                <RelativeLayout
+                                    android:id="@+id/tracker_tools_rel_img_medicine"
+                                    android:layout_width="@dimen/tools_menu_image_bg_width"
+                                    android:layout_height="@dimen/tools_menu_image_bg_height"
+                                    android:layout_centerHorizontal="true"
+                                    android:background="@drawable/ic_tools_image_back"
+
+                                    android:backgroundTint="#707070">
+
+                                    <ImageView
+                                        android:layout_width="@dimen/tools_menu_icon_width"
+                                        android:layout_height="@dimen/tools_menu_icon_height"
+                                        android:layout_centerInParent="true"
+                                        android:src="@drawable/ic_tool_medicine" />
+                                </RelativeLayout>
+
+                                <TextView
+                                    android:id="@+id/tracker_tools_lbl_medicine"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_below="@+id/tracker_tools_rel_img_medicine"
+                                    android:layout_centerHorizontal="true"
+                                    android:layout_marginLeft="@dimen/_5sdp"
+                                    android:layout_marginTop="@dimen/_5sdp"
+                                    android:layout_marginRight="@dimen/_5sdp"
+                                    android:gravity="center"
+                                    android:lineSpacingExtra="@dimen/_2sdp"
+                                    android:text="@string/lbl_medicine"
+                                    android:textColor="@color/menu_text_color"
+                                    android:textSize="@dimen/tools_menu_text_size" />
+                            </RelativeLayout>
+                        </RelativeLayout>
+                    </LinearLayout>
+                </RelativeLayout>
+            </RelativeLayout>
+        </androidx.cardview.widget.CardView>
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:id="@+id/banner1"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:gravity="center"
+        android:minHeight="50dp">
+
+        <RelativeLayout
+            android:id="@+id/banner"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:layout_gravity="center"
+
+            android:gravity="center" />
+    </RelativeLayout>
+</RelativeLayout>

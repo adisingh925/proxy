@@ -9,10 +9,8 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
-import androidx.core.os.bundleOf
-import androidx.core.view.isVisible
 import androidx.navigation.fragment.findNavController
-import app.android.heartrate.phoneapp.HomeActivity
+import app.android.heartrate.phoneapp.activities.main.HomeActivity
 import app.android.heartrate.phoneapp.R
 import app.android.heartrate.phoneapp.databinding.FragmentLoginBinding
 import app.android.heartrate.phoneapp.model.GetRoleResponse
@@ -24,7 +22,6 @@ import app.android.heartrate.phoneapp.sharedpreferences.SharedPreferences
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
-import java.util.regex.Pattern
 
 
 class LoginFragment : Fragment() {
