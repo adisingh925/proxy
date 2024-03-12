@@ -13,7 +13,7 @@
 
 
     <color name="appcolor">#39B33D</color>
-    <color name="bg_color">#ffffff</color>
+    <color name="bg_color">@color/light_green</color>
     <color name="appthe">#E8E8E8</color>
     <color name="colorError">#D12014</color>
     <color name="colorWarning">#F44438</color>
@@ -236,8 +236,8 @@
     <color name="tool_bar_color_dark">#080a12</color>
     <color name="tool_bar_color_item_press">#cccccc</color>
     <color name="tool_bar_title_color">#222222</color>
-    <color name="tool_bar_title_text_color">#202c52</color>
-    <color name="tools_card_bg_color">#f4f6f8</color>
+    <color name="tool_bar_title_text_color">@color/white</color>
+    <color name="tools_card_bg_color">@color/white</color>
     <color name="tooltip_background_dark">#e6616161</color>
     <color name="tooltip_background_light">#e6ffffff</color>
     <color name="transparent">#00000000</color>

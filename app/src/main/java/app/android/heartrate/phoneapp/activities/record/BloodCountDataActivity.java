@@ -74,7 +74,7 @@ public class BloodCountDataActivity extends AppCompatActivity {
 
     private void SetView() {
         setContentView(R.layout.activity_blood_count_list);
-        
+
         this.mContext = this;
         this.push_animation = AnimationUtils.loadAnimation(this, R.anim.view_push);
         setUpActionBar();
@@ -239,8 +239,8 @@ public class BloodCountDataActivity extends AppCompatActivity {
     public void onResume() {
         super.onResume();
         int selectedItemPosition = this.spinner_profiles.getSelectedItemPosition();
-        this.current_user_id = this.arrayProfileIds[selectedItemPosition];
-        this.current_profile_name = this.arrayProfileNames[selectedItemPosition].trim();
+        this.current_user_id = 1;
+        this.current_profile_name = "RICHARD KIM";
         SetBloodCountDataList();
     }
 

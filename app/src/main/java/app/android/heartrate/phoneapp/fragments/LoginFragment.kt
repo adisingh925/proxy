@@ -97,7 +97,6 @@ class LoginFragment : Fragment() {
                                         if (body != null) {
                                             if (response.isSuccessful) {
                                                 if (body.code == 1) {
-                                                    Log.d("LoginFragment", "role success")
                                                     val profileCheck =
                                                         ApiClient.apiService.checkProfile(
                                                             SharedPreferences.read("token", "")
