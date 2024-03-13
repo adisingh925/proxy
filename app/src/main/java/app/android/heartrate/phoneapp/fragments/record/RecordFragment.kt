@@ -13,6 +13,7 @@ import android.widget.Button
 import android.widget.TextView
 import app.android.heartrate.phoneapp.R
 import app.android.heartrate.phoneapp.activities.record.AddProfileActivity
+import app.android.heartrate.phoneapp.activities.record.TrackerStatisticsActivity
 import app.android.heartrate.phoneapp.activities.record.TrackerToolsActivity
 import app.android.heartrate.phoneapp.databinding.FragmentRecordBinding
 import app.android.heartrate.phoneapp.fragments.base.BaseFragment
@@ -56,6 +57,16 @@ class RecordFragment : BaseFragment() {
             val exist = sqlite.CheckProfileDataExist()
             if (exist) {
                 startActivity(TrackerToolsActivity::class.java)
+            } else {
+                NoProfileDialog()
+            }
+        }
+
+        binding.cvStatistics.setOnClickListener {
+            val sqlite = SQLiteHealthTracker(requireContext()).open()
+            val exist = sqlite.CheckProfileDataExist()
+            if (exist) {
+                startActivity(TrackerStatisticsActivity::class.java)
             } else {
                 NoProfileDialog()
             }

@@ -356,7 +356,7 @@
                         android:layout_toRightOf="@+id/bt_row_img_edit"
                         android:text="@string/lbl_edit"
                         android:textColor="@color/white"
-                        android:textSize="@dimen/_12sdp"/>
+                        android:textSize="@dimen/_12sdp" />
                 </RelativeLayout>
 
                 <RelativeLayout

@@ -1,32 +1,192 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android" xmlns:app="http://schemas.android.com/apk/res-auto" android:background="@drawable/dialog_background" android:fitsSystemWindows="true" android:layout_width="match_parent" android:layout_height="wrap_content">
-    <RelativeLayout android:id="@+id/dialog_duration_rel_main" android:paddingBottom="@dimen/_5sdp" android:layout_width="match_parent" android:layout_height="wrap_content">
-        <RelativeLayout android:id="@+id/dialog_duration_rel_header" android:layout_width="match_parent" android:layout_height="wrap_content" android:layout_marginLeft="@dimen/_8sdp" android:layout_marginTop="@dimen/_5sdp" android:layout_marginRight="@dimen/_8sdp">
-            <TextView android:textSize="@dimen/_14sdp" android:textColor="@color/dialog_header_color" android:id="@+id/dialog_duration_txt_header" android:paddingTop="@dimen/_5sdp" android:paddingBottom="@dimen/_5sdp" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="@string/lbl_custom_duration" android:layout_centerHorizontal="true" />
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@drawable/dialog_background"
+    android:fitsSystemWindows="true">
+
+    <RelativeLayout
+        android:id="@+id/dialog_duration_rel_main"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingBottom="@dimen/_5sdp">
+
+        <RelativeLayout
+            android:id="@+id/dialog_duration_rel_header"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/_8sdp"
+            android:layout_marginTop="@dimen/_5sdp"
+            android:layout_marginRight="@dimen/_8sdp">
+
+            <TextView
+                android:id="@+id/dialog_duration_txt_header"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerHorizontal="true"
+                android:paddingTop="@dimen/_5sdp"
+                android:paddingBottom="@dimen/_5sdp"
+                android:text="@string/lbl_custom_duration"
+                android:textColor="@color/dialog_header_color"
+                android:textSize="@dimen/_14sdp" />
         </RelativeLayout>
-        <RelativeLayout android:id="@+id/dialog_duration_rel_message" android:layout_width="match_parent" android:layout_height="wrap_content" android:layout_marginLeft="@dimen/_8sdp" android:layout_marginTop="@dimen/_10sdp" android:layout_marginRight="@dimen/_8sdp" android:layout_below="@+id/dialog_duration_rel_header">
-            <LinearLayout android:orientation="horizontal" android:id="@+id/dialog_duration_lin_date_duration" android:layout_width="match_parent" android:layout_height="wrap_content" android:layout_marginTop="@dimen/_5sdp">
-                <RelativeLayout android:layout_width="0dp" android:layout_height="wrap_content" android:layout_weight="1">
-                    <androidx.cardview.widget.CardView android:visibility="visible" android:layout_width="match_parent" android:layout_height="@dimen/_50sdp" android:layout_marginTop="@dimen/_5sdp" android:layout_marginRight="@dimen/_3sdp" android:layout_centerVertical="true" app:cardBackgroundColor="@color/white" app:cardCornerRadius="@dimen/_8sdp" app:cardElevation="0dp">
-                        <RelativeLayout android:orientation="vertical" android:id="@+id/dialog_duration_rel_start_date" android:background="@drawable/select_date_rel_selector" android:layout_width="match_parent" android:layout_height="match_parent">
-                            <TextView android:textSize="@dimen/_11sdp" android:textColor="@color/app_label_text_color" android:id="@+id/dialog_duration_lbl_start_date" android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_marginLeft="@dimen/_10sdp" android:layout_marginTop="@dimen/_5sdp" android:layout_marginRight="@dimen/_5sdp" android:text="@string/lbl_start_date" android:singleLine="true" android:textAllCaps="false"/>
-                            <TextView android:textSize="@dimen/app_input_text_size" android:textColor="@color/input_text_color" android:id="@+id/dialog_duration_txt_start_date" android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_marginLeft="@dimen/_10sdp" android:layout_marginTop="@dimen/_5sdp" android:layout_marginRight="@dimen/_10sdp" android:text="@string/lbl_dash" android:singleLine="true" android:layout_below="@+id/dialog_duration_lbl_start_date" android:layout_centerHorizontal="true" />
+
+        <RelativeLayout
+            android:id="@+id/dialog_duration_rel_message"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/dialog_duration_rel_header"
+            android:layout_marginLeft="@dimen/_8sdp"
+            android:layout_marginTop="@dimen/_10sdp"
+            android:layout_marginRight="@dimen/_8sdp">
+
+            <LinearLayout
+                android:id="@+id/dialog_duration_lin_date_duration"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/_5sdp"
+                android:orientation="horizontal">
+
+                <RelativeLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1">
+
+                    <androidx.cardview.widget.CardView
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/_50sdp"
+                        android:layout_centerVertical="true"
+                        android:layout_marginTop="@dimen/_5sdp"
+                        android:layout_marginRight="@dimen/_3sdp"
+                        android:visibility="visible"
+                        app:cardBackgroundColor="@color/white"
+                        app:cardCornerRadius="@dimen/_8sdp"
+                        app:cardElevation="0dp">
+
+                        <RelativeLayout
+                            android:id="@+id/dialog_duration_rel_start_date"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:background="@drawable/select_date_rel_selector"
+                            android:orientation="vertical">
+
+                            <TextView
+                                android:id="@+id/dialog_duration_lbl_start_date"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginLeft="@dimen/_10sdp"
+                                android:layout_marginTop="@dimen/_5sdp"
+                                android:layout_marginRight="@dimen/_5sdp"
+                                android:singleLine="true"
+                                android:text="@string/lbl_start_date"
+                                android:textAllCaps="false"
+                                android:textColor="@color/app_label_text_color"
+                                android:textSize="@dimen/_11sdp" />
+
+                            <TextView
+                                android:id="@+id/dialog_duration_txt_start_date"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_below="@+id/dialog_duration_lbl_start_date"
+                                android:layout_centerHorizontal="true"
+                                android:layout_marginLeft="@dimen/_10sdp"
+                                android:layout_marginTop="@dimen/_5sdp"
+                                android:layout_marginRight="@dimen/_10sdp"
+                                android:singleLine="true"
+                                android:text="@string/lbl_dash"
+                                android:textColor="@color/input_text_color"
+                                android:textSize="@dimen/app_input_text_size" />
                         </RelativeLayout>
                     </androidx.cardview.widget.CardView>
                 </RelativeLayout>
-                <RelativeLayout android:layout_width="0dp" android:layout_height="wrap_content" android:layout_weight="1">
-                    <androidx.cardview.widget.CardView android:visibility="visible" android:layout_width="match_parent" android:layout_height="@dimen/_50sdp" android:layout_marginLeft="@dimen/_3sdp" android:layout_marginTop="@dimen/_5sdp" android:layout_centerVertical="true" app:cardBackgroundColor="@color/white" app:cardCornerRadius="@dimen/_8sdp" app:cardElevation="0dp">
-                        <RelativeLayout android:orientation="vertical" android:id="@+id/dialog_duration_rel_end_date" android:background="@drawable/select_date_rel_selector" android:layout_width="match_parent" android:layout_height="match_parent">
-                            <TextView android:textSize="@dimen/_11sdp" android:textColor="@color/app_label_text_color" android:id="@+id/dialog_duration_lbl_end_date" android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_marginLeft="@dimen/_10sdp" android:layout_marginTop="@dimen/_5sdp" android:layout_marginRight="@dimen/_5sdp" android:text="@string/lbl_end_date" android:singleLine="true" android:textAllCaps="false"/>
-                            <TextView android:textSize="@dimen/app_input_text_size" android:textColor="@color/input_text_color" android:id="@+id/dialog_duration_txt_end_date" android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_marginLeft="@dimen/_10sdp" android:layout_marginTop="@dimen/_5sdp" android:layout_marginRight="@dimen/_10sdp" android:text="@string/lbl_dash" android:singleLine="true" android:layout_below="@+id/dialog_duration_lbl_end_date" android:layout_centerHorizontal="true" />
+
+                <RelativeLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1">
+
+                    <androidx.cardview.widget.CardView
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/_50sdp"
+                        android:layout_centerVertical="true"
+                        android:layout_marginLeft="@dimen/_3sdp"
+                        android:layout_marginTop="@dimen/_5sdp"
+                        android:visibility="visible"
+                        app:cardBackgroundColor="@color/white"
+                        app:cardCornerRadius="@dimen/_8sdp"
+                        app:cardElevation="0dp">
+
+                        <RelativeLayout
+                            android:id="@+id/dialog_duration_rel_end_date"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:background="@drawable/select_date_rel_selector"
+                            android:orientation="vertical">
+
+                            <TextView
+                                android:id="@+id/dialog_duration_lbl_end_date"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginLeft="@dimen/_10sdp"
+                                android:layout_marginTop="@dimen/_5sdp"
+                                android:layout_marginRight="@dimen/_5sdp"
+                                android:singleLine="true"
+                                android:text="@string/lbl_end_date"
+                                android:textAllCaps="false"
+                                android:textColor="@color/app_label_text_color"
+                                android:textSize="@dimen/_11sdp" />
+
+                            <TextView
+                                android:id="@+id/dialog_duration_txt_end_date"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_below="@+id/dialog_duration_lbl_end_date"
+                                android:layout_centerHorizontal="true"
+                                android:layout_marginLeft="@dimen/_10sdp"
+                                android:layout_marginTop="@dimen/_5sdp"
+                                android:layout_marginRight="@dimen/_10sdp"
+                                android:singleLine="true"
+                                android:text="@string/lbl_dash"
+                                android:textColor="@color/input_text_color"
+                                android:textSize="@dimen/app_input_text_size" />
                         </RelativeLayout>
                     </androidx.cardview.widget.CardView>
                 </RelativeLayout>
             </LinearLayout>
         </RelativeLayout>
-        <RelativeLayout android:gravity="center" android:id="@+id/dialog_duration_rel_buttons" android:layout_width="match_parent" android:layout_height="@dimen/_35sdp" android:layout_marginTop="@dimen/_10sdp" android:layout_below="@+id/dialog_duration_rel_message">
-            <Button android:textSize="@dimen/_12sdp" android:textColor="@color/white" android:gravity="center" android:id="@+id/dialog_duration_btn_continue" android:background="@drawable/menu_button_selector" android:layout_width="@dimen/_80sdp" android:layout_height="@dimen/_30sdp" android:text="@string/lbl_done" android:textAllCaps="false" />
-            <Button android:textSize="@dimen/_12sdp" android:textColor="@color/white" android:gravity="center" android:id="@+id/dialog_duration_btn_cancel" android:background="@drawable/menu_button_selector" android:layout_width="@dimen/_80sdp" android:layout_height="@dimen/_30sdp" android:layout_marginLeft="@dimen/_10sdp" android:text="@string/lbl_cancel" android:layout_toRightOf="@+id/dialog_duration_btn_continue" android:textAllCaps="false" />
+
+        <RelativeLayout
+            android:id="@+id/dialog_duration_rel_buttons"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/_35sdp"
+            android:layout_below="@+id/dialog_duration_rel_message"
+            android:layout_marginTop="@dimen/_10sdp"
+            android:gravity="center">
+
+            <Button
+                android:id="@+id/dialog_duration_btn_continue"
+                android:layout_width="@dimen/_80sdp"
+                android:layout_height="@dimen/_30sdp"
+                android:background="@drawable/menu_button_selector"
+                android:gravity="center"
+                android:text="@string/lbl_done"
+                android:textAllCaps="false"
+                android:textColor="@color/white"
+                android:textSize="@dimen/_12sdp" />
+
+            <Button
+                android:id="@+id/dialog_duration_btn_cancel"
+                android:layout_width="@dimen/_80sdp"
+                android:layout_height="@dimen/_30sdp"
+                android:layout_marginLeft="@dimen/_10sdp"
+                android:layout_toRightOf="@+id/dialog_duration_btn_continue"
+                android:background="@drawable/menu_button_selector"
+                android:gravity="center"
+                android:text="@string/lbl_cancel"
+                android:textAllCaps="false"
+                android:textColor="@color/white"
+                android:textSize="@dimen/_12sdp" />
         </RelativeLayout>
     </RelativeLayout>
 </RelativeLayout>

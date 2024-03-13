@@ -36,6 +36,6 @@
             android:lines="1"
             android:text="@string/app_header_name_2"
             android:textColor="@color/white"
-            android:textSize="@dimen/_16sdp"/>
+            android:textSize="@dimen/_16sdp" />
     </RelativeLayout>
 </androidx.appcompat.widget.Toolbar>

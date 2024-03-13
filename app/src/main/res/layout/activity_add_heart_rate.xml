@@ -604,11 +604,12 @@
 
     <RelativeLayout
         android:id="@+id/banner1"
-        android:minHeight="50dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
-        android:gravity="center">
+        android:gravity="center"
+        android:minHeight="50dp">
+
         <RelativeLayout
             android:id="@+id/banner"
             android:layout_width="match_parent"

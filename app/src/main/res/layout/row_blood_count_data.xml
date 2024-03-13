@@ -483,7 +483,7 @@
                         android:layout_height="@dimen/_15sdp"
                         android:layout_centerVertical="true"
                         android:src="@drawable/ic_row_delete"
-                        app:tint="@color/row_remove_text_color"/>
+                        app:tint="@color/row_remove_text_color" />
 
                     <TextView
                         android:id="@+id/row_bc_lbl_delete"

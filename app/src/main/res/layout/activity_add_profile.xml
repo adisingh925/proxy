@@ -7,7 +7,7 @@
 
     <include
         android:id="@+id/toolbar_actionbar"
-        layout="@layout/layout_toolbar_custom"/>
+        layout="@layout/layout_toolbar_custom" />
 
     <RelativeLayout
         android:layout_width="match_parent"
@@ -403,7 +403,7 @@
             android:layout_height="wrap_content"
             android:layout_centerHorizontal="true"
             android:layout_gravity="center"
-            android:gravity="center"/>
+            android:gravity="center" />
     </RelativeLayout>
 
 </RelativeLayout>

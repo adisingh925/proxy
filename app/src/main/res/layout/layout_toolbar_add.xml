@@ -39,9 +39,9 @@
                         android:id="@+id/toolbar_img_back"
                         android:layout_width="@dimen/_12sdp"
                         android:layout_height="@dimen/_12sdp"
-                        app:tint="@color/white"
                         android:layout_centerInParent="true"
-                        android:src="@drawable/ic_tool_back" />
+                        android:src="@drawable/ic_tool_back"
+                        app:tint="@color/white" />
                 </RelativeLayout>
 
                 <RelativeLayout
