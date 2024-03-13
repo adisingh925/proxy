@@ -121,6 +121,7 @@ public class BloodPressureDataActivity extends AppCompatActivity {
     private void SetProfileSpinner() {
         this.array_profiles.clear();
         ArrayList<UserProfileData> arrayList = (ArrayList) this.SQLite_health_tracker.GetUserProfileData();
+        Log.e(" list "," ==> "+arrayList.size());
         this.array_profiles = arrayList;
         if (arrayList.size() > 0) {
             this.arrayProfileIds = new int[this.array_profiles.size()];

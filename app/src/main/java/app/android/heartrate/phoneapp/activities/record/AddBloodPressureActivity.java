@@ -69,7 +69,7 @@ public class AddBloodPressureActivity extends AppCompatActivity {
     String pulse_rate_string = "";
     int pulse_rate_value = 0;
     Animation push_animation;
-  
+
     RelativeLayout rel_select_date;
     RelativeLayout rel_select_time;
     private int save_entry_day;
@@ -93,7 +93,7 @@ public class AddBloodPressureActivity extends AppCompatActivity {
 
 
     @Override
-    
+
     public void onCreate(Bundle bundle) {
         super.onCreate(bundle);
         SetView();
@@ -106,7 +106,7 @@ public class AddBloodPressureActivity extends AppCompatActivity {
 
     private void SetView() {
         setContentView(R.layout.activity_add_blood_pressure);
-        
+
         this.mContext = this;
         activity_add_blood_pressure = this;
         this.push_animation = AnimationUtils.loadAnimation(this, R.anim.view_push);
@@ -136,7 +136,7 @@ public class AddBloodPressureActivity extends AppCompatActivity {
             SetBloodPressureData();
         }
         this.rel_select_date.setOnClickListener(new View.OnClickListener() {
-            
+
 
             public void onClick(View view) {
                 AddBloodPressureActivity.this.hideSoftKeyboard();
@@ -145,7 +145,7 @@ public class AddBloodPressureActivity extends AppCompatActivity {
                 AddBloodPressureActivity.this.save_entry_month = instance.get(2);
                 AddBloodPressureActivity.this.save_entry_day = instance.get(5);
                 new DatePickerDialog(AddBloodPressureActivity.this, R.style.DialogTheme, new DatePickerDialog.OnDateSetListener() {
-                    
+
 
                     public void onDateSet(DatePicker datePicker, int i, int i2, int i3) {
                         try {
@@ -158,14 +158,14 @@ public class AddBloodPressureActivity extends AppCompatActivity {
             }
         });
         this.rel_select_time.setOnClickListener(new View.OnClickListener() {
-            
+
 
             public void onClick(View view) {
                 Calendar instance = Calendar.getInstance();
                 AddBloodPressureActivity.this.save_entry_hour = instance.get(11);
                 AddBloodPressureActivity.this.save_entry_minute = instance.get(12);
                 new TimePickerDialog(AddBloodPressureActivity.this, R.style.DialogTheme, new TimePickerDialog.OnTimeSetListener() {
-                    
+
 
                     public void onTimeSet(TimePicker timePicker, int i, int i2) {
                         try {
@@ -178,7 +178,7 @@ public class AddBloodPressureActivity extends AppCompatActivity {
             }
         });
         this.et_systolic_level.addTextChangedListener(new TextWatcher() {
-            
+
 
             public void beforeTextChanged(CharSequence charSequence, int i, int i2, int i3) {
             }
@@ -198,7 +198,7 @@ public class AddBloodPressureActivity extends AppCompatActivity {
             }
         });
         this.et_diastolic_level.addTextChangedListener(new TextWatcher() {
-            
+
 
             public void beforeTextChanged(CharSequence charSequence, int i, int i2, int i3) {
             }
@@ -235,13 +235,13 @@ public class AddBloodPressureActivity extends AppCompatActivity {
             this.spinner_profiles.setAdapter(spinnerProfileAdapter);
         }
         this.spinner_profiles.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-            
 
-            @Override 
+
+            @Override
             public void onNothingSelected(AdapterView<?> adapterView) {
             }
 
-            @Override 
+            @Override
             public void onItemSelected(AdapterView<?> adapterView, View view, int i, long j) {
                 int i2 = AddBloodPressureActivity.this.arrayProfileIds[i];
                 String trim = AddBloodPressureActivity.this.arrayProfileNames[i].trim();
@@ -299,7 +299,6 @@ public class AddBloodPressureActivity extends AppCompatActivity {
         EUGeneralClass.ShowErrorToast(this, "Something went wrong!");
     }
 
- 
 
     private void SaveProcess() {
         try {
@@ -341,7 +340,8 @@ public class AddBloodPressureActivity extends AppCompatActivity {
                 bloodPressureData.month = this.month;
                 bloodPressureData.year = this.year;
                 bloodPressureData.hour = this.hour;
-                this.SQLite_health_tracker.InsertBloodPressureData(bloodPressureData);
+                Long insert = SQLite_health_tracker.InsertBloodPressureData(bloodPressureData);
+                Log.e(" insert ", " ===> " + insert);
                 EUGeneralClass.ShowSuccessToast(this, AppConstants.data_saved_messages);
                 onBackPressed();
                 return;
@@ -449,14 +449,14 @@ public class AddBloodPressureActivity extends AppCompatActivity {
         ((TextView) findViewById(R.id.toolbar_txt_title_1)).setText(getResources().getString(R.string.lbl_header_add));
         ((TextView) findViewById(R.id.toolbar_txt_title_2)).setText(getResources().getString(R.string.lbl_header_blood_pressure));
         findViewById(R.id.toolbar_rel_save).setOnClickListener(new View.OnClickListener() {
-            
+
 
             public void onClick(View view) {
                 AddBloodPressureActivity.this.SaveProcess();
             }
         });
         findViewById(R.id.toolbar_rel_back).setOnClickListener(new View.OnClickListener() {
-            
+
 
             public void onClick(View view) {
                 AddBloodPressureActivity.this.onBackPressed();
@@ -477,15 +477,11 @@ public class AddBloodPressureActivity extends AppCompatActivity {
     }
 
 
-    @Override 
+    @Override
     public void onResume() {
         super.onResume();
 
     }
-
-
-
-
 
 
     @Override
@@ -495,7 +491,7 @@ public class AddBloodPressureActivity extends AppCompatActivity {
     }
 
     private void BackScreen() {
-        
+
         finish();
         AppConstants.overridePendingTransitionExit(this);
     }

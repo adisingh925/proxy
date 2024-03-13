@@ -15,6 +15,7 @@ import androidx.fragment.app.Fragment
 import app.android.heartrate.phoneapp.R
 import app.android.heartrate.phoneapp.activities.record.AddMedicinesActivity
 import app.android.heartrate.phoneapp.activities.record.AddProfileActivity
+import app.android.heartrate.phoneapp.activities.record.MedicineDataActivity
 import app.android.heartrate.phoneapp.databinding.FragmentMedicationsBinding
 import app.android.heartrate.phoneapp.databinding.FragmentWellnessBinding
 import app.android.heartrate.phoneapp.fragments.base.BaseFragment
@@ -52,7 +53,7 @@ class MedicationFragment : BaseFragment() {
             val sqlite = SQLiteHealthTracker(requireContext()).open()
             val exist = sqlite.CheckProfileDataExist()
             if (exist) {
-                startActivity(AddMedicinesActivity::class.java)
+                startActivity(MedicineDataActivity::class.java)
             } else {
                 NoProfileDialog()
             }

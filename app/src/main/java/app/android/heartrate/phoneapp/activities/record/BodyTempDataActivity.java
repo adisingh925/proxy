@@ -12,8 +12,6 @@ import android.os.Message;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.animation.Animation;
-import android.view.animation.AnimationUtils;
 import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.Spinner;
@@ -96,7 +94,6 @@ public class BodyTempDataActivity extends AppCompatActivity {
     boolean is_user_interact = false;
     TextView lbl_no_data;
     LottieAnimationView lottie_circular_loading;
-    Animation push_animation;
     RecyclerView recycler_temp_data;
 
     SpinnerProfileAdapter spinner_profile_adapter;
@@ -119,7 +116,6 @@ public class BodyTempDataActivity extends AppCompatActivity {
 
         body_temp_list_activity = this;
         setUpActionBar();
-        this.push_animation = AnimationUtils.loadAnimation(this, R.anim.view_push);
         SQLiteHealthTracker sQLiteHealthTracker = new SQLiteHealthTracker(this);
         this.SQLite_health_tracker = sQLiteHealthTracker;
         sQLiteHealthTracker.openToWrite();

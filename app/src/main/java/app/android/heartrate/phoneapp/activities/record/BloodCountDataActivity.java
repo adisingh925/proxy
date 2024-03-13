@@ -212,11 +212,7 @@ public class BloodCountDataActivity extends AppCompatActivity {
                 BloodCountDataActivity.this.AddBloodCountScreen();
             }
         });
-        findViewById(R.id.toolbar_rel_back).setOnClickListener(new View.OnClickListener() {
-            public void onClick(View view) {
-                BloodCountDataActivity.this.onBackPressed();
-            }
-        });
+        findViewById(R.id.toolbar_rel_back).setOnClickListener(view -> BloodCountDataActivity.this.onBackPressed());
         setSupportActionBar(findViewById(R.id.toolbar_actionbar));
         ActionBar supportActionBar = getSupportActionBar();
         supportActionBar.setDisplayShowTitleEnabled(false);
@@ -239,8 +235,8 @@ public class BloodCountDataActivity extends AppCompatActivity {
     public void onResume() {
         super.onResume();
         int selectedItemPosition = this.spinner_profiles.getSelectedItemPosition();
-        this.current_user_id = 1;
-        this.current_profile_name = "RICHARD KIM";
+        this.current_user_id = this.arrayProfileIds[selectedItemPosition];
+        this.current_profile_name = this.arrayProfileNames[selectedItemPosition].trim();
         SetBloodCountDataList();
     }
 
