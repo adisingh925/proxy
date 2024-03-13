@@ -15,7 +15,7 @@ class EmergencyContactFragment : BaseFragment() {
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         binding = FragmentSettingEmergencyContactBinding.inflate(layoutInflater)
         return binding.root
     }

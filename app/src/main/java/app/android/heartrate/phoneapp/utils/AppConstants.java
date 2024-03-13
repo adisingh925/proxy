@@ -28,15 +28,15 @@ import app.android.heartrate.phoneapp.model.classes.WeightData;
 
 public class AppConstants {
     public static final String CROP_FOLDER_NAME = "CropImages";
+    public static final String MY_FOLDER_NAME = "HealthTracker";
+    public static final String PROFILE_FOLDER_NAME = "UserProfile";
     public static String FEVER = "Fever";
     public static String HEALTH_TRACKER_DB_NAME = "easy_health_tracker.db";
     public static String HEIGHT_CM = "cm";
     public static String HEIGHT_FEET = "feet";
     public static String HIGH_FEVER = "High Fever";
     public static String HYPOTHERMIA = "Hypothermia";
-    public static final String MY_FOLDER_NAME = "HealthTracker";
     public static String NORMAL = "Normal";
-    public static final String PROFILE_FOLDER_NAME = "UserProfile";
     public static String WATER_REMINDER_DB_NAME = "water_reminder.db";
     public static String age_unit_year = "year";
     public static String age_unit_years = "years";

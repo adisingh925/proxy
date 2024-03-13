@@ -41,9 +41,7 @@ public class TrackerToolsActivity extends AppCompatActivity {
         super.onCreate(bundle);
         SetView();
 
-        AdAdmob adAdmob = new AdAdmob(this);
-        adAdmob.FullscreenAd(this);
-        adAdmob.BannerAd(findViewById(R.id.banner), this);
+
         AppConstants.overridePendingTransitionEnter(this);
     }
 

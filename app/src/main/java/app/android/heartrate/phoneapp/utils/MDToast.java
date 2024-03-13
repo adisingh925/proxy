@@ -16,12 +16,12 @@ import app.android.heartrate.phoneapp.R;
 
 
 public class MDToast extends Toast {
-    public static int LENGTH_LONG = 1;
-    public static int LENGTH_SHORT = 0;
     public static final int TYPE_ERROR = 3;
     public static final int TYPE_INFO = 0;
     public static final int TYPE_SUCCESS = 1;
     public static final int TYPE_WARNING = 2;
+    public static int LENGTH_LONG = 1;
+    public static int LENGTH_SHORT = 0;
     private final Context mContext;
     private int mType;
     private View mView;
@@ -118,11 +118,11 @@ public class MDToast extends Toast {
         throw new RuntimeException("This Toast was not created with Toast.makeText()");
     }
 
-    public void setType(int i) {
-        this.mType = i;
-    }
-
     public int getType() {
         return this.mType;
+    }
+
+    public void setType(int i) {
+        this.mType = i;
     }
 }

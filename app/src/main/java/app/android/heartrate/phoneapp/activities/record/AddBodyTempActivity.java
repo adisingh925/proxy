@@ -26,6 +26,12 @@ import android.widget.TimePicker;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.ItemTouchHelper;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
+
 import app.android.heartrate.phoneapp.AdAdmob;
 import app.android.heartrate.phoneapp.R;
 import app.android.heartrate.phoneapp.adapters.SpinnerProfileAdapter;
@@ -36,32 +42,20 @@ import app.android.heartrate.phoneapp.utils.AppConstants;
 import app.android.heartrate.phoneapp.utils.EUGeneralClass;
 import app.android.heartrate.phoneapp.utils.StoredPreferencesValue;
 
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.Date;
-
 public class AddBodyTempActivity extends AppCompatActivity {
     SQLiteHealthTracker SQLite_health_tracker;
     int[] arrayProfileIds;
     String[] arrayProfileNames;
-    private String[] array_celsius_range;
-    private String[] array_fahrenheit_range;
     ArrayList<UserProfileData> array_profiles = new ArrayList<>();
-    private String[] array_pulse_range;
     float cel_max_value = 42.0f;
     float cel_min_value = 33.0f;
     float cel_value = 37.0f;
-    private int celsiusIndex = 0;
-    private String current_date_time = "";
     String current_minute = "";
     String date_time = "";
     int day;
     float fah_max_value = 108.0f;
     float fah_min_value = 91.0f;
     float fah_value = 0.0f;
-    private int fahrenheitIndex = 0;
     int hour;
     ImageView img_info;
     TextView lbl_seek_celsius_max;
@@ -72,20 +66,13 @@ public class AddBodyTempActivity extends AppCompatActivity {
     TextView lbl_seek_pulse_min;
     Context mContext;
     int month;
-    private int pulseIndex = 0;
     float pulse_max_value = 250.0f;
     float pulse_min_value = 1.0f;
     int pulse_value = 72;
     Animation push_animation;
-
     RelativeLayout rel_fever_status;
     RelativeLayout rel_select_date;
     RelativeLayout rel_select_time;
-    private int save_entry_day;
-    private int save_entry_hour;
-    private int save_entry_minute;
-    private int save_entry_month;
-    private int save_entry_year;
     TextView save_txt_date;
     TextView save_txt_time;
     SeekBar seek_celsius;
@@ -101,16 +88,25 @@ public class AddBodyTempActivity extends AppCompatActivity {
     TextView txt_seek_fahrenheit_progress;
     TextView txt_seek_pulse_progress;
     int year;
-
+    private String[] array_celsius_range;
+    private String[] array_fahrenheit_range;
+    private String[] array_pulse_range;
+    private int celsiusIndex = 0;
+    private String current_date_time = "";
+    private int fahrenheitIndex = 0;
+    private int pulseIndex = 0;
+    private int save_entry_day;
+    private int save_entry_hour;
+    private int save_entry_minute;
+    private int save_entry_month;
+    private int save_entry_year;
 
     @Override
     public void onCreate(Bundle bundle) {
         super.onCreate(bundle);
         SetView();
 
-        AdAdmob adAdmob = new AdAdmob(this);
-        adAdmob.FullscreenAd(this);
-        adAdmob.BannerAd(findViewById(R.id.banner), this);
+
         AppConstants.overridePendingTransitionEnter(this);
     }
 

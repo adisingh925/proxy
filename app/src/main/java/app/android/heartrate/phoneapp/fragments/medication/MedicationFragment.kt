@@ -11,15 +11,11 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
 import android.widget.TextView
-import androidx.fragment.app.Fragment
 import app.android.heartrate.phoneapp.R
-import app.android.heartrate.phoneapp.activities.record.AddMedicinesActivity
 import app.android.heartrate.phoneapp.activities.record.AddProfileActivity
 import app.android.heartrate.phoneapp.activities.record.MedicineDataActivity
 import app.android.heartrate.phoneapp.databinding.FragmentMedicationsBinding
-import app.android.heartrate.phoneapp.databinding.FragmentWellnessBinding
 import app.android.heartrate.phoneapp.fragments.base.BaseFragment
-import app.android.heartrate.phoneapp.fragments.medication.add.AddMedicationActivity
 import app.android.heartrate.phoneapp.sqlite.SQLiteHealthTracker
 import app.android.heartrate.phoneapp.utils.AppConstants
 import com.gun0912.tedpermission.PermissionListener
@@ -33,7 +29,7 @@ class MedicationFragment : BaseFragment() {
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         binding = FragmentMedicationsBinding.inflate(layoutInflater)
         return binding.root
     }

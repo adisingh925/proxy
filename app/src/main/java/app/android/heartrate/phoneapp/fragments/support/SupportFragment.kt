@@ -5,11 +5,8 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.fragment.app.Fragment
 import app.android.heartrate.phoneapp.databinding.FragmentSupportBinding
-import app.android.heartrate.phoneapp.databinding.FragmentWellnessBinding
 import app.android.heartrate.phoneapp.fragments.base.BaseFragment
-import app.android.heartrate.phoneapp.fragments.medication.add.AddMedicationActivity
 import app.android.heartrate.phoneapp.fragments.support.about_us.AboutUsActivity
 import app.android.heartrate.phoneapp.fragments.support.faq.FqaActivity
 import app.android.heartrate.phoneapp.fragments.support.feedback.FeedbackActivity
@@ -26,7 +23,7 @@ class SupportFragment : BaseFragment() {
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         binding = FragmentSupportBinding.inflate(layoutInflater)
         return binding.root
     }

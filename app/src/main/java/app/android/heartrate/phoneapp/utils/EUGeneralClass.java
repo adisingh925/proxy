@@ -16,6 +16,7 @@ import android.text.format.DateFormat;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
+
 import java.io.PrintStream;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
@@ -36,9 +37,9 @@ public class EUGeneralClass {
 
     public static SimpleDateFormat f283df;
     public static boolean is_online;
-    private static Context mContext;
     public static SimpleDateFormat sdf;
     public static SimpleDateFormat sdt;
+    private static Context mContext;
 
     public EUGeneralClass(Context context) {
         mContext = context;

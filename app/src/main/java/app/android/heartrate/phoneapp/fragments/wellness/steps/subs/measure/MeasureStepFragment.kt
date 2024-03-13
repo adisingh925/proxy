@@ -7,7 +7,6 @@ import android.view.ViewGroup
 import androidx.navigation.fragment.findNavController
 import app.android.heartrate.phoneapp.R
 import app.android.heartrate.phoneapp.databinding.FragmentMeasureStepsBinding
-import app.android.heartrate.phoneapp.databinding.FragmentMeasureStressBinding
 import app.android.heartrate.phoneapp.fragments.base.BaseFragment
 import app.android.heartrate.phoneapp.utils.CommonUtils
 
@@ -18,7 +17,7 @@ class MeasureStepFragment : BaseFragment() {
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         binding = FragmentMeasureStepsBinding.inflate(layoutInflater)
         return binding.root
     }

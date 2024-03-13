@@ -16,7 +16,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import app.android.heartrate.phoneapp.R;
-
 import app.android.heartrate.phoneapp.model.classes.UserProfileData;
 import de.hdodenhof.circleimageview.CircleImageView;
 
@@ -25,13 +24,13 @@ public abstract class SelectProfilesAdapter extends RecyclerView.Adapter<SelectP
     private final Context mContext;
     Animation push_animation;
 
-    public abstract void onSelectProfileAdapterClickItem(int i, View view);
-
     public SelectProfilesAdapter(Context context, ArrayList<UserProfileData> arrayList) {
         this.array_data = arrayList;
         this.mContext = context;
         this.push_animation = AnimationUtils.loadAnimation(context, R.anim.view_push);
     }
+
+    public abstract void onSelectProfileAdapterClickItem(int i, View view);
 
     @Override
     public ProfileViewHolder onCreateViewHolder(ViewGroup viewGroup, int i) {

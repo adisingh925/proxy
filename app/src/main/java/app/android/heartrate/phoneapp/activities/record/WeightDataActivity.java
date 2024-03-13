@@ -22,6 +22,8 @@ import androidx.recyclerview.widget.DefaultItemAnimator;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import java.util.ArrayList;
+
 import app.android.heartrate.phoneapp.AdAdmob;
 import app.android.heartrate.phoneapp.R;
 import app.android.heartrate.phoneapp.adapters.SpinnerProfileAdapter;
@@ -31,8 +33,6 @@ import app.android.heartrate.phoneapp.model.classes.WeightData;
 import app.android.heartrate.phoneapp.sqlite.SQLiteHealthTracker;
 import app.android.heartrate.phoneapp.utils.AppConstants;
 import app.android.heartrate.phoneapp.utils.EUGeneralClass;
-
-import java.util.ArrayList;
 
 public class WeightDataActivity extends AppCompatActivity {
     SQLiteHealthTracker SQLite_health_tracker;
@@ -61,9 +61,7 @@ public class WeightDataActivity extends AppCompatActivity {
         super.onCreate(bundle);
         SetView();
 
-        AdAdmob adAdmob = new AdAdmob(this);
-        adAdmob.FullscreenAd(this);
-        adAdmob.BannerAd(findViewById(R.id.banner), this);
+
         AppConstants.overridePendingTransitionEnter(this);
     }
 

@@ -31,11 +31,11 @@ class WellnessFragment : BaseFragment() {
         init()
     }
 
-    private fun init(){
+    private fun init() {
         handleClicks()
     }
 
-    private fun handleClicks(){
+    private fun handleClicks() {
         binding.cvFitness.setOnClickListener {
             startActivity(FitnessActivity::class.java)
         }
@@ -53,7 +53,7 @@ class WellnessFragment : BaseFragment() {
         }
     }
 
-    private fun startActivity(cls: Class<*>){
+    private fun startActivity(cls: Class<*>) {
         startActivity(Intent(requireContext(), cls))
     }
 }

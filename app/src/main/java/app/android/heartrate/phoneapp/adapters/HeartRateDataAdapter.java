@@ -14,21 +14,19 @@ import android.widget.TextView;
 
 import androidx.recyclerview.widget.RecyclerView;
 
-import app.android.heartrate.phoneapp.model.classes.HeartRateData;
-import app.android.heartrate.phoneapp.utils.AppConstants;
-import app.android.heartrate.phoneapp.R;
-import app.android.heartrate.phoneapp.sqlite.SQLiteHealthTracker;
-
 import java.util.ArrayList;
 import java.util.List;
 
+import app.android.heartrate.phoneapp.R;
+import app.android.heartrate.phoneapp.model.classes.HeartRateData;
+import app.android.heartrate.phoneapp.sqlite.SQLiteHealthTracker;
+import app.android.heartrate.phoneapp.utils.AppConstants;
+
 public abstract class HeartRateDataAdapter extends RecyclerView.Adapter<HeartRateDataAdapter.HeartRateViewHolder> {
-    SQLiteHealthTracker SQLite_health_tracker;
     private final List<HeartRateData> array_data;
     private final Context mContext;
+    SQLiteHealthTracker SQLite_health_tracker;
     Animation push_animation;
-
-    public abstract void onHeartRateAdapterClickItem(int i, View view);
 
     public HeartRateDataAdapter(Context context, ArrayList<HeartRateData> arrayList) {
         this.array_data = arrayList;
@@ -38,6 +36,8 @@ public abstract class HeartRateDataAdapter extends RecyclerView.Adapter<HeartRat
         this.SQLite_health_tracker = sQLiteHealthTracker;
         sQLiteHealthTracker.openToWrite();
     }
+
+    public abstract void onHeartRateAdapterClickItem(int i, View view);
 
     @Override
     public HeartRateViewHolder onCreateViewHolder(ViewGroup viewGroup, int i) {

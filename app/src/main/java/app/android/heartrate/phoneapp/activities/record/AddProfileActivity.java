@@ -59,14 +59,13 @@ public class AddProfileActivity extends AppCompatActivity {
     public static Activity activity_add_profile;
     public static Bitmap selected_user_image;
     private final int IMAGE_COMPRESSION = 80;
-    SQLiteHealthTracker SQLite_health_tracker;
     private final String TAG = "AddProfileActivity :";
-
-    ArrayAdapter<String> adapter_spinner_gender;
-    ArrayList<String> arrayListGender = new ArrayList<>(Arrays.asList(AppConstants.hr_gender_male, AppConstants.hr_gender_female, AppConstants.hr_gender_child));
-
     private final int bitmapMaxHeight = 200;
     private final int bitmapMaxWidth = 200;
+    private final boolean setBitmapMaxWidthHeight = false;
+    SQLiteHealthTracker SQLite_health_tracker;
+    ArrayAdapter<String> adapter_spinner_gender;
+    ArrayList<String> arrayListGender = new ArrayList<>(Arrays.asList(AppConstants.hr_gender_male, AppConstants.hr_gender_female, AppConstants.hr_gender_child));
     File cropDirectory;
     String crop_save_location = "";
     String currentPhotoPath = "";
@@ -77,21 +76,15 @@ public class AddProfileActivity extends AppCompatActivity {
     String height_feet = "";
     String imagePath = "";
     CircleImageView img_profile_photo;
-   
     LinearLayout lin_select_date;
     Context mContext;
     Animation push_animation;
-
     RelativeLayout rel_get_height;
     RelativeLayout rel_pick_photo;
     RelativeLayout rel_save;
     File saveDirectory;
-    private int save_entry_day;
-    private int save_entry_month;
-    private int save_entry_year;
     String save_location = "";
     String selected_unit = "cm";
-    private final boolean setBitmapMaxWidthHeight = false;
     Spinner spinner_gender;
     TextView txt_birth_date;
     TextView txt_btn_save;
@@ -99,6 +92,9 @@ public class AddProfileActivity extends AppCompatActivity {
     TextView txt_height_label;
     String user_gender = AppConstants.hr_gender_male;
     String user_photo_path = "";
+    private int save_entry_day;
+    private int save_entry_month;
+    private int save_entry_year;
 
     private void setResultCancelled() {
     }
@@ -108,16 +104,14 @@ public class AddProfileActivity extends AppCompatActivity {
     public void onCreate(Bundle bundle) {
         super.onCreate(bundle);
         SetView();
-        AdAdmob adAdmob = new AdAdmob(this);
-        adAdmob.FullscreenAd(this);
-        adAdmob.BannerAd(findViewById(R.id.banner), this);
+
         AppConstants.overridePendingTransitionEnter(this);
 
     }
 
     private void SetView() {
         setContentView(R.layout.activity_add_profile);
-        
+
         this.mContext = this;
         activity_add_profile = this;
         this.push_animation = AnimationUtils.loadAnimation(this, R.anim.view_push);
@@ -153,7 +147,7 @@ public class AddProfileActivity extends AppCompatActivity {
             this.txt_btn_save.setText(getResources().getString(R.string.lbl_save));
         }
         this.rel_pick_photo.setOnClickListener(new View.OnClickListener() {
-            
+
 
             public void onClick(View view) {
                 view.startAnimation(AddProfileActivity.this.push_animation);
@@ -180,7 +174,7 @@ public class AddProfileActivity extends AppCompatActivity {
             }
         });
         this.spinner_gender.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-            
+
 
             @Override
             public void onNothingSelected(AdapterView<?> adapterView) {
@@ -197,14 +191,14 @@ public class AddProfileActivity extends AppCompatActivity {
             }
         });
         this.rel_get_height.setOnClickListener(new View.OnClickListener() {
-            
+
 
             public void onClick(View view) {
                 AddProfileActivity.this.SelectHeightDialog();
             }
         });
         this.rel_save.setOnClickListener(new View.OnClickListener() {
-            
+
 
             public void onClick(View view) {
                 AddProfileActivity.this.SaveProcess();
@@ -458,21 +452,21 @@ public class AddProfileActivity extends AppCompatActivity {
             }
         }
         numberPicker.setOnValueChangedListener(new NumberPicker.OnValueChangeListener() {
-            
+
 
             @Override
             public void onValueChange(NumberPicker numberPicker, int i, int i2) {
             }
         });
         numberPicker2.setOnValueChangedListener(new NumberPicker.OnValueChangeListener() {
-            
+
 
             @Override
             public void onValueChange(NumberPicker numberPicker, int i, int i2) {
             }
         });
         numberPicker3.setOnValueChangedListener(new NumberPicker.OnValueChangeListener() {
-            
+
 
             @Override
             public void onValueChange(NumberPicker numberPicker, int i, int i2) {
@@ -480,7 +474,7 @@ public class AddProfileActivity extends AppCompatActivity {
         });
         textView.setText("Height");
         spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-            
+
 
             @Override
             public void onNothingSelected(AdapterView<?> adapterView) {
@@ -503,7 +497,7 @@ public class AddProfileActivity extends AppCompatActivity {
             }
         });
         relativeLayout.setOnClickListener(new View.OnClickListener() {
-            
+
 
             public void onClick(View view) {
                 try {
@@ -525,7 +519,7 @@ public class AddProfileActivity extends AppCompatActivity {
             }
         });
         relativeLayout2.setOnClickListener(new View.OnClickListener() {
-            
+
 
             public void onClick(View view) {
                 dialog.dismiss();
@@ -569,12 +563,10 @@ public class AddProfileActivity extends AppCompatActivity {
             str = trim4;
             z = true;
             i = 30;
-        }
-        else if (trim4.contains("'")) {
+        } else if (trim4.contains("'")) {
             str = AppConstants.HEIGHT_FEET.trim();
             i = (int) Float.parseFloat(AppConstants.FeetToCentimeter(trim4));
-        }
-        else {
+        } else {
             str = AppConstants.HEIGHT_CM.trim();
             String replaceAll = trim4.replaceAll("cm", "");
             i = Integer.parseInt(replaceAll.trim());
@@ -664,7 +656,7 @@ public class AddProfileActivity extends AppCompatActivity {
 
 
     private void BackScreen() {
-        
+
         finish();
         AppConstants.overridePendingTransitionExit(this);
     }

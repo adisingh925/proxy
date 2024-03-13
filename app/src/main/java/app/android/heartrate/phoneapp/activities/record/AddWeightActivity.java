@@ -25,6 +25,14 @@ import android.widget.TimePicker;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.shawnlin.numberpicker.NumberPicker;
+
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
+
 import app.android.heartrate.phoneapp.AdAdmob;
 import app.android.heartrate.phoneapp.R;
 import app.android.heartrate.phoneapp.adapters.SpinnerProfileAdapter;
@@ -34,23 +42,13 @@ import app.android.heartrate.phoneapp.sqlite.SQLiteHealthTracker;
 import app.android.heartrate.phoneapp.utils.AppConstants;
 import app.android.heartrate.phoneapp.utils.EUGeneralClass;
 
-import com.shawnlin.numberpicker.NumberPicker;
-
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.Date;
-
 public class AddWeightActivity extends AppCompatActivity {
     public static Activity activity_add_profile;
+    public int weightIndex = 0;
     SQLiteHealthTracker SQLite_health_tracker;
     int[] arrayProfileIds;
     String[] arrayProfileNames;
     ArrayList<UserProfileData> array_profiles = new ArrayList<>();
-    private String[] array_weight_range;
-
-    private String current_date_time = "";
     String date_time = "";
     int day;
     EditText et_notes;
@@ -59,14 +57,8 @@ public class AddWeightActivity extends AppCompatActivity {
     int month;
     NumberPicker np_weight;
     Animation push_animation;
-
     RelativeLayout rel_select_date;
     RelativeLayout rel_select_time;
-    private int save_entry_day;
-    private int save_entry_hour;
-    private int save_entry_minute;
-    private int save_entry_month;
-    private int save_entry_year;
     int selected_user_id;
     String selected_user_name = "";
     SpinnerProfileAdapter spinner_profile_adapter;
@@ -74,21 +66,24 @@ public class AddWeightActivity extends AppCompatActivity {
     TextView txt_date;
     TextView txt_time;
     TextView txt_weight;
-    public int weightIndex = 0;
     int weight_default_value = 55;
     int weight_max_value = 300;
     int weight_min_value = 1;
     int year;
-
+    private String[] array_weight_range;
+    private String current_date_time = "";
+    private int save_entry_day;
+    private int save_entry_hour;
+    private int save_entry_minute;
+    private int save_entry_month;
+    private int save_entry_year;
 
     @Override
     public void onCreate(Bundle bundle) {
         super.onCreate(bundle);
         SetView();
 
-        AdAdmob adAdmob = new AdAdmob(this);
-        adAdmob.FullscreenAd(this);
-        adAdmob.BannerAd(findViewById(R.id.banner), this);
+
         AppConstants.overridePendingTransitionEnter(this);
     }
 

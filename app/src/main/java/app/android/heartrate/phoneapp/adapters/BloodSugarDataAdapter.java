@@ -14,22 +14,19 @@ import android.widget.TextView;
 
 import androidx.recyclerview.widget.RecyclerView;
 
+import java.util.ArrayList;
+import java.util.List;
 
 import app.android.heartrate.phoneapp.R;
 import app.android.heartrate.phoneapp.model.classes.BloodSugarData;
 import app.android.heartrate.phoneapp.sqlite.SQLiteHealthTracker;
 import app.android.heartrate.phoneapp.utils.AppConstants;
 
-import java.util.ArrayList;
-import java.util.List;
-
 public abstract class BloodSugarDataAdapter extends RecyclerView.Adapter<BloodSugarDataAdapter.BloodSugarViewHolder> {
-    SQLiteHealthTracker SQLite_health_tracker;
     private final List<BloodSugarData> array_data;
     private final Context mContext;
+    SQLiteHealthTracker SQLite_health_tracker;
     Animation push_animation;
-
-    public abstract void onBloodSugarAdapterClickItem(int i, View view);
 
     public BloodSugarDataAdapter(Context context, ArrayList<BloodSugarData> arrayList) {
         this.array_data = arrayList;
@@ -39,6 +36,8 @@ public abstract class BloodSugarDataAdapter extends RecyclerView.Adapter<BloodSu
         this.SQLite_health_tracker = sQLiteHealthTracker;
         sQLiteHealthTracker.openToWrite();
     }
+
+    public abstract void onBloodSugarAdapterClickItem(int i, View view);
 
     @Override
     public BloodSugarViewHolder onCreateViewHolder(ViewGroup viewGroup, int i) {

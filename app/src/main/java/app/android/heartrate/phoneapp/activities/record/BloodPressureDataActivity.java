@@ -23,6 +23,8 @@ import androidx.recyclerview.widget.DefaultItemAnimator;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import java.util.ArrayList;
+
 import app.android.heartrate.phoneapp.AdAdmob;
 import app.android.heartrate.phoneapp.R;
 import app.android.heartrate.phoneapp.adapters.BloodPressureDataAdapter;
@@ -32,8 +34,6 @@ import app.android.heartrate.phoneapp.model.classes.UserProfileData;
 import app.android.heartrate.phoneapp.sqlite.SQLiteHealthTracker;
 import app.android.heartrate.phoneapp.utils.AppConstants;
 import app.android.heartrate.phoneapp.utils.EUGeneralClass;
-
-import java.util.ArrayList;
 
 public class BloodPressureDataActivity extends AppCompatActivity {
     SQLiteHealthTracker SQLite_health_tracker;
@@ -62,9 +62,7 @@ public class BloodPressureDataActivity extends AppCompatActivity {
         super.onCreate(bundle);
         SetView();
 
-        AdAdmob adAdmob = new AdAdmob(this);
-        adAdmob.FullscreenAd(this);
-        adAdmob.BannerAd(findViewById(R.id.banner), this);
+
         AppConstants.overridePendingTransitionEnter(this);
     }
 
@@ -121,7 +119,7 @@ public class BloodPressureDataActivity extends AppCompatActivity {
     private void SetProfileSpinner() {
         this.array_profiles.clear();
         ArrayList<UserProfileData> arrayList = (ArrayList) this.SQLite_health_tracker.GetUserProfileData();
-        Log.e(" list "," ==> "+arrayList.size());
+        Log.e(" list ", " ==> " + arrayList.size());
         this.array_profiles = arrayList;
         if (arrayList.size() > 0) {
             this.arrayProfileIds = new int[this.array_profiles.size()];
@@ -162,6 +160,7 @@ public class BloodPressureDataActivity extends AppCompatActivity {
         this.array_bp_data = arrayList;
         if (arrayList.size() > 0) {
             this.txt_no_data.setVisibility(View.GONE);
+            Log.e(" arrayList "," ===> "+arrayList.size());
             BloodPressureDataAdapter r0 = new BloodPressureDataAdapter(this, this.array_bp_data) {
 
 

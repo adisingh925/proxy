@@ -6,7 +6,6 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.navigation.fragment.findNavController
 import app.android.heartrate.phoneapp.R
-import app.android.heartrate.phoneapp.databinding.FragmentMeasureSugarBinding
 import app.android.heartrate.phoneapp.databinding.FragmentMeasureTempBinding
 import app.android.heartrate.phoneapp.fragments.base.BaseFragment
 import app.android.heartrate.phoneapp.utils.CommonUtils
@@ -18,7 +17,7 @@ class MeasureTempFragment : BaseFragment() {
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         binding = FragmentMeasureTempBinding.inflate(layoutInflater)
         return binding.root
     }

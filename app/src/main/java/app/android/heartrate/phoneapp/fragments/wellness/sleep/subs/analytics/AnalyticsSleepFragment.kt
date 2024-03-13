@@ -4,7 +4,6 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import app.android.heartrate.phoneapp.databinding.FragmentAnalyticsFitnessBinding
 import app.android.heartrate.phoneapp.databinding.FragmentAnalyticsSleepBinding
 import app.android.heartrate.phoneapp.fragments.base.BaseFragment
 import app.android.heartrate.phoneapp.utils.CommonUtils
@@ -17,7 +16,7 @@ class AnalyticsSleepFragment : BaseFragment() {
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         binding = FragmentAnalyticsSleepBinding.inflate(layoutInflater)
         return binding.root
     }

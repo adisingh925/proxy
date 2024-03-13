@@ -4,7 +4,6 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import app.android.heartrate.phoneapp.databinding.FragmentMedicationDetailsBinding
 import app.android.heartrate.phoneapp.databinding.FragmentRecordDetailsBinding
 import app.android.heartrate.phoneapp.fragments.base.BaseFragment
 
@@ -14,7 +13,7 @@ class RecordDetailsFragment : BaseFragment() {
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         binding = FragmentRecordDetailsBinding.inflate(layoutInflater)
         return binding.root
     }

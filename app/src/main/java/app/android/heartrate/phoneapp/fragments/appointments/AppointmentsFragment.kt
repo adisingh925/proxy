@@ -5,12 +5,9 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.fragment.app.Fragment
 import app.android.heartrate.phoneapp.databinding.FragmentAppointmentsBinding
-import app.android.heartrate.phoneapp.databinding.FragmentWellnessBinding
 import app.android.heartrate.phoneapp.fragments.appointments.my_appointment.MyAppointmentActivity
 import app.android.heartrate.phoneapp.fragments.base.BaseFragment
-import app.android.heartrate.phoneapp.fragments.medication.add.AddMedicationActivity
 
 class AppointmentsFragment : BaseFragment() {
 
@@ -20,7 +17,7 @@ class AppointmentsFragment : BaseFragment() {
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         binding = FragmentAppointmentsBinding.inflate(layoutInflater)
         return binding.root
     }
@@ -30,11 +27,11 @@ class AppointmentsFragment : BaseFragment() {
         init()
     }
 
-    private fun init(){
+    private fun init() {
         handleClicks()
     }
 
-    private fun handleClicks(){
+    private fun handleClicks() {
         binding.myAppointment.setOnClickListener {
             startActivity(MyAppointmentActivity::class.java)
         }

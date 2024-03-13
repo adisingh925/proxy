@@ -5,11 +5,8 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.fragment.app.Fragment
 import app.android.heartrate.phoneapp.databinding.FragmentServicesBinding
-import app.android.heartrate.phoneapp.databinding.FragmentWellnessBinding
 import app.android.heartrate.phoneapp.fragments.base.BaseFragment
-import app.android.heartrate.phoneapp.fragments.medication.add.AddMedicationActivity
 import app.android.heartrate.phoneapp.fragments.services.accu_pressure.AccuPressureActivity
 import app.android.heartrate.phoneapp.fragments.services.care_giver.CareGiverActivity
 import app.android.heartrate.phoneapp.fragments.services.chiropractor.ChiropractorActivity
@@ -26,7 +23,7 @@ class ServicesFragment : BaseFragment() {
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         binding = FragmentServicesBinding.inflate(layoutInflater)
         return binding.root
     }

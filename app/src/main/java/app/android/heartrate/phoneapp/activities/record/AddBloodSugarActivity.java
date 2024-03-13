@@ -28,6 +28,16 @@ import android.widget.TimePicker;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.github.mikephil.charting.utils.Utils;
+
+import java.text.DecimalFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Calendar;
+import java.util.Date;
+
 import app.android.heartrate.phoneapp.AdAdmob;
 import app.android.heartrate.phoneapp.R;
 import app.android.heartrate.phoneapp.adapters.SpinnerProfileAdapter;
@@ -38,16 +48,6 @@ import app.android.heartrate.phoneapp.sqlite.rulerpicker.RulerValuePicker;
 import app.android.heartrate.phoneapp.sqlite.rulerpicker.RulerValuePickerListener;
 import app.android.heartrate.phoneapp.utils.AppConstants;
 import app.android.heartrate.phoneapp.utils.EUGeneralClass;
-
-import com.github.mikephil.charting.utils.Utils;
-
-import java.text.DecimalFormat;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Calendar;
-import java.util.Date;
 
 public class AddBloodSugarActivity extends AppCompatActivity {
     public static Activity activity_add_blood_sugar;
@@ -60,7 +60,6 @@ public class AddBloodSugarActivity extends AppCompatActivity {
 
     String blood_sugar_result;
     float blood_sugar_value = 0.0f;
-    private String current_date_time = "";
     String current_status;
     ArrayAdapter<String> current_status_spinner_adapter;
     String date = "";
@@ -79,15 +78,9 @@ public class AddBloodSugarActivity extends AppCompatActivity {
     int month;
     String notes = "";
     Animation push_animation;
-
     RelativeLayout rel_select_date;
     RelativeLayout rel_select_time;
     RulerValuePicker ruler_sugar_level;
-    private int save_entry_day;
-    private int save_entry_hour;
-    private int save_entry_minute;
-    private int save_entry_month;
-    private int save_entry_year;
     int selected_user_id;
     String selected_user_name = "";
     Spinner spinner_current_status;
@@ -102,6 +95,12 @@ public class AddBloodSugarActivity extends AppCompatActivity {
     TextView txt_dcct_level;
     TextView txt_time;
     int year;
+    private String current_date_time = "";
+    private int save_entry_day;
+    private int save_entry_hour;
+    private int save_entry_minute;
+    private int save_entry_month;
+    private int save_entry_year;
 
     public double CalculateADAG(double d) {
         return (d * 28.7d) - 46.7d;
@@ -117,15 +116,13 @@ public class AddBloodSugarActivity extends AppCompatActivity {
         super.onCreate(bundle);
         SetView();
 
-        AdAdmob adAdmob = new AdAdmob(this);
-        adAdmob.FullscreenAd(this);
-        adAdmob.BannerAd(findViewById(R.id.banner), this);
+
         AppConstants.overridePendingTransitionEnter(this);
     }
 
     private void SetView() {
         setContentView(R.layout.activity_add_blood_sugar);
-        
+
         this.mContext = this;
         activity_add_blood_sugar = this;
         this.push_animation = AnimationUtils.loadAnimation(this, R.anim.view_push);
@@ -426,8 +423,7 @@ public class AddBloodSugarActivity extends AppCompatActivity {
                 }
             }
             EUGeneralClass.ShowErrorToast(this, "Values are not natural! Please enter natural value as par condition!");
-        }
-        catch (Exception e) {
+        } catch (Exception e) {
             e.printStackTrace();
         }
     }
@@ -736,7 +732,7 @@ public class AddBloodSugarActivity extends AppCompatActivity {
     }
 
     private void BackScreen() {
-        
+
         finish();
         AppConstants.overridePendingTransitionExit(this);
     }

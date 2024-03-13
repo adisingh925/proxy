@@ -18,7 +18,7 @@ class SecurityFragment : BaseFragment() {
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         binding = FragmentSettingSecurityBinding.inflate(layoutInflater)
         return binding.root
     }
@@ -28,13 +28,13 @@ class SecurityFragment : BaseFragment() {
         init()
     }
 
-    private fun init(){
+    private fun init() {
         CommonUtils.updateToolbarTitle("Security Settings", requireActivity())
 
         handleClicks()
     }
 
-    private fun handleClicks(){
+    private fun handleClicks() {
         binding.cvChangePassword.setOnClickListener {
             findNavController().navigate(R.id.action_securityFragment_to_changePasswordFragment)
 

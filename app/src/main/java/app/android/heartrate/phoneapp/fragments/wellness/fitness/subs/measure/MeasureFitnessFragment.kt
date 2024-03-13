@@ -17,7 +17,7 @@ class MeasureFitnessFragment : BaseFragment() {
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         binding = FragmentMeasureFitnessBinding.inflate(layoutInflater)
         return binding.root
     }

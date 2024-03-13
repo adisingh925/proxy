@@ -25,15 +25,6 @@ import android.widget.TimePicker;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-import app.android.heartrate.phoneapp.AdAdmob;
-import app.android.heartrate.phoneapp.R;
-import app.android.heartrate.phoneapp.adapters.SpinnerProfileAdapter;
-import app.android.heartrate.phoneapp.model.classes.HeartRateData;
-import app.android.heartrate.phoneapp.model.classes.UserProfileData;
-import app.android.heartrate.phoneapp.sqlite.SQLiteHealthTracker;
-import app.android.heartrate.phoneapp.utils.AppConstants;
-import app.android.heartrate.phoneapp.utils.EUGeneralClass;
-
 import com.shawnlin.numberpicker.NumberPicker;
 
 import java.text.ParseException;
@@ -43,12 +34,21 @@ import java.util.Arrays;
 import java.util.Calendar;
 import java.util.Date;
 
+import app.android.heartrate.phoneapp.AdAdmob;
+import app.android.heartrate.phoneapp.R;
+import app.android.heartrate.phoneapp.adapters.SpinnerProfileAdapter;
+import app.android.heartrate.phoneapp.model.classes.HeartRateData;
+import app.android.heartrate.phoneapp.model.classes.UserProfileData;
+import app.android.heartrate.phoneapp.sqlite.SQLiteHealthTracker;
+import app.android.heartrate.phoneapp.utils.AppConstants;
+import app.android.heartrate.phoneapp.utils.EUGeneralClass;
+
 public class AddHeartRateActivity extends AppCompatActivity {
     public static Activity activity_add_heart_rate;
+    public int ageIndex = 0;
     SQLiteHealthTracker SQLite_health_tracker;
     ArrayAdapter<String> adapter_spinner_gender;
     ArrayAdapter<String> adapter_spinner_status;
-    public int ageIndex = 0;
     int age_default_value = AppConstants.default_hr_age_value;
     int age_max_value = 120;
     int age_min_value = 1;
@@ -59,11 +59,8 @@ public class AddHeartRateActivity extends AppCompatActivity {
     ArrayList<String> arrayListGender = new ArrayList<>(Arrays.asList(AppConstants.hr_gender_male, AppConstants.hr_gender_female, AppConstants.hr_gender_child));
     int[] arrayProfileIds;
     String[] arrayProfileNames;
-    private String[] array_age_range;
     ArrayList<UserProfileData> array_profiles = new ArrayList<>();
-
     String color_string = "";
-    private String current_date_time = "";
     String current_status = "";
     String date = "";
     String date_time = "";
@@ -80,15 +77,9 @@ public class AddHeartRateActivity extends AppCompatActivity {
     NumberPicker np_age;
     Animation push_animation;
     String range_string = "";
-
     RelativeLayout rel_select_date;
     RelativeLayout rel_select_time;
     String result_string = "";
-    private int save_entry_day;
-    private int save_entry_hour;
-    private int save_entry_minute;
-    private int save_entry_month;
-    private int save_entry_year;
     int selected_user_id;
     String selected_user_name = "";
     Spinner spinner_current_status;
@@ -101,21 +92,25 @@ public class AddHeartRateActivity extends AppCompatActivity {
     TextView txt_date;
     TextView txt_time;
     int year;
-
+    private String[] array_age_range;
+    private String current_date_time = "";
+    private int save_entry_day;
+    private int save_entry_hour;
+    private int save_entry_minute;
+    private int save_entry_month;
+    private int save_entry_year;
 
     @Override
     public void onCreate(Bundle bundle) {
         super.onCreate(bundle);
         SetView();
-        AdAdmob adAdmob = new AdAdmob(this);
-        adAdmob.FullscreenAd(this);
-        adAdmob.BannerAd(findViewById(R.id.banner), this);
+
         AppConstants.overridePendingTransitionEnter(this);
     }
 
     private void SetView() {
         setContentView(R.layout.activity_add_heart_rate);
-        
+
         this.mContext = this;
         activity_add_heart_rate = this;
         this.push_animation = AnimationUtils.loadAnimation(this, R.anim.view_push);
@@ -958,7 +953,7 @@ public class AddHeartRateActivity extends AppCompatActivity {
     }
 
     private void BackScreen() {
-        
+
         finish();
         AppConstants.overridePendingTransitionExit(this);
     }

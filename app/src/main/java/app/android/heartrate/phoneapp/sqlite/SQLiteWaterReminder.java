@@ -8,11 +8,11 @@ import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.util.Log;
 
-import app.android.heartrate.phoneapp.model.classes.WaterReminderData;
-import app.android.heartrate.phoneapp.utils.AppConstants;
-
 import java.util.ArrayList;
 import java.util.List;
+
+import app.android.heartrate.phoneapp.model.classes.WaterReminderData;
+import app.android.heartrate.phoneapp.utils.AppConstants;
 
 public class SQLiteWaterReminder {
     private static final String CREATE_USER_PROFILE_TABLE = "CREATE TABLE water_states (row_id INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, date_time TEXT UNIQUE,intook INTEGER,total_intake INTEGER);";
@@ -53,24 +53,6 @@ public class SQLiteWaterReminder {
 
     public void close() {
         sqLiteHelper.close();
-    }
-
-    public class SQLiteHelper extends SQLiteOpenHelper {
-        public void onUpgrade(SQLiteDatabase sQLiteDatabase, int i, int i2) {
-        }
-
-        public SQLiteHelper(Context context, String str, SQLiteDatabase.CursorFactory cursorFactory, int i) {
-            super(context, str, cursorFactory, i);
-        }
-
-        public void onCreate(SQLiteDatabase sQLiteDatabase) {
-            sQLiteDatabase.execSQL(SQLiteWaterReminder.CREATE_USER_PROFILE_TABLE);
-        }
-
-        public void onOpen(SQLiteDatabase sQLiteDatabase) {
-            super.onOpen(sQLiteDatabase);
-            sQLiteDatabase.disableWriteAheadLogging();
-        }
     }
 
     public long InsertWaterStateData(WaterReminderData waterReminderData) {
@@ -170,5 +152,23 @@ public class SQLiteWaterReminder {
         sqLiteDatabase = readableDatabase;
         Cursor rawQuery = readableDatabase.rawQuery("SELECT * FROM water_states", null);
         return rawQuery != null && rawQuery.getCount() != 0;
+    }
+
+    public class SQLiteHelper extends SQLiteOpenHelper {
+        public SQLiteHelper(Context context, String str, SQLiteDatabase.CursorFactory cursorFactory, int i) {
+            super(context, str, cursorFactory, i);
+        }
+
+        public void onUpgrade(SQLiteDatabase sQLiteDatabase, int i, int i2) {
+        }
+
+        public void onCreate(SQLiteDatabase sQLiteDatabase) {
+            sQLiteDatabase.execSQL(SQLiteWaterReminder.CREATE_USER_PROFILE_TABLE);
+        }
+
+        public void onOpen(SQLiteDatabase sQLiteDatabase) {
+            super.onOpen(sQLiteDatabase);
+            sQLiteDatabase.disableWriteAheadLogging();
+        }
     }
 }

@@ -23,6 +23,8 @@ import androidx.recyclerview.widget.DefaultItemAnimator;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import java.util.ArrayList;
+
 import app.android.heartrate.phoneapp.AdAdmob;
 import app.android.heartrate.phoneapp.R;
 import app.android.heartrate.phoneapp.adapters.BloodSugarDataAdapter;
@@ -32,8 +34,6 @@ import app.android.heartrate.phoneapp.model.classes.UserProfileData;
 import app.android.heartrate.phoneapp.sqlite.SQLiteHealthTracker;
 import app.android.heartrate.phoneapp.utils.AppConstants;
 import app.android.heartrate.phoneapp.utils.EUGeneralClass;
-
-import java.util.ArrayList;
 
 public class BloodSugarDataActivity extends AppCompatActivity {
     SQLiteHealthTracker SQLite_health_tracker;
@@ -62,15 +62,13 @@ public class BloodSugarDataActivity extends AppCompatActivity {
         super.onCreate(bundle);
         SetView();
 
-        AdAdmob adAdmob = new AdAdmob(this);
-        adAdmob.FullscreenAd(this);
-        adAdmob.BannerAd(findViewById(R.id.banner), this);
+
         AppConstants.overridePendingTransitionEnter(this);
     }
 
     private void SetView() {
         setContentView(R.layout.activity_bs_data_list);
-        
+
         this.mContext = this;
         this.push_animation = AnimationUtils.loadAnimation(this, R.anim.view_push);
         setUpActionBar();
@@ -236,7 +234,7 @@ public class BloodSugarDataActivity extends AppCompatActivity {
                 BloodSugarDataActivity.this.onBackPressed();
             }
         });
-        setSupportActionBar( findViewById(R.id.toolbar_actionbar));
+        setSupportActionBar(findViewById(R.id.toolbar_actionbar));
         ActionBar supportActionBar = getSupportActionBar();
         supportActionBar.setDisplayShowTitleEnabled(false);
         supportActionBar.setDisplayHomeAsUpEnabled(false);
@@ -275,7 +273,7 @@ public class BloodSugarDataActivity extends AppCompatActivity {
 
     private void BackScreen() {
         AppConstants.is_tools_interstitial_show = true;
-        
+
         finish();
         AppConstants.overridePendingTransitionExit(this);
     }

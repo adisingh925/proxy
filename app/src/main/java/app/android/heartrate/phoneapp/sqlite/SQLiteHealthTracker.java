@@ -9,6 +9,18 @@ import android.database.sqlite.SQLiteOpenHelper;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.util.Log;
+
+import java.io.File;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Date;
+import java.util.HashMap;
+import java.util.Iterator;
+import java.util.LinkedList;
+import java.util.List;
+import java.util.Map;
+
 import app.android.heartrate.phoneapp.R;
 import app.android.heartrate.phoneapp.model.classes.BMIChartData;
 import app.android.heartrate.phoneapp.model.classes.BMIData;
@@ -31,17 +43,6 @@ import app.android.heartrate.phoneapp.model.classes.UserProfileSpinnerData;
 import app.android.heartrate.phoneapp.model.classes.WeightChartData;
 import app.android.heartrate.phoneapp.model.classes.WeightData;
 import app.android.heartrate.phoneapp.utils.AppConstants;
-
-import java.io.File;
-import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Date;
-import java.util.HashMap;
-import java.util.Iterator;
-import java.util.LinkedList;
-import java.util.List;
-import java.util.Map;
 
 public class SQLiteHealthTracker {
     private static final String ALL_MEDICINE_TABLE = "all_medicines";
@@ -126,14 +127,84 @@ public class SQLiteHealthTracker {
     private static final String WEIGHT_DATA_TABLE = "weight_data";
     private static SQLiteDatabase sqLiteDatabase;
     private static SQLiteOpenHelper sqLiteHelper;
+    private final Context mContext;
     String date_format = "dd/MM/yyyy";
     String date_time_format = "dd/MM/yyyy hh:mm a";
-    private final Context mContext;
     String month_format = "MMMM";
     String time_format = "hh:mm a";
 
     public SQLiteHealthTracker(Context context) {
         this.mContext = context;
+    }
+
+    public static int GetUserProfileLatestRowID() {
+        int i;
+        SQLiteDatabase readableDatabase = sqLiteHelper.getReadableDatabase();
+        sqLiteDatabase = readableDatabase;
+        Cursor rawQuery = readableDatabase.rawQuery("SELECT row_id FROM user_profiles ORDER BY row_id DESC;", null);
+        try {
+            rawQuery.moveToFirst();
+            i = rawQuery.getInt(0);
+        } catch (Exception unused) {
+            i = -1;
+        }
+        rawQuery.close();
+        return i;
+    }
+
+    public static int GetLatestRowID() {
+        int i;
+        SQLiteDatabase readableDatabase = sqLiteHelper.getReadableDatabase();
+        sqLiteDatabase = readableDatabase;
+        Cursor rawQuery = readableDatabase.rawQuery("SELECT row_id FROM body_temp_data ORDER BY row_id DESC;", null);
+        try {
+            rawQuery.moveToFirst();
+            i = rawQuery.getInt(0);
+        } catch (Exception unused) {
+            i = -1;
+        }
+        rawQuery.close();
+        return i;
+    }
+
+    public static float[] GetTempStatisticsData() {
+        SQLiteDatabase readableDatabase = sqLiteHelper.getReadableDatabase();
+        sqLiteDatabase = readableDatabase;
+        float[] fArr = new float[3];
+        Cursor rawQuery = readableDatabase.rawQuery("SELECT SUM(celsius), SUM(fahrenheit), SUM(pulse), COUNT(celsius), COUNT(fahrenheit), COUNT(pulse) FROM body_temp_data", null);
+        try {
+            rawQuery.moveToFirst();
+            fArr[0] = rawQuery.getFloat(0) / rawQuery.getFloat(3);
+            fArr[1] = rawQuery.getFloat(1) / rawQuery.getFloat(4);
+            fArr[2] = rawQuery.getFloat(2) / rawQuery.getFloat(5);
+        } catch (Exception unused) {
+        }
+        rawQuery.close();
+        return fArr;
+    }
+
+    public static ArrayList<String> hmSort(HashMap<String, Integer> hashMap) {
+        LinkedList linkedList = new LinkedList(hashMap.entrySet());
+        ArrayList<String> arrayList = new ArrayList<>();
+        Iterator it = linkedList.iterator();
+        while (it.hasNext()) {
+            arrayList.add((String) ((Map.Entry) it.next()).getKey());
+        }
+        return arrayList;
+    }
+
+    public static ArrayList<String[]> csvData() {
+        sqLiteDatabase = sqLiteHelper.getReadableDatabase();
+        ArrayList<String[]> arrayList = new ArrayList<>();
+        Cursor rawQuery = sqLiteDatabase.rawQuery("SELECT * FROM body_temp_data", null);
+        arrayList.add(new String[]{"Celsius", "Fahrenheit", "Pulse", "Day", "Month", "Year", "Date"});
+        rawQuery.moveToFirst();
+        while (!rawQuery.isAfterLast()) {
+            arrayList.add(new String[]{rawQuery.getString(rawQuery.getColumnIndexOrThrow(KEY_ROW_ID)), rawQuery.getString(rawQuery.getColumnIndexOrThrow(KEY_DATE_TIME)), rawQuery.getString(rawQuery.getColumnIndexOrThrow(KEY_CELSIUS)), rawQuery.getString(rawQuery.getColumnIndexOrThrow(KEY_FAHRENHEIT)), rawQuery.getString(rawQuery.getColumnIndexOrThrow(KEY_PULSE)), rawQuery.getString(rawQuery.getColumnIndexOrThrow(KEY_DAY)), rawQuery.getString(rawQuery.getColumnIndexOrThrow(KEY_MONTH))});
+            rawQuery.moveToNext();
+        }
+        rawQuery.close();
+        return arrayList;
     }
 
     public SQLiteHealthTracker open() throws SQLException {
@@ -159,34 +230,6 @@ public class SQLiteHealthTracker {
 
     public void close() {
         sqLiteHelper.close();
-    }
-
-    public class SQLiteHelper extends SQLiteOpenHelper {
-        public void onUpgrade(SQLiteDatabase sQLiteDatabase, int i, int i2) {
-        }
-
-        public SQLiteHelper(Context context, String str, SQLiteDatabase.CursorFactory cursorFactory, int i) {
-            super(context, str, cursorFactory, i);
-        }
-
-        public void onCreate(SQLiteDatabase sQLiteDatabase) {
-            sQLiteDatabase.execSQL(SQLiteHealthTracker.CREATE_USER_PROFILE_TABLE);
-            sQLiteDatabase.execSQL(SQLiteHealthTracker.CREATE_WEIGHT_DATA_TABLE);
-            sQLiteDatabase.execSQL(SQLiteHealthTracker.CREATE_BLOOD_SUGAR_TABLE);
-            sQLiteDatabase.execSQL(SQLiteHealthTracker.CREATE_BLOOD_PRESSURE_TABLE);
-            sQLiteDatabase.execSQL(SQLiteHealthTracker.CREATE_HEART_RATE_TABLE);
-            sQLiteDatabase.execSQL(SQLiteHealthTracker.CREATE_BMI_TABLE);
-            sQLiteDatabase.execSQL(SQLiteHealthTracker.CREATE_ALL_MEDICINE_TABLE);
-            sQLiteDatabase.execSQL(SQLiteHealthTracker.CREATE_MEDICINE_TABLE);
-            sQLiteDatabase.execSQL(SQLiteHealthTracker.CREATE_BODY_TEMP_DATA_TABLE);
-            sQLiteDatabase.execSQL(SQLiteHealthTracker.CREATE_CHOLESTEROL_TABLE);
-            sQLiteDatabase.execSQL(SQLiteHealthTracker.CREATE_BLOOD_COUNT_TABLE);
-        }
-
-        public void onOpen(SQLiteDatabase sQLiteDatabase) {
-            super.onOpen(sQLiteDatabase);
-            sQLiteDatabase.disableWriteAheadLogging();
-        }
     }
 
     public long InsertUserProfileData(UserProfileData userProfileData) {
@@ -391,21 +434,6 @@ public class SQLiteHealthTracker {
 
     public void deleteAllUserProfileData() {
         sqLiteDatabase.execSQL("DELETE FROM user_profiles");
-    }
-
-    public static int GetUserProfileLatestRowID() {
-        int i;
-        SQLiteDatabase readableDatabase = sqLiteHelper.getReadableDatabase();
-        sqLiteDatabase = readableDatabase;
-        Cursor rawQuery = readableDatabase.rawQuery("SELECT row_id FROM user_profiles ORDER BY row_id DESC;", null);
-        try {
-            rawQuery.moveToFirst();
-            i = rawQuery.getInt(0);
-        } catch (Exception unused) {
-            i = -1;
-        }
-        rawQuery.close();
-        return i;
     }
 
     public long InsertBloodCountData(BloodCountData bloodCountData) {
@@ -1138,8 +1166,6 @@ public class SQLiteHealthTracker {
         return sqLiteDatabase.update(BLOOD_PRESSURE_TABLE, contentValues, "row_id=" + i, null);
     }
 
-    
-    
     public List GetBloodPressureData() {
         Exception e;
         Exception e2;
@@ -1276,8 +1302,6 @@ public class SQLiteHealthTracker {
         }
     }
 
-    
-    
     public List GetBloodPressureDataByUserID(int i) {
         ArrayList arrayList;
         Exception e;
@@ -1366,7 +1390,7 @@ public class SQLiteHealthTracker {
                         }
                         try {
                             arrayList.add(bloodPressureData);
-                            if (rawQuery.moveToNext()) {
+                            if (!rawQuery.moveToNext()) {
                                 return arrayList;
                             }
                             arrayList2 = arrayList;
@@ -1403,8 +1427,6 @@ public class SQLiteHealthTracker {
         sqLiteDatabase.execSQL("DELETE FROM blood_pressure_data");
     }
 
-    
-    
     public List GetBloodPressureChartAllData(int i) {
         ArrayList arrayList;
         Exception e;
@@ -1516,8 +1538,6 @@ public class SQLiteHealthTracker {
         }
     }
 
-    
-    
     public List GetBloodPressureChartTodayData(int i, int i2, int i3, int i4) {
         Exception e;
         Exception e2;
@@ -1616,8 +1636,6 @@ public class SQLiteHealthTracker {
         return arrayList;
     }
 
-    
-    
     public List GetBloodPressureChartMonthlyData(int i, int i2, int i3) {
         Exception e;
         int i4;
@@ -1717,8 +1735,6 @@ public class SQLiteHealthTracker {
         return arrayList;
     }
 
-    
-    
     public List GetBloodPressureChartYearlyData(int i, int i2) {
         Exception e;
         Exception e2;
@@ -1817,8 +1833,6 @@ public class SQLiteHealthTracker {
         return arrayList;
     }
 
-    
-    
     public List GetBloodPressureChartCustomData(int i, String str, String str2) {
         Exception e;
         Exception e2;
@@ -1996,8 +2010,6 @@ public class SQLiteHealthTracker {
         return sqLiteDatabase.update(BLOOD_SUGAR_TABLE, contentValues, "row_id=" + i, null);
     }
 
-    
-    
     public List GetBloodSugarData() {
         Exception e;
         Exception e2;
@@ -2099,8 +2111,6 @@ public class SQLiteHealthTracker {
         return arrayList;
     }
 
-    
-    
     public List GetBloodSugarDataByUserID(int i) {
         ArrayList arrayList;
         Exception e;
@@ -2256,8 +2266,6 @@ public class SQLiteHealthTracker {
         sqLiteDatabase.execSQL("DELETE FROM blood_sugar_data");
     }
 
-    
-    
     public List GetBloodSugarChartAllData(int i) {
         ArrayList arrayList;
         Exception e;
@@ -2371,8 +2379,6 @@ public class SQLiteHealthTracker {
         }
     }
 
-    
-    
     public List GetBloodSugarChartTodayData(int i, int i2, int i3, int i4) {
         Exception e;
         Exception e2;
@@ -2473,8 +2479,6 @@ public class SQLiteHealthTracker {
         return arrayList;
     }
 
-    
-    
     public List GetBloodSugarChartMonthlyData(int i, int i2, int i3) {
         Exception e;
         float f;
@@ -2576,8 +2580,6 @@ public class SQLiteHealthTracker {
         return arrayList;
     }
 
-    
-    
     public List GetBloodSugarChartYearlyData(int i, int i2) {
         Exception e;
         Exception e2;
@@ -2678,8 +2680,6 @@ public class SQLiteHealthTracker {
         return arrayList;
     }
 
-    
-    
     public List GetBloodSugarChartCustomData(int i, String str, String str2) {
         Exception e;
         Exception e2;
@@ -2851,8 +2851,6 @@ public class SQLiteHealthTracker {
         return sqLiteDatabase.update(BMI_TABLE, contentValues, "row_id=" + i, null);
     }
 
-    
-    
     public List GetBMIData() {
         Exception e;
         Exception e2;
@@ -2950,8 +2948,6 @@ public class SQLiteHealthTracker {
         return arrayList;
     }
 
-    
-    
     public List GetBMIDataByUserID(int i) {
         ArrayList arrayList;
         Exception e;
@@ -3112,8 +3108,6 @@ public class SQLiteHealthTracker {
         sqLiteDatabase.execSQL("DELETE FROM bmi_data");
     }
 
-    
-    
     public List GetBMIChartAllData(int i) {
         ArrayList arrayList;
         Exception e;
@@ -3223,8 +3217,6 @@ public class SQLiteHealthTracker {
         }
     }
 
-    
-    
     public List GetBMIChartTodayData(int i, int i2, int i3, int i4) {
         Exception e;
         Exception e2;
@@ -3321,8 +3313,6 @@ public class SQLiteHealthTracker {
         return arrayList;
     }
 
-    
-    
     public List GetBMIChartMonthlyData(int i, int i2, int i3) {
         Exception e;
         String string;
@@ -3420,8 +3410,6 @@ public class SQLiteHealthTracker {
         return arrayList;
     }
 
-    
-    
     public List GetBMIChartYearlyData(int i, int i2) {
         Exception e;
         Exception e2;
@@ -3518,8 +3506,6 @@ public class SQLiteHealthTracker {
         return arrayList;
     }
 
-    
-    
     public List GetBMIChartCustomData(int i, String str, String str2) {
         Exception e;
         Exception e2;
@@ -3870,61 +3856,6 @@ public class SQLiteHealthTracker {
 
     public void deleteAllData() {
         sqLiteDatabase.execSQL("DELETE FROM body_temp_data");
-    }
-
-    public static int GetLatestRowID() {
-        int i;
-        SQLiteDatabase readableDatabase = sqLiteHelper.getReadableDatabase();
-        sqLiteDatabase = readableDatabase;
-        Cursor rawQuery = readableDatabase.rawQuery("SELECT row_id FROM body_temp_data ORDER BY row_id DESC;", null);
-        try {
-            rawQuery.moveToFirst();
-            i = rawQuery.getInt(0);
-        } catch (Exception unused) {
-            i = -1;
-        }
-        rawQuery.close();
-        return i;
-    }
-
-    public static float[] GetTempStatisticsData() {
-        SQLiteDatabase readableDatabase = sqLiteHelper.getReadableDatabase();
-        sqLiteDatabase = readableDatabase;
-        float[] fArr = new float[3];
-        Cursor rawQuery = readableDatabase.rawQuery("SELECT SUM(celsius), SUM(fahrenheit), SUM(pulse), COUNT(celsius), COUNT(fahrenheit), COUNT(pulse) FROM body_temp_data", null);
-        try {
-            rawQuery.moveToFirst();
-            fArr[0] = rawQuery.getFloat(0) / rawQuery.getFloat(3);
-            fArr[1] = rawQuery.getFloat(1) / rawQuery.getFloat(4);
-            fArr[2] = rawQuery.getFloat(2) / rawQuery.getFloat(5);
-        } catch (Exception unused) {
-        }
-        rawQuery.close();
-        return fArr;
-    }
-
-    public static ArrayList<String> hmSort(HashMap<String, Integer> hashMap) {
-        LinkedList linkedList = new LinkedList(hashMap.entrySet());
-        ArrayList<String> arrayList = new ArrayList<>();
-        Iterator it = linkedList.iterator();
-        while (it.hasNext()) {
-            arrayList.add((String) ((Map.Entry) it.next()).getKey());
-        }
-        return arrayList;
-    }
-
-    public static ArrayList<String[]> csvData() {
-        sqLiteDatabase = sqLiteHelper.getReadableDatabase();
-        ArrayList<String[]> arrayList = new ArrayList<>();
-        Cursor rawQuery = sqLiteDatabase.rawQuery("SELECT * FROM body_temp_data", null);
-        arrayList.add(new String[]{"Celsius", "Fahrenheit", "Pulse", "Day", "Month", "Year", "Date"});
-        rawQuery.moveToFirst();
-        while (!rawQuery.isAfterLast()) {
-            arrayList.add(new String[]{rawQuery.getString(rawQuery.getColumnIndexOrThrow(KEY_ROW_ID)), rawQuery.getString(rawQuery.getColumnIndexOrThrow(KEY_DATE_TIME)), rawQuery.getString(rawQuery.getColumnIndexOrThrow(KEY_CELSIUS)), rawQuery.getString(rawQuery.getColumnIndexOrThrow(KEY_FAHRENHEIT)), rawQuery.getString(rawQuery.getColumnIndexOrThrow(KEY_PULSE)), rawQuery.getString(rawQuery.getColumnIndexOrThrow(KEY_DAY)), rawQuery.getString(rawQuery.getColumnIndexOrThrow(KEY_MONTH))});
-            rawQuery.moveToNext();
-        }
-        rawQuery.close();
-        return arrayList;
     }
 
     private String GetFeverStatus(float f) {
@@ -4307,8 +4238,6 @@ public class SQLiteHealthTracker {
         return sqLiteDatabase.update(CHOLESTEROL_TABLE, contentValues, "row_id=" + i, null);
     }
 
-    
-    
     public List GetCholesterolData() {
         Exception e;
         Exception e2;
@@ -4404,8 +4333,6 @@ public class SQLiteHealthTracker {
         return arrayList;
     }
 
-    
-    
     public List GetCholesterolDataByUserID(int i) {
         ArrayList arrayList;
         Exception e;
@@ -4584,8 +4511,6 @@ public class SQLiteHealthTracker {
         sqLiteDatabase.execSQL("DELETE FROM cholesterol_data");
     }
 
-    
-    
     public List GetCholesterolChartAllData(int i) {
         ArrayList arrayList;
         Exception e;
@@ -4693,8 +4618,6 @@ public class SQLiteHealthTracker {
         }
     }
 
-    
-    
     public List GetCholesterolChartTodayData(int i, int i2, int i3, int i4) {
         Exception e;
         Exception e2;
@@ -4789,8 +4712,6 @@ public class SQLiteHealthTracker {
         return arrayList;
     }
 
-    
-    
     public List GetCholesterolChartMonthlyData(int i, int i2, int i3) {
         Exception e;
         String string;
@@ -4886,8 +4807,6 @@ public class SQLiteHealthTracker {
         return arrayList;
     }
 
-    
-    
     public List GetCholesterolChartYearlyData(int i, int i2) {
         Exception e;
         Exception e2;
@@ -4982,8 +4901,6 @@ public class SQLiteHealthTracker {
         return arrayList;
     }
 
-    
-    
     public List GetCholesterolChartCustomData(int i, String str, String str2) {
         Exception e;
         Exception e2;
@@ -5153,8 +5070,6 @@ public class SQLiteHealthTracker {
         return sqLiteDatabase.update(HEART_RATE_TABLE, contentValues, "row_id=" + i, null);
     }
 
-    
-    
     public List GetHeartRateData() {
         Exception e;
         Exception e2;
@@ -5254,8 +5169,6 @@ public class SQLiteHealthTracker {
         return arrayList;
     }
 
-    
-    
     public List GetHeartRateDataByUserID(int i) {
         ArrayList arrayList;
         Exception e;
@@ -5409,8 +5322,6 @@ public class SQLiteHealthTracker {
         sqLiteDatabase.execSQL("DELETE FROM heart_rate_data");
     }
 
-    
-    
     public List GetHeartRateChartAllData(int i) {
         ArrayList arrayList;
         Exception e;
@@ -5522,8 +5433,6 @@ public class SQLiteHealthTracker {
         }
     }
 
-    
-    
     public List GetHeartRateChartTodayData(int i, int i2, int i3, int i4) {
         Exception e;
         Exception e2;
@@ -5622,8 +5531,6 @@ public class SQLiteHealthTracker {
         return arrayList;
     }
 
-    
-    
     public List GetHeartRateChartMonthlyData(int i, int i2, int i3) {
         Exception e;
         String string;
@@ -5723,8 +5630,6 @@ public class SQLiteHealthTracker {
         return arrayList;
     }
 
-    
-    
     public List GetHeartRateChartYearlyData(int i, int i2) {
         Exception e;
         Exception e2;
@@ -5823,8 +5728,6 @@ public class SQLiteHealthTracker {
         return arrayList;
     }
 
-    
-    
     public List GetHeartRateChartCustomData(int i, String str, String str2) {
         Exception e;
         Exception e2;
@@ -6733,5 +6636,33 @@ public class SQLiteHealthTracker {
 
     public void deleteAllMedicineData() {
         sqLiteDatabase.execSQL("DELETE FROM medicine_data");
+    }
+
+    public class SQLiteHelper extends SQLiteOpenHelper {
+        public SQLiteHelper(Context context, String str, SQLiteDatabase.CursorFactory cursorFactory, int i) {
+            super(context, str, cursorFactory, i);
+        }
+
+        public void onUpgrade(SQLiteDatabase sQLiteDatabase, int i, int i2) {
+        }
+
+        public void onCreate(SQLiteDatabase sQLiteDatabase) {
+            sQLiteDatabase.execSQL(SQLiteHealthTracker.CREATE_USER_PROFILE_TABLE);
+            sQLiteDatabase.execSQL(SQLiteHealthTracker.CREATE_WEIGHT_DATA_TABLE);
+            sQLiteDatabase.execSQL(SQLiteHealthTracker.CREATE_BLOOD_SUGAR_TABLE);
+            sQLiteDatabase.execSQL(SQLiteHealthTracker.CREATE_BLOOD_PRESSURE_TABLE);
+            sQLiteDatabase.execSQL(SQLiteHealthTracker.CREATE_HEART_RATE_TABLE);
+            sQLiteDatabase.execSQL(SQLiteHealthTracker.CREATE_BMI_TABLE);
+            sQLiteDatabase.execSQL(SQLiteHealthTracker.CREATE_ALL_MEDICINE_TABLE);
+            sQLiteDatabase.execSQL(SQLiteHealthTracker.CREATE_MEDICINE_TABLE);
+            sQLiteDatabase.execSQL(SQLiteHealthTracker.CREATE_BODY_TEMP_DATA_TABLE);
+            sQLiteDatabase.execSQL(SQLiteHealthTracker.CREATE_CHOLESTEROL_TABLE);
+            sQLiteDatabase.execSQL(SQLiteHealthTracker.CREATE_BLOOD_COUNT_TABLE);
+        }
+
+        public void onOpen(SQLiteDatabase sQLiteDatabase) {
+            super.onOpen(sQLiteDatabase);
+            sQLiteDatabase.disableWriteAheadLogging();
+        }
     }
 }

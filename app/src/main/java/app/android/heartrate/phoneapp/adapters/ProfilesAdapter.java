@@ -14,23 +14,20 @@ import android.widget.TextView;
 
 import androidx.recyclerview.widget.RecyclerView;
 
-import app.android.heartrate.phoneapp.model.classes.UserProfileData;
-import app.android.heartrate.phoneapp.utils.AppConstants;
-import app.android.heartrate.phoneapp.R;
-import app.android.heartrate.phoneapp.sqlite.SQLiteHealthTracker;
-
 import java.util.ArrayList;
 import java.util.List;
 
+import app.android.heartrate.phoneapp.R;
+import app.android.heartrate.phoneapp.model.classes.UserProfileData;
+import app.android.heartrate.phoneapp.sqlite.SQLiteHealthTracker;
+import app.android.heartrate.phoneapp.utils.AppConstants;
 import de.hdodenhof.circleimageview.CircleImageView;
 
 public abstract class ProfilesAdapter extends RecyclerView.Adapter<ProfilesAdapter.ProfileViewHolder> {
-    SQLiteHealthTracker SQLite_health_tracker;
     private final List<UserProfileData> array_data;
     private final Context mContext;
+    SQLiteHealthTracker SQLite_health_tracker;
     Animation push_animation;
-
-    public abstract void onProfileAdapterClickItem(int i, View view);
 
     public ProfilesAdapter(Context context, ArrayList<UserProfileData> arrayList) {
         this.array_data = arrayList;
@@ -40,6 +37,8 @@ public abstract class ProfilesAdapter extends RecyclerView.Adapter<ProfilesAdapt
         this.SQLite_health_tracker = sQLiteHealthTracker;
         sQLiteHealthTracker.openToWrite();
     }
+
+    public abstract void onProfileAdapterClickItem(int i, View view);
 
     @Override
     public ProfileViewHolder onCreateViewHolder(ViewGroup viewGroup, int i) {

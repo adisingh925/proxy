@@ -4,7 +4,6 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import app.android.heartrate.phoneapp.databinding.FragmentAnalyticsEkgBinding
 import app.android.heartrate.phoneapp.databinding.FragmentAnalyticsPulseBinding
 import app.android.heartrate.phoneapp.fragments.base.BaseFragment
 import app.android.heartrate.phoneapp.utils.CommonUtils
@@ -12,13 +11,12 @@ import app.android.heartrate.phoneapp.utils.CommonUtils
 class AnalyticsPulseFragment : BaseFragment() {
 
 
-
     private lateinit var binding: FragmentAnalyticsPulseBinding
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         binding = FragmentAnalyticsPulseBinding.inflate(layoutInflater)
         return binding.root
     }

@@ -17,7 +17,7 @@ class MeasureBpFragment : BaseFragment() {
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         binding = FragmentMeasureBpBinding.inflate(layoutInflater)
         return binding.root
     }

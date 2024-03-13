@@ -10,7 +10,6 @@ import android.widget.TextView;
 import java.util.ArrayList;
 
 import app.android.heartrate.phoneapp.R;
-
 import app.android.heartrate.phoneapp.model.classes.UserProfileData;
 import de.hdodenhof.circleimageview.CircleImageView;
 

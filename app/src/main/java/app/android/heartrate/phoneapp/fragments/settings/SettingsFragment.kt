@@ -5,11 +5,8 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.fragment.app.Fragment
 import app.android.heartrate.phoneapp.databinding.FragmentSettingsBinding
-import app.android.heartrate.phoneapp.databinding.FragmentWellnessBinding
 import app.android.heartrate.phoneapp.fragments.base.BaseFragment
-import app.android.heartrate.phoneapp.fragments.medication.add.AddMedicationActivity
 import app.android.heartrate.phoneapp.fragments.settings.link_family.LinkFamilyActivity
 import app.android.heartrate.phoneapp.fragments.settings.logout.LogoutActivity
 import app.android.heartrate.phoneapp.fragments.settings.preferences.PreferencesActivity
@@ -23,7 +20,7 @@ class SettingsFragment : BaseFragment() {
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         binding = FragmentSettingsBinding.inflate(layoutInflater)
         return binding.root
     }

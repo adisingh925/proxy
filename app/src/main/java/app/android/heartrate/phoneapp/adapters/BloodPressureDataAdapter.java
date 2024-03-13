@@ -14,21 +14,19 @@ import android.widget.TextView;
 
 import androidx.recyclerview.widget.RecyclerView;
 
-import app.android.heartrate.phoneapp.model.classes.BloodPressureData;
-import app.android.heartrate.phoneapp.utils.AppConstants;
-import app.android.heartrate.phoneapp.R;
-import app.android.heartrate.phoneapp.sqlite.SQLiteHealthTracker;
-
 import java.util.ArrayList;
 import java.util.List;
 
+import app.android.heartrate.phoneapp.R;
+import app.android.heartrate.phoneapp.model.classes.BloodPressureData;
+import app.android.heartrate.phoneapp.sqlite.SQLiteHealthTracker;
+import app.android.heartrate.phoneapp.utils.AppConstants;
+
 public abstract class BloodPressureDataAdapter extends RecyclerView.Adapter<BloodPressureDataAdapter.BloodPressureViewHolder> {
-    SQLiteHealthTracker SQLite_health_tracker;
     private final List<BloodPressureData> array_data;
     private final Context mContext;
+    SQLiteHealthTracker SQLite_health_tracker;
     Animation push_animation;
-
-    public abstract void onBloodPressureAdapterClickItem(int i, View view);
 
     public BloodPressureDataAdapter(Context context, ArrayList<BloodPressureData> arrayList) {
         this.array_data = arrayList;
@@ -38,6 +36,8 @@ public abstract class BloodPressureDataAdapter extends RecyclerView.Adapter<Bloo
         this.SQLite_health_tracker = sQLiteHealthTracker;
         sQLiteHealthTracker.openToWrite();
     }
+
+    public abstract void onBloodPressureAdapterClickItem(int i, View view);
 
     @Override
     public BloodPressureViewHolder onCreateViewHolder(ViewGroup viewGroup, int i) {
@@ -80,7 +80,7 @@ public abstract class BloodPressureDataAdapter extends RecyclerView.Adapter<Bloo
             bloodPressureViewHolder.img_arrow_high_stage_1.setVisibility(View.INVISIBLE);
             bloodPressureViewHolder.img_arrow_high_stage_2.setVisibility(View.INVISIBLE);
             bloodPressureViewHolder.img_arrow_high_crisis.setVisibility(View.INVISIBLE);
-            bloodPressureViewHolder.img_arrow_low_hypotension.setVisibility(View.VISIBLE);  
+            bloodPressureViewHolder.img_arrow_low_hypotension.setVisibility(View.VISIBLE);
         } else if (trim5.equalsIgnoreCase(AppConstants.pressure_level_normal)) {
             bloodPressureViewHolder.img_arrow_low_hypotension.setVisibility(View.INVISIBLE);
             bloodPressureViewHolder.img_arrow_pre_hypertension.setVisibility(View.INVISIBLE);

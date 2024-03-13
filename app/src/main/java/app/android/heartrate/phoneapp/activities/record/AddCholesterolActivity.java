@@ -25,6 +25,12 @@ import android.widget.TimePicker;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
+
 import app.android.heartrate.phoneapp.AdAdmob;
 import app.android.heartrate.phoneapp.R;
 import app.android.heartrate.phoneapp.adapters.SpinnerProfileAdapter;
@@ -34,20 +40,12 @@ import app.android.heartrate.phoneapp.sqlite.SQLiteHealthTracker;
 import app.android.heartrate.phoneapp.utils.AppConstants;
 import app.android.heartrate.phoneapp.utils.EUGeneralClass;
 
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.Date;
-
 public class AddCholesterolActivity extends AppCompatActivity {
     public static Activity activity_add_cholesterol;
     SQLiteHealthTracker SQLite_health_tracker;
     int[] arrayProfileIds;
     String[] arrayProfileNames;
     ArrayList<UserProfileData> array_profiles = new ArrayList<>();
-
-    private String current_date_time = "";
     String date_time = "";
     int day;
     EditText et_hdl_value;
@@ -59,14 +57,8 @@ public class AddCholesterolActivity extends AppCompatActivity {
     Context mContext;
     int month;
     Animation push_animation;
-
     RelativeLayout rel_select_date;
     RelativeLayout rel_select_time;
-    private int save_entry_day;
-    private int save_entry_hour;
-    private int save_entry_minute;
-    private int save_entry_month;
-    private int save_entry_year;
     int selected_user_id;
     String selected_user_name = "";
     SpinnerProfileAdapter spinner_profile_adapter;
@@ -74,16 +66,19 @@ public class AddCholesterolActivity extends AppCompatActivity {
     TextView txt_date;
     TextView txt_time;
     int year;
-
+    private String current_date_time = "";
+    private int save_entry_day;
+    private int save_entry_hour;
+    private int save_entry_minute;
+    private int save_entry_month;
+    private int save_entry_year;
 
     @Override
     public void onCreate(Bundle bundle) {
         super.onCreate(bundle);
         SetView();
 
-        AdAdmob adAdmob = new AdAdmob(this);
-        adAdmob.FullscreenAd(this);
-        adAdmob.BannerAd(findViewById(R.id.banner), this);
+
         AppConstants.overridePendingTransitionEnter(this);
     }
 

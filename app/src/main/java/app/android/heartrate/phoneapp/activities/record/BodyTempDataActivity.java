@@ -26,6 +26,8 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.airbnb.lottie.LottieAnimationView;
 
+import java.util.ArrayList;
+
 import app.android.heartrate.phoneapp.AdAdmob;
 import app.android.heartrate.phoneapp.R;
 import app.android.heartrate.phoneapp.adapters.BodyTempDataAdapter;
@@ -35,8 +37,6 @@ import app.android.heartrate.phoneapp.model.classes.UserProfileData;
 import app.android.heartrate.phoneapp.sqlite.SQLiteHealthTracker;
 import app.android.heartrate.phoneapp.utils.AppConstants;
 import app.android.heartrate.phoneapp.utils.EUGeneralClass;
-
-import java.util.ArrayList;
 
 public class BodyTempDataActivity extends AppCompatActivity {
     public static String[] array_celsius_range;
@@ -54,6 +54,10 @@ public class BodyTempDataActivity extends AppCompatActivity {
     BodyTempDataTask body_temp_Data_task;
     String current_profile_name;
     int current_user_id;
+    boolean is_user_interact = false;
+    TextView lbl_no_data;
+    LottieAnimationView lottie_circular_loading;
+    RecyclerView recycler_temp_data;
     private final Handler data_handler = new Handler(Looper.getMainLooper()) {
 
 
@@ -90,12 +94,6 @@ public class BodyTempDataActivity extends AppCompatActivity {
             }
         }
     };
-
-    boolean is_user_interact = false;
-    TextView lbl_no_data;
-    LottieAnimationView lottie_circular_loading;
-    RecyclerView recycler_temp_data;
-
     SpinnerProfileAdapter spinner_profile_adapter;
     Spinner spinner_profiles;
 
@@ -105,9 +103,7 @@ public class BodyTempDataActivity extends AppCompatActivity {
         super.onCreate(bundle);
         SetView();
 
-        AdAdmob adAdmob = new AdAdmob(this);
-        adAdmob.FullscreenAd(this);
-        adAdmob.BannerAd(findViewById(R.id.banner), this);
+
         AppConstants.overridePendingTransitionEnter(this);
     }
 
@@ -178,49 +174,6 @@ public class BodyTempDataActivity extends AppCompatActivity {
         BodyTempDataTask bodyTempDataTask = new BodyTempDataTask();
         this.body_temp_Data_task = bodyTempDataTask;
         bodyTempDataTask.execute();
-    }
-
-
-    public class BodyTempDataTask extends AsyncTask<Void, Void, Void> {
-        private BodyTempDataTask() {
-        }
-
-        public void onPreExecute() {
-            super.onPreExecute();
-            BodyTempDataActivity.this.ShowProgressBar();
-        }
-
-        public Void doInBackground(Void... voidArr) {
-            try {
-                BodyTempDataActivity.array_celsius_range = new String[91];
-                BodyTempDataActivity.array_fahrenheit_range = new String[91];
-                BodyTempDataActivity.array_pulse_range = new String[ItemTouchHelper.Callback.DEFAULT_SWIPE_ANIMATION_DURATION];
-                for (int i = 0; i < BodyTempDataActivity.array_celsius_range.length; i++) {
-                    float f = ((float) ((i) + 330)) / 10.0f;
-                    BodyTempDataActivity.array_celsius_range[i] = String.valueOf(f);
-                    BodyTempDataActivity.array_fahrenheit_range[i] = String.valueOf(((float) Math.round(((f * 1.8f) + 32.0f) * 10.0f)) / 10.0f);
-                }
-                int i2 = 0;
-                while (i2 < BodyTempDataActivity.array_pulse_range.length) {
-                    int i3 = i2 + 1;
-                    BodyTempDataActivity.array_pulse_range[i2] = String.valueOf(i3);
-                    i2 = i3;
-                }
-                BodyTempDataActivity.this.array_temp_data.clear();
-                BodyTempDataActivity bodyTempDataActivity = BodyTempDataActivity.this;
-                bodyTempDataActivity.array_temp_data = (ArrayList) bodyTempDataActivity.SQLite_health_tracker.GetTemperatureDataByUserID(BodyTempDataActivity.this.current_user_id);
-                BodyTempDataActivity.this.data_handler.sendMessage(BodyTempDataActivity.this.data_handler.obtainMessage(0));
-                return null;
-            } catch (Exception e) {
-                e.printStackTrace();
-                BodyTempDataActivity.this.data_handler.sendMessage(BodyTempDataActivity.this.data_handler.obtainMessage(99));
-                return null;
-            }
-        }
-
-        public void onPostExecute(Void r1) {
-            super.onPostExecute(null);
-        }
     }
 
     public void ConformDeleteDialog(final int i) {
@@ -307,7 +260,6 @@ public class BodyTempDataActivity extends AppCompatActivity {
         return super.onOptionsItemSelected(menuItem);
     }
 
-
     @Override
     public void onResume() {
         super.onResume();
@@ -319,18 +271,58 @@ public class BodyTempDataActivity extends AppCompatActivity {
 
     }
 
-
     @Override
     public void onBackPressed() {
         super.onBackPressed();
 
     }
 
-
     private void BackScreen() {
         AppConstants.is_tools_interstitial_show = true;
 
         finish();
         AppConstants.overridePendingTransitionExit(this);
+    }
+
+    public class BodyTempDataTask extends AsyncTask<Void, Void, Void> {
+        private BodyTempDataTask() {
+        }
+
+        public void onPreExecute() {
+            super.onPreExecute();
+            BodyTempDataActivity.this.ShowProgressBar();
+        }
+
+        public Void doInBackground(Void... voidArr) {
+            try {
+                BodyTempDataActivity.array_celsius_range = new String[91];
+                BodyTempDataActivity.array_fahrenheit_range = new String[91];
+                BodyTempDataActivity.array_pulse_range = new String[ItemTouchHelper.Callback.DEFAULT_SWIPE_ANIMATION_DURATION];
+                for (int i = 0; i < BodyTempDataActivity.array_celsius_range.length; i++) {
+                    float f = ((float) ((i) + 330)) / 10.0f;
+                    BodyTempDataActivity.array_celsius_range[i] = String.valueOf(f);
+                    BodyTempDataActivity.array_fahrenheit_range[i] = String.valueOf(((float) Math.round(((f * 1.8f) + 32.0f) * 10.0f)) / 10.0f);
+                }
+                int i2 = 0;
+                while (i2 < BodyTempDataActivity.array_pulse_range.length) {
+                    int i3 = i2 + 1;
+                    BodyTempDataActivity.array_pulse_range[i2] = String.valueOf(i3);
+                    i2 = i3;
+                }
+                BodyTempDataActivity.this.array_temp_data.clear();
+                BodyTempDataActivity bodyTempDataActivity = BodyTempDataActivity.this;
+                bodyTempDataActivity.array_temp_data = (ArrayList) bodyTempDataActivity.SQLite_health_tracker.GetTemperatureDataByUserID(BodyTempDataActivity.this.current_user_id);
+                BodyTempDataActivity.this.data_handler.sendMessage(BodyTempDataActivity.this.data_handler.obtainMessage(0));
+                return null;
+            } catch (Exception e) {
+                e.printStackTrace();
+                BodyTempDataActivity.this.data_handler.sendMessage(BodyTempDataActivity.this.data_handler.obtainMessage(99));
+                return null;
+            }
+        }
+
+        public void onPostExecute(Void r1) {
+            super.onPostExecute(null);
+        }
     }
 }

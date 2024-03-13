@@ -2,13 +2,10 @@ package app.android.heartrate.phoneapp.fragments.support.feedback
 
 import android.os.Bundle
 import android.view.MenuItem
-import androidx.activity.enableEdgeToEdge
-import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import app.android.heartrate.phoneapp.R
 import app.android.heartrate.phoneapp.databinding.ActivityFeedbackBinding
-import app.android.heartrate.phoneapp.databinding.ActivityFqaBinding
 import app.android.heartrate.phoneapp.fragments.base.BaseActivity
 import app.android.heartrate.phoneapp.utils.CommonUtils
 

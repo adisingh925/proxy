@@ -4,10 +4,8 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import app.android.heartrate.phoneapp.databinding.FragmentAnalyticsFitnessBinding
 import app.android.heartrate.phoneapp.databinding.FragmentNewAppointmentBinding
 import app.android.heartrate.phoneapp.fragments.base.BaseFragment
-import app.android.heartrate.phoneapp.utils.CommonUtils
 
 class NewAppointmentDetailsFragment : BaseFragment() {
     private lateinit var binding: FragmentNewAppointmentBinding
@@ -15,7 +13,7 @@ class NewAppointmentDetailsFragment : BaseFragment() {
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         binding = FragmentNewAppointmentBinding.inflate(layoutInflater)
         return binding.root
     }

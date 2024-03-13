@@ -5,9 +5,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.fragment.app.Fragment
 import app.android.heartrate.phoneapp.databinding.FragmentHealthBinding
-import app.android.heartrate.phoneapp.databinding.FragmentWellnessBinding
 import app.android.heartrate.phoneapp.fragments.base.BaseFragment
 import app.android.heartrate.phoneapp.fragments.health.bp.BpActivity
 import app.android.heartrate.phoneapp.fragments.health.ekg.EkgActivity
@@ -25,7 +23,7 @@ class HealthFragment : BaseFragment() {
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         binding = FragmentHealthBinding.inflate(layoutInflater)
         return binding.root
     }

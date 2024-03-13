@@ -74,13 +74,13 @@ public final class RulerValuePicker extends FrameLayout implements ObservableHor
         addView(this.mHorizontalScrollView);
     }
 
-    
+
     public void onDraw(Canvas canvas) {
         super.onDraw(canvas);
         canvas.drawPath(this.mNotchPath, this.mNotchPaint);
     }
 
-    
+
     public void onLayout(boolean z, int i, int i2, int i3, int i4) {
         super.onLayout(z, i, i2, i3, i4);
         if (z) {
@@ -106,7 +106,7 @@ public final class RulerValuePicker extends FrameLayout implements ObservableHor
 
     public void selectValue(final int i) {
         this.mHorizontalScrollView.postDelayed(new Runnable() {
-            
+
 
             public void run() {
                 int i = 0;
@@ -277,7 +277,7 @@ public final class RulerValuePicker extends FrameLayout implements ObservableHor
 
     public static class SavedState extends BaseSavedState {
         public static final Creator<SavedState> CREATOR = new Creator<SavedState>() {
-            
+
 
             @Override
             public SavedState createFromParcel(Parcel parcel) {

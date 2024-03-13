@@ -22,6 +22,8 @@ import androidx.recyclerview.widget.DefaultItemAnimator;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import java.util.ArrayList;
+
 import app.android.heartrate.phoneapp.AdAdmob;
 import app.android.heartrate.phoneapp.R;
 import app.android.heartrate.phoneapp.adapters.HeartRateDataAdapter;
@@ -31,8 +33,6 @@ import app.android.heartrate.phoneapp.model.classes.UserProfileData;
 import app.android.heartrate.phoneapp.sqlite.SQLiteHealthTracker;
 import app.android.heartrate.phoneapp.utils.AppConstants;
 import app.android.heartrate.phoneapp.utils.EUGeneralClass;
-
-import java.util.ArrayList;
 
 public class HeartRateDataActivity extends AppCompatActivity {
     SQLiteHealthTracker SQLite_health_tracker;
@@ -50,7 +50,7 @@ public class HeartRateDataActivity extends AppCompatActivity {
     Context mContext;
     Animation push_animation;
     RecyclerView recycler_heart_rate;
-  
+
     SpinnerProfileAdapter spinner_profile_adapter;
     Spinner spinner_profiles;
     TextView txt_no_data;
@@ -61,15 +61,13 @@ public class HeartRateDataActivity extends AppCompatActivity {
         super.onCreate(bundle);
         SetView();
 
-        AdAdmob adAdmob = new AdAdmob(this);
-        adAdmob.FullscreenAd(this);
-        adAdmob.BannerAd(findViewById(R.id.banner), this);
+
         AppConstants.overridePendingTransitionEnter(this);
     }
 
     private void SetView() {
         setContentView(R.layout.activity_heart_rate_data_list);
-        
+
         this.mContext = this;
         this.push_animation = AnimationUtils.loadAnimation(this, R.anim.view_push);
         setUpActionBar();
@@ -107,7 +105,7 @@ public class HeartRateDataActivity extends AppCompatActivity {
             this.spinner_profiles.setAdapter(spinnerProfileAdapter);
         }
         this.spinner_profiles.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-            
+
 
             @Override
             public void onNothingSelected(AdapterView<?> adapterView) {
@@ -135,7 +133,7 @@ public class HeartRateDataActivity extends AppCompatActivity {
         if (arrayList.size() > 0) {
             this.txt_no_data.setVisibility(View.GONE);
             HeartRateDataAdapter r0 = new HeartRateDataAdapter(this, this.array_heart_rate_data) {
-                
+
 
                 @Override
                 public void onHeartRateAdapterClickItem(int i, View view) {
@@ -168,7 +166,7 @@ public class HeartRateDataActivity extends AppCompatActivity {
         button.setText("Delete");
         button2.setText("Cancel");
         button.setOnClickListener(new View.OnClickListener() {
-            
+
 
             public void onClick(View view) {
                 try {
@@ -182,7 +180,7 @@ public class HeartRateDataActivity extends AppCompatActivity {
             }
         });
         button2.setOnClickListener(new View.OnClickListener() {
-            
+
 
             public void onClick(View view) {
                 dialog.dismiss();
@@ -200,7 +198,7 @@ public class HeartRateDataActivity extends AppCompatActivity {
         ((TextView) findViewById(R.id.toolbar_txt_title_1)).setText(getResources().getString(R.string.lbl_header_heart));
         ((TextView) findViewById(R.id.toolbar_txt_title_2)).setText(getResources().getString(R.string.lbl_header_rate_data));
         findViewById(R.id.tool_bar_rel_add_user).setOnClickListener(new View.OnClickListener() {
-            
+
 
             public void onClick(View view) {
                 AppConstants.is_heart_rate_edit_mode = false;
@@ -208,13 +206,13 @@ public class HeartRateDataActivity extends AppCompatActivity {
             }
         });
         findViewById(R.id.toolbar_rel_back).setOnClickListener(new View.OnClickListener() {
-            
+
 
             public void onClick(View view) {
                 HeartRateDataActivity.this.onBackPressed();
             }
         });
-        setSupportActionBar( findViewById(R.id.toolbar_actionbar));
+        setSupportActionBar(findViewById(R.id.toolbar_actionbar));
         ActionBar supportActionBar = getSupportActionBar();
         supportActionBar.setDisplayShowTitleEnabled(false);
         supportActionBar.setDisplayHomeAsUpEnabled(false);

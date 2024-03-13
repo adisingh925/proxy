@@ -16,7 +16,7 @@ class AnalyticsStressFragment : BaseFragment() {
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         binding = FragmentAnalyticsStressBinding.inflate(layoutInflater)
         return binding.root
     }

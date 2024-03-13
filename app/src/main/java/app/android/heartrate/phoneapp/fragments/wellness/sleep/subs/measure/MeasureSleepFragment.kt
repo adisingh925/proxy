@@ -6,7 +6,6 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.navigation.fragment.findNavController
 import app.android.heartrate.phoneapp.R
-import app.android.heartrate.phoneapp.databinding.FragmentMeasureFitnessBinding
 import app.android.heartrate.phoneapp.databinding.FragmentMeasureSleepBinding
 import app.android.heartrate.phoneapp.fragments.base.BaseFragment
 import app.android.heartrate.phoneapp.utils.CommonUtils
@@ -18,7 +17,7 @@ class MeasureSleepFragment : BaseFragment() {
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         binding = FragmentMeasureSleepBinding.inflate(layoutInflater)
         return binding.root
     }

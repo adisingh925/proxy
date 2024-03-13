@@ -6,7 +6,6 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.navigation.fragment.findNavController
 import app.android.heartrate.phoneapp.R
-import app.android.heartrate.phoneapp.databinding.FragmentMeasureBpBinding
 import app.android.heartrate.phoneapp.databinding.FragmentMeasureEkgBinding
 import app.android.heartrate.phoneapp.fragments.base.BaseFragment
 import app.android.heartrate.phoneapp.utils.CommonUtils
@@ -18,7 +17,7 @@ class MeasureEkgFragment : BaseFragment() {
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         binding = FragmentMeasureEkgBinding.inflate(layoutInflater)
         return binding.root
     }

@@ -2,12 +2,9 @@ package app.android.heartrate.phoneapp.fragments.health.ekg
 
 import android.os.Bundle
 import android.view.MenuItem
-import androidx.activity.enableEdgeToEdge
-import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import app.android.heartrate.phoneapp.R
-import app.android.heartrate.phoneapp.databinding.ActivityBpBinding
 import app.android.heartrate.phoneapp.databinding.ActivityEkgBinding
 import app.android.heartrate.phoneapp.fragments.base.BaseActivity
 import app.android.heartrate.phoneapp.utils.CommonUtils

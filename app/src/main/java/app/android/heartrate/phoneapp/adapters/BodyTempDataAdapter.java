@@ -12,20 +12,18 @@ import android.widget.TextView;
 
 import androidx.recyclerview.widget.RecyclerView;
 
-import app.android.heartrate.phoneapp.model.classes.BodyTempData;
-import app.android.heartrate.phoneapp.utils.AppConstants;
-import app.android.heartrate.phoneapp.R;
-import app.android.heartrate.phoneapp.sqlite.SQLiteHealthTracker;
-
 import java.util.List;
 
+import app.android.heartrate.phoneapp.R;
+import app.android.heartrate.phoneapp.model.classes.BodyTempData;
+import app.android.heartrate.phoneapp.sqlite.SQLiteHealthTracker;
+import app.android.heartrate.phoneapp.utils.AppConstants;
+
 public abstract class BodyTempDataAdapter extends RecyclerView.Adapter<BodyTempDataAdapter.ContactViewHolder> {
-    SQLiteHealthTracker SQLite_health_tracker;
     private final List<BodyTempData> arrayTempData;
     private final Context mContext;
+    SQLiteHealthTracker SQLite_health_tracker;
     Animation push_animation;
-
-    public abstract void onBodyTempAdapterClickItem(int i, View view);
 
     public BodyTempDataAdapter(List<BodyTempData> list, Context context) {
         this.arrayTempData = list;
@@ -35,6 +33,8 @@ public abstract class BodyTempDataAdapter extends RecyclerView.Adapter<BodyTempD
         this.SQLite_health_tracker = sQLiteHealthTracker;
         sQLiteHealthTracker.openToWrite();
     }
+
+    public abstract void onBodyTempAdapterClickItem(int i, View view);
 
     @Override
     public ContactViewHolder onCreateViewHolder(ViewGroup viewGroup, int i) {

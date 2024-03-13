@@ -15,7 +15,7 @@ class ChangePasswordFragment : BaseFragment() {
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         binding = FragmentSettingChangePasswordBinding.inflate(layoutInflater)
         return binding.root
     }

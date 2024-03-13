@@ -14,21 +14,19 @@ import android.widget.TextView;
 
 import androidx.recyclerview.widget.RecyclerView;
 
-import app.android.heartrate.phoneapp.model.classes.CholesterolData;
-import app.android.heartrate.phoneapp.utils.AppConstants;
-import app.android.heartrate.phoneapp.R;
-import app.android.heartrate.phoneapp.sqlite.SQLiteHealthTracker;
-
 import java.util.ArrayList;
 import java.util.List;
 
+import app.android.heartrate.phoneapp.R;
+import app.android.heartrate.phoneapp.model.classes.CholesterolData;
+import app.android.heartrate.phoneapp.sqlite.SQLiteHealthTracker;
+import app.android.heartrate.phoneapp.utils.AppConstants;
+
 public abstract class CholesterolDataAdapter extends RecyclerView.Adapter<CholesterolDataAdapter.CholesterolViewHolder> {
-    SQLiteHealthTracker SQLite_health_tracker;
     private final List<CholesterolData> array_data;
     private final Context mContext;
+    SQLiteHealthTracker SQLite_health_tracker;
     Animation push_animation;
-
-    public abstract void onCholesterolAdapterClickItem(int i, View view);
 
     public CholesterolDataAdapter(Context context, ArrayList<CholesterolData> arrayList) {
         this.array_data = arrayList;
@@ -38,6 +36,8 @@ public abstract class CholesterolDataAdapter extends RecyclerView.Adapter<Choles
         this.SQLite_health_tracker = sQLiteHealthTracker;
         sQLiteHealthTracker.openToWrite();
     }
+
+    public abstract void onCholesterolAdapterClickItem(int i, View view);
 
     @Override
     public CholesterolViewHolder onCreateViewHolder(ViewGroup viewGroup, int i) {

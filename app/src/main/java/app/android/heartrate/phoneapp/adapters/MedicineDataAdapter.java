@@ -22,12 +22,10 @@ import app.android.heartrate.phoneapp.sqlite.SQLiteHealthTracker;
 
 
 public abstract class MedicineDataAdapter extends RecyclerView.Adapter<MedicineDataAdapter.MedicineViewHolder> {
-    SQLiteHealthTracker SQLite_health_tracker;
     private final List<MedicineData> array_data;
     private final Context mContext;
+    SQLiteHealthTracker SQLite_health_tracker;
     Animation push_animation;
-
-    public abstract void onMedicineAdapterClickItem(int i, View view);
 
     public MedicineDataAdapter(Context context, ArrayList<MedicineData> arrayList) {
         this.array_data = arrayList;
@@ -37,6 +35,8 @@ public abstract class MedicineDataAdapter extends RecyclerView.Adapter<MedicineD
         this.SQLite_health_tracker = sQLiteHealthTracker;
         sQLiteHealthTracker.openToWrite();
     }
+
+    public abstract void onMedicineAdapterClickItem(int i, View view);
 
     @Override
     public MedicineViewHolder onCreateViewHolder(ViewGroup viewGroup, int i) {

@@ -1,11 +1,8 @@
 package app.android.heartrate.phoneapp.utils
 
 import android.app.Activity
-import android.content.Context
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
-import androidx.navigation.NavController
-import androidx.navigation.ui.AppBarConfiguration
 
 object CommonUtils {
 
@@ -24,7 +21,8 @@ object CommonUtils {
     }
 
     fun updateToolbarTitle(title: String, activity: Activity) {
-        val actionBar: androidx.appcompat.app.ActionBar? = (activity as AppCompatActivity).supportActionBar
+        val actionBar: androidx.appcompat.app.ActionBar? =
+            (activity as AppCompatActivity).supportActionBar
         actionBar?.apply {
             setTitle(title)
         }

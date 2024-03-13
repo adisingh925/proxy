@@ -26,6 +26,12 @@ import android.widget.TimePicker;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
+
 import app.android.heartrate.phoneapp.R;
 import app.android.heartrate.phoneapp.adapters.SpinnerProfileAdapter;
 import app.android.heartrate.phoneapp.model.classes.BMICalcForKg;
@@ -36,12 +42,6 @@ import app.android.heartrate.phoneapp.model.classes.UserProfileData;
 import app.android.heartrate.phoneapp.sqlite.SQLiteHealthTracker;
 import app.android.heartrate.phoneapp.utils.AppConstants;
 import app.android.heartrate.phoneapp.utils.EUGeneralClass;
-
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.Date;
 
 public class AddBMIDataActivity extends AppCompatActivity {
     public static final int IMPERIAL_SYSTEM_INDEX = 2;
@@ -55,7 +55,6 @@ public class AddBMIDataActivity extends AppCompatActivity {
     String[] arrayProfileNames;
     ArrayList<UserProfileData> array_profiles = new ArrayList<>();
     String current_date = "";
-    private String current_date_time = "";
     String current_time = "";
     String date = "";
     String date_time = "";
@@ -68,7 +67,6 @@ public class AddBMIDataActivity extends AppCompatActivity {
     String heightUnit = "";
     float height_value = 0.0f;
     int hour;
-    private int indexOfCheckedItemInMenu;
     TextView lbl_imperial;
     TextView lbl_metric;
     LinearLayout lin_imperial;
@@ -78,11 +76,6 @@ public class AddBMIDataActivity extends AppCompatActivity {
     Animation push_animation;
     RelativeLayout rel_select_date;
     RelativeLayout rel_select_time;
-    private int save_entry_day;
-    private int save_entry_hour;
-    private int save_entry_minute;
-    private int save_entry_month;
-    private int save_entry_year;
     int selected_user_id;
     String selected_user_name = "";
     SpinnerProfileAdapter spinner_profile_adapter;
@@ -98,6 +91,13 @@ public class AddBMIDataActivity extends AppCompatActivity {
     String weightUnit = "";
     float weight_value = 0.0f;
     int year;
+    private String current_date_time = "";
+    private int indexOfCheckedItemInMenu;
+    private int save_entry_day;
+    private int save_entry_hour;
+    private int save_entry_minute;
+    private int save_entry_month;
+    private int save_entry_year;
 
     public double CalculateADAG(double d) {
         return (d * 28.7d) - 46.7d;
@@ -107,10 +107,10 @@ public class AddBMIDataActivity extends AppCompatActivity {
         return (d * 35.6d) - 77.3d;
     }
 
-    
-    @Override 
+
+    @Override
     public void onCreate(Bundle bundle) {
-       super.onCreate(bundle);
+        super.onCreate(bundle);
         SetView();
 
 
@@ -119,7 +119,7 @@ public class AddBMIDataActivity extends AppCompatActivity {
 
     private void SetView() {
         setContentView(R.layout.activity_add_bmi);
-        
+
         this.mContext = this;
         activity_add_bmi = this;
         this.push_animation = AnimationUtils.loadAnimation(this, R.anim.view_push);
@@ -157,7 +157,7 @@ public class AddBMIDataActivity extends AppCompatActivity {
             SetBMIData();
         }
         this.rel_select_date.setOnClickListener(new View.OnClickListener() {
-            
+
 
             public void onClick(View view) {
                 AddBMIDataActivity.this.hideSoftKeyboard();
@@ -166,7 +166,7 @@ public class AddBMIDataActivity extends AppCompatActivity {
                 AddBMIDataActivity.this.save_entry_month = instance.get(2);
                 AddBMIDataActivity.this.save_entry_day = instance.get(5);
                 new DatePickerDialog(AddBMIDataActivity.this, R.style.DialogTheme, new DatePickerDialog.OnDateSetListener() {
-                    
+
 
                     public void onDateSet(DatePicker datePicker, int i, int i2, int i3) {
                         try {
@@ -179,14 +179,14 @@ public class AddBMIDataActivity extends AppCompatActivity {
             }
         });
         this.rel_select_time.setOnClickListener(new View.OnClickListener() {
-            
+
 
             public void onClick(View view) {
                 Calendar instance = Calendar.getInstance();
                 AddBMIDataActivity.this.save_entry_hour = instance.get(11);
                 AddBMIDataActivity.this.save_entry_minute = instance.get(12);
                 new TimePickerDialog(AddBMIDataActivity.this, R.style.DialogTheme, new TimePickerDialog.OnTimeSetListener() {
-                    
+
 
                     public void onTimeSet(TimePicker timePicker, int i, int i2) {
                         try {
@@ -199,7 +199,7 @@ public class AddBMIDataActivity extends AppCompatActivity {
             }
         });
         this.lin_metric.setOnClickListener(new View.OnClickListener() {
-            
+
 
             public void onClick(View view) {
                 AddBMIDataActivity.this.indexOfCheckedItemInMenu = 1;
@@ -207,7 +207,7 @@ public class AddBMIDataActivity extends AppCompatActivity {
             }
         });
         this.lin_imperial.setOnClickListener(new View.OnClickListener() {
-            
+
 
             public void onClick(View view) {
                 AddBMIDataActivity.this.indexOfCheckedItemInMenu = 2;
@@ -216,7 +216,6 @@ public class AddBMIDataActivity extends AppCompatActivity {
         });
     }
 
- 
 
     private void SetMetricSystemUI() {
         this.lin_metric.setBackgroundResource(R.drawable.radio_unselected_bg);
@@ -234,7 +233,6 @@ public class AddBMIDataActivity extends AppCompatActivity {
         editText.setSelection(editText.getText().toString().length());
     }
 
- 
 
     private void SetImperialSystemUI() {
         this.lin_metric.setBackgroundResource(R.drawable.radio_unselected_bg);
@@ -268,13 +266,13 @@ public class AddBMIDataActivity extends AppCompatActivity {
             this.spinner_profiles.setAdapter(spinnerProfileAdapter);
         }
         this.spinner_profiles.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-            
 
-            @Override 
+
+            @Override
             public void onNothingSelected(AdapterView<?> adapterView) {
             }
 
-            @Override 
+            @Override
             public void onItemSelected(AdapterView<?> adapterView, View view, int i, long j) {
                 int i2 = AddBMIDataActivity.this.arrayProfileIds[i];
                 String trim = AddBMIDataActivity.this.arrayProfileNames[i].trim();
@@ -342,10 +340,7 @@ public class AddBMIDataActivity extends AppCompatActivity {
         EUGeneralClass.ShowErrorToast(this, "Something went wrong!");
     }
 
- 
 
-    
-    
     private void SaveProcess() {
         boolean z;
         try {
@@ -559,14 +554,14 @@ public class AddBMIDataActivity extends AppCompatActivity {
         ((TextView) findViewById(R.id.toolbar_txt_title_1)).setText(getResources().getString(R.string.lbl_header_add));
         ((TextView) findViewById(R.id.toolbar_txt_title_2)).setText(getResources().getString(R.string.lbl_header_bmi));
         findViewById(R.id.toolbar_rel_save).setOnClickListener(new View.OnClickListener() {
-            
+
 
             public void onClick(View view) {
                 AddBMIDataActivity.this.SaveProcess();
             }
         });
         findViewById(R.id.toolbar_rel_back).setOnClickListener(new View.OnClickListener() {
-            
+
 
             public void onClick(View view) {
                 AddBMIDataActivity.this.onBackPressed();
@@ -586,8 +581,8 @@ public class AddBMIDataActivity extends AppCompatActivity {
         return super.onOptionsItemSelected(menuItem);
     }
 
-    
-    @Override 
+
+    @Override
     public void onResume() {
         super.onResume();
     }

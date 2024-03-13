@@ -5,7 +5,6 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import app.android.heartrate.phoneapp.databinding.FragmentAnalyticsCalsBinding
-import app.android.heartrate.phoneapp.databinding.FragmentAnalyticsStepsBinding
 import app.android.heartrate.phoneapp.fragments.base.BaseFragment
 import app.android.heartrate.phoneapp.utils.CommonUtils
 
@@ -17,7 +16,7 @@ class AnalyticsCalBurnsFragment : BaseFragment() {
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         binding = FragmentAnalyticsCalsBinding.inflate(layoutInflater)
         return binding.root
     }

@@ -2,12 +2,9 @@ package app.android.heartrate.phoneapp.fragments.settings.logout
 
 import android.os.Bundle
 import android.view.MenuItem
-import androidx.activity.enableEdgeToEdge
-import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import app.android.heartrate.phoneapp.R
-import app.android.heartrate.phoneapp.databinding.ActivityLinkFamilyBinding
 import app.android.heartrate.phoneapp.databinding.ActivityLogoutBinding
 import app.android.heartrate.phoneapp.fragments.base.BaseActivity
 import app.android.heartrate.phoneapp.utils.CommonUtils
@@ -26,7 +23,6 @@ class LogoutActivity : BaseActivity() {
         }
         init()
     }
-
 
 
     private fun init() {

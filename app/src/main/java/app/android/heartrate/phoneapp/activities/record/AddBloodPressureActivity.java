@@ -25,6 +25,12 @@ import android.widget.TimePicker;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
+
 import app.android.heartrate.phoneapp.AdAdmob;
 import app.android.heartrate.phoneapp.R;
 import app.android.heartrate.phoneapp.adapters.SpinnerProfileAdapter;
@@ -34,12 +40,6 @@ import app.android.heartrate.phoneapp.sqlite.SQLiteHealthTracker;
 import app.android.heartrate.phoneapp.utils.AppConstants;
 import app.android.heartrate.phoneapp.utils.EUGeneralClass;
 
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.Date;
-
 public class AddBloodPressureActivity extends AppCompatActivity {
     public static Activity activity_add_blood_pressure;
     SQLiteHealthTracker SQLite_health_tracker;
@@ -48,7 +48,6 @@ public class AddBloodPressureActivity extends AppCompatActivity {
     ArrayList<UserProfileData> array_profiles = new ArrayList<>();
 
     String blood_pressure_result = "";
-    private String current_date_time = "";
     String date = "";
     String date_time = "";
     int day;
@@ -69,14 +68,8 @@ public class AddBloodPressureActivity extends AppCompatActivity {
     String pulse_rate_string = "";
     int pulse_rate_value = 0;
     Animation push_animation;
-
     RelativeLayout rel_select_date;
     RelativeLayout rel_select_time;
-    private int save_entry_day;
-    private int save_entry_hour;
-    private int save_entry_minute;
-    private int save_entry_month;
-    private int save_entry_year;
     int selected_user_id;
     String selected_user_name = "";
     SpinnerProfileAdapter spinner_profile_adapter;
@@ -90,16 +83,19 @@ public class AddBloodPressureActivity extends AppCompatActivity {
     TextView txt_pulse_pressure_level;
     TextView txt_time;
     int year;
-
+    private String current_date_time = "";
+    private int save_entry_day;
+    private int save_entry_hour;
+    private int save_entry_minute;
+    private int save_entry_month;
+    private int save_entry_year;
 
     @Override
 
     public void onCreate(Bundle bundle) {
         super.onCreate(bundle);
         SetView();
-        AdAdmob adAdmob = new AdAdmob(this);
-        adAdmob.FullscreenAd(this);
-        adAdmob.BannerAd(findViewById(R.id.banner), this);
+
         AppConstants.overridePendingTransitionEnter(this);
 
     }
@@ -340,8 +336,7 @@ public class AddBloodPressureActivity extends AppCompatActivity {
                 bloodPressureData.month = this.month;
                 bloodPressureData.year = this.year;
                 bloodPressureData.hour = this.hour;
-                Long insert = SQLite_health_tracker.InsertBloodPressureData(bloodPressureData);
-                Log.e(" insert ", " ===> " + insert);
+                SQLite_health_tracker.InsertBloodPressureData(bloodPressureData);
                 EUGeneralClass.ShowSuccessToast(this, AppConstants.data_saved_messages);
                 onBackPressed();
                 return;

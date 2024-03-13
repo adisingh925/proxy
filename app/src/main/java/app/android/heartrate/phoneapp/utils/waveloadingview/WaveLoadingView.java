@@ -40,10 +40,12 @@ public class WaveLoadingView extends View {
     private static final int DEFAULT_WAVE_PROGRESS_VALUE = 50;
     private static final int DEFAULT_WAVE_SHAPE = ShapeType.CIRCLE.ordinal();
     private static final float DEFAULT_WAVE_SHIFT_RATIO = 0.0f;
+    private final float mWaterLevelRatio;
+    private final float mWaveShiftRatio;
+    Paint mBorderPaint;
     private Bitmap bitmapBuffer;
     private float mAmplitudeRatio;
     private AnimatorSet mAnimatorSet;
-     Paint mBorderPaint;
     private String mBottomTitle;
     private Paint mBottomTitlePaint;
     private Paint mBottomTitleStrokePaint;
@@ -64,28 +66,12 @@ public class WaveLoadingView extends View {
     private Paint mTopTitlePaint;
     private Paint mTopTitleStrokePaint;
     private int mTriangleDirection;
-    private final float mWaterLevelRatio;
     private int mWaveBgColor;
     private Paint mWaveBgPaint;
     private int mWaveColor;
     private Paint mWavePaint;
     private BitmapShader mWaveShader;
-    private final float mWaveShiftRatio;
     private ObjectAnimator waveShiftAnim;
-
-    public enum ShapeType {
-        TRIANGLE,
-        CIRCLE,
-        SQUARE,
-        RECTANGLE
-    }
-
-    public enum TriangleDirection {
-        NORTH,
-        SOUTH,
-        EAST,
-        WEST
-    }
 
     public WaveLoadingView(Context context) {
         this(context, null);
@@ -181,7 +167,6 @@ public class WaveLoadingView extends View {
             if (!TextUtils.isEmpty(this.mCenterTitle)) {
 
 
-
             }
             if (!TextUtils.isEmpty(this.mBottomTitle)) {
                 float measureText3 = this.mBottomTitlePaint.measureText(this.mBottomTitle);
@@ -194,7 +179,6 @@ public class WaveLoadingView extends View {
         this.mWavePaint.setShader(null);
     }
 
-    
     public void onSizeChanged(int i, int i2, int i3, int i4) {
         super.onSizeChanged(i, i2, i3, i4);
         if (getShapeType() == 3) {
@@ -259,7 +243,6 @@ public class WaveLoadingView extends View {
         return getMeasuredWidth() != this.bitmapBuffer.getWidth() || getMeasuredHeight() != this.bitmapBuffer.getHeight();
     }
 
-    
     public void onMeasure(int i, int i2) {
         int measureWidth = measureWidth(i);
         int measureHeight = measureHeight(i2);
@@ -288,24 +271,9 @@ public class WaveLoadingView extends View {
         return size + 2;
     }
 
-
-
-
-
-
-
-
-
-
-
-
-
     public int getShapeType() {
         return this.mShapeType;
     }
-
-
-
 
     public void setProgressValue(int i) {
         this.mProgressValue = i;
@@ -317,17 +285,9 @@ public class WaveLoadingView extends View {
         animatorSet.start();
     }
 
-
-
-
-
-
     public void setCenterTitle(String str) {
         this.mCenterTitle = str;
     }
-
-
-
 
     public void startAnimation() {
         AnimatorSet animatorSet = this.mAnimatorSet;
@@ -336,18 +296,12 @@ public class WaveLoadingView extends View {
         }
     }
 
-
-
     public void cancelAnimation() {
         AnimatorSet animatorSet = this.mAnimatorSet;
         if (animatorSet != null) {
             animatorSet.cancel();
         }
     }
-
-
-
-
 
     private void initAnimation() {
         @SuppressLint("ObjectAnimatorBinding") ObjectAnimator ofFloat = ObjectAnimator.ofFloat(this, "waveShiftRatio", 0.0f, 1.0f);
@@ -360,13 +314,11 @@ public class WaveLoadingView extends View {
         animatorSet.play(this.waveShiftAnim);
     }
 
-    
     public void onAttachedToWindow() {
         startAnimation();
         super.onAttachedToWindow();
     }
 
-    
     public void onDetachedFromWindow() {
         cancelAnimation();
         super.onDetachedFromWindow();
@@ -423,5 +375,19 @@ public class WaveLoadingView extends View {
         path2.lineTo((float) point4.x, (float) point4.y);
         path2.lineTo((float) point2.x, (float) point2.y);
         return path2;
+    }
+
+    public enum ShapeType {
+        TRIANGLE,
+        CIRCLE,
+        SQUARE,
+        RECTANGLE
+    }
+
+    public enum TriangleDirection {
+        NORTH,
+        SOUTH,
+        EAST,
+        WEST
     }
 }

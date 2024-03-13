@@ -14,22 +14,20 @@ import android.widget.TextView;
 
 import androidx.recyclerview.widget.RecyclerView;
 
-import app.android.heartrate.phoneapp.model.classes.BMIData;
-import app.android.heartrate.phoneapp.utils.AppConstants;
-import app.android.heartrate.phoneapp.R;
-import app.android.heartrate.phoneapp.sqlite.SQLiteHealthTracker;
-
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 
+import app.android.heartrate.phoneapp.R;
+import app.android.heartrate.phoneapp.model.classes.BMIData;
+import app.android.heartrate.phoneapp.sqlite.SQLiteHealthTracker;
+import app.android.heartrate.phoneapp.utils.AppConstants;
+
 public abstract class BMIDataAdapter extends RecyclerView.Adapter<BMIDataAdapter.BMIViewHolder> {
-    SQLiteHealthTracker SQLite_health_tracker;
     private final List<BMIData> array_data;
     private final Context mContext;
+    SQLiteHealthTracker SQLite_health_tracker;
     Animation push_animation;
-
-    public abstract void onBMIAdapterClickItem(int i, View view);
 
     public BMIDataAdapter(Context context, ArrayList<BMIData> arrayList) {
         this.array_data = arrayList;
@@ -39,6 +37,8 @@ public abstract class BMIDataAdapter extends RecyclerView.Adapter<BMIDataAdapter
         this.SQLite_health_tracker = sQLiteHealthTracker;
         sQLiteHealthTracker.openToWrite();
     }
+
+    public abstract void onBMIAdapterClickItem(int i, View view);
 
     @Override
     public BMIViewHolder onCreateViewHolder(ViewGroup viewGroup, int i) {
@@ -65,10 +65,10 @@ public abstract class BMIDataAdapter extends RecyclerView.Adapter<BMIDataAdapter
         bMIViewHolder.txt_bmi_value.setText(String.format(Locale.US, "%.2f", Float.valueOf(parseFloat)));
         bMIViewHolder.txt_height_value.setText(trim6);
         TextView textView2 = bMIViewHolder.txt_height_unit;
-        textView2.setText("" + trim5 + "");
+        textView2.setText(trim5);
         bMIViewHolder.txt_weight_value.setText(trim8);
         TextView textView3 = bMIViewHolder.txt_weight_unit;
-        textView3.setText("" + trim7 + "");
+        textView3.setText(trim7);
         bMIViewHolder.txt_status.setText(GetBMIStatus(parseFloat, bMIViewHolder));
         bMIViewHolder.lin_bmi_status.setOnClickListener(new View.OnClickListener() {
 
@@ -98,55 +98,6 @@ public abstract class BMIDataAdapter extends RecyclerView.Adapter<BMIDataAdapter
     @Override
     public int getItemViewType(int i) {
         return super.getItemViewType(i);
-    }
-
-    public static class BMIViewHolder extends RecyclerView.ViewHolder {
-        ImageView img_arrow_moderately_obese;
-        ImageView img_arrow_normal;
-        ImageView img_arrow_overweight;
-        ImageView img_arrow_severely;
-        ImageView img_arrow_severely_obese;
-        ImageView img_arrow_underweight;
-        ImageView img_arrow_very_severely;
-        ImageView img_arrow_very_severely_obese;
-        LinearLayout lin_bmi_status;
-        RelativeLayout rel_delete;
-        RelativeLayout rel_edit;
-        TextView txt_bmi_value;
-        TextView txt_day;
-        TextView txt_height_unit;
-        TextView txt_height_value;
-        TextView txt_month;
-        TextView txt_status;
-        TextView txt_time;
-        TextView txt_weight_unit;
-        TextView txt_weight_value;
-        TextView txt_year;
-
-        public BMIViewHolder(View view) {
-            super(view);
-            this.txt_day = view.findViewById(R.id.row_bmi_txt_day);
-            this.txt_month = view.findViewById(R.id.row_bmi_txt_month);
-            this.txt_year = view.findViewById(R.id.row_bmi_txt_year);
-            this.txt_time = view.findViewById(R.id.row_bmi_txt_time);
-            this.txt_status = view.findViewById(R.id.row_bmi_txt_status);
-            this.txt_bmi_value = view.findViewById(R.id.row_bmi_txt_bmi_value);
-            this.txt_weight_unit = view.findViewById(R.id.row_bmi_txt_weight_unit);
-            this.txt_weight_value = view.findViewById(R.id.row_bmi_txt_weight);
-            this.txt_height_unit = view.findViewById(R.id.row_bmi_txt_height_unit);
-            this.txt_height_value = view.findViewById(R.id.row_bmi_txt_height);
-            this.lin_bmi_status = view.findViewById(R.id.row_bmi_lin_status);
-            this.img_arrow_very_severely = view.findViewById(R.id.row_bmi_img_very_severely);
-            this.img_arrow_severely = view.findViewById(R.id.row_bmi_img_severely);
-            this.img_arrow_underweight = view.findViewById(R.id.row_bmi_img_underweight);
-            this.img_arrow_normal = view.findViewById(R.id.row_bmi_img_normal);
-            this.img_arrow_overweight = view.findViewById(R.id.row_bmi_img_overweight);
-            this.img_arrow_moderately_obese = view.findViewById(R.id.row_bmi_img_moderately_obese);
-            this.img_arrow_severely_obese = view.findViewById(R.id.row_bmi_img_severely_obese);
-            this.img_arrow_very_severely_obese = view.findViewById(R.id.row_bmi_img_very_severely_obese);
-            this.rel_edit = view.findViewById(R.id.row_bmi_rel_edit);
-            this.rel_delete = view.findViewById(R.id.row_bmi_rel_delete);
-        }
     }
 
     private String GetBMIStatus(float f, BMIViewHolder bMIViewHolder) {
@@ -240,6 +191,55 @@ public abstract class BMIDataAdapter extends RecyclerView.Adapter<BMIDataAdapter
             bMIViewHolder.img_arrow_severely_obese.setVisibility(View.INVISIBLE);
             bMIViewHolder.img_arrow_very_severely_obese.setVisibility(View.VISIBLE);
             return str8;
+        }
+    }
+
+    public static class BMIViewHolder extends RecyclerView.ViewHolder {
+        ImageView img_arrow_moderately_obese;
+        ImageView img_arrow_normal;
+        ImageView img_arrow_overweight;
+        ImageView img_arrow_severely;
+        ImageView img_arrow_severely_obese;
+        ImageView img_arrow_underweight;
+        ImageView img_arrow_very_severely;
+        ImageView img_arrow_very_severely_obese;
+        LinearLayout lin_bmi_status;
+        RelativeLayout rel_delete;
+        RelativeLayout rel_edit;
+        TextView txt_bmi_value;
+        TextView txt_day;
+        TextView txt_height_unit;
+        TextView txt_height_value;
+        TextView txt_month;
+        TextView txt_status;
+        TextView txt_time;
+        TextView txt_weight_unit;
+        TextView txt_weight_value;
+        TextView txt_year;
+
+        public BMIViewHolder(View view) {
+            super(view);
+            this.txt_day = view.findViewById(R.id.row_bmi_txt_day);
+            this.txt_month = view.findViewById(R.id.row_bmi_txt_month);
+            this.txt_year = view.findViewById(R.id.row_bmi_txt_year);
+            this.txt_time = view.findViewById(R.id.row_bmi_txt_time);
+            this.txt_status = view.findViewById(R.id.row_bmi_txt_status);
+            this.txt_bmi_value = view.findViewById(R.id.row_bmi_txt_bmi_value);
+            this.txt_weight_unit = view.findViewById(R.id.row_bmi_txt_weight_unit);
+            this.txt_weight_value = view.findViewById(R.id.row_bmi_txt_weight);
+            this.txt_height_unit = view.findViewById(R.id.row_bmi_txt_height_unit);
+            this.txt_height_value = view.findViewById(R.id.row_bmi_txt_height);
+            this.lin_bmi_status = view.findViewById(R.id.row_bmi_lin_status);
+            this.img_arrow_very_severely = view.findViewById(R.id.row_bmi_img_very_severely);
+            this.img_arrow_severely = view.findViewById(R.id.row_bmi_img_severely);
+            this.img_arrow_underweight = view.findViewById(R.id.row_bmi_img_underweight);
+            this.img_arrow_normal = view.findViewById(R.id.row_bmi_img_normal);
+            this.img_arrow_overweight = view.findViewById(R.id.row_bmi_img_overweight);
+            this.img_arrow_moderately_obese = view.findViewById(R.id.row_bmi_img_moderately_obese);
+            this.img_arrow_severely_obese = view.findViewById(R.id.row_bmi_img_severely_obese);
+            this.img_arrow_very_severely_obese = view.findViewById(R.id.row_bmi_img_very_severely_obese);
+            this.rel_edit = view.findViewById(R.id.row_bmi_rel_edit);
+            this.rel_delete = view.findViewById(R.id.row_bmi_rel_delete);
         }
     }
 }

@@ -99,15 +99,9 @@ public class TrackerStatisticsActivity extends AppCompatActivity {
     String fahrenheit_legend_text = "Fahrenheit";
     float graph_left_axis_text_size = 12.0f;
     float graph_legend_text_size = 12.0f;
-    private BarChart graph_view_all;
-    private BarChart graph_view_custom;
-    private BarChart graph_view_monthly;
-    private BarChart graph_view_today;
-    private BarChart graph_view_yearly;
     float graph_x_axis_text_size = 12.0f;
     String hdl_legend_text = "HDL";
     String heart_rate_legend_text = "Heart Rate";
-
     boolean is_chart_legend_visible = true;
     boolean is_user_interact = false;
     TextView lbl_no_data;
@@ -115,31 +109,32 @@ public class TrackerStatisticsActivity extends AppCompatActivity {
     LinearLayout lin_bottom_label;
     String pulse_legend_text = "Pulse";
     Animation push_animation;
-
     int saved_temp_data_count = 0;
     SpinnerProfileAdapter spinner_profile_adapter;
     Spinner spinner_profiles;
     Spinner spinner_report_duration;
     Spinner spinner_report_types;
-    private int start_date_day;
-    private int start_date_month;
-    private int start_date_year;
     String systolic_legend_text = "Systolic";
     Typeface tf_quick_bold;
     Typeface tf_roboto;
     String triglyceride_legend_text = "Triglyceride";
     TextView txt_chart_type;
     String weight_legend_text = "Weight";
-
+    private BarChart graph_view_all;
+    private BarChart graph_view_custom;
+    private BarChart graph_view_monthly;
+    private BarChart graph_view_today;
+    private BarChart graph_view_yearly;
+    private int start_date_day;
+    private int start_date_month;
+    private int start_date_year;
 
     @Override
     public void onCreate(Bundle bundle) {
         super.onCreate(bundle);
         SetView();
 
-        AdAdmob adAdmob = new AdAdmob(this);
-        adAdmob.FullscreenAd(this);
-        adAdmob.BannerAd(findViewById(R.id.banner), this);
+
         AppConstants.overridePendingTransitionEnter(this);
     }
 

@@ -1,24 +1,12 @@
 package app.android.heartrate.phoneapp.fragments.wellness.fitness
 
 import android.os.Bundle
-import android.view.LayoutInflater
 import android.view.MenuItem
-import android.view.View
-import android.view.ViewGroup
-import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
-import androidx.appcompat.widget.Toolbar
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
-import androidx.navigation.Navigation.findNavController
-import androidx.navigation.findNavController
-import androidx.navigation.ui.AppBarConfiguration
-import androidx.navigation.ui.navigateUp
-import androidx.navigation.ui.setupWithNavController
 import app.android.heartrate.phoneapp.R
 import app.android.heartrate.phoneapp.databinding.ActivityFitnessBinding
-import app.android.heartrate.phoneapp.fragments.base.BaseActivity
-import app.android.heartrate.phoneapp.fragments.base.BaseFragment
 import app.android.heartrate.phoneapp.utils.CommonUtils
 
 class FitnessActivity : AppCompatActivity() {
@@ -52,7 +40,6 @@ class FitnessActivity : AppCompatActivity() {
             else -> return super.onOptionsItemSelected(item)
         }
     }
-
 
 
 }

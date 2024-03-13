@@ -17,7 +17,7 @@ class MeasureStressFragment : BaseFragment() {
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         binding = FragmentMeasureStressBinding.inflate(layoutInflater)
         return binding.root
     }

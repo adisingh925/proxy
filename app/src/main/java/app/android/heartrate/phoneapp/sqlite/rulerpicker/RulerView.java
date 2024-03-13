@@ -7,7 +7,6 @@ import android.util.AttributeSet;
 import android.view.View;
 
 
-
 public final class RulerView extends View {
     private int mIndicatorColor = -1;
     private int mIndicatorInterval = 14;
@@ -64,7 +63,7 @@ public final class RulerView extends View {
         requestLayout();
     }
 
-    
+
     public void onDraw(Canvas canvas) {
         for (int i = 1; i < this.mMaxValue - this.mMinValue; i++) {
             if (i % 5 == 0) {
@@ -79,7 +78,7 @@ public final class RulerView extends View {
         super.onDraw(canvas);
     }
 
-    
+
     public void onMeasure(int i, int i2) {
         this.mViewHeight = MeasureSpec.getSize(i2);
         int i3 = ((this.mMaxValue - this.mMinValue) - 1) * this.mIndicatorInterval;
@@ -107,73 +106,73 @@ public final class RulerView extends View {
         canvas.drawText(String.valueOf(this.mMinValue + i), (float) (this.mIndicatorInterval * i), ((float) this.mLongIndicatorHeight) + this.mTextPaint.getTextSize(), this.mTextPaint);
     }
 
-    
+
     public int getTextColor() {
         return this.mIndicatorColor;
     }
 
-    
+
     public void setTextColor(int i) {
         this.mTextColor = i;
         refreshPaint();
     }
 
-    
+
     public float getTextSize() {
         return (float) this.mTextSize;
     }
 
-    
+
     public void setTextSize(int i) {
         this.mTextSize = RulerViewUtils.sp2px(getContext(), (float) i);
         refreshPaint();
     }
 
-    
+
     public int getIndicatorColor() {
         return this.mIndicatorColor;
     }
 
-    
+
     public void setIndicatorColor(int i) {
         this.mIndicatorColor = i;
         refreshPaint();
     }
 
-    
+
     public float getIndicatorWidth() {
         return this.mIndicatorWidthPx;
     }
 
-    
+
     public void setIndicatorWidth(int i) {
         this.mIndicatorWidthPx = (float) i;
         refreshPaint();
     }
 
-    
+
     public int getMinValue() {
         return this.mMinValue;
     }
 
-    
+
     public int getMaxValue() {
         return this.mMaxValue;
     }
 
-    
+
     public void setValueRange(int i, int i2) {
         this.mMinValue = i;
         this.mMaxValue = i2;
         invalidate();
     }
 
-    
+
     public int getIndicatorIntervalWidth() {
         return this.mIndicatorInterval;
     }
 
-    
+
     public void setIndicatorIntervalDistance(int i) {
         if (i > 0) {
             this.mIndicatorInterval = i;
@@ -183,17 +182,17 @@ public final class RulerView extends View {
         throw new IllegalArgumentException("Interval cannot be negative or zero.");
     }
 
-    
+
     public float getLongIndicatorHeightRatio() {
         return this.mLongIndicatorHeightRatio;
     }
 
-    
+
     public float getShortIndicatorHeightRatio() {
         return this.mShortIndicatorHeightRatio;
     }
 
-    
+
     public void setIndicatorHeight(float f, float f2) {
         if (f2 < 0.0f || f2 > 1.0f) {
             throw new IllegalArgumentException("Sort indicator height must be between 0 to 1.");

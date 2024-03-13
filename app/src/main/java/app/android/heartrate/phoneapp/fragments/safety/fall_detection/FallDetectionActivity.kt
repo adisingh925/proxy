@@ -2,14 +2,11 @@ package app.android.heartrate.phoneapp.fragments.safety.fall_detection
 
 import android.os.Bundle
 import android.view.MenuItem
-import androidx.activity.enableEdgeToEdge
-import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import app.android.heartrate.phoneapp.R
 import app.android.heartrate.phoneapp.databinding.ActivityFallDetectionBinding
 import app.android.heartrate.phoneapp.fragments.base.BaseActivity
-import app.android.heartrate.phoneapp.fragments.safety.emergency_call.EmergencyCallActivity
 import app.android.heartrate.phoneapp.utils.CommonUtils
 
 class FallDetectionActivity : BaseActivity() {

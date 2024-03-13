@@ -42,17 +42,13 @@ public class RoundedBarChart extends BarChart {
     private void readRadiusAttr(Context context, AttributeSet attributeSet) {
 
 
-
-
-
-
     }
 
     public void setRadius(int i) {
         setRenderer(new RoundedBarChartRenderer(this, getAnimator(), getViewPortHandler(), i));
     }
 
- 
+
     public class RoundedBarChartRenderer extends BarChartRenderer {
         private final RectF mBarShadowRectBuffer = new RectF();
         private int mRadius = 50;
@@ -65,7 +61,7 @@ public class RoundedBarChart extends BarChart {
             this.mRadius = i;
         }
 
-        
+
         @Override
         public void drawDataSet(Canvas canvas, IBarDataSet iBarDataSet, int i) {
             Transformer transformer = this.mChart.getTransformer(iBarDataSet.getAxisDependency());

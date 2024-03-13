@@ -15,7 +15,7 @@ class MedicationDetailsFragment : BaseFragment() {
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         binding = FragmentMedicationDetailsBinding.inflate(layoutInflater)
         return binding.root
     }

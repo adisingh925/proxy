@@ -13,20 +13,18 @@ import android.widget.TextView;
 
 import androidx.recyclerview.widget.RecyclerView;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import app.android.heartrate.phoneapp.R;
 import app.android.heartrate.phoneapp.model.classes.WeightData;
 import app.android.heartrate.phoneapp.sqlite.SQLiteHealthTracker;
 
-import java.util.ArrayList;
-import java.util.List;
-
 public abstract class WeightDataAdapter extends RecyclerView.Adapter<WeightDataAdapter.WeightViewHolder> {
-    SQLiteHealthTracker SQLite_health_tracker;
     private final List<WeightData> array_data;
     private final Context mContext;
+    SQLiteHealthTracker SQLite_health_tracker;
     Animation push_animation;
-
-    public abstract void onWeightAdapterClickItem(int i, View view);
 
     public WeightDataAdapter(Context context, ArrayList<WeightData> arrayList) {
         this.array_data = arrayList;
@@ -36,6 +34,8 @@ public abstract class WeightDataAdapter extends RecyclerView.Adapter<WeightDataA
         this.SQLite_health_tracker = sQLiteHealthTracker;
         sQLiteHealthTracker.openToWrite();
     }
+
+    public abstract void onWeightAdapterClickItem(int i, View view);
 
     @Override
     public WeightViewHolder onCreateViewHolder(ViewGroup viewGroup, int i) {
