@@ -2195,7 +2195,7 @@ public class SQLiteHealthTracker {
                             }
                             try {
                                 arrayList.add(bloodSugarData);
-                                if (rawQuery.moveToNext()) {
+                                if (!rawQuery.moveToNext()) {
                                     return arrayList;
                                 }
                                 arrayList2 = arrayList;
@@ -4417,7 +4417,7 @@ public class SQLiteHealthTracker {
                         }
                         try {
                             arrayList.add(cholesterolData);
-                            if (rawQuery.moveToNext()) {
+                            if (!rawQuery.moveToNext()) {
                                 return arrayList;
                             }
                             rawQuery = rawQuery;
@@ -5251,7 +5251,7 @@ public class SQLiteHealthTracker {
                             }
                             try {
                                 arrayList.add(heartRateData);
-                                if (rawQuery.moveToNext()) {
+                                if (!rawQuery.moveToNext()) {
                                     return arrayList;
                                 }
                                 arrayList2 = arrayList;
