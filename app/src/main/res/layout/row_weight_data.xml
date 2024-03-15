@@ -16,10 +16,20 @@
         app:cardCornerRadius="@dimen/app_card_radius"
         app:cardElevation="@dimen/_2sdp">
 
-        <LinearLayout
+        <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical">
+
+            <LinearLayout
+                android:id="@+id/llMain"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toStartOf="@+id/row_bs_lin_buttons"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent">
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -44,7 +54,7 @@
                         android:gravity="center_vertical"
                         android:text="Day"
                         android:textColor="@color/app_text_color"
-                        android:textSize="@dimen/_12sdp" />
+                        android:textSize="@dimen/_10sdp" />
 
                     <TextView
                         android:id="@+id/row_weight_txt_month"
@@ -55,7 +65,7 @@
                         android:layout_toRightOf="@+id/row_weight_txt_day"
                         android:text="Month,"
                         android:textColor="@color/app_text_color"
-                        android:textSize="@dimen/_12sdp" />
+                        android:textSize="@dimen/_10sdp" />
 
                     <TextView
                         android:id="@+id/row_weight_txt_year"
@@ -66,7 +76,7 @@
                         android:layout_toRightOf="@+id/row_weight_txt_month"
                         android:text="Year"
                         android:textColor="@color/app_text_color"
-                        android:textSize="@dimen/_12sdp" />
+                        android:textSize="@dimen/_10sdp" />
                 </RelativeLayout>
 
                 <TextView
@@ -81,7 +91,7 @@
                     android:textSize="@dimen/row_title_text_size" />
             </LinearLayout>
 
-            <RelativeLayout
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="@dimen/_10sdp"
@@ -94,30 +104,27 @@
                     android:id="@+id/row_weight_txt_weight"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_centerHorizontal="true"
                     android:text="@string/lbl_dash"
                     android:textColor="@color/row_text_color_blue"
-                    android:textSize="@dimen/_16sdp" />
+                    android:textSize="@dimen/_12sdp" />
 
                 <TextView
                     android:id="@+id/row_weight_lbl_kg"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_below="@+id/row_weight_txt_weight"
-                    android:layout_centerHorizontal="true"
-                    android:fontFamily="@font/roboto_regular"
                     android:text="@string/lbl_kg"
+                    android:layout_marginLeft="4dp"
                     android:textAllCaps="true"
                     android:textColor="@color/row_text_color"
-                    android:textSize="@dimen/_10sdp" />
+                    android:textSize="@dimen/_8sdp" />
 
                 <ImageView
                     android:layout_width="@dimen/_356sdp"
                     android:layout_height="@dimen/_100sdp"
-                    android:layout_below="@+id/row_weight_lbl_kg"
                     android:layout_marginTop="@dimen/_5sdp"
+                    android:visibility="gone"
                     android:src="@drawable/ic_row_round_scale" />
-            </RelativeLayout>
+            </LinearLayout>
 
             <LinearLayout
                 android:id="@+id/row_weight_lin_notes"
@@ -139,69 +146,64 @@
                     android:textSize="@dimen/row_summery_text_size" />
             </LinearLayout>
 
-            <LinearLayout
+            </LinearLayout>
+
+
+
+            <androidx.constraintlayout.widget.ConstraintLayout
                 android:id="@+id/row_bs_lin_buttons"
-                android:layout_width="match_parent"
-                android:layout_height="@dimen/_35sdp"
-                android:layout_marginTop="@dimen/_10sdp"
-                android:gravity="center">
+                android:layout_width="60dp"
+                android:layout_height="0dp"
+                android:gravity="center"
+                android:orientation="vertical"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@+id/llMain"
+                app:layout_constraintTop_toTopOf="parent">
 
                 <RelativeLayout
                     android:id="@+id/row_weight_rel_edit"
                     android:layout_width="0dp"
-                    android:layout_height="match_parent"
+                    android:layout_height="0dp"
                     android:layout_weight="1"
                     android:background="@drawable/row_edit_button_selector"
-                    android:gravity="center">
+                    android:gravity="center"
+                    app:layout_constraintBottom_toTopOf="@+id/row_weight_rel_delete"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent">
 
                     <ImageView
-                        android:id="@+id/row_weight_img_edit"
+                        android:id="@+id/row_medicine_img_edit"
                         android:layout_width="@dimen/_15sdp"
                         android:layout_height="@dimen/_15sdp"
                         android:layout_centerVertical="true"
                         android:src="@drawable/ic_row_edit"
                         app:tint="@color/white" />
-
-                    <TextView
-                        android:id="@+id/row_weight_lbl_edit"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_centerVertical="true"
-                        android:layout_marginLeft="@dimen/_10sdp"
-                        android:layout_toRightOf="@+id/row_weight_img_edit"
-                        android:text="@string/lbl_edit"
-                        android:textColor="@color/white"
-                        android:textSize="@dimen/_12sdp" />
                 </RelativeLayout>
 
                 <RelativeLayout
                     android:id="@+id/row_weight_rel_delete"
                     android:layout_width="0dp"
-                    android:layout_height="match_parent"
+                    android:layout_height="0dp"
                     android:layout_weight="1"
                     android:background="@drawable/row_remove_button_selector"
-                    android:gravity="center">
+                    android:gravity="center"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/row_weight_rel_edit">
 
                     <ImageView
-                        android:id="@+id/row_weight_img_delete"
                         android:layout_width="@dimen/_15sdp"
                         android:layout_height="@dimen/_15sdp"
                         android:layout_centerVertical="true"
                         android:src="@drawable/ic_row_delete"
                         app:tint="@color/row_remove_text_color" />
 
-                    <TextView
-                        android:id="@+id/row_weight_lbl_delete"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_centerVertical="true"
-                        android:layout_marginLeft="@dimen/_10sdp"
-                        android:layout_toRightOf="@+id/row_weight_img_delete"
-                        android:text="@string/lbl_remove"
-                        android:textColor="@color/row_remove_text_color"
-                        android:textSize="@dimen/_12sdp" />
                 </RelativeLayout>
-            </LinearLayout>
-        </LinearLayout>
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
     </androidx.cardview.widget.CardView>
 </RelativeLayout>

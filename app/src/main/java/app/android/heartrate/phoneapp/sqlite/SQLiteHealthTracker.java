@@ -3028,7 +3028,7 @@ public class SQLiteHealthTracker {
                             }
                             try {
                                 arrayList.add(bMIData);
-                                if (rawQuery.moveToNext()) {
+                                if (!rawQuery.moveToNext()) {
                                     return arrayList;
                                 }
                                 arrayList2 = arrayList;

@@ -21,43 +21,51 @@
             android:layout_height="wrap_content"
             android:orientation="vertical">
 
-            <LinearLayout
+            <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
-                android:layout_height="@dimen/row_rel_date_time_height"
+                android:layout_height="wrap_content"
                 android:orientation="horizontal">
 
                 <RelativeLayout
+                    android:id="@+id/llTime"
                     android:layout_width="0dp"
+
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintBottom_toTopOf="@+id/llDate"
+                    app:layout_constraintEnd_toStartOf="@+id/llAction"
+                    android:layout_marginEnd="10dp"
                     android:layout_height="match_parent"
-                    android:layout_weight="1">
+                    >
 
                     <TextView
                         android:id="@+id/row_bc_txt_time"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_alignParentLeft="true"
-                        android:layout_centerVertical="true"
-                        android:layout_marginLeft="@dimen/_10sdp"
                         android:singleLine="true"
                         android:text="@string/lbl_time"
+                        android:layout_marginLeft="@dimen/_10sdp"
                         android:textColor="@color/row_header_text_color"
                         android:textSize="@dimen/row_title_text_size" />
                 </RelativeLayout>
-
                 <RelativeLayout
+                    android:id="@+id/llDate"
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
-                    android:layout_weight="1"
-                    android:gravity="right">
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/llTime"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toStartOf="@+id/llAction"
+                    android:layout_marginEnd="10dp"
+                    >
 
                     <TextView
                         android:id="@+id/row_bc_txt_day"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_alignParentLeft="true"
-                        android:layout_centerVertical="true"
-                        android:gravity="center_vertical"
                         android:text="Day"
+                        android:layout_marginLeft="@dimen/_10sdp"
+
                         android:textColor="@color/app_text_color"
                         android:textSize="@dimen/_12sdp" />
 
@@ -84,7 +92,52 @@
                         android:textColor="@color/app_text_color"
                         android:textSize="@dimen/_12sdp" />
                 </RelativeLayout>
-            </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/llAction"
+                    android:layout_marginEnd="5dp"
+                    android:layout_width="80dp"
+                    android:layout_height="@dimen/_30sdp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    android:layout_marginTop="@dimen/_10sdp"
+                    android:gravity="center">
+                    <RelativeLayout
+                        android:id="@+id/row_bc_rel_edit"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:background="@drawable/row_edit_button_selector"
+                        android:gravity="center">
+
+                        <ImageView
+                            android:id="@+id/row_bp_img_edit"
+                            android:layout_width="@dimen/_15sdp"
+                            android:layout_height="@dimen/_15sdp"
+                            android:layout_centerVertical="true"
+                            android:src="@drawable/ic_row_edit"
+                            app:tint="@color/white" />
+                    </RelativeLayout>
+                    <RelativeLayout
+                        android:id="@+id/row_bc_rel_delete"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:background="@drawable/row_remove_button_selector"
+                        android:gravity="center">
+
+                        <ImageView
+                            android:id="@+id/row_bp_img_delete"
+                            android:layout_width="@dimen/_15sdp"
+                            android:layout_height="@dimen/_15sdp"
+                            android:layout_centerVertical="true"
+                            android:src="@drawable/ic_row_delete"
+                            app:tint="@color/row_remove_text_color" />
+                    </RelativeLayout>
+                </LinearLayout>
+
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -104,7 +157,7 @@
 
                         <androidx.cardview.widget.CardView
                             android:layout_width="@dimen/_120sdp"
-                            android:layout_height="@dimen/_70sdp"
+                            android:layout_height="@dimen/_50sdp"
                             android:layout_centerInParent="true"
                             app:cardBackgroundColor="@color/row_rbc_bg_color"
                             app:cardCornerRadius="@dimen/app_card_radius"
@@ -118,12 +171,12 @@
 
                                 <RelativeLayout
                                     android:layout_width="match_parent"
-                                    android:layout_height="@dimen/_45sdp">
+                                    android:layout_height="@dimen/_35sdp">
 
                                     <ImageView
                                         android:id="@+id/row_bc_img_rbc_sign"
-                                        android:layout_width="@dimen/_35sdp"
-                                        android:layout_height="@dimen/_35sdp"
+                                        android:layout_width="@dimen/_30sdp"
+                                        android:layout_height="@dimen/_30sdp"
                                         android:layout_centerVertical="true"
                                         android:layout_marginLeft="@dimen/_10sdp"
                                         android:src="@drawable/ic_row_rbc" />
@@ -143,7 +196,7 @@
                                             android:layout_height="wrap_content"
                                             android:text="@string/lbl_dash"
                                             android:textColor="@color/row_bc_value_text_color"
-                                            android:textSize="@dimen/_14sdp" />
+                                            android:textSize="@dimen/_10sdp" />
 
                                         <TextView
                                             android:layout_width="wrap_content"
@@ -181,7 +234,7 @@
 
                         <androidx.cardview.widget.CardView
                             android:layout_width="@dimen/_120sdp"
-                            android:layout_height="@dimen/_70sdp"
+                            android:layout_height="@dimen/_50sdp"
                             android:layout_centerInParent="true"
                             app:cardBackgroundColor="#E8E8E8"
                             app:cardCornerRadius="@dimen/app_card_radius"
@@ -195,12 +248,12 @@
 
                                 <RelativeLayout
                                     android:layout_width="match_parent"
-                                    android:layout_height="@dimen/_45sdp">
+                                    android:layout_height="@dimen/_35sdp">
 
                                     <ImageView
                                         android:id="@+id/row_bc_img_wbc_sign"
-                                        android:layout_width="@dimen/_35sdp"
-                                        android:layout_height="@dimen/_35sdp"
+                                        android:layout_width="@dimen/_30sdp"
+                                        android:layout_height="@dimen/_30sdp"
                                         android:layout_centerVertical="true"
                                         android:layout_marginLeft="@dimen/_10sdp"
                                         android:src="@drawable/ic_row_wbc" />
@@ -220,7 +273,7 @@
                                             android:layout_height="wrap_content"
                                             android:text="@string/lbl_dash"
                                             android:textColor="@color/row_bc_value_text_color"
-                                            android:textSize="@dimen/_14sdp" />
+                                            android:textSize="@dimen/_10sdp" />
 
                                         <TextView
                                             android:layout_width="wrap_content"
@@ -265,7 +318,7 @@
 
                         <androidx.cardview.widget.CardView
                             android:layout_width="@dimen/_120sdp"
-                            android:layout_height="@dimen/_70sdp"
+                            android:layout_height="@dimen/_50sdp"
                             android:layout_centerInParent="true"
                             app:cardBackgroundColor="#E6FFE6"
                             app:cardCornerRadius="@dimen/app_card_radius"
@@ -279,12 +332,12 @@
 
                                 <RelativeLayout
                                     android:layout_width="match_parent"
-                                    android:layout_height="@dimen/_45sdp">
+                                    android:layout_height="@dimen/_35sdp">
 
                                     <ImageView
                                         android:id="@+id/row_bc_img_haemoglobin_sign"
-                                        android:layout_width="@dimen/_35sdp"
-                                        android:layout_height="@dimen/_35sdp"
+                                        android:layout_width="@dimen/_30sdp"
+                                        android:layout_height="@dimen/_30sdp"
                                         android:layout_centerVertical="true"
                                         android:layout_marginLeft="@dimen/_10sdp"
                                         android:src="@drawable/ic_row_hemoglobin" />
@@ -304,7 +357,7 @@
                                             android:layout_height="wrap_content"
                                             android:text="@string/lbl_dash"
                                             android:textColor="@color/row_bc_value_text_color"
-                                            android:textSize="@dimen/_14sdp" />
+                                            android:textSize="@dimen/_10sdp" />
 
                                         <TextView
                                             android:layout_width="wrap_content"
@@ -342,7 +395,7 @@
 
                         <androidx.cardview.widget.CardView
                             android:layout_width="@dimen/_120sdp"
-                            android:layout_height="@dimen/_70sdp"
+                            android:layout_height="@dimen/_50sdp"
                             android:layout_centerInParent="true"
                             app:cardBackgroundColor="#F1ECFD"
                             app:cardCornerRadius="@dimen/app_card_radius"
@@ -356,12 +409,12 @@
 
                                 <RelativeLayout
                                     android:layout_width="match_parent"
-                                    android:layout_height="@dimen/_45sdp">
+                                    android:layout_height="@dimen/_35sdp">
 
                                     <ImageView
                                         android:id="@+id/row_bc_img_platelets_sign"
-                                        android:layout_width="@dimen/_35sdp"
-                                        android:layout_height="@dimen/_35sdp"
+                                        android:layout_width="@dimen/_30sdp"
+                                        android:layout_height="@dimen/_30sdp"
                                         android:layout_centerVertical="true"
                                         android:layout_marginLeft="@dimen/_10sdp"
                                         android:src="@drawable/ic_row_platelets" />
@@ -381,7 +434,7 @@
                                             android:layout_height="wrap_content"
                                             android:text="@string/lbl_dash"
                                             android:textColor="@color/row_bc_value_text_color"
-                                            android:textSize="@dimen/_14sdp" />
+                                            android:textSize="@dimen/_10sdp" />
 
                                         <TextView
                                             android:layout_width="wrap_content"
@@ -419,7 +472,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="@dimen/_10sdp"
-                android:layout_marginTop="@dimen/_10sdp"
+                android:layout_marginTop="@dimen/_8sdp"
                 android:layout_marginRight="@dimen/_10sdp"
                 android:layout_marginBottom="@dimen/_5sdp"
                 android:orientation="horizontal">
@@ -435,68 +488,6 @@
                     android:textSize="@dimen/row_summery_text_size" />
             </LinearLayout>
 
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="@dimen/_35sdp"
-                android:layout_marginTop="@dimen/_10sdp"
-                android:gravity="center">
-
-                <RelativeLayout
-                    android:id="@+id/row_bc_rel_edit"
-                    android:layout_width="0dp"
-                    android:layout_height="match_parent"
-                    android:layout_weight="1"
-                    android:background="@drawable/row_edit_button_selector"
-                    android:gravity="center">
-
-                    <ImageView
-                        android:id="@+id/row_bc_img_edit"
-                        android:layout_width="@dimen/_15sdp"
-                        android:layout_height="@dimen/_15sdp"
-                        android:layout_centerVertical="true"
-                        android:src="@drawable/ic_row_edit"
-                        app:tint="@color/white" />
-
-                    <TextView
-                        android:id="@+id/row_bc_lbl_edit"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_centerVertical="true"
-                        android:layout_marginLeft="@dimen/_10sdp"
-                        android:layout_toRightOf="@+id/row_bc_img_edit"
-                        android:text="@string/lbl_edit"
-                        android:textColor="@color/white"
-                        android:textSize="@dimen/_12sdp" />
-                </RelativeLayout>
-
-                <RelativeLayout
-                    android:id="@+id/row_bc_rel_delete"
-                    android:layout_width="0dp"
-                    android:layout_height="match_parent"
-                    android:layout_weight="1"
-                    android:background="@drawable/row_remove_button_selector"
-                    android:gravity="center">
-
-                    <ImageView
-                        android:id="@+id/row_bc_img_delete"
-                        android:layout_width="@dimen/_15sdp"
-                        android:layout_height="@dimen/_15sdp"
-                        android:layout_centerVertical="true"
-                        android:src="@drawable/ic_row_delete"
-                        app:tint="@color/row_remove_text_color" />
-
-                    <TextView
-                        android:id="@+id/row_bc_lbl_delete"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_centerVertical="true"
-                        android:layout_marginLeft="@dimen/_10sdp"
-                        android:layout_toRightOf="@+id/row_bc_img_delete"
-                        android:text="@string/lbl_remove"
-                        android:textColor="@color/row_remove_text_color"
-                        android:textSize="@dimen/_12sdp" />
-                </RelativeLayout>
-            </LinearLayout>
         </LinearLayout>
     </androidx.cardview.widget.CardView>
 </RelativeLayout>

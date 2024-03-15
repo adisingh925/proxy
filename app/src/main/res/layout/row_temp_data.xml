@@ -17,13 +17,13 @@
 
         <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="@dimen/_240sdp"
+            android:layout_height="@dimen/_160sdp"
             android:background="@drawable/card_rel_selector">
 
             <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:layout_above="@+id/bt_row_lin_buttons">
+               >
 
                 <RelativeLayout
                     android:id="@+id/bt_row_rel_thermometer"
@@ -82,7 +82,7 @@
 
                         <ImageView
                             android:layout_width="@dimen/_40sdp"
-                            android:layout_height="@dimen/_100sdp"
+                            android:layout_height="@dimen/_50sdp"
                             android:layout_centerInParent="true"
                             android:src="@drawable/ic_row_thermometer" />
                     </RelativeLayout>
@@ -103,69 +103,124 @@
                         android:layout_marginBottom="@dimen/_5sdp"
                         android:orientation="horizontal">
 
-                        <TextView
-                            android:id="@+id/bt_row_txt_time"
+                        <LinearLayout
                             android:layout_width="0dp"
+                            android:layout_weight="1"
                             android:layout_height="wrap_content"
-                            android:layout_weight="0.5"
-                            android:gravity="left"
-                            android:singleLine="true"
-                            android:text="@string/lbl_time"
-                            android:textColor="@color/row_header_text_color"
-                            android:textSize="@dimen/_9sdp" />
+                            android:orientation="vertical">
+                            <TextView
+                                android:id="@+id/bt_row_txt_time"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="0.5"
+                                android:gravity="left"
+                                android:singleLine="true"
+                                android:text="@string/lbl_time"
+                                android:textColor="@color/row_header_text_color"
+                                android:textSize="@dimen/_9sdp" />
+                            <RelativeLayout
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:gravity="left">
 
-                        <RelativeLayout
+                                <TextView
+                                    android:id="@+id/bt_row_txt_day"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_alignParentLeft="true"
+                                    android:layout_centerVertical="true"
+                                    android:gravity="center_vertical"
+                                    android:text="Day"
+                                    android:textColor="@color/app_text_color"
+                                    android:textSize="@dimen/_9sdp" />
+
+                                <TextView
+                                    android:id="@+id/bt_row_txt_month"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_centerVertical="true"
+                                    android:layout_marginLeft="@dimen/_5sdp"
+                                    android:layout_toRightOf="@+id/bt_row_txt_day"
+                                    android:text="Month,"
+                                    android:textColor="@color/app_text_color"
+                                    android:textSize="@dimen/_9sdp" />
+
+                                <TextView
+                                    android:id="@+id/bt_row_txt_year"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_centerVertical="true"
+                                    android:layout_marginLeft="@dimen/_5sdp"
+                                    android:layout_toRightOf="@+id/bt_row_txt_month"
+                                    android:text="Year"
+                                    android:textColor="@color/app_text_color"
+                                    android:textSize="@dimen/_9sdp" />
+                            </RelativeLayout>
+
+                        </LinearLayout>
+
+
+
+                        <LinearLayout
                             android:layout_width="0dp"
-                            android:layout_height="wrap_content"
-                            android:layout_weight="1.5"
-                            android:gravity="right">
+                            android:id="@+id/bt_row_lin_buttons"
+                            android:layout_height="@dimen/_30sdp"
+                            android:layout_weight="1"
+                            android:layout_alignParentBottom="true"
+                            android:gravity="center"
+                            android:orientation="horizontal">
 
-                            <TextView
-                                android:id="@+id/bt_row_txt_day"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:layout_alignParentLeft="true"
-                                android:layout_centerVertical="true"
-                                android:gravity="center_vertical"
-                                android:text="Day"
-                                android:textColor="@color/app_text_color"
-                                android:textSize="@dimen/_9sdp" />
+                            <RelativeLayout
+                                android:id="@+id/bt_row_rel_edit"
+                                android:layout_width="0dp"
+                                android:layout_height="match_parent"
+                                android:layout_weight="1"
+                                android:background="@drawable/row_edit_button_selector"
+                                android:gravity="center">
 
-                            <TextView
-                                android:id="@+id/bt_row_txt_month"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:layout_centerVertical="true"
-                                android:layout_marginLeft="@dimen/_5sdp"
-                                android:layout_toRightOf="@+id/bt_row_txt_day"
-                                android:text="Month,"
-                                android:textColor="@color/app_text_color"
-                                android:textSize="@dimen/_9sdp" />
+                                <ImageView
+                                    android:id="@+id/bt_row_img_edit"
+                                    android:layout_width="@dimen/_15sdp"
+                                    android:layout_height="@dimen/_15sdp"
+                                    android:layout_centerVertical="true"
+                                    android:src="@drawable/ic_row_edit"
+                                    app:tint="@color/white" />
 
-                            <TextView
-                                android:id="@+id/bt_row_txt_year"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:layout_centerVertical="true"
-                                android:layout_marginLeft="@dimen/_5sdp"
-                                android:layout_toRightOf="@+id/bt_row_txt_month"
-                                android:text="Year"
-                                android:textColor="@color/app_text_color"
-                                android:textSize="@dimen/_9sdp" />
-                        </RelativeLayout>
+                            </RelativeLayout>
+
+                            <RelativeLayout
+                                android:id="@+id/bt_row_rel_delete"
+                                android:layout_width="0dp"
+                                android:layout_height="match_parent"
+                                android:layout_weight="1"
+                                android:background="@drawable/row_remove_button_selector"
+                                android:gravity="center">
+
+                                <ImageView
+                                    android:id="@+id/bt_row_img_delete"
+                                    android:layout_width="@dimen/_15sdp"
+                                    android:layout_height="@dimen/_15sdp"
+                                    android:layout_centerVertical="true"
+                                    android:src="@drawable/ic_row_delete"
+                                    app:tint="@color/row_remove_text_color" />
+
+                            </RelativeLayout>
+                        </LinearLayout>
+
+
+
                     </LinearLayout>
 
                     <RelativeLayout
                         android:id="@+id/bt_row_rel_middle"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="@dimen/_5sdp"
                         android:gravity="center_horizontal">
 
                         <androidx.cardview.widget.CardView
                             android:id="@+id/bt_row_card_fahrenheit"
                             android:layout_width="@dimen/_85sdp"
-                            android:layout_height="@dimen/_85sdp"
+                            android:layout_height="@dimen/_45sdp"
                             app:cardBackgroundColor="@color/row_fahrenheit_value_bg_color"
                             app:cardCornerRadius="@dimen/_10sdp"
                             app:cardElevation="0dp">
@@ -182,7 +237,7 @@
                                     android:layout_centerHorizontal="true"
                                     android:text="@string/lbl_dash"
                                     android:textColor="@color/white"
-                                    android:textSize="@dimen/_14sdp" />
+                                    android:textSize="@dimen/_10sdp" />
 
                                 <TextView
                                     android:id="@+id/bt_row_lbl_fahrenheit_desc"
@@ -214,7 +269,7 @@
                         <androidx.cardview.widget.CardView
                             android:id="@+id/bt_row_card_pulse"
                             android:layout_width="@dimen/_85sdp"
-                            android:layout_height="@dimen/_85sdp"
+                            android:layout_height="@dimen/_45sdp"
                             android:layout_marginLeft="@dimen/_10sdp"
                             android:layout_toRightOf="@+id/bt_row_card_fahrenheit"
                             app:cardBackgroundColor="@color/row_pulse_value_bg_color"
@@ -239,7 +294,7 @@
                                     android:layout_centerHorizontal="true"
                                     android:text="@string/lbl_dash"
                                     android:textColor="@color/white"
-                                    android:textSize="@dimen/_14sdp" />
+                                    android:textSize="@dimen/_10sdp" />
 
                                 <TextView
                                     android:id="@+id/bt_row_lbl_pulse"
@@ -271,7 +326,7 @@
                     <RelativeLayout
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
-                        android:layout_marginTop="@dimen/_5sdp"
+                        android:layout_marginTop="@dimen/_2sdp"
                         android:gravity="center">
 
                         <TextView
@@ -282,7 +337,7 @@
                             android:gravity="center"
                             android:text="@string/lbl_your_body_temp"
                             android:textColor="@color/text_color"
-                            android:textSize="@dimen/_10sdp"
+                            android:textSize="@dimen/_8sdp"
                             android:visibility="visible" />
 
                         <TextView
@@ -296,7 +351,7 @@
                             android:gravity="center"
                             android:text="@string/lbl_shows_that"
                             android:textColor="@color/text_color"
-                            android:textSize="@dimen/_10sdp"
+                            android:textSize="@dimen/_8sdp"
                             android:visibility="visible" />
 
                         <RelativeLayout
@@ -316,77 +371,13 @@
                                 android:gravity="center"
                                 android:text="@string/lbl_status_normal"
                                 android:textColor="@color/white"
-                                android:textSize="@dimen/_12sdp"
+                                android:textSize="@dimen/_10sdp"
                                 android:visibility="visible" />
                         </RelativeLayout>
                     </RelativeLayout>
                 </LinearLayout>
             </RelativeLayout>
 
-            <LinearLayout
-                android:id="@+id/bt_row_lin_buttons"
-                android:layout_width="match_parent"
-                android:layout_height="@dimen/_35sdp"
-                android:layout_alignParentBottom="true"
-                android:gravity="center"
-                android:orientation="horizontal">
-
-                <RelativeLayout
-                    android:id="@+id/bt_row_rel_edit"
-                    android:layout_width="0dp"
-                    android:layout_height="match_parent"
-                    android:layout_weight="1"
-                    android:background="@drawable/row_edit_button_selector"
-                    android:gravity="center">
-
-                    <ImageView
-                        android:id="@+id/bt_row_img_edit"
-                        android:layout_width="@dimen/_15sdp"
-                        android:layout_height="@dimen/_15sdp"
-                        android:layout_centerVertical="true"
-                        android:src="@drawable/ic_row_edit"
-                        app:tint="@color/white" />
-
-                    <TextView
-                        android:id="@+id/bt_row_lbl_edit"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_centerVertical="true"
-                        android:layout_marginLeft="@dimen/_10sdp"
-                        android:layout_toRightOf="@+id/bt_row_img_edit"
-                        android:text="@string/lbl_edit"
-                        android:textColor="@color/white"
-                        android:textSize="@dimen/_12sdp" />
-                </RelativeLayout>
-
-                <RelativeLayout
-                    android:id="@+id/bt_row_rel_delete"
-                    android:layout_width="0dp"
-                    android:layout_height="match_parent"
-                    android:layout_weight="1"
-                    android:background="@drawable/row_remove_button_selector"
-                    android:gravity="center">
-
-                    <ImageView
-                        android:id="@+id/bt_row_img_delete"
-                        android:layout_width="@dimen/_15sdp"
-                        android:layout_height="@dimen/_15sdp"
-                        android:layout_centerVertical="true"
-                        android:src="@drawable/ic_row_delete"
-                        app:tint="@color/row_remove_text_color" />
-
-                    <TextView
-                        android:id="@+id/bt_row_lbl_delete"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_centerVertical="true"
-                        android:layout_marginLeft="@dimen/_10sdp"
-                        android:layout_toRightOf="@+id/bt_row_img_delete"
-                        android:text="@string/lbl_remove"
-                        android:textColor="@color/row_remove_text_color"
-                        android:textSize="@dimen/_12sdp" />
-                </RelativeLayout>
-            </LinearLayout>
         </RelativeLayout>
     </androidx.cardview.widget.CardView>
 </RelativeLayout>

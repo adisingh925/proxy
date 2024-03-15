@@ -731,7 +731,7 @@
     <dimen name="row_indicator_arrow_width">@dimen/_15sdp</dimen>
     <dimen name="row_rel_date_time_height">@dimen/_35sdp</dimen>
     <dimen name="row_summery_text_size">@dimen/_11sdp</dimen>
-    <dimen name="row_title_text_size">@dimen/_12sdp</dimen>
+    <dimen name="row_title_text_size">@dimen/_10sdp</dimen>
     <dimen name="row_value_text_size">@dimen/_12sdp</dimen>
     <dimen name="ruler_label_text_size">@dimen/_9sdp</dimen>
     <dimen name="ruler_selected_value_text_size">@dimen/_16sdp</dimen>

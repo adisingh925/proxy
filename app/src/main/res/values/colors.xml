@@ -182,7 +182,7 @@
     <color name="row_bc_value_text_color">#2d2f34</color>
     <color name="row_btn_text_color">#051f54</color>
     <color name="row_card_rel_press_color">#ededed</color>
-    <color name="row_edit_bg_normal_color">#1a2442</color>
+    <color name="row_edit_bg_normal_color">@color/purple_500</color>
     <color name="row_edit_bg_press_color">#2c3c6d</color>
     <color name="row_fah_hint_text_color">#697498</color>
     <color name="row_fahrenheit_value_bg_color">#202c52</color>

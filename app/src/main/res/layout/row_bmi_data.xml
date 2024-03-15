@@ -26,6 +26,7 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginTop="3dp"
                 android:orientation="horizontal">
 
                 <RelativeLayout
@@ -38,8 +39,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_alignParentLeft="true"
-                        android:layout_marginLeft="@dimen/_10sdp"
-                        android:layout_marginTop="@dimen/_5sdp"
+                        android:layout_marginLeft="@dimen/_8sdp"
                         android:singleLine="true"
                         android:text="@string/lbl_time"
                         android:textColor="@color/row_header_text_color"
@@ -49,8 +49,8 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_below="@+id/row_bmi_txt_time"
-                        android:layout_marginLeft="@dimen/_10sdp"
-                        android:layout_marginTop="@dimen/_2sdp">
+                        android:layout_marginLeft="@dimen/_8sdp"
+                        >
 
                         <TextView
                             android:id="@+id/row_bmi_txt_day"
@@ -61,7 +61,7 @@
                             android:gravity="center_vertical"
                             android:text="Day"
                             android:textColor="@color/app_text_color"
-                            android:textSize="@dimen/_12sdp" />
+                            android:textSize="@dimen/_8sdp" />
 
                         <TextView
                             android:id="@+id/row_bmi_txt_month"
@@ -73,7 +73,7 @@
                             android:fontFamily="@font/roboto_regular"
                             android:text="Month,"
                             android:textColor="@color/app_text_color"
-                            android:textSize="@dimen/_12sdp" />
+                            android:textSize="@dimen/_8sdp" />
 
                         <TextView
                             android:id="@+id/row_bmi_txt_year"
@@ -86,7 +86,7 @@
                             android:fontFamily="@font/roboto_regular"
                             android:text="Year"
                             android:textColor="@color/app_text_color"
-                            android:textSize="@dimen/_12sdp" />
+                            android:textSize="@dimen/_8sdp" />
                     </RelativeLayout>
                 </RelativeLayout>
 
@@ -94,32 +94,73 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:gravity="right">
+                    android:layout_marginStart="2dp"
+                    android:gravity="left">
 
                     <TextView
                         android:id="@+id/row_bmi_txt_bmi_value"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_alignParentRight="true"
-                        android:layout_marginTop="@dimen/_5sdp"
-                        android:layout_marginRight="@dimen/_10sdp"
                         android:singleLine="true"
                         android:text="100"
+                        android:gravity="center_horizontal"
                         android:textColor="@color/row_text_color"
-                        android:textSize="@dimen/_16sdp" />
+                        android:textSize="@dimen/_8sdp" />
 
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_below="@+id/row_bmi_txt_bmi_value"
-                        android:layout_alignParentRight="true"
-                        android:layout_marginRight="@dimen/_10sdp"
-                        android:fontFamily="@font/roboto_regular"
                         android:singleLine="true"
                         android:text="@string/lbl_current_bmi"
                         android:textColor="@color/row_text_color"
                         android:textSize="@dimen/row_title_text_size" />
                 </RelativeLayout>
+
+                <LinearLayout
+                    android:id="@+id/row_bmi_lin_buttons"
+                    android:layout_width="0dp"
+                    android:layout_height="@dimen/_25sdp"
+                    android:layout_weight="1"
+                    android:gravity="center">
+
+                    <RelativeLayout
+                        android:id="@+id/row_bmi_rel_edit"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:background="@drawable/row_edit_button_selector"
+                        android:gravity="center">
+
+                        <ImageView
+                            android:id="@+id/row_bmi_img_edit"
+                            android:layout_width="@dimen/_15sdp"
+                            android:layout_height="@dimen/_15sdp"
+                            android:layout_centerVertical="true"
+                            android:src="@drawable/ic_row_edit"
+                            app:tint="@color/white" />
+
+                    </RelativeLayout>
+
+                    <RelativeLayout
+                        android:id="@+id/row_bmi_rel_delete"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:background="@drawable/row_remove_button_selector"
+                        android:gravity="center">
+
+                        <ImageView
+                            android:id="@+id/row_bmi_img_delete"
+                            android:layout_width="@dimen/_15sdp"
+                            android:layout_height="@dimen/_15sdp"
+                            android:layout_centerVertical="true"
+                            android:src="@drawable/ic_row_delete"
+                            app:tint="@color/row_remove_text_color" />
+
+                    </RelativeLayout>
+                </LinearLayout>
+
             </LinearLayout>
 
             <LinearLayout
@@ -130,15 +171,14 @@
                 <RelativeLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/_5sdp">
+                    android:layout_marginTop="@dimen/_10sdp">
 
                     <RelativeLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:gravity="center"
                         android:orientation="vertical"
-                        android:paddingTop="@dimen/_5sdp"
-                        android:paddingBottom="@dimen/_5sdp">
+                        >
 
                         <TextView
                             android:id="@+id/row_bmi_txt_status"
@@ -150,7 +190,7 @@
                             android:singleLine="true"
                             android:text="@string/app_name"
                             android:textColor="@color/bmi_result_text_color"
-                            android:textSize="@dimen/_13sdp" />
+                            android:textSize="@dimen/_12sdp" />
 
                         <TextView
                             android:layout_width="wrap_content"
@@ -158,7 +198,6 @@
                             android:layout_below="@+id/row_bmi_txt_status"
                             android:layout_centerHorizontal="true"
                             android:layout_marginLeft="@dimen/_10sdp"
-                            android:layout_marginTop="@dimen/_5sdp"
                             android:layout_marginRight="@dimen/_10sdp"
                             android:fontFamily="@font/roboto_regular"
                             android:singleLine="true"
@@ -170,16 +209,15 @@
 
                 <RelativeLayout
                     android:layout_width="match_parent"
-                    android:layout_height="@dimen/_45sdp"
+                    android:layout_height="@dimen/_20sdp"
                     android:layout_marginLeft="@dimen/_10sdp"
                     android:layout_marginTop="@dimen/_5sdp"
                     android:layout_marginRight="@dimen/_10sdp"
                     android:layout_marginBottom="@dimen/_5sdp"
                     android:background="@drawable/row_indicator_rounded_bg"
                     android:paddingLeft="@dimen/_5sdp"
-                    android:paddingTop="@dimen/_5sdp"
                     android:paddingRight="@dimen/_5sdp"
-                    android:paddingBottom="@dimen/_5sdp">
+                    >
 
                     <RelativeLayout
                         android:layout_width="match_parent"
@@ -630,7 +668,7 @@
 
                 <LinearLayout
                     android:layout_width="match_parent"
-                    android:layout_height="@dimen/_50sdp"
+                    android:layout_height="@dimen/_30sdp"
                     android:orientation="horizontal">
 
                     <RelativeLayout
@@ -640,7 +678,7 @@
 
                         <androidx.cardview.widget.CardView
                             android:layout_width="@dimen/_130sdp"
-                            android:layout_height="@dimen/_40sdp"
+                            android:layout_height="@dimen/_20sdp"
                             android:layout_centerInParent="true"
                             app:cardBackgroundColor="@color/row_square_bg_color"
                             app:cardCornerRadius="@dimen/_30sdp"
@@ -658,7 +696,7 @@
                                     android:fontFamily="@font/roboto_regular"
                                     android:text="@string/lbl_weight"
                                     android:textColor="@color/row_text_color"
-                                    android:textSize="@dimen/_10sdp" />
+                                    android:textSize="@dimen/_8sdp" />
 
                                 <TextView
                                     android:layout_width="wrap_content"
@@ -676,7 +714,7 @@
                                     android:layout_height="wrap_content"
                                     android:text="@string/lbl_dash"
                                     android:textColor="@color/row_text_color"
-                                    android:textSize="@dimen/_15sdp" />
+                                    android:textSize="@dimen/_12sdp" />
 
                                 <TextView
                                     android:id="@+id/row_bmi_txt_weight_unit"
@@ -687,7 +725,7 @@
                                     android:fontFamily="@font/roboto_regular"
                                     android:text="@string/lbl_kg"
                                     android:textColor="@color/row_text_color"
-                                    android:textSize="@dimen/_10sdp" />
+                                    android:textSize="@dimen/_8sdp" />
                             </LinearLayout>
                         </androidx.cardview.widget.CardView>
                     </RelativeLayout>
@@ -699,7 +737,7 @@
 
                         <androidx.cardview.widget.CardView
                             android:layout_width="@dimen/_130sdp"
-                            android:layout_height="@dimen/_40sdp"
+                            android:layout_height="@dimen/_20sdp"
                             android:layout_centerInParent="true"
                             app:cardBackgroundColor="@color/row_square_bg_color"
                             app:cardCornerRadius="@dimen/_30sdp"
@@ -717,7 +755,7 @@
                                     android:fontFamily="@font/roboto_regular"
                                     android:text="@string/lbl_height"
                                     android:textColor="@color/row_text_color"
-                                    android:textSize="@dimen/_10sdp" />
+                                    android:textSize="@dimen/_8sdp" />
 
                                 <TextView
                                     android:layout_width="wrap_content"
@@ -727,7 +765,7 @@
                                     android:fontFamily="@font/roboto_regular"
                                     android:text=":"
                                     android:textColor="@color/row_text_color"
-                                    android:textSize="@dimen/_10sdp" />
+                                    android:textSize="@dimen/_8sdp" />
 
                                 <TextView
                                     android:id="@+id/row_bmi_txt_height"
@@ -735,7 +773,7 @@
                                     android:layout_height="wrap_content"
                                     android:text="@string/lbl_dash"
                                     android:textColor="@color/row_text_color"
-                                    android:textSize="@dimen/_15sdp" />
+                                    android:textSize="@dimen/_12sdp" />
 
                                 <TextView
                                     android:id="@+id/row_bmi_txt_height_unit"
@@ -746,73 +784,9 @@
                                     android:fontFamily="@font/roboto_regular"
                                     android:text="@string/lbl_cm"
                                     android:textColor="@color/row_text_color"
-                                    android:textSize="@dimen/_10sdp" />
+                                    android:textSize="@dimen/_8sdp" />
                             </LinearLayout>
                         </androidx.cardview.widget.CardView>
-                    </RelativeLayout>
-                </LinearLayout>
-
-                <LinearLayout
-                    android:id="@+id/row_bmi_lin_buttons"
-                    android:layout_width="match_parent"
-                    android:layout_height="@dimen/_35sdp"
-                    android:layout_marginTop="@dimen/_10sdp"
-                    android:gravity="center">
-
-                    <RelativeLayout
-                        android:id="@+id/row_bmi_rel_edit"
-                        android:layout_width="0dp"
-                        android:layout_height="match_parent"
-                        android:layout_weight="1"
-                        android:background="@drawable/row_edit_button_selector"
-                        android:gravity="center">
-
-                        <ImageView
-                            android:id="@+id/row_bmi_img_edit"
-                            android:layout_width="@dimen/_15sdp"
-                            android:layout_height="@dimen/_15sdp"
-                            android:layout_centerVertical="true"
-                            android:src="@drawable/ic_row_edit"
-                            app:tint="@color/white" />
-
-                        <TextView
-                            android:id="@+id/row_bmi_lbl_edit"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_centerVertical="true"
-                            android:layout_marginLeft="@dimen/_10sdp"
-                            android:layout_toRightOf="@+id/row_bmi_img_edit"
-                            android:text="@string/lbl_edit"
-                            android:textColor="@color/white"
-                            android:textSize="@dimen/_12sdp" />
-                    </RelativeLayout>
-
-                    <RelativeLayout
-                        android:id="@+id/row_bmi_rel_delete"
-                        android:layout_width="0dp"
-                        android:layout_height="match_parent"
-                        android:layout_weight="1"
-                        android:background="@drawable/row_remove_button_selector"
-                        android:gravity="center">
-
-                        <ImageView
-                            android:id="@+id/row_bmi_img_delete"
-                            android:layout_width="@dimen/_15sdp"
-                            android:layout_height="@dimen/_15sdp"
-                            android:layout_centerVertical="true"
-                            android:src="@drawable/ic_row_delete"
-                            app:tint="@color/row_remove_text_color" />
-
-                        <TextView
-                            android:id="@+id/row_bmi_lbl_delete"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_centerVertical="true"
-                            android:layout_marginLeft="@dimen/_10sdp"
-                            android:layout_toRightOf="@+id/row_bmi_img_delete"
-                            android:text="@string/lbl_remove"
-                            android:textColor="@color/row_remove_text_color"
-                            android:textSize="@dimen/_12sdp" />
                     </RelativeLayout>
                 </LinearLayout>
             </LinearLayout>
