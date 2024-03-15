@@ -13,12 +13,14 @@ import androidx.navigation.fragment.findNavController
 import app.android.heartrate.phoneapp.R
 import app.android.heartrate.phoneapp.activities.main.HomeActivity
 import app.android.heartrate.phoneapp.databinding.FragmentLoginBinding
+import app.android.heartrate.phoneapp.model.GetProfileResponse
 import app.android.heartrate.phoneapp.model.GetRoleResponse
 import app.android.heartrate.phoneapp.model.LoginRequest
 import app.android.heartrate.phoneapp.model.LoginSuccessResponse
 import app.android.heartrate.phoneapp.model.SignupResponse
 import app.android.heartrate.phoneapp.retrofit.ApiClient
 import app.android.heartrate.phoneapp.sharedpreferences.SharedPreferences
+import com.google.gson.Gson
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -116,7 +118,7 @@ class LoginFragment : Fragment() {
                                                                 )
                                                                 if (body != null) {
                                                                     if (body.code == 1) {
-                                                                        proceedToHomeActivity()
+                                                                        getProfile()
                                                                     } else {
                                                                         findNavController().navigate(
                                                                             R.id.action_loginFragment3_to_profileFragment
@@ -181,5 +183,41 @@ class LoginFragment : Fragment() {
 //         findNavController().navigate(R.id.action_loginFragment3_to_dashboardFragment)
         val intent = Intent(requireContext(), HomeActivity::class.java)
         startActivity(intent)
+    }
+
+    private fun getProfile() {
+        val getUserProfile = ApiClient.apiService.getProfile(
+            SharedPreferences.read("token", "")
+                .toString()
+        )
+
+        getUserProfile.enqueue(object : Callback<GetProfileResponse> {
+            override fun onResponse(
+                call: Call<GetProfileResponse>,
+                response: Response<GetProfileResponse>
+            ) {
+                if (response.isSuccessful) {
+                    val getProfileResponse = response.body()
+                    if (getProfileResponse?.data != null) {
+                        SharedPreferences.write("profile", Gson().toJson(getProfileResponse))
+                        proceedToHomeActivity()
+                    } else {
+                        showMessage(getProfileResponse?.msg ?: "Unable to fetch profile")
+                    }
+                } else {
+                    showMessage("Unable to get profile ")
+                }
+            }
+
+            override fun onFailure(call: Call<GetProfileResponse>, t: Throwable) {
+                showMessage("Failed to fetch profile, Please try again later")
+            }
+
+        })
+
+    }
+
+    private fun showMessage(message: String) {
+        Toast.makeText(requireContext(), message, Toast.LENGTH_SHORT).show()
     }
 }

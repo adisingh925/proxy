@@ -16,15 +16,20 @@
         app:cardCornerRadius="@dimen/app_card_radius"
         app:cardElevation="@dimen/_2sdp">
 
-        <LinearLayout
+        <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical">
 
             <LinearLayout
-                android:layout_width="match_parent"
+                android:id="@+id/llMain"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:orientation="vertical">
+                android:orientation="vertical"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toStartOf="@+id/row_bs_lin_buttons"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent">
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -89,9 +94,8 @@
                 <androidx.cardview.widget.CardView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginLeft="@dimen/_30sdp"
-                    android:layout_marginTop="@dimen/_10sdp"
-                    android:layout_marginRight="@dimen/_30sdp"
+                    android:layout_marginLeft="@dimen/_10sdp"
+                    android:layout_marginRight="@dimen/_10sdp"
                     app:cardBackgroundColor="@color/medicine_input_color"
                     app:cardCornerRadius="@dimen/_10sdp"
                     app:cardElevation="0dp">
@@ -102,9 +106,9 @@
                         android:gravity="center"
                         android:orientation="vertical"
                         android:paddingLeft="@dimen/_10sdp"
-                        android:paddingTop="@dimen/_10sdp"
+                        android:paddingTop="@dimen/_3sdp"
                         android:paddingRight="@dimen/_10sdp"
-                        android:paddingBottom="@dimen/_10sdp">
+                        android:paddingBottom="@dimen/_3sdp">
 
                         <TextView
                             android:id="@+id/row_medicine_txt_name"
@@ -117,7 +121,7 @@
                             android:text="@string/lbl_medicine_name"
                             android:textAllCaps="false"
                             android:textColor="@color/white"
-                            android:textSize="@dimen/_13sdp" />
+                            android:textSize="@dimen/_12sdp" />
 
                         <TextView
                             android:id="@+id/row_medicine_txt_details"
@@ -139,7 +143,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="@dimen/_10sdp"
-                    android:layout_marginTop="@dimen/_10sdp"
+                    android:layout_marginTop="@dimen/_3sdp"
                     android:layout_marginRight="@dimen/_10sdp"
                     android:layout_marginBottom="@dimen/_5sdp"
                     android:orientation="horizontal">
@@ -149,76 +153,67 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center"
-                        android:gravity="center"
                         android:text="@string/lbl_dash"
                         android:textColor="@color/row_text_color"
-                        android:textSize="@dimen/row_summery_text_size" />
-                </LinearLayout>
-
-                <LinearLayout
-                    android:id="@+id/row_bs_lin_buttons"
-                    android:layout_width="match_parent"
-                    android:layout_height="@dimen/_35sdp"
-                    android:layout_marginTop="@dimen/_10sdp"
-                    android:gravity="center">
-
-                    <RelativeLayout
-                        android:id="@+id/row_medicine_rel_edit"
-                        android:layout_width="0dp"
-                        android:layout_height="match_parent"
-                        android:layout_weight="1"
-                        android:background="@drawable/row_edit_button_selector"
-                        android:gravity="center">
-
-                        <ImageView
-                            android:id="@+id/row_medicine_img_edit"
-                            android:layout_width="@dimen/_15sdp"
-                            android:layout_height="@dimen/_15sdp"
-                            android:layout_centerVertical="true"
-                            android:src="@drawable/ic_row_edit"
-                            app:tint="@color/white" />
-
-                        <TextView
-                            android:id="@+id/row_medicine_lbl_edit"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_centerVertical="true"
-                            android:layout_marginLeft="@dimen/_10sdp"
-                            android:layout_toRightOf="@+id/row_medicine_img_edit"
-                            android:text="@string/lbl_edit"
-                            android:textColor="@color/white"
-                            android:textSize="@dimen/_12sdp" />
-                    </RelativeLayout>
-
-                    <RelativeLayout
-                        android:id="@+id/row_medicine_rel_delete"
-                        android:layout_width="0dp"
-                        android:layout_height="match_parent"
-                        android:layout_weight="1"
-                        android:background="@drawable/row_remove_button_selector"
-                        android:gravity="center">
-
-                        <ImageView
-                            android:id="@+id/row_medicine_img_delete"
-                            android:layout_width="@dimen/_15sdp"
-                            android:layout_height="@dimen/_15sdp"
-                            android:layout_centerVertical="true"
-                            android:src="@drawable/ic_row_delete"
-                            app:tint="@color/row_remove_text_color" />
-
-                        <TextView
-                            android:id="@+id/row_medicine_lbl_delete"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_centerVertical="true"
-                            android:layout_marginLeft="@dimen/_10sdp"
-                            android:layout_toRightOf="@+id/row_medicine_img_delete"
-                            android:text="@string/lbl_remove"
-                            android:textColor="@color/row_remove_text_color"
-                            android:textSize="@dimen/_12sdp" />
-                    </RelativeLayout>
+                        android:textSize="@dimen/_10sdp" />
                 </LinearLayout>
             </LinearLayout>
-        </LinearLayout>
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/row_bs_lin_buttons"
+                android:layout_width="60dp"
+                android:layout_height="0dp"
+                android:gravity="center"
+                android:orientation="vertical"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@+id/llMain"
+                app:layout_constraintTop_toTopOf="parent">
+
+                <RelativeLayout
+                    android:id="@+id/row_medicine_rel_edit"
+                    android:layout_width="0dp"
+                    android:layout_height="0dp"
+                    android:layout_weight="1"
+                    android:background="@drawable/row_edit_button_selector"
+                    android:gravity="center"
+                    app:layout_constraintBottom_toTopOf="@+id/row_medicine_rel_delete"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent">
+
+                    <ImageView
+                        android:id="@+id/row_medicine_img_edit"
+                        android:layout_width="@dimen/_15sdp"
+                        android:layout_height="@dimen/_15sdp"
+                        android:layout_centerVertical="true"
+                        android:src="@drawable/ic_row_edit"
+                        app:tint="@color/white" />
+                </RelativeLayout>
+
+                <RelativeLayout
+                    android:id="@+id/row_medicine_rel_delete"
+                    android:layout_width="0dp"
+                    android:layout_height="0dp"
+                    android:layout_weight="1"
+                    android:background="@drawable/row_remove_button_selector"
+                    android:gravity="center"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/row_medicine_rel_edit">
+
+                    <ImageView
+                        android:id="@+id/row_medicine_img_delete"
+                        android:layout_width="@dimen/_15sdp"
+                        android:layout_height="@dimen/_15sdp"
+                        android:layout_centerVertical="true"
+                        android:src="@drawable/ic_row_delete"
+                        app:tint="@color/row_remove_text_color" />
+
+                </RelativeLayout>
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
     </androidx.cardview.widget.CardView>
 </RelativeLayout>

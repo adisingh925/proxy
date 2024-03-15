@@ -1,5 +1,6 @@
 package app.android.heartrate.phoneapp.apis
 
+import app.android.heartrate.phoneapp.model.GetProfileResponse
 import app.android.heartrate.phoneapp.model.GetRoleResponse
 import app.android.heartrate.phoneapp.model.LoginRequest
 import app.android.heartrate.phoneapp.model.LoginSuccessResponse
@@ -16,6 +17,11 @@ interface ApiService {
 
     @POST("login")
     fun login(@Body loginRequest: LoginRequest): Call<LoginSuccessResponse>
+
+    @GET("getProfile")
+    fun getProfile(
+        @Header("Authorization") bearerToken: String,
+    ): Call<GetProfileResponse>
 
     @POST("signup")
     fun signup(@Body signupRequest: LoginRequest): Call<SignupResponse>

@@ -27,7 +27,7 @@
 
     <color name="label_text_color">#1D7A21</color>
 
-    <color name="app_text_color">#D2000000</color>
+    <color name="app_text_color">@color/black</color>
     <color name="app_value_text_color">#202c52</color>
     <color name="axis_label_color">#21272f</color>
 
@@ -187,7 +187,7 @@
     <color name="row_fah_hint_text_color">#697498</color>
     <color name="row_fahrenheit_value_bg_color">#202c52</color>
     <color name="row_gender_icon_bg_color">#cd20ff</color>
-    <color name="row_header_text_color">#202c52</color>
+    <color name="row_header_text_color">@color/black</color>
     <color name="row_height_icon_bg_color">#006cff</color>
     <color name="row_hr_view_color">#e7e9ec</color>
     <color name="row_label_text_color">#aeaeae</color>

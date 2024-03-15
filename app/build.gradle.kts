@@ -58,6 +58,8 @@ dependencies {
     androidTestImplementation("androidx.test.espresso:espresso-core:3.5.1")
     implementation("com.squareup.retrofit2:retrofit:2.9.0")
     implementation("com.squareup.retrofit2:converter-gson:2.9.0")
+    implementation("com.squareup.okhttp3:logging-interceptor:4.12.0")
+
 
 
     implementation ("de.hdodenhof:circleimageview:3.1.0")
@@ -76,4 +78,5 @@ dependencies {
     implementation ("com.github.owl-93.Determinate-Progress-View:release:v1.4.4")
     implementation ("com.intuit.sdp:sdp-android:1.1.0")
     implementation ("com.google.android.gms:play-services-ads:21.4.0")
+
 }
