@@ -9,9 +9,10 @@
         android:id="@+id/toolbar_actionbar"
         layout="@layout/layout_toolbar_add" />
 
-    <RelativeLayout
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:orientation="vertical"
         android:layout_below="@+id/toolbar_actionbar"
         android:layout_marginBottom="@dimen/ad_margin_below">
 
@@ -566,7 +567,7 @@
                 </LinearLayout>
             </RelativeLayout>
         </ScrollView>
-    </RelativeLayout>
+    </LinearLayout>
 
 
 
