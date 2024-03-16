@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/mobile_navigation"
+    app:startDestination="@+id/nav_home">
+
+    <fragment
+        android:id="@+id/nav_home"
+        android:name="app.android.heartrate.phoneapp.fragments.home.HomeFragment"
+        android:label="@string/menu_home"
+        tools:layout="@layout/fragment_home" />
+
+    <fragment
+        android:id="@+id/nav_wellness"
+        android:name="app.android.heartrate.phoneapp.fragments.wellness.WellnessFragment"
+        android:label="@string/menu_wellness"
+        tools:layout="@layout/fragment_wellness" />
+
+    <fragment
+        android:id="@+id/nav_health"
+        android:name="app.android.heartrate.phoneapp.fragments.health.HealthFragment"
+        android:label="@string/menu_health"
+        tools:layout="@layout/fragment_health" />
+
+    <fragment
+        android:id="@+id/nav_medication"
+        android:name="app.android.heartrate.phoneapp.fragments.medication.MedicationFragment"
+        android:label="@string/menu_medication"
+        tools:layout="@layout/fragment_medications" />
+
+    <fragment
+        android:id="@+id/nav_record"
+        android:name="app.android.heartrate.phoneapp.fragments.record.RecordFragment"
+        android:label="@string/menu_record"
+        tools:layout="@layout/fragment_record" />
+
+    <fragment
+        android:id="@+id/nav_appointments"
+        android:name="app.android.heartrate.phoneapp.fragments.appointments.AppointmentsFragment"
+        android:label="@string/menu_appointments"
+        tools:layout="@layout/fragment_appointments" />
+
+    <fragment
+        android:id="@+id/nav_safety"
+        android:name="app.android.heartrate.phoneapp.fragments.safety.SafetyFragment"
+        android:label="@string/menu_safety"
+        tools:layout="@layout/fragment_safety" />
+
+    <fragment
+        android:id="@+id/nav_services"
+        android:name="app.android.heartrate.phoneapp.fragments.services.ServicesFragment"
+        android:label="@string/menu_services"
+        tools:layout="@layout/fragment_services" />
+
+    <fragment
+        android:id="@+id/nav_settings"
+        android:name="app.android.heartrate.phoneapp.fragments.settings.SettingsFragment"
+        android:label="@string/menu_settings"
+        tools:layout="@layout/fragment_settings" />
+
+
+    <fragment
+        android:id="@+id/nav_support"
+        android:name="app.android.heartrate.phoneapp.fragments.support.SupportFragment"
+        android:label="@string/menu_support"
+        tools:layout="@layout/fragment_support"
+
+        />
+
+</navigation>

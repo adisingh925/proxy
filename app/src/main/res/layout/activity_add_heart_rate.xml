@@ -1,0 +1,607 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/bg_color">
+
+    <include
+        android:id="@+id/toolbar_actionbar"
+        layout="@layout/layout_toolbar_add" />
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_above="@+id/banner1"
+        android:layout_below="@+id/toolbar_actionbar"
+        android:layout_marginBottom="@dimen/ad_margin_below">
+
+        <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginLeft="@dimen/app_scroll_view_margin_left"
+            android:layout_marginRight="@dimen/app_scroll_view_margin_right"
+            android:layout_marginBottom="@dimen/app_scroll_view_margin_bottom">
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/add_input_rel_bg"
+                android:padding="@dimen/_5sdp">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/_5sdp"
+                        android:orientation="vertical">
+
+                        <RelativeLayout
+                            android:layout_width="@dimen/profile_spinner_rel_width"
+                            android:layout_height="@dimen/profile_spinner_rel_height"
+                            android:layout_gravity="center_horizontal"
+                            android:background="@drawable/ic_profile_bg">
+
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:gravity="center"
+                                android:orientation="vertical">
+
+                                <Spinner
+                                    android:id="@+id/add_hr_spinner_profiles"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="match_parent"
+                                    android:backgroundTint="@color/tool_bar_color_dark"
+                                    android:dropDownVerticalOffset="@dimen/_100sdp"
+                                    android:spinnerMode="dropdown" />
+                            </LinearLayout>
+                        </RelativeLayout>
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/_5sdp"
+                        android:orientation="vertical"
+                        android:visibility="visible">
+
+                        <RelativeLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:background="@drawable/heart_rate_input_bg"
+                            android:orientation="vertical"
+                            android:paddingTop="@dimen/_5sdp"
+                            android:paddingBottom="@dimen/_10sdp">
+
+                            <LinearLayout
+                                android:id="@+id/add_hr_lin_heart_rate"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_alignParentTop="true"
+                                android:layout_centerHorizontal="true"
+                                android:gravity="center"
+                                android:orientation="horizontal">
+
+                                <LinearLayout
+                                    android:layout_width="@dimen/_90sdp"
+                                    android:layout_height="wrap_content"
+                                    android:layout_weight="1.4"
+                                    android:orientation="vertical">
+
+                                    <EditText
+                                        android:id="@+id/add_hr_et_heart_rate"
+                                        android:layout_width="match_parent"
+                                        android:layout_height="@dimen/_30sdp"
+                                        android:layout_marginLeft="@dimen/_5sdp"
+                                        android:layout_marginTop="@dimen/_5sdp"
+                                        android:layout_marginRight="@dimen/_5sdp"
+                                        android:background="@color/transparent"
+                                        android:backgroundTint="@color/et_base_color"
+
+                                        android:gravity="center"
+                                        android:hint="@string/lbl_hint_heart_rate"
+                                        android:inputType="number"
+                                        android:paddingLeft="@dimen/_5sdp"
+                                        android:paddingTop="@dimen/_5sdp"
+                                        android:paddingRight="@dimen/_5sdp"
+                                        android:textColor="@color/white"
+                                        android:textColorHint="@color/et_hint_text_color"
+                                        android:textCursorDrawable="@drawable/cursor_white"
+                                        android:textSize="@dimen/_15sdp" />
+
+                                    <View
+                                        android:layout_width="match_parent"
+                                        android:layout_height="@dimen/et_base_hr_height"
+                                        android:layout_marginLeft="@dimen/_5sdp"
+                                        android:layout_marginRight="@dimen/_5sdp"
+                                        android:background="@color/et_base_color" />
+                                </LinearLayout>
+
+                                <TextView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginLeft="@dimen/_2sdp"
+                                    android:layout_marginTop="@dimen/_5sdp"
+
+                                    android:singleLine="true"
+                                    android:text="@string/lbl_bpm"
+                                    android:textColor="@color/white"
+                                    android:textSize="@dimen/_12sdp" />
+                            </LinearLayout>
+
+                            <ImageView
+                                android:id="@+id/add_hr_img_heart_rate"
+                                android:layout_width="match_parent"
+                                android:layout_height="@dimen/_30sdp"
+                                android:layout_below="@+id/add_hr_lin_heart_rate"
+                                android:layout_centerHorizontal="true"
+                                android:layout_marginTop="@dimen/_5sdp"
+                                android:src="@drawable/ic_heart_beat"
+                                app:tint="@color/white" />
+
+                            <LinearLayout
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_below="@+id/add_hr_img_heart_rate"
+                                android:layout_centerHorizontal="true"
+                                android:layout_marginTop="@dimen/_8sdp"
+                                android:gravity="center"
+                                android:orientation="horizontal">
+
+                                <TextView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+
+                                    android:singleLine="true"
+                                    android:text="@string/lbl_heart_rate"
+                                    android:textColor="@color/white"
+                                    android:textSize="@dimen/_10sdp" />
+                            </LinearLayout>
+                        </RelativeLayout>
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/_8sdp"
+                        android:orientation="horizontal"
+                        android:visibility="visible">
+
+                        <RelativeLayout
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1">
+
+                            <androidx.cardview.widget.CardView
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:layout_marginRight="@dimen/_3sdp"
+                                android:visibility="visible"
+                                app:cardBackgroundColor="@color/white"
+                                app:cardCornerRadius="@dimen/_8sdp"
+                                app:cardElevation="0dp">
+
+                                <RelativeLayout
+                                    android:layout_width="match_parent"
+                                    android:layout_height="match_parent"
+                                    android:background="@drawable/select_date_rel_selector"
+                                    android:orientation="vertical"
+                                    android:paddingTop="@dimen/_5sdp"
+                                    android:paddingBottom="@dimen/_5sdp">
+
+                                    <LinearLayout
+                                        android:layout_width="match_parent"
+                                        android:layout_height="wrap_content"
+                                        android:orientation="vertical">
+
+                                        <TextView
+                                            android:layout_width="wrap_content"
+                                            android:layout_height="wrap_content"
+                                            android:layout_gravity="center_horizontal"
+
+                                            android:singleLine="true"
+                                            android:text="@string/lbl_heading_gender"
+                                            android:textAllCaps="false"
+                                            android:textColor="@color/app_label_text_color"
+                                            android:textSize="@dimen/_9sdp" />
+
+                                        <androidx.cardview.widget.CardView
+                                            android:layout_width="match_parent"
+                                            android:layout_height="@dimen/input_card_height"
+                                            android:layout_marginLeft="@dimen/_5sdp"
+                                            android:layout_marginTop="@dimen/_8sdp"
+                                            android:layout_marginRight="@dimen/_5sdp"
+                                            app:cardBackgroundColor="@color/app_spinner_card_color"
+                                            app:cardCornerRadius="@dimen/_10sdp"
+                                            app:cardElevation="@dimen/input_card_elevation">
+
+                                            <LinearLayout
+                                                android:layout_width="match_parent"
+                                                android:layout_height="match_parent"
+                                                android:gravity="center"
+                                                android:orientation="vertical">
+
+                                                <RelativeLayout
+                                                    android:layout_width="match_parent"
+                                                    android:layout_height="match_parent"
+                                                    android:gravity="center">
+
+                                                    <Spinner
+                                                        android:id="@+id/add_hr_spinner_gender"
+                                                        android:layout_width="match_parent"
+                                                        android:layout_height="match_parent"
+                                                        android:backgroundTint="@color/app_icon_tint_color"
+                                                        android:dropDownVerticalOffset="@dimen/_35sdp"
+                                                        android:spinnerMode="dropdown" />
+                                                </RelativeLayout>
+                                            </LinearLayout>
+                                        </androidx.cardview.widget.CardView>
+                                    </LinearLayout>
+                                </RelativeLayout>
+                            </androidx.cardview.widget.CardView>
+                        </RelativeLayout>
+
+                        <RelativeLayout
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1">
+
+                            <androidx.cardview.widget.CardView
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:layout_marginLeft="@dimen/_2sdp"
+                                android:visibility="visible"
+                                app:cardBackgroundColor="@color/white"
+                                app:cardCornerRadius="@dimen/_8sdp"
+                                app:cardElevation="0dp">
+
+                                <RelativeLayout
+                                    android:layout_width="match_parent"
+                                    android:layout_height="match_parent"
+                                    android:background="@drawable/select_date_rel_selector"
+                                    android:orientation="vertical"
+                                    android:paddingTop="@dimen/_5sdp"
+                                    android:paddingBottom="@dimen/_5sdp">
+
+                                    <LinearLayout
+                                        android:layout_width="match_parent"
+                                        android:layout_height="wrap_content"
+                                        android:orientation="vertical">
+
+                                        <TextView
+                                            android:layout_width="wrap_content"
+                                            android:layout_height="wrap_content"
+                                            android:layout_gravity="center_horizontal"
+
+                                            android:singleLine="true"
+                                            android:text="@string/lbl_heading_current_status"
+                                            android:textAllCaps="false"
+                                            android:textColor="@color/app_label_text_color"
+                                            android:textSize="@dimen/_9sdp" />
+
+                                        <androidx.cardview.widget.CardView
+                                            android:layout_width="match_parent"
+                                            android:layout_height="@dimen/input_card_height"
+                                            android:layout_marginLeft="@dimen/_5sdp"
+                                            android:layout_marginTop="@dimen/_8sdp"
+                                            android:layout_marginRight="@dimen/_5sdp"
+                                            app:cardBackgroundColor="@color/app_spinner_card_color"
+                                            app:cardCornerRadius="@dimen/_10sdp"
+                                            app:cardElevation="@dimen/input_card_elevation">
+
+                                            <LinearLayout
+                                                android:layout_width="match_parent"
+                                                android:layout_height="match_parent"
+                                                android:gravity="center"
+                                                android:orientation="vertical">
+
+                                                <RelativeLayout
+                                                    android:layout_width="match_parent"
+                                                    android:layout_height="match_parent"
+                                                    android:gravity="center">
+
+                                                    <Spinner
+                                                        android:id="@+id/add_hr_spinner_current_status"
+                                                        android:layout_width="match_parent"
+                                                        android:layout_height="match_parent"
+                                                        android:backgroundTint="@color/app_icon_tint_color"
+                                                        android:dropDownVerticalOffset="@dimen/_35sdp"
+                                                        android:spinnerMode="dropdown" />
+                                                </RelativeLayout>
+                                            </LinearLayout>
+                                        </androidx.cardview.widget.CardView>
+                                    </LinearLayout>
+                                </RelativeLayout>
+                            </androidx.cardview.widget.CardView>
+                        </RelativeLayout>
+                    </LinearLayout>
+
+                    <androidx.cardview.widget.CardView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/_8sdp"
+                        app:cardBackgroundColor="@color/white"
+                        app:cardCornerRadius="@dimen/_8sdp"
+                        app:cardElevation="0dp">
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="vertical"
+                            android:paddingLeft="@dimen/_5sdp"
+                            android:paddingTop="@dimen/_5sdp"
+                            android:paddingRight="@dimen/_5sdp"
+                            android:paddingBottom="@dimen/_5sdp">
+
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:orientation="horizontal">
+
+                                <LinearLayout
+                                    android:layout_width="0dp"
+                                    android:layout_height="wrap_content"
+                                    android:layout_weight="1"
+                                    android:orientation="horizontal"
+                                    android:padding="@dimen/_5sdp">
+
+                                    <TextView
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+
+                                        android:singleLine="true"
+                                        android:text="@string/lbl_heading_age"
+                                        android:textColor="@color/app_label_text_color"
+                                        android:textSize="@dimen/app_label_text_size" />
+
+                                    <TextView
+                                        android:id="@+id/add_hr_txt_age"
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:layout_marginLeft="@dimen/_5sdp"
+                                        android:singleLine="true"
+                                        android:text="@string/lbl_dash"
+                                        android:textColor="@color/app_value_text_color"
+                                        android:textSize="@dimen/app_label_text_size" />
+                                </LinearLayout>
+
+                                <LinearLayout
+                                    android:layout_width="0dp"
+                                    android:layout_height="wrap_content"
+                                    android:layout_weight="1"
+                                    android:orientation="horizontal"
+                                    android:padding="@dimen/_5sdp">
+
+                                    <TextView
+                                        android:id="@+id/add_hr_txt_age_unit"
+                                        android:layout_width="match_parent"
+                                        android:layout_height="wrap_content"
+                                        android:layout_marginRight="@dimen/_5sdp"
+
+                                        android:gravity="right"
+                                        android:singleLine="true"
+                                        android:text="@string/lbl_dash"
+                                        android:textColor="@color/app_value_text_color"
+                                        android:textSize="@dimen/app_label_text_size" />
+                                </LinearLayout>
+                            </LinearLayout>
+
+                            <com.shawnlin.numberpicker.NumberPicker
+                                android:id="@+id/add_hr_np_age"
+                                android:layout_width="match_parent"
+                                android:layout_height="@dimen/_50sdp"
+                                android:layout_centerHorizontal="true"
+                                android:layout_marginTop="@dimen/_5sdp"
+                                android:background="@drawable/light_gery_rounded_bg"
+                                android:descendantFocusability="blocksDescendants"
+                                android:visibility="visible"
+                                app:np_dividerColor="#505050"
+                                app:np_formatter="@string/number_picker_formatter"
+                                app:np_max="120"
+                                app:np_min="1"
+                                app:np_orientation="horizontal"
+                                app:np_selectedTextColor="@color/app_text_color"
+                                app:np_selectedTextSize="@dimen/_16sdp"
+                                app:np_selectedTextUnderline="false"
+                                app:np_textColor="#788596"
+                                app:np_textSize="@dimen/_14sdp"
+                                app:np_value="30"
+                                app:np_wheelItemCount="5" />
+                        </LinearLayout>
+                    </androidx.cardview.widget.CardView>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/_5sdp"
+                        android:orientation="horizontal"
+                        android:visibility="visible">
+
+                        <RelativeLayout
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1">
+
+                            <androidx.cardview.widget.CardView
+                                android:layout_width="match_parent"
+                                android:layout_height="@dimen/_50sdp"
+                                android:layout_centerVertical="true"
+                                android:layout_marginTop="@dimen/_5sdp"
+                                android:layout_marginRight="@dimen/_5sdp"
+                                android:visibility="visible"
+                                app:cardBackgroundColor="@color/white"
+                                app:cardCornerRadius="@dimen/_10sdp"
+                                app:cardElevation="0dp">
+
+                                <RelativeLayout
+                                    android:id="@+id/add_hr_rel_select_date"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="match_parent"
+                                    android:background="@drawable/select_date_rel_selector"
+                                    android:orientation="vertical">
+
+                                    <TextView
+                                        android:id="@+id/add_hr_lbl_date"
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:layout_marginLeft="@dimen/_10sdp"
+                                        android:layout_marginTop="@dimen/_5sdp"
+                                        android:layout_marginRight="@dimen/_5sdp"
+
+                                        android:singleLine="true"
+                                        android:text="@string/lbl_date"
+                                        android:textAllCaps="false"
+                                        android:textColor="@color/app_label_text_color"
+                                        android:textSize="@dimen/_11sdp" />
+
+                                    <TextView
+                                        android:id="@+id/add_hr_txt_date"
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:layout_below="@+id/add_hr_lbl_date"
+                                        android:layout_centerHorizontal="true"
+                                        android:layout_marginLeft="@dimen/_10sdp"
+                                        android:layout_marginTop="@dimen/_5sdp"
+                                        android:layout_marginRight="@dimen/_10sdp"
+
+                                        android:singleLine="true"
+                                        android:text="@string/lbl_dash"
+                                        android:textColor="@color/input_text_color"
+                                        android:textSize="@dimen/app_input_text_size" />
+                                </RelativeLayout>
+                            </androidx.cardview.widget.CardView>
+                        </RelativeLayout>
+
+                        <RelativeLayout
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1">
+
+                            <androidx.cardview.widget.CardView
+                                android:layout_width="match_parent"
+                                android:layout_height="@dimen/_50sdp"
+                                android:layout_centerVertical="true"
+                                android:layout_marginLeft="@dimen/_5sdp"
+                                android:layout_marginTop="@dimen/_5sdp"
+                                android:layout_marginRight="@dimen/_5sdp"
+                                android:visibility="visible"
+                                app:cardBackgroundColor="@color/select_time_rel_bg_color"
+                                app:cardCornerRadius="@dimen/_10sdp"
+                                app:cardElevation="0dp">
+
+                                <RelativeLayout
+                                    android:id="@+id/add_hr_rel_select_time"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="match_parent"
+                                    android:background="@drawable/select_time_rel_selector"
+                                    android:orientation="vertical">
+
+                                    <TextView
+                                        android:id="@+id/add_hr_lbl_time"
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:layout_marginLeft="@dimen/_10sdp"
+                                        android:layout_marginTop="@dimen/_5sdp"
+                                        android:layout_marginRight="@dimen/_5sdp"
+
+                                        android:singleLine="true"
+                                        android:text="@string/lbl_time"
+                                        android:textAllCaps="false"
+                                        android:textColor="@color/white"
+                                        android:textSize="@dimen/_11sdp" />
+
+                                    <TextView
+                                        android:id="@+id/add_hr_txt_time"
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:layout_below="@+id/add_hr_lbl_time"
+                                        android:layout_centerHorizontal="true"
+                                        android:layout_marginLeft="@dimen/_10sdp"
+                                        android:layout_marginTop="@dimen/_5sdp"
+                                        android:layout_marginRight="@dimen/_10sdp"
+
+                                        android:singleLine="true"
+                                        android:text="@string/lbl_dash"
+                                        android:textColor="@color/white"
+                                        android:textSize="@dimen/app_input_text_size" />
+                                </RelativeLayout>
+                            </androidx.cardview.widget.CardView>
+                        </RelativeLayout>
+                    </LinearLayout>
+
+                    <androidx.cardview.widget.CardView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/_5sdp"
+                        app:cardBackgroundColor="@color/white"
+                        app:cardCornerRadius="@dimen/_10sdp"
+                        app:cardElevation="0dp">
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="vertical"
+                            android:padding="@dimen/_5sdp">
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_gravity="center_horizontal"
+                                android:layout_marginLeft="@dimen/_5sdp"
+                                android:layout_marginTop="@dimen/_5sdp"
+                                android:layout_marginRight="@dimen/_10sdp"
+
+                                android:singleLine="true"
+                                android:text="@string/lbl_notes"
+                                android:textAllCaps="false"
+                                android:textColor="@color/app_label_text_color"
+                                android:textSize="@dimen/app_label_text_size_10" />
+
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="@dimen/_5sdp"
+                                android:gravity="center"
+                                android:orientation="vertical">
+
+                                <EditText
+                                    android:id="@+id/add_hr_et_notes"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:background="@color/transparent"
+
+                                    android:gravity="center"
+                                    android:hint="@string/lbl_hint_notes"
+                                    android:inputType="text"
+                                    android:minHeight="@dimen/input_card_height"
+                                    android:paddingLeft="@dimen/_10sdp"
+                                    android:paddingTop="@dimen/_5sdp"
+                                    android:paddingRight="@dimen/_10sdp"
+                                    android:textColor="@color/app_text_color"
+                                    android:textColorHint="@color/et_hint_text_color"
+                                    android:textCursorDrawable="@drawable/cursor_black"
+                                    android:textSize="@dimen/app_input_text_size"
+                                    android:theme="@style/Theme.App.Base" />
+
+                                <View
+                                    android:layout_width="match_parent"
+                                    android:layout_height="@dimen/et_base_hr_height"
+                                    android:layout_marginLeft="@dimen/_5sdp"
+                                    android:layout_marginRight="@dimen/_5sdp"
+                                    android:background="@color/et_base_color" />
+                            </LinearLayout>
+                        </LinearLayout>
+                    </androidx.cardview.widget.CardView>
+                </LinearLayout>
+            </RelativeLayout>
+        </ScrollView>
+    </RelativeLayout>
+
+
+
+</RelativeLayout>

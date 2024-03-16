@@ -1,13 +1,11 @@
 package app.android.heartrate.phoneapp.fragments
 
 import android.os.Bundle
-import android.util.Log
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
-import app.android.heartrate.phoneapp.R
+import androidx.fragment.app.Fragment
 import app.android.heartrate.phoneapp.databinding.FragmentSignupBinding
 import app.android.heartrate.phoneapp.model.LoginRequest
 import app.android.heartrate.phoneapp.model.SignupResponse
@@ -64,14 +62,26 @@ class SignupFragment : Fragment() {
                 ) {
                     if (response.isSuccessful) {
                         if (response.body()?.code == 1) {
-                            Toast.makeText(requireContext(), response.body()!!.msg, Toast.LENGTH_SHORT)
+                            Toast.makeText(
+                                requireContext(),
+                                response.body()!!.msg,
+                                Toast.LENGTH_SHORT
+                            )
                                 .show()
                         } else {
-                            Toast.makeText(requireContext(), response.body()?.msg ?: "Signup Failed", Toast.LENGTH_SHORT)
+                            Toast.makeText(
+                                requireContext(),
+                                response.body()?.msg ?: "Signup Failed",
+                                Toast.LENGTH_SHORT
+                            )
                                 .show()
                         }
-                    }else{
-                        Toast.makeText(requireContext(), "A User with this email already exists!", Toast.LENGTH_SHORT).show()
+                    } else {
+                        Toast.makeText(
+                            requireContext(),
+                            "A User with this email already exists!",
+                            Toast.LENGTH_SHORT
+                        ).show()
                     }
                 }
 

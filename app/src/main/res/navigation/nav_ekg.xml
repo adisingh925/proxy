@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main_navigation"
+    app:startDestination="@id/measureEkgFragment">
+    <fragment
+        android:id="@+id/measureEkgFragment"
+        android:name="app.android.heartrate.phoneapp.fragments.health.ekg.subs.measure.MeasureEkgFragment"
+        android:label="Measure Ekg"
+        tools:layout="@layout/fragment_measure_ekg">
+        <action
+            android:id="@+id/action_measureEkgFragment_to_analyticsEkgFragment"
+            app:destination="@id/analyticsEkgFragment" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/analyticsEkgFragment"
+        android:name="app.android.heartrate.phoneapp.fragments.health.ekg.subs.analytics.AnalyticsEkgFragment"
+        android:label="Analytics Ekg"
+        tools:layout="@layout/fragment_analytics_ekg" />
+
+
+</navigation>

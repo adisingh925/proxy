@@ -1,0 +1,104 @@
+package app.android.heartrate.phoneapp;
+
+
+import android.app.Activity;
+import android.app.ProgressDialog;
+import android.content.Context;
+import android.widget.RelativeLayout;
+
+
+public class AdAdmob {
+
+
+    ProgressDialog ProgressDialog;
+
+    public AdAdmob(Activity activity) {
+
+
+//        MobileAds.initialize(activity, initializationStatus -> {
+//        });
+
+
+    }
+
+
+    public void BannerAd(final RelativeLayout Ad_Layout, Activity activity) {
+
+//        AdView mAdView = new AdView(activity);
+//        mAdView.setAdSize(AdSize.BANNER);
+//        mAdView.setAdUnitId(activity.getResources().getString(R.string.banner));
+//        AdRequest adore = new AdRequest.Builder().build();
+//        mAdView.loadAd(adore);
+//        Ad_Layout.addView(mAdView);
+//
+//
+//        mAdView.setAdListener(new AdListener() {
+//
+//            @Override
+//            public void onAdLoaded() {
+//                Ad_Layout.setVisibility(View.VISIBLE);
+//                super.onAdLoaded();
+//
+//                Log.e("ddddd", "dddd");
+//            }
+//
+//            @Override
+//            public void onAdOpened() {
+//                super.onAdOpened();
+//                Ad_Layout.setVisibility(View.INVISIBLE);
+//                Log.e("ddddd1", "dddd");
+//
+//            }
+//
+//            @Override
+//            public void onAdFailedToLoad(LoadAdError loadAdError) {
+//                super.onAdFailedToLoad(loadAdError);
+//                mAdView.destroy();
+//                Ad_Layout.setVisibility(View.INVISIBLE);
+//                Log.e("ddddd2", "dddd" + loadAdError.getMessage());
+//
+//            }
+//        });
+
+
+    }
+
+    public void FullscreenAd(final Activity activity) {
+
+//
+//        Ad_Popup(activity);
+//
+//        AdRequest adRequest = new AdRequest.Builder().build();
+//
+//        InterstitialAd.load(activity, activity.getResources().getString(R.string.inter), adRequest,
+//                new InterstitialAdLoadCallback() {
+//                    @Override
+//                    public void onAdLoaded(@NonNull InterstitialAd interstitialAd) {
+//
+//                        interstitialAd.show(activity);
+//                        ProgressDialog.dismiss();
+//
+//                    }
+//
+//                    @Override
+//                    public void onAdFailedToLoad(@NonNull LoadAdError loadAdError) {
+//
+//                        ProgressDialog.dismiss();
+//                    }
+//                });
+
+
+    }
+
+
+    private void Ad_Popup(Context mContext) {
+
+
+//        ProgressDialog = android.app.ProgressDialog.show(mContext, "", "Ad Loading . . .", true);
+//        ProgressDialog.setCancelable(true);
+//        ProgressDialog.show();
+
+    }
+
+
+}

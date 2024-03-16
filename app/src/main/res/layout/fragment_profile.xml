@@ -1,164 +1,164 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context=".fragments.ProfileFragment">
 
     <TextView
         android:id="@+id/profileHeader"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="16dp"
         android:text="Profile"
         android:textSize="32sp"
-        android:layout_width="wrap_content"
         android:textStyle="bold"
-        app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
-        android:layout_margin="16dp"
-        android:layout_height="wrap_content"/>
+        app:layout_constraintTop_toTopOf="parent" />
 
     <com.google.android.material.textfield.TextInputLayout
-        app:layout_constraintTop_toBottomOf="@id/profileHeader"
         android:id="@+id/first_name_layout"
-        app:layout_constraintVertical_chainStyle="packed"
         style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
         android:layout_width="0dp"
-        app:boxCornerRadiusTopStart="10dp"
-        app:boxCornerRadiusBottomStart="10dp"
-        app:boxCornerRadiusBottomEnd="10dp"
-        app:boxCornerRadiusTopEnd="10dp"
-        app:layout_constraintBottom_toTopOf="@id/last_name_layout"
-        app:layout_constraintRight_toRightOf="parent"
-        app:errorEnabled="true"
-        app:layout_constraintLeft_toLeftOf="parent"
+        android:layout_height="wrap_content"
         android:layout_margin="16dp"
-        android:layout_height="wrap_content">
+        app:boxCornerRadiusBottomEnd="10dp"
+        app:boxCornerRadiusBottomStart="10dp"
+        app:boxCornerRadiusTopEnd="10dp"
+        app:boxCornerRadiusTopStart="10dp"
+        app:errorEnabled="true"
+        app:layout_constraintBottom_toTopOf="@id/last_name_layout"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/profileHeader"
+        app:layout_constraintVertical_chainStyle="packed">
 
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/first_name_input_field"
             android:layout_width="match_parent"
-            android:inputType="textPersonName"
             android:layout_height="wrap_content"
-            android:hint="FirstName" />
+            android:hint="FirstName"
+            android:inputType="textPersonName" />
 
     </com.google.android.material.textfield.TextInputLayout>
 
     <com.google.android.material.textfield.TextInputLayout
-        app:layout_constraintTop_toBottomOf="@id/first_name_layout"
         android:id="@+id/last_name_layout"
-        app:layout_constraintVertical_chainStyle="packed"
         style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
         android:layout_width="0dp"
-        app:boxCornerRadiusTopStart="10dp"
-        app:boxCornerRadiusBottomStart="10dp"
-        app:boxCornerRadiusBottomEnd="10dp"
-        app:boxCornerRadiusTopEnd="10dp"
-        app:layout_constraintBottom_toTopOf="@id/dob_layout"
-        app:layout_constraintRight_toRightOf="parent"
-        app:errorEnabled="true"
-        app:layout_constraintLeft_toLeftOf="parent"
+        android:layout_height="wrap_content"
         android:layout_margin="16dp"
-        android:layout_height="wrap_content">
+        app:boxCornerRadiusBottomEnd="10dp"
+        app:boxCornerRadiusBottomStart="10dp"
+        app:boxCornerRadiusTopEnd="10dp"
+        app:boxCornerRadiusTopStart="10dp"
+        app:errorEnabled="true"
+        app:layout_constraintBottom_toTopOf="@id/dob_layout"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/first_name_layout"
+        app:layout_constraintVertical_chainStyle="packed">
 
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/last_name_input_field"
             android:layout_width="match_parent"
-            android:inputType="textPersonName"
             android:layout_height="wrap_content"
-            android:hint="LastName" />
+            android:hint="LastName"
+            android:inputType="textPersonName" />
 
     </com.google.android.material.textfield.TextInputLayout>
 
     <com.google.android.material.textfield.TextInputLayout
-        app:layout_constraintTop_toBottomOf="@id/last_name_layout"
         android:id="@+id/dob_layout"
-        app:layout_constraintVertical_chainStyle="packed"
         style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
         android:layout_width="0dp"
-        app:boxCornerRadiusTopStart="10dp"
-        app:boxCornerRadiusBottomStart="10dp"
-        app:boxCornerRadiusBottomEnd="10dp"
-        app:boxCornerRadiusTopEnd="10dp"
-        app:layout_constraintBottom_toTopOf="@id/gender_layout"
-        app:layout_constraintRight_toRightOf="parent"
-        app:errorEnabled="true"
-        app:layout_constraintLeft_toLeftOf="parent"
+        android:layout_height="wrap_content"
         android:layout_margin="16dp"
-        android:layout_height="wrap_content">
+        app:boxCornerRadiusBottomEnd="10dp"
+        app:boxCornerRadiusBottomStart="10dp"
+        app:boxCornerRadiusTopEnd="10dp"
+        app:boxCornerRadiusTopStart="10dp"
+        app:errorEnabled="true"
+        app:layout_constraintBottom_toTopOf="@id/gender_layout"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/last_name_layout"
+        app:layout_constraintVertical_chainStyle="packed">
 
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/dob_input_field"
             android:layout_width="match_parent"
-            android:inputType="date"
             android:layout_height="wrap_content"
-            android:hint="Date of Birth (yyyy/mm/dd)" />
+            android:hint="Date of Birth (yyyy/mm/dd)"
+            android:inputType="date" />
 
     </com.google.android.material.textfield.TextInputLayout>
 
     <com.google.android.material.textfield.TextInputLayout
-        app:layout_constraintTop_toBottomOf="@id/dob_layout"
         android:id="@+id/gender_layout"
-        app:layout_constraintVertical_chainStyle="packed"
         style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
         android:layout_width="0dp"
-        app:boxCornerRadiusTopStart="10dp"
-        app:boxCornerRadiusBottomStart="10dp"
-        app:boxCornerRadiusBottomEnd="10dp"
-        app:boxCornerRadiusTopEnd="10dp"
-        app:layout_constraintBottom_toTopOf="@id/phone_layout"
-        app:layout_constraintRight_toRightOf="parent"
-        app:errorEnabled="true"
-        app:layout_constraintLeft_toLeftOf="parent"
+        android:layout_height="wrap_content"
         android:layout_margin="16dp"
-        android:layout_height="wrap_content">
+        app:boxCornerRadiusBottomEnd="10dp"
+        app:boxCornerRadiusBottomStart="10dp"
+        app:boxCornerRadiusTopEnd="10dp"
+        app:boxCornerRadiusTopStart="10dp"
+        app:errorEnabled="true"
+        app:layout_constraintBottom_toTopOf="@id/phone_layout"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/dob_layout"
+        app:layout_constraintVertical_chainStyle="packed">
 
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/gender_input_field"
             android:layout_width="match_parent"
-            android:inputType="text"
             android:layout_height="wrap_content"
-            android:hint="Gender (M/F)" />
+            android:hint="Gender (M/F)"
+            android:inputType="text" />
 
     </com.google.android.material.textfield.TextInputLayout>
 
     <com.google.android.material.textfield.TextInputLayout
-        app:layout_constraintTop_toBottomOf="@id/gender_layout"
         android:id="@+id/phone_layout"
-        app:layout_constraintVertical_chainStyle="packed"
         style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
         android:layout_width="0dp"
-        app:boxCornerRadiusTopStart="10dp"
-        app:boxCornerRadiusBottomStart="10dp"
-        app:boxCornerRadiusBottomEnd="10dp"
-        app:boxCornerRadiusTopEnd="10dp"
-        app:layout_constraintBottom_toTopOf="@id/submit"
-        app:layout_constraintRight_toRightOf="parent"
-        app:errorEnabled="true"
-        app:layout_constraintLeft_toLeftOf="parent"
+        android:layout_height="wrap_content"
         android:layout_margin="16dp"
-        android:layout_height="wrap_content">
+        app:boxCornerRadiusBottomEnd="10dp"
+        app:boxCornerRadiusBottomStart="10dp"
+        app:boxCornerRadiusTopEnd="10dp"
+        app:boxCornerRadiusTopStart="10dp"
+        app:errorEnabled="true"
+        app:layout_constraintBottom_toTopOf="@id/submit"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/gender_layout"
+        app:layout_constraintVertical_chainStyle="packed">
 
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/phone_input_field"
             android:layout_width="match_parent"
-            android:inputType="phone"
             android:layout_height="wrap_content"
-            android:hint="Phone Number" />
+            android:hint="Phone Number"
+            android:inputType="phone" />
 
     </com.google.android.material.textfield.TextInputLayout>
 
     <com.google.android.material.button.MaterialButton
         android:id="@+id/submit"
+        android:layout_width="0dp"
+        android:layout_height="60dp"
+        android:layout_margin="16dp"
+        android:text="Submit"
+        app:cornerRadius="10dp"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toBottomOf="@id/phone_layout"
-        app:layout_constraintVertical_chainStyle="packed"
-        android:text="Submit"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:cornerRadius="10dp"
-        android:layout_width="0dp"
-        android:layout_margin="16dp"
-        android:layout_height="60dp"/>
+        app:layout_constraintVertical_chainStyle="packed" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

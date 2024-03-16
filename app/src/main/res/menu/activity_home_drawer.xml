@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:showIn="navigation_view">
+
+    <group android:checkableBehavior="single">
+        <item
+            android:id="@+id/nav_home"
+            android:icon="@drawable/outline_dashboard_24"
+            android:title="@string/menu_home" />
+
+        <item
+            android:id="@+id/nav_wellness"
+            android:icon="@drawable/running_man"
+            android:title="@string/menu_wellness" />
+        <item
+            android:id="@+id/nav_health"
+            android:icon="@drawable/heartbeat"
+            android:title="@string/menu_health" />
+        <item
+            android:id="@+id/nav_medication"
+            android:icon="@drawable/pills"
+            android:title="@string/menu_medication" />
+
+        <item
+            android:id="@+id/nav_record"
+            android:icon="@drawable/folder"
+            android:title="@string/menu_record" />
+
+        <item
+            android:id="@+id/nav_appointments"
+            android:icon="@drawable/schedule"
+            android:title="@string/menu_appointments" />
+
+        <item
+            android:id="@+id/nav_safety"
+            android:icon="@drawable/security"
+            android:title="@string/menu_safety" />
+
+        <item
+            android:id="@+id/nav_services"
+            android:icon="@drawable/customer_care"
+            android:title="@string/menu_services" />
+
+        <item
+            android:id="@+id/nav_settings"
+            android:icon="@drawable/setting"
+            android:title="@string/menu_settings" />
+
+        <item
+            android:id="@+id/nav_support"
+            android:icon="@drawable/help"
+            android:title="@string/menu_support" />
+
+    </group>
+</menu>

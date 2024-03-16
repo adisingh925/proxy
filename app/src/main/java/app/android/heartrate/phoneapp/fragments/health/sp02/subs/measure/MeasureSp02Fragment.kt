@@ -1,0 +1,41 @@
+package app.android.heartrate.phoneapp.fragments.health.sp02.subs.measure
+
+import android.os.Bundle
+import android.view.LayoutInflater
+import android.view.View
+import android.view.ViewGroup
+import androidx.navigation.fragment.findNavController
+import app.android.heartrate.phoneapp.R
+import app.android.heartrate.phoneapp.databinding.FragmentMeasureSp02Binding
+import app.android.heartrate.phoneapp.fragments.base.BaseFragment
+import app.android.heartrate.phoneapp.utils.CommonUtils
+
+class MeasureSp02Fragment : BaseFragment() {
+
+    private lateinit var binding: FragmentMeasureSp02Binding
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View {
+        binding = FragmentMeasureSp02Binding.inflate(layoutInflater)
+        return binding.root
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        init()
+    }
+
+    private fun init() {
+        CommonUtils.updateToolbarTitle("Measure Sp02", requireActivity())
+        handleClicks()
+    }
+
+    private fun handleClicks() {
+        binding.btnAnalytics.setOnClickListener {
+            findNavController().navigate(R.id.action_measureSp02Fragment_to_analyticsSp02Fragment)
+        }
+    }
+
+}

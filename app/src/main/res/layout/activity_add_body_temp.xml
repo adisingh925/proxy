@@ -1,0 +1,590 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/bg_color">
+
+    <include
+        android:id="@+id/toolbar_actionbar"
+        layout="@layout/layout_toolbar_add" />
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_above="@+id/banner1"
+        android:layout_below="@+id/toolbar_actionbar"
+        android:layout_marginLeft="@dimen/app_scroll_view_margin_left"
+        android:layout_marginRight="@dimen/app_scroll_view_margin_right"
+        android:layout_marginBottom="@dimen/ad_margin_below">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@drawable/add_input_rel_bg"
+            android:padding="@dimen/_5sdp">
+
+            <ScrollView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginBottom="@dimen/_5sdp">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="@dimen/ad_margin_below"
+                    android:orientation="vertical">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/_5sdp"
+                        android:orientation="vertical">
+
+                        <RelativeLayout
+                            android:layout_width="@dimen/profile_spinner_rel_width"
+                            android:layout_height="@dimen/profile_spinner_rel_height"
+                            android:layout_gravity="center_horizontal"
+                            android:background="@drawable/ic_profile_bg">
+
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:gravity="center"
+                                android:orientation="vertical">
+
+                                <Spinner
+                                    android:id="@+id/add_temp_spinner_profiles"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="match_parent"
+                                    android:backgroundTint="@color/tool_bar_color_dark"
+                                    android:dropDownVerticalOffset="@dimen/_100sdp"
+                                    android:spinnerMode="dropdown" />
+                            </LinearLayout>
+                        </RelativeLayout>
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:id="@+id/add_temp_rel_input"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/_5sdp"
+                        android:orientation="vertical">
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="horizontal">
+
+                            <RelativeLayout
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1">
+
+                                <androidx.cardview.widget.CardView
+                                    android:layout_width="match_parent"
+                                    android:layout_height="@dimen/_50sdp"
+                                    android:layout_centerInParent="true"
+                                    android:layout_marginTop="@dimen/_5sdp"
+                                    android:layout_marginRight="@dimen/_5sdp"
+                                    android:visibility="visible"
+                                    app:cardBackgroundColor="@color/white"
+                                    app:cardCornerRadius="@dimen/_8sdp"
+                                    app:cardElevation="9dp">
+
+                                    <RelativeLayout
+                                        android:id="@+id/add_temp_rel_select_date"
+                                        android:layout_width="match_parent"
+                                        android:layout_height="match_parent"
+                                        android:background="@drawable/select_date_rel_selector"
+                                        android:orientation="vertical">
+
+                                        <TextView
+                                            android:id="@+id/add_temp_lbl_date"
+                                            android:layout_width="wrap_content"
+                                            android:layout_height="wrap_content"
+                                            android:layout_marginLeft="@dimen/_10sdp"
+                                            android:layout_marginTop="@dimen/_5sdp"
+                                            android:layout_marginRight="@dimen/_5sdp"
+
+                                            android:singleLine="true"
+                                            android:text="@string/lbl_date"
+                                            android:textAllCaps="false"
+                                            android:textColor="@color/label_text_color"
+                                            android:textSize="@dimen/_11sdp" />
+
+                                        <TextView
+                                            android:id="@+id/add_temp_txt_date"
+                                            android:layout_width="wrap_content"
+                                            android:layout_height="wrap_content"
+                                            android:layout_below="@+id/add_temp_lbl_date"
+                                            android:layout_centerHorizontal="true"
+                                            android:layout_marginLeft="@dimen/_10sdp"
+                                            android:layout_marginTop="@dimen/_5sdp"
+                                            android:layout_marginRight="@dimen/_10sdp"
+
+                                            android:singleLine="true"
+                                            android:text="@string/lbl_dash"
+                                            android:textColor="@color/input_text_color"
+                                            android:textSize="@dimen/app_input_text_size" />
+                                    </RelativeLayout>
+                                </androidx.cardview.widget.CardView>
+                            </RelativeLayout>
+
+                            <RelativeLayout
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1">
+
+                                <androidx.cardview.widget.CardView
+                                    android:layout_width="match_parent"
+                                    android:layout_height="@dimen/_50sdp"
+                                    android:layout_centerInParent="true"
+                                    android:layout_marginLeft="@dimen/_5sdp"
+                                    android:layout_marginTop="@dimen/_5sdp"
+                                    android:visibility="visible"
+                                    app:cardBackgroundColor="@color/select_time_rel_bg_color"
+                                    app:cardCornerRadius="@dimen/_8sdp"
+                                    app:cardElevation="0dp">
+
+                                    <RelativeLayout
+                                        android:id="@+id/add_temp_rel_select_time"
+                                        android:layout_width="match_parent"
+                                        android:layout_height="match_parent"
+                                        android:background="@drawable/select_time_rel_selector"
+                                        android:orientation="vertical">
+
+                                        <TextView
+                                            android:id="@+id/add_temp_lbl_time"
+                                            android:layout_width="wrap_content"
+                                            android:layout_height="wrap_content"
+                                            android:layout_marginLeft="@dimen/_10sdp"
+                                            android:layout_marginTop="@dimen/_5sdp"
+                                            android:layout_marginRight="@dimen/_5sdp"
+
+                                            android:singleLine="true"
+                                            android:text="@string/lbl_time"
+                                            android:textAllCaps="false"
+                                            android:textColor="@color/white"
+                                            android:textSize="@dimen/_11sdp" />
+
+                                        <TextView
+                                            android:id="@+id/add_temp_txt_time"
+                                            android:layout_width="wrap_content"
+                                            android:layout_height="wrap_content"
+                                            android:layout_below="@+id/add_temp_lbl_time"
+                                            android:layout_centerHorizontal="true"
+                                            android:layout_marginLeft="@dimen/_10sdp"
+                                            android:layout_marginTop="@dimen/_5sdp"
+                                            android:layout_marginRight="@dimen/_10sdp"
+
+                                            android:singleLine="true"
+                                            android:text="@string/lbl_dash"
+                                            android:textColor="@color/white"
+                                            android:textSize="@dimen/app_input_text_size" />
+                                    </RelativeLayout>
+                                </androidx.cardview.widget.CardView>
+                            </RelativeLayout>
+                        </LinearLayout>
+
+                        <androidx.cardview.widget.CardView
+                            android:id="@+id/add_temp_card_temp_status"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center"
+                            android:layout_marginTop="@dimen/_5sdp"
+                            app:cardBackgroundColor="@color/white"
+                            app:cardCornerRadius="@dimen/input_card_radius"
+                            app:cardElevation="@dimen/input_card_elevation">
+
+                            <RelativeLayout
+                                android:id="@+id/add_temp_rel_temp_status"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_margin="@dimen/_2sdp"
+                                android:orientation="vertical"
+                                android:paddingLeft="@dimen/_5sdp"
+                                android:paddingTop="@dimen/_5sdp"
+                                android:paddingRight="@dimen/_5sdp"
+                                android:paddingBottom="@dimen/_10sdp">
+
+                                <RelativeLayout
+                                    android:id="@+id/add_temp_rel_human_body"
+                                    android:layout_width="@dimen/_60sdp"
+                                    android:layout_height="match_parent"
+                                    android:layout_alignParentLeft="true"
+                                    android:visibility="gone">
+
+                                    <ImageView
+                                        android:layout_width="@dimen/_31sdp"
+                                        android:layout_height="@dimen/_100sdp"
+                                        android:layout_centerInParent="true"
+                                        android:src="@drawable/ic_human_body" />
+                                </RelativeLayout>
+
+                                <TextView
+                                    android:id="@+id/add_temp_lbl_fever_status"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_centerHorizontal="true"
+                                    android:layout_marginTop="@dimen/_5sdp"
+
+                                    android:gravity="center"
+                                    android:text="@string/lbl_fever_status"
+                                    android:textColor="@color/text_color"
+                                    android:textSize="@dimen/_10sdp"
+                                    android:visibility="visible" />
+
+                                <RelativeLayout
+                                    android:id="@+id/add_temp_rel_fever_status"
+                                    android:layout_width="@dimen/_100sdp"
+                                    android:layout_height="@dimen/_30sdp"
+                                    android:layout_below="@+id/add_temp_lbl_fever_status"
+                                    android:layout_centerHorizontal="true"
+                                    android:layout_marginTop="@dimen/_8sdp"
+                                    android:background="@drawable/rel_normal_bg">
+
+                                    <TextView
+                                        android:id="@+id/add_temp_txt_fever_status"
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:layout_centerInParent="true"
+
+                                        android:gravity="center"
+                                        android:text="@string/lbl_status_normal"
+                                        android:textColor="@color/white"
+                                        android:textSize="@dimen/_12sdp"
+                                        android:visibility="visible" />
+                                </RelativeLayout>
+                            </RelativeLayout>
+                        </androidx.cardview.widget.CardView>
+
+                        <androidx.cardview.widget.CardView
+                            android:id="@+id/add_temp_card_add_data"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:layout_gravity="center"
+                            android:layout_marginTop="@dimen/_8sdp"
+                            app:cardBackgroundColor="@color/white"
+                            app:cardCornerRadius="@dimen/input_card_radius"
+                            app:cardElevation="@dimen/input_card_elevation">
+
+                            <RelativeLayout
+                                android:id="@+id/add_temp_rel_np"
+                                android:layout_width="match_parent"
+                                android:layout_height="@dimen/_200sdp"
+                                android:layout_margin="@dimen/_2sdp"
+                                android:orientation="vertical"
+                                android:padding="@dimen/_5sdp"
+                                android:visibility="visible">
+
+                                <TextView
+                                    android:id="@+id/add_temp_lbl_temp_data"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_centerHorizontal="true"
+                                    android:layout_marginTop="@dimen/_5sdp"
+
+                                    android:gravity="center"
+                                    android:text="@string/lbl_add_temp_data"
+                                    android:textColor="@color/app_text_color"
+                                    android:textSize="@dimen/_12sdp"
+                                    android:visibility="gone" />
+
+                                <ImageView
+                                    android:id="@+id/add_temp_img_info"
+                                    android:layout_width="@dimen/_15sdp"
+                                    android:layout_height="@dimen/_15sdp"
+                                    android:layout_alignParentTop="true"
+                                    android:layout_alignParentRight="true"
+                                    android:layout_marginLeft="@dimen/_2sdp"
+                                    android:layout_marginTop="@dimen/_2sdp"
+                                    android:src="@drawable/ic_info" />
+
+                                <LinearLayout
+                                    android:layout_width="match_parent"
+                                    android:layout_height="match_parent"
+                                    android:layout_centerHorizontal="true"
+                                    android:gravity="center"
+                                    android:orientation="vertical">
+
+                                    <RelativeLayout
+                                        android:layout_width="match_parent"
+                                        android:layout_height="0dp"
+                                        android:layout_weight="1">
+
+                                        <RelativeLayout
+                                            android:layout_width="match_parent"
+                                            android:layout_height="wrap_content"
+                                            android:layout_centerVertical="true"
+                                            android:layout_marginLeft="@dimen/_5sdp"
+                                            android:layout_marginRight="@dimen/_5sdp"
+                                            android:background="@color/transparent"
+                                            android:gravity="center_vertical">
+
+                                            <TextView
+                                                android:id="@+id/add_temp_lbl_pulse"
+                                                android:layout_width="wrap_content"
+                                                android:layout_height="wrap_content"
+                                                android:layout_marginLeft="@dimen/_5sdp"
+                                                android:layout_marginTop="@dimen/_2sdp"
+
+                                                android:text="@string/lbl_list_pulse"
+                                                android:textAllCaps="true"
+                                                android:textColor="@color/app_text_color"
+                                                android:textSize="@dimen/_8sdp"
+                                                android:visibility="visible" />
+
+                                            <RelativeLayout
+                                                android:layout_width="match_parent"
+                                                android:layout_height="wrap_content"
+                                                android:layout_below="@+id/add_temp_lbl_pulse"
+                                                android:layout_marginTop="@dimen/_5sdp">
+
+                                                <SeekBar
+                                                    android:id="@+id/add_temp_seek_pulse"
+                                                    android:layout_width="match_parent"
+                                                    android:layout_height="wrap_content"
+                                                    android:maxHeight="@dimen/_6sdp"
+                                                    android:padding="@dimen/_5sdp"
+                                                    android:progressDrawable="@drawable/custom_seek_progress_pulse"
+                                                    android:thumb="@drawable/custom_seek_thumb_pulse" />
+
+                                                <RelativeLayout
+                                                    android:layout_width="match_parent"
+                                                    android:layout_height="wrap_content"
+                                                    android:layout_below="@+id/add_temp_seek_pulse"
+                                                    android:layout_marginTop="@dimen/_2sdp">
+
+                                                    <TextView
+                                                        android:id="@+id/add_temp_lbl_pulse_min"
+                                                        android:layout_width="wrap_content"
+                                                        android:layout_height="wrap_content"
+                                                        android:layout_alignParentLeft="true"
+                                                        android:layout_marginLeft="@dimen/_5sdp"
+
+                                                        android:text="0"
+                                                        android:textAllCaps="true"
+                                                        android:textColor="@color/app_text_color"
+                                                        android:textSize="@dimen/_10sdp"
+                                                        android:visibility="visible" />
+
+                                                    <TextView
+                                                        android:id="@+id/add_temp_txt_pulse_progress"
+                                                        android:layout_width="wrap_content"
+                                                        android:layout_height="wrap_content"
+                                                        android:layout_centerHorizontal="true"
+
+                                                        android:text="@string/lbl_dash"
+                                                        android:textAllCaps="true"
+                                                        android:textColor="@color/pulse_seek_text_color"
+                                                        android:textSize="@dimen/_10sdp"
+                                                        android:visibility="visible" />
+
+                                                    <TextView
+                                                        android:id="@+id/add_temp_lbl_pulse_max"
+                                                        android:layout_width="wrap_content"
+                                                        android:layout_height="wrap_content"
+                                                        android:layout_alignParentRight="true"
+                                                        android:layout_marginRight="@dimen/_5sdp"
+
+                                                        android:text="250"
+                                                        android:textAllCaps="true"
+                                                        android:textColor="@color/app_text_color"
+                                                        android:textSize="@dimen/_10sdp"
+                                                        android:visibility="visible" />
+                                                </RelativeLayout>
+                                            </RelativeLayout>
+                                        </RelativeLayout>
+                                    </RelativeLayout>
+
+                                    <RelativeLayout
+                                        android:layout_width="match_parent"
+                                        android:layout_height="0dp"
+                                        android:layout_weight="1">
+
+                                        <RelativeLayout
+                                            android:layout_width="match_parent"
+                                            android:layout_height="wrap_content"
+                                            android:layout_centerVertical="true"
+                                            android:layout_marginLeft="@dimen/_5sdp"
+                                            android:layout_marginRight="@dimen/_5sdp"
+                                            android:background="@color/transparent"
+                                            android:gravity="center_vertical">
+
+                                            <TextView
+                                                android:id="@+id/add_temp_lbl_cel"
+                                                android:layout_width="wrap_content"
+                                                android:layout_height="wrap_content"
+                                                android:layout_marginLeft="@dimen/_5sdp"
+                                                android:layout_marginTop="@dimen/_2sdp"
+
+                                                android:text="@string/lbl_add_temp_cel"
+                                                android:textAllCaps="true"
+                                                android:textColor="@color/app_text_color"
+                                                android:textSize="@dimen/_8sdp"
+                                                android:visibility="visible" />
+
+                                            <RelativeLayout
+                                                android:layout_width="match_parent"
+                                                android:layout_height="wrap_content"
+                                                android:layout_below="@+id/add_temp_lbl_cel"
+                                                android:layout_marginTop="@dimen/_5sdp">
+
+                                                <SeekBar
+                                                    android:id="@+id/add_temp_seek_cel"
+                                                    android:layout_width="match_parent"
+                                                    android:layout_height="wrap_content"
+                                                    android:maxHeight="@dimen/_6sdp"
+                                                    android:padding="@dimen/_5sdp"
+                                                    android:progressDrawable="@drawable/custom_seek_progress_celsius"
+                                                    android:thumb="@drawable/custom_seek_thumb_celsius" />
+
+                                                <RelativeLayout
+                                                    android:layout_width="match_parent"
+                                                    android:layout_height="wrap_content"
+                                                    android:layout_below="@+id/add_temp_seek_cel"
+                                                    android:layout_marginTop="@dimen/_2sdp">
+
+                                                    <TextView
+                                                        android:id="@+id/add_temp_lbl_cel_min"
+                                                        android:layout_width="wrap_content"
+                                                        android:layout_height="wrap_content"
+                                                        android:layout_alignParentLeft="true"
+                                                        android:layout_marginLeft="@dimen/_5sdp"
+
+                                                        android:text="33"
+                                                        android:textAllCaps="true"
+                                                        android:textColor="@color/app_text_color"
+                                                        android:textSize="@dimen/_10sdp"
+                                                        android:visibility="visible" />
+
+                                                    <TextView
+                                                        android:id="@+id/add_temp_txt_cel_progress"
+                                                        android:layout_width="wrap_content"
+                                                        android:layout_height="wrap_content"
+                                                        android:layout_centerHorizontal="true"
+
+                                                        android:text="@string/lbl_dash"
+                                                        android:textAllCaps="true"
+                                                        android:textColor="@color/cel_seek_text_color"
+                                                        android:textSize="@dimen/_10sdp"
+                                                        android:visibility="visible" />
+
+                                                    <TextView
+                                                        android:id="@+id/add_temp_lbl_cel_max"
+                                                        android:layout_width="wrap_content"
+                                                        android:layout_height="wrap_content"
+                                                        android:layout_alignParentRight="true"
+                                                        android:layout_marginRight="@dimen/_5sdp"
+
+                                                        android:text="42"
+                                                        android:textAllCaps="true"
+                                                        android:textColor="@color/app_text_color"
+                                                        android:textSize="@dimen/_10sdp"
+                                                        android:visibility="visible" />
+                                                </RelativeLayout>
+                                            </RelativeLayout>
+                                        </RelativeLayout>
+                                    </RelativeLayout>
+
+                                    <RelativeLayout
+                                        android:layout_width="match_parent"
+                                        android:layout_height="0dp"
+                                        android:layout_weight="1">
+
+                                        <RelativeLayout
+                                            android:layout_width="match_parent"
+                                            android:layout_height="wrap_content"
+                                            android:layout_centerVertical="true"
+                                            android:layout_marginLeft="@dimen/_5sdp"
+                                            android:layout_marginRight="@dimen/_5sdp"
+                                            android:background="@color/transparent"
+                                            android:gravity="center_vertical">
+
+                                            <TextView
+                                                android:id="@+id/add_temp_lbl_fah"
+                                                android:layout_width="wrap_content"
+                                                android:layout_height="wrap_content"
+                                                android:layout_marginLeft="@dimen/_5sdp"
+                                                android:layout_marginTop="@dimen/_2sdp"
+
+                                                android:text="@string/lbl_add_temp_fah"
+                                                android:textAllCaps="true"
+                                                android:textColor="@color/app_text_color"
+                                                android:textSize="@dimen/_8sdp"
+                                                android:visibility="visible" />
+
+                                            <RelativeLayout
+                                                android:layout_width="match_parent"
+                                                android:layout_height="wrap_content"
+                                                android:layout_below="@+id/add_temp_lbl_fah"
+                                                android:layout_marginTop="@dimen/_5sdp">
+
+                                                <SeekBar
+                                                    android:id="@+id/add_temp_seek_fah"
+                                                    android:layout_width="match_parent"
+                                                    android:layout_height="wrap_content"
+                                                    android:maxHeight="@dimen/_6sdp"
+                                                    android:padding="@dimen/_5sdp"
+                                                    android:progressDrawable="@drawable/custom_seek_progress_fahrenheit"
+                                                    android:thumb="@drawable/custom_seek_thumb_fahrenheit" />
+
+                                                <RelativeLayout
+                                                    android:layout_width="match_parent"
+                                                    android:layout_height="wrap_content"
+                                                    android:layout_below="@+id/add_temp_seek_fah"
+                                                    android:layout_marginTop="@dimen/_2sdp">
+
+                                                    <TextView
+                                                        android:id="@+id/add_temp_lbl_fah_min"
+                                                        android:layout_width="wrap_content"
+                                                        android:layout_height="wrap_content"
+                                                        android:layout_alignParentLeft="true"
+                                                        android:layout_marginLeft="@dimen/_5sdp"
+
+                                                        android:text="91"
+                                                        android:textAllCaps="true"
+                                                        android:textColor="@color/app_text_color"
+                                                        android:textSize="@dimen/_10sdp"
+                                                        android:visibility="visible" />
+
+                                                    <TextView
+                                                        android:id="@+id/add_temp_txt_fah_progress"
+                                                        android:layout_width="wrap_content"
+                                                        android:layout_height="wrap_content"
+                                                        android:layout_centerHorizontal="true"
+
+                                                        android:text="@string/lbl_dash"
+                                                        android:textAllCaps="true"
+                                                        android:textColor="@color/fah_seek_text_color"
+                                                        android:textSize="@dimen/_10sdp"
+                                                        android:visibility="visible" />
+
+                                                    <TextView
+                                                        android:id="@+id/add_temp_lbl_fah_max"
+                                                        android:layout_width="wrap_content"
+                                                        android:layout_height="wrap_content"
+                                                        android:layout_alignParentRight="true"
+                                                        android:layout_marginRight="@dimen/_5sdp"
+
+                                                        android:text="108"
+                                                        android:textAllCaps="true"
+                                                        android:textColor="@color/app_text_color"
+                                                        android:textSize="@dimen/_10sdp"
+                                                        android:visibility="visible" />
+                                                </RelativeLayout>
+                                            </RelativeLayout>
+                                        </RelativeLayout>
+                                    </RelativeLayout>
+                                </LinearLayout>
+                            </RelativeLayout>
+                        </androidx.cardview.widget.CardView>
+                    </LinearLayout>
+                </LinearLayout>
+            </ScrollView>
+        </RelativeLayout>
+    </RelativeLayout>
+
+
+</RelativeLayout>

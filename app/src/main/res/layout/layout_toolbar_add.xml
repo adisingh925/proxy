@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.google.android.material.appbar.AppBarLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/appBar"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:theme="@style/Theme.PhoneApp.AppBarOverlay"
+    app:layout_constraintBottom_toTopOf="@+id/nav_fitness_fragment"
+    app:layout_constraintEnd_toEndOf="parent"
+    app:layout_constraintStart_toStartOf="parent"
+    app:layout_constraintTop_toTopOf="parent">
+
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize"
+        android:background="?attr/colorPrimary"
+        app:popupTheme="@style/Theme.PhoneApp.PopupOverlay">
+
+        <RelativeLayout
+            android:id="@+id/toolbar_actionbar"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/_45sdp"
+            android:background="@color/transparent">
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+                <RelativeLayout
+                    android:id="@+id/toolbar_rel_back"
+                    android:layout_width="@dimen/_45sdp"
+                    android:layout_height="match_parent"
+                    android:layout_alignParentLeft="true"
+                    android:background="@drawable/tool_bar_item_selector"
+                    android:gravity="center">
+
+                    <ImageView
+                        android:id="@+id/toolbar_img_back"
+                        android:layout_width="@dimen/_12sdp"
+                        android:layout_height="@dimen/_12sdp"
+                        android:layout_centerInParent="true"
+                        android:src="@drawable/ic_tool_back"
+                        app:tint="@color/white" />
+                </RelativeLayout>
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_toLeftOf="@+id/toolbar_rel_save"
+                    android:layout_toRightOf="@+id/toolbar_rel_back"
+                    android:gravity="center_vertical">
+
+                    <TextView
+                        android:id="@+id/toolbar_txt_title_1"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:layout_marginRight="@dimen/_5sdp"
+                        android:fontFamily="@font/roboto_light"
+                        android:lines="1"
+                        android:text="@string/lbl_add"
+                        android:textColor="@color/tool_bar_title_text_color"
+                        android:textSize="@dimen/_16sdp"
+                        android:textStyle="bold" />
+
+                    <TextView
+                        android:id="@+id/toolbar_txt_title_2"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_vertical"
+                        android:layout_marginLeft="@dimen/_2sdp"
+                        android:layout_marginRight="@dimen/_5sdp"
+                        android:layout_toRightOf="@+id/toolbar_txt_title_1"
+                        android:lines="1"
+                        android:text="@string/lbl_heart_rate"
+                        android:textColor="@color/tool_bar_title_text_color"
+                        android:textSize="@dimen/_16sdp"
+                        android:textStyle="bold" />
+                </RelativeLayout>
+
+                <RelativeLayout
+                    android:id="@+id/toolbar_rel_save"
+                    android:layout_width="@dimen/_28sdp"
+                    android:layout_height="@dimen/_28sdp"
+                    android:layout_alignParentRight="true"
+                    android:layout_centerVertical="true"
+                    android:layout_marginRight="@dimen/_10sdp"
+                    android:background="@drawable/white_round_bg_selector"
+                    android:gravity="center">
+
+                    <ImageView
+                        android:layout_width="@dimen/_16sdp"
+                        android:layout_height="@dimen/_16sdp"
+                        android:layout_centerInParent="true"
+                        android:src="@drawable/ic_done" />
+                </RelativeLayout>
+            </RelativeLayout>
+        </RelativeLayout>
+
+    </androidx.appcompat.widget.Toolbar>
+</com.google.android.material.appbar.AppBarLayout>

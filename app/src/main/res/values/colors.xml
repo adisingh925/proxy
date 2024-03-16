@@ -3,8 +3,246 @@
     <color name="purple_200">#FFBB86FC</color>
     <color name="purple_500">#FF6200EE</color>
     <color name="purple_700">#FF3700B3</color>
-    <color name="teal_200">#FF03DAC5</color>
-    <color name="teal_700">#FF018786</color>
+    <color name="teal_200">#FFBB86FC</color>
+    <color name="teal_700">#FF3700B3</color>
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
+
+    <color name="light_green">#f1f6ff</color>
+    <color name="icon_default_gray">#ff9e9e9e</color>
+
+
+    <color name="appcolor">#39B33D</color>
+    <color name="bg_color">@color/light_green</color>
+    <color name="appthe">#E8E8E8</color>
+    <color name="colorError">#D12014</color>
+    <color name="colorWarning">#F44438</color>
+    <color name="colorSuccess">#757575</color>
+    <color name="app">#39B33D</color>
+
+    <color name="select_time_rel_bg_color">#303030</color>
+    <color name="select_time_rel_press_color">#25938A</color>
+    <color name="add_button_normal_color">#303030</color>
+    <color name="exit_dialog_header_bg_color">#013934</color>
+
+    <color name="label_text_color">#1D7A21</color>
+
+    <color name="app_text_color">@color/black</color>
+    <color name="app_value_text_color">#202c52</color>
+    <color name="axis_label_color">#21272f</color>
+
+    <color name="accent_material_dark">@color/material_deep_teal_200</color>
+    <color name="accent_material_light">@color/material_deep_teal_500</color>
+    <color name="add_button_press_color">#394e93</color>
+    <color name="add_input_rel_press_color">#e1e4ea</color>
+    <color name="add_profile_button_normal_color">#1f475d</color>
+    <color name="add_profile_button_press_color">#337599</color>
+    <color name="androidx_core_ripple_material_light">#1f000000</color>
+    <color name="androidx_core_secondary_text_default_material_light">#8a000000</color>
+    <color name="app_button_normal_color">#1a2442</color>
+    <color name="app_button_press_color">#2c3c6d</color>
+    <color name="app_formula_text_color">#a2a2a2</color>
+    <color name="app_icon_tint_color">#202c52</color>
+    <color name="app_label_text_color">#949494</color>
+    <color name="app_spinner_card_color">#ececec</color>
+    <color name="app_spinner_card_press_color">#cccccc</color>
+
+    <color name="background_floating_material_dark">@color/material_grey_800</color>
+    <color name="background_floating_material_light">@android:color/white</color>
+    <color name="background_material_dark">@color/material_grey_850</color>
+    <color name="background_material_light">@color/material_grey_50</color>
+    <color name="bar_gradient_color_bottom_1">#e63135</color>
+    <color name="bar_gradient_color_bottom_2">#f96700</color>
+    <color name="bar_gradient_color_bottom_3">#fdcf00</color>
+    <color name="bar_gradient_color_bottom_4">#a9de19</color>
+    <color name="bar_gradient_color_top_1">#e63135</color>
+    <color name="bar_gradient_color_top_2">#f96700</color>
+    <color name="bar_gradient_color_top_3">#fdcf00</color>
+    <color name="bar_gradient_color_top_4">#a9de19</color>
+    <color name="blue">#0281e6</color>
+    <color name="bmi_result_text_color">#ea3d3b</color>
+    <color name="bmi_tab_normal_text_color">#d4d4d4</color>
+    <color name="bmi_tab_selected_text_color">#202c52</color>
+    <color name="bright_foreground_disabled_material_dark">#80ffffff</color>
+    <color name="bright_foreground_disabled_material_light">#80000000</color>
+    <color name="bright_foreground_inverse_material_dark">@color/bright_foreground_material_light</color>
+    <color name="bright_foreground_inverse_material_light">@color/bright_foreground_material_dark</color>
+    <color name="bright_foreground_material_dark">@android:color/white</color>
+    <color name="bright_foreground_material_light">@android:color/black</color>
+
+    <color name="bs_value_text_color">#147f65</color>
+    <color name="button_material_dark">#ff5a595b</color>
+    <color name="button_material_light">#ffd6d7d7</color>
+    <color name="button_normal_color">#008aff</color>
+    <color name="button_press_color">#005299</color>
+    <color name="card_rel_press_color">#e4e4e4</color>
+    <color name="cardview_dark_background">#ff424242</color>
+    <color name="cardview_light_background">#ffffffff</color>
+    <color name="cardview_shadow_end_color">#03000000</color>
+    <color name="cardview_shadow_start_color">#37000000</color>
+    <color name="cel_seek_bg_color">#e6e6e6</color>
+    <color name="cel_seek_secondary_color">#850000</color>
+    <color name="cel_seek_text_color">#850000</color>
+    <color name="cel_seek_thumb_color">#850000</color>
+    <color name="celsius_color">#e63135</color>
+    <color name="chart_bar_gradient_color_bottom">#e63135</color>
+    <color name="chart_bar_gradient_color_top">#e63135</color>
+    <color name="chart_bar_legend_color">#202c52</color>
+    <color name="chart_duration_rel_normal_color">#00000000</color>
+    <color name="chart_duration_rel_press_color">#0058c5</color>
+    <color name="chart_duration_text_normal_color">#d5d5d5</color>
+    <color name="chart_duration_text_press_color">#ffffff</color>
+    <color name="chart_label_color">#43586b</color>
+    <color name="chart_name_text_color">#f96700</color>
+    <color name="chart_spinner_card_color">#202c52</color>
+    <color name="chart_spinner_card_press_color">#2c3c6d</color>
+    <color name="circular_loading_color">#134afe</color>
+
+
+
+    <color name="dialog_bg_color">#f7f7f7</color>
+    <color name="dialog_button_press_color">#e7e7e7</color>
+    <color name="dialog_button_text_color">#0e93fa</color>
+    <color name="dialog_button_text_select_color">#fd5151</color>
+    <color name="dialog_header_color">#0b0b0b</color>
+    <color name="dialog_message_color">#808080</color>
+    <color name="dialog_spinner_bg_color">#1a2442</color>
+    <color name="dialog_spinner_bg_press_color">#2c3c6d</color>
+
+
+    <color name="diastolic_bar_legend_color">#f66600</color>
+    <color name="dim_foreground_disabled_material_dark">#80bebebe</color>
+    <color name="dim_foreground_disabled_material_light">#80323232</color>
+    <color name="dim_foreground_material_dark">#ffbebebe</color>
+    <color name="dim_foreground_material_light">#ff323232</color>
+    <color name="dividerColor">#f5f5f5</color>
+    <color name="error_color_material_dark">#ff7043</color>
+    <color name="error_color_material_light">#ff5722</color>
+    <color name="et_base_color">#919191</color>
+    <color name="et_hint_text_color">#FF919191</color>
+    <color name="exit_dialog_bg_color">#f7f7f7</color>
+    <color name="exit_dialog_cancel_button_color">#00000000</color>
+    <color name="exit_dialog_cancel_button_press_color">#d5d5d5</color>
+    <color name="exit_dialog_cancel_button_text_color">#181818</color>
+    <color name="exit_dialog_continue_button_color">#00000000</color>
+    <color name="exit_dialog_continue_button_press_color">#d5d5d5</color>
+    <color name="exit_dialog_continue_button_stroke_color">#acacac</color>
+    <color name="exit_dialog_continue_button_text_color">#181818</color>
+    <color name="exit_dialog_header_text_color">#ffffff</color>
+    <color name="exit_dialog_message_text_color">#9c9c9c</color>
+    <color name="fah_seek_bg_color">#e6e6e6</color>
+    <color name="fah_seek_secondary_color">#e15625</color>
+    <color name="fah_seek_text_color">#e15625</color>
+    <color name="fah_seek_thumb_color">#e15625</color>
+    <color name="fahrenheit_color">#f66600</color>
+    <color name="fever_color">#ffc107</color>
+    <color name="foreground_material_dark">@android:color/white</color>
+    <color name="foreground_material_light">@android:color/black</color>
+    <color name="frequency_normal_bg_color">#ffffff</color>
+    <color name="frequency_selected_bg_color">#202c52</color>
+    <color name="gradient_color_1">#e63135</color>
+    <color name="gradient_color_2">#f96700</color>
+    <color name="gradient_color_3">#fdcf00</color>
+    <color name="gradient_color_4">#a9de19</color>
+    <color name="heart_rate_bg_end_color">#cc0000</color>
+    <color name="heart_rate_bg_start_color">#cc0000</color>
+    <color name="high_fever_color">#f44336</color>
+    <color name="highlighted_text_material_dark">#6680cbc4</color>
+    <color name="highlighted_text_material_light">#66009688</color>
+    <color name="hypothermia_color">#fe2a93</color>
+    <color name="input_text_color">#202c52</color>
+    <color name="light_grey_bg_color">#f7f7f7</color>
+
+    <color name="normal_color">#14c34e</color>
+    <color name="notification_action_color_filter">@color/androidx_core_secondary_text_default_material_light</color>
+    <color name="notification_icon_bg_color">#ff9e9e9e</color>
+    <color name="np_divider_color">#ababab</color>
+    <color name="np_normal_text_color">#333333</color>
+    <color name="np_select_text_color">#0457ef</color>
+
+    <color name="primary_dark_material_dark">@android:color/black</color>
+    <color name="primary_dark_material_light">@color/material_grey_600</color>
+    <color name="primary_material_dark">@color/material_grey_900</color>
+    <color name="primary_material_light">@color/material_grey_100</color>
+
+
+
+    <color name="progress_gradient_color_1">#e6f6f8</color>
+    <color name="progress_gradient_color_3">#6fbdfb</color>
+    <color name="progress_gradient_color_4">#0e47ff</color>
+    <color name="pulse_color">#fdcf00</color>
+    <color name="pulse_seek_bg_color">#e6e6e6</color>
+    <color name="pulse_seek_secondary_color">#e12525</color>
+    <color name="pulse_seek_text_color">#e12525</color>
+    <color name="pulse_seek_thumb_color">#e12525</color>
+    <color name="purple">#a431f6</color>
+    <color name="radio_selected_bg_color">#d4d4d4</color>
+    <color name="ripple_material_dark">#33ffffff</color>
+    <color name="ripple_material_light">#1f000000</color>
+    <color name="row_bc_value_text_color">#2d2f34</color>
+    <color name="row_btn_text_color">#051f54</color>
+    <color name="row_card_rel_press_color">#ededed</color>
+    <color name="row_edit_bg_normal_color">@color/purple_500</color>
+    <color name="row_edit_bg_press_color">#2c3c6d</color>
+    <color name="row_fah_hint_text_color">#697498</color>
+    <color name="row_fahrenheit_value_bg_color">#202c52</color>
+    <color name="row_gender_icon_bg_color">#cd20ff</color>
+    <color name="row_header_text_color">@color/black</color>
+    <color name="row_height_icon_bg_color">#006cff</color>
+    <color name="row_hr_view_color">#e7e9ec</color>
+    <color name="row_label_text_color">#aeaeae</color>
+    <color name="row_pulse_hint_text_color">#fdc0c0</color>
+    <color name="row_pulse_value_bg_color">#e23b3b</color>
+    <color name="row_rbc_bg_color">#FCECEC</color>
+    <color name="row_remove_bg_normal_color">#ececec</color>
+    <color name="row_remove_bg_press_color">#cccccc</color>
+    <color name="row_remove_text_color">#1a1a1a</color>
+    <color name="row_result_bg_color">#ea3d3b</color>
+    <color name="row_rounded_edit_button_color">#f1f1f1</color>
+    <color name="row_rounded_edit_button_color_press">#cccccc</color>
+    <color name="row_rounded_remove_button_color">#c41c1c</color>
+    <color name="row_rounded_remove_button_color_press">#701010</color>
+    <color name="row_square_bg_color">#f5f5f5</color>
+    <color name="row_status_color_1">#e42b33</color>
+    <color name="row_status_color_2">#fa6500</color>
+    <color name="row_status_color_3">#fdd900</color>
+    <color name="row_status_color_4">#b3df16</color>
+    <color name="row_status_color_5">#58b60d</color>
+    <color name="row_status_color_6">#3ec0e9</color>
+    <color name="row_status_color_7">#00a99d</color>
+    <color name="row_status_color_8">#673ab7</color>
+    <color name="row_text_color">#202c52</color>
+    <color name="row_text_color_blue">#006cff</color>
+    <color name="row_text_color_summery">#929292</color>
+    <color name="row_thermometer_bg_color">#e00000</color>
+    <color name="row_value_color">#ea3d3b</color>
+    <color name="row_value_text_color">#202c52</color>
+
+
+
+
+    <color name="spinner_text_color">#202c52</color>
+    <color name="summery_text_color">#ababab</color>
+
+    <color name="systolic_bar_legend_color">#e63135</color>
+    <color name="teal">#03dac5</color>
+    <color name="medicine_input_color">#006cff</color>
+    <color name="menu_text_color">#13292b</color>
+    <color name="text_color">#333333</color>
+    <color name="text_color_light">#808080</color>
+    <color name="text_color_no_data">#FF919191</color>
+    <color name="text_view_hint_color">#FF919191</color>
+    <color name="tool_bar_color">#182037</color>
+    <color name="tool_bar_color_dark">#080a12</color>
+    <color name="tool_bar_color_item_press">#cccccc</color>
+    <color name="tool_bar_title_color">#222222</color>
+    <color name="tool_bar_title_text_color">@color/white</color>
+    <color name="tools_card_bg_color">@color/white</color>
+    <color name="tooltip_background_dark">#e6616161</color>
+    <color name="tooltip_background_light">#e6ffffff</color>
+    <color name="transparent">#00000000</color>
+
+    <color name="water_selected_color">#e6e6e6</color>
+    <color name="white_press_color">#cccccc</color>
+
 </resources>

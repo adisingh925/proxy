@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main_navigation"
+    app:startDestination="@id/measureSugarFragment">
+    <fragment
+        android:id="@+id/measureSugarFragment"
+        android:name="app.android.heartrate.phoneapp.fragments.health.sugar.subs.measure.MeasureSugarFragment"
+        android:label="Measure Sugar"
+        tools:layout="@layout/fragment_measure_sugar">
+        <action
+            android:id="@+id/action_measureSugarFragment_to_analyticsSugarFragment"
+            app:destination="@id/analyticsSugarFragment" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/analyticsSugarFragment"
+        android:name="app.android.heartrate.phoneapp.fragments.health.sugar.subs.analytics.AnalyticsSugarFragment"
+        android:label="Analytics Sugar"
+        tools:layout="@layout/fragment_analytics_sugar" />
+
+
+</navigation>

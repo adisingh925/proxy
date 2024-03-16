@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main_navigation"
+    app:startDestination="@id/measureStepsFragment">
+    <fragment
+        android:id="@+id/measureStepsFragment"
+        android:name="app.android.heartrate.phoneapp.fragments.wellness.steps.subs.measure.MeasureStepFragment"
+        android:label="Measure Steps"
+        tools:layout="@layout/fragment_measure_steps">
+
+        <action
+            android:id="@+id/action_measureStepsFragment_to_analyticsStepsFragment"
+            app:destination="@id/analyticsStepsFragment" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/analyticsStepsFragment"
+        android:name="app.android.heartrate.phoneapp.fragments.wellness.steps.subs.analytics.AnalyticsStepFragment"
+        android:label="Analytics Steps"
+        tools:layout="@layout/fragment_analytics_steps" />
+
+
+</navigation>

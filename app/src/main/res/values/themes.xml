@@ -4,16 +4,76 @@
         <!-- Primary brand color. -->
         <item name="colorPrimary">@color/purple_500</item>
         <item name="colorPrimaryVariant">@color/purple_700</item>
-        <item name="colorOnPrimary">@color/white</item>
+        <item name="colorOnPrimary">@color/black</item>
         <!-- Secondary brand color. -->
         <item name="colorSecondary">@color/teal_200</item>
-        <item name="colorSecondaryVariant">@color/teal_700</item>
+        <item name="colorSecondaryVariant">@color/teal_200</item>
         <item name="colorOnSecondary">@color/black</item>
         <!-- Status bar color. -->
-        <item name="android:statusBarColor">#fef7ff</item>
+        <item name="android:statusBarColor">?attr/colorPrimaryVariant</item>
+
         <!-- Customize your theme here. -->
-        <item name="android:windowLightStatusBar">true</item>
+        <item name="android:windowLightStatusBar">false</item>
         <item name="android:navigationBarColor">#fef7ff</item>
         <item name="android:windowLightNavigationBar">true</item>
     </style>
+
+    <style name="Theme.PhoneApp.NoActionBar">
+        <item name="windowActionBar">false</item>
+        <item name="windowNoTitle">true</item>
+    </style>
+
+
+    <style name="Theme.PhoneApp.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
+
+    <style name="Theme.PhoneApp.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
+
+
+    <style name="DialogTheme" parent="ThemeOverlay.MaterialComponents.MaterialCalendar">
+
+        <!-- Buttons -->
+        <item name="buttonBarPositiveButtonStyle">@style/TextButton</item>
+        <item name="buttonBarNegativeButtonStyle">@style/TextButton</item>
+    </style>
+    <style name="TextButton" parent="Widget.MaterialComponents.Button.TextButton.Dialog">
+        <item name="android:textColor">@color/black</item>
+        <item name="backgroundTint">@color/black</item>
+    </style>
+
+    <style name="DividerVertical">
+        <item name="android:background">@color/dividerColor</item>
+        <item name="android:layout_width">@dimen/_1sdp</item>
+        <item name="android:layout_height">match_parent</item>
+    </style>
+
+    <style name="TransparentBackground" parent="@android:style/Theme.Dialog">
+        <item name="android:windowBackground">@android:color/transparent</item>
+        <item name="android:windowNoTitle">true</item>
+        <item name="android:windowAnimationStyle">@style/customDialogAnimation</item>
+    </style>
+
+    <style name="customDialogAnimation">
+        <item name="android:windowEnterAnimation">@anim/dialog_zoom_in</item>
+        <item name="android:windowExitAnimation">@anim/dialog_zoom_out</item>
+    </style>
+
+    <style name="Theme.App.Base" parent="@style/Theme.AppCompat.Light.DarkActionBar">
+        <item name="colorControlActivated">@color/et_base_color</item>
+        <item name="colorControlHighlight">@color/et_base_color</item>
+        <item name="colorControlNormal">@color/et_base_color</item>
+    </style>
+
+    <style name="DividerHorizontal">
+        <item name="android:background">@color/dividerColor</item>
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">@dimen/_1sdp</item>
+    </style>
+
+
+    <style name="spinnerDropDownItemStyle" parent="@android:style/TextAppearance.Widget.TextView.SpinnerItem"></style>
+
+    <style name="spinnerItemStyle" parent="@android:style/Widget.TextView.SpinnerItem"></style>
+
+
+
 </resources>

@@ -1,28 +1,29 @@
 package app.android.heartrate.phoneapp.fragments
 
+import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import android.util.Patterns
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
-import androidx.core.os.bundleOf
-import androidx.core.view.isVisible
+import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import app.android.heartrate.phoneapp.R
+import app.android.heartrate.phoneapp.activities.main.HomeActivity
 import app.android.heartrate.phoneapp.databinding.FragmentLoginBinding
+import app.android.heartrate.phoneapp.model.GetProfileResponse
 import app.android.heartrate.phoneapp.model.GetRoleResponse
 import app.android.heartrate.phoneapp.model.LoginRequest
 import app.android.heartrate.phoneapp.model.LoginSuccessResponse
 import app.android.heartrate.phoneapp.model.SignupResponse
 import app.android.heartrate.phoneapp.retrofit.ApiClient
 import app.android.heartrate.phoneapp.sharedpreferences.SharedPreferences
+import com.google.gson.Gson
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
-import java.util.regex.Pattern
 
 
 class LoginFragment : Fragment() {
@@ -98,28 +99,35 @@ class LoginFragment : Fragment() {
                                         if (body != null) {
                                             if (response.isSuccessful) {
                                                 if (body.code == 1) {
-                                                    Log.d("LoginFragment", "role success")
-                                                    val profileCheck = ApiClient.apiService.checkProfile(
-                                                        SharedPreferences.read("token", "").toString()
-                                                    )
-                                                    profileCheck.enqueue(object : Callback<SignupResponse>{
+                                                    val profileCheck =
+                                                        ApiClient.apiService.checkProfile(
+                                                            SharedPreferences.read("token", "")
+                                                                .toString()
+                                                        )
+                                                    profileCheck.enqueue(object :
+                                                        Callback<SignupResponse> {
                                                         override fun onResponse(
                                                             call: Call<SignupResponse>,
                                                             response: Response<SignupResponse>
                                                         ) {
-                                                            if(response.isSuccessful){
+                                                            if (response.isSuccessful) {
                                                                 val body = response.body()
-                                                                Log.d("Profile Check", "onResponse: ${response}")
-                                                                if(body != null){
-                                                                    if(body.code == 1){
-                                                                        findNavController().navigate(R.id.action_loginFragment3_to_dashboardFragment)
-                                                                    }else{
-                                                                        findNavController().navigate(R.id.action_loginFragment3_to_profileFragment)
+                                                                Log.d(
+                                                                    "Profile Check",
+                                                                    "onResponse: ${response}"
+                                                                )
+                                                                if (body != null) {
+                                                                    if (body.code == 1) {
+                                                                        proceedToHomeActivity()
+                                                                    } else {
+                                                                        findNavController().navigate(
+                                                                            R.id.action_loginFragment3_to_profileFragment
+                                                                        )
                                                                     }
-                                                                }else{
+                                                                } else {
                                                                     findNavController().navigate(R.id.action_loginFragment3_to_profileFragment)
                                                                 }
-                                                            }else{
+                                                            } else {
                                                                 findNavController().navigate(R.id.action_loginFragment3_to_profileFragment)
                                                             }
                                                         }
@@ -135,7 +143,7 @@ class LoginFragment : Fragment() {
                                             } else {
                                                 findNavController().navigate(R.id.action_loginFragment3_to_chooseRoleFragment)
                                             }
-                                        }else{
+                                        } else {
                                             findNavController().navigate(R.id.action_loginFragment3_to_chooseRoleFragment)
                                         }
                                     }
@@ -170,4 +178,11 @@ class LoginFragment : Fragment() {
 
         return binding.root
     }
+
+    private fun proceedToHomeActivity() {
+//         findNavController().navigate(R.id.action_loginFragment3_to_dashboardFragment)
+        val intent = Intent(requireContext(), HomeActivity::class.java)
+        startActivity(intent)
+    }
+
 }

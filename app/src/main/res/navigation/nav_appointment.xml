@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main_navigation"
+    app:startDestination="@id/newAppointmentFragment">
+    <fragment
+        android:id="@+id/newAppointmentFragment"
+        android:name="app.android.heartrate.phoneapp.fragments.appointments.my_appointment.subs.new_appointment.NewAppointmentDetailsFragment"
+        android:label="New Appointment"
+        tools:layout="@layout/fragment_new_appointment" />
+
+
+</navigation>

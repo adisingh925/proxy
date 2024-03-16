@@ -1,10 +1,8 @@
-package app.android.heartrate.phoneapp
+package app.android.heartrate.phoneapp.activities.main
 
-import android.content.BroadcastReceiver
-import android.content.Context
-import android.content.Intent
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import androidx.appcompat.app.AppCompatActivity
+import app.android.heartrate.phoneapp.R
 import app.android.heartrate.phoneapp.sharedpreferences.SharedPreferences
 
 class MainActivity : AppCompatActivity() {

@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main_navigation"
+    app:startDestination="@id/measurePulseFragment">
+    <fragment
+        android:id="@+id/measurePulseFragment"
+        android:name="app.android.heartrate.phoneapp.fragments.health.pulse.subs.measure.MeasurePluseFragment"
+        android:label="Measure Pulse"
+        tools:layout="@layout/fragment_measure_pulse">
+        <action
+            android:id="@+id/action_measurePulseFragment_to_analyticsPulseFragment"
+            app:destination="@id/analyticsPulseFragment" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/analyticsPulseFragment"
+        android:name="app.android.heartrate.phoneapp.fragments.health.pulse.subs.analytics.AnalyticsPulseFragment"
+        android:label="Analytics Pulse"
+        tools:layout="@layout/fragment_analytics_pulse" />
+
+
+</navigation>

@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <array name="height_units">
+        <item>@string/lbl_centimeter</item>
+        <item>@string/lbl_feet_inches</item>
+    </array>
+    <array name="report_duration">
+        <item>@string/lbl_today</item>
+        <item>@string/lbl_month</item>
+        <item>@string/lbl_year</item>
+        <item>@string/lbl_all</item>
+        <item>@string/lbl_custom</item>
+    </array>
+    <array name="tracker_chart_tools">
+        <item>@string/lbl_chart_blood_count</item>
+        <item>@string/lbl_chart_blood_pressure</item>
+        <item>@string/lbl_chart_blood_sugar</item>
+        <item>@string/lbl_chart_bmi</item>
+        <item>@string/lbl_chart_body_temp</item>
+        <item>@string/lbl_chart_cholesterol</item>
+        <item>@string/lbl_chart_heart_rate</item>
+        <item>@string/lbl_chart_weight</item>
+    </array>
+</resources>

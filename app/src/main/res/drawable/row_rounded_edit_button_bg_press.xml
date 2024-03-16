@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<shape xmlns:android="http://schemas.android.com/apk/res/android" android:shape="rectangle">
+    <gradient android:startColor="@color/row_rounded_edit_button_color_press" android:endColor="@color/row_rounded_edit_button_color_press" android:angle="270"/>
+    <corners android:radius="@dimen/_30sdp"/>
+    <stroke android:width="0dp" android:color="@color/transparent"/>
+</shape>
