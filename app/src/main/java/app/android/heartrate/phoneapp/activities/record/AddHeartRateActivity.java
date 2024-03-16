@@ -124,7 +124,6 @@ public class AddHeartRateActivity extends AppCompatActivity {
         this.spinner_gender = findViewById(R.id.add_hr_spinner_gender);
         this.spinner_current_status = findViewById(R.id.add_hr_spinner_current_status);
         this.txt_age = findViewById(R.id.add_hr_txt_age);
-        this.spinner_txt_name = findViewById(R.id.spinner_txt_name);
         this.txt_age_unit = findViewById(R.id.add_hr_txt_age_unit);
         this.np_age = findViewById(R.id.add_hr_np_age);
         EditText editText = findViewById(R.id.add_hr_et_heart_rate);
@@ -137,6 +136,7 @@ public class AddHeartRateActivity extends AppCompatActivity {
         this.rel_select_time = findViewById(R.id.add_hr_rel_select_time);
         this.txt_time = findViewById(R.id.add_hr_txt_time);
         this.et_notes = findViewById(R.id.add_hr_et_notes);
+        this.spinner_txt_name = findViewById(R.id.spinner_txt_name);
         SetProfileSpinner();
         SetAgePicker();
         SetGenderSpinner();

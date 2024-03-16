@@ -45,91 +45,65 @@ class MedicationFragment : BaseFragment() {
 
     private fun handleClicks() {
         binding.cvAddMedication.setOnClickListener {
-
-            val sqlite = SQLiteHealthTracker(requireContext()).open()
-            val exist = sqlite.CheckProfileDataExist()
-            if (exist) {
-                startActivity(MedicineDataActivity::class.java)
-            } else {
-                NoProfileDialog()
-            }
+            handlePermissions()
         }
     }
 
-    private fun NoProfileDialog() {
-        val dialog = Dialog(requireContext(), R.style.TransparentBackground)
-        dialog.requestWindowFeature(1)
-        dialog.setContentView(R.layout.dialog_rate)
-        val button = dialog.findViewById<Button>(R.id.dialog_conform_btn_yes)
-        val button2 = dialog.findViewById<Button>(R.id.dialog_conform_btn_no)
-        val str: String = AppConstants.create_profile_messages
-        (dialog.findViewById<View>(R.id.dialog_conform_txt_header) as TextView).text =
-            "User Profile"
-        (dialog.findViewById<View>(R.id.dialog_conform_txt_message) as TextView).text =
-            str
-        button.text = "Create"
-        button2.text = "Cancel"
-        button.setOnClickListener {
-            if (Build.VERSION.SDK_INT >= 33) {
-                try {
-                    TedPermission.create().setPermissions(
-                        "android.permission.READ_MEDIA_IMAGES",
-                        "android.permission.CAMERA"
-                    ).setPermissionListener(object : PermissionListener {
-                        override fun onPermissionGranted() {
-                            startActivity(AddProfileActivity::class.java)
-                        }
+    private fun handlePermissions() {
+        if (Build.VERSION.SDK_INT >= 33) {
+            try {
+                TedPermission.create().setPermissions(
+                    "android.permission.READ_MEDIA_IMAGES",
+                    "android.permission.CAMERA"
+                ).setPermissionListener(object : PermissionListener {
+                    override fun onPermissionGranted() {
+                        startActivity(MedicineDataActivity::class.java)
+                    }
 
-                        override fun onPermissionDenied(list: List<String>) {
-                            Log.e("Permission:", "Permission Denied!")
-                        }
-                    }).check()
-                } catch (e: ActivityNotFoundException) {
-                    e.printStackTrace()
-                }
-                dialog.dismiss()
-            } else if (Build.VERSION.SDK_INT >= 30) {
-                try {
-                    TedPermission.create().setPermissions(
-                        "android.permission.WRITE_EXTERNAL_STORAGE",
-                        "android.permission.READ_EXTERNAL_STORAGE",
-                        "android.permission.CAMERA"
-                    ).setPermissionListener(object : PermissionListener {
-                        override fun onPermissionGranted() {
-                            startActivity(AddProfileActivity::class.java)
-                        }
+                    override fun onPermissionDenied(list: List<String>) {
+                        Log.e("Permission:", "Permission Denied!")
+                    }
+                }).check()
+            } catch (e: ActivityNotFoundException) {
+                e.printStackTrace()
+            }
+        } else if (Build.VERSION.SDK_INT >= 30) {
+            try {
+                TedPermission.create().setPermissions(
+                    "android.permission.WRITE_EXTERNAL_STORAGE",
+                    "android.permission.READ_EXTERNAL_STORAGE",
+                    "android.permission.CAMERA"
+                ).setPermissionListener(object : PermissionListener {
+                    override fun onPermissionGranted() {
+                        startActivity(MedicineDataActivity::class.java)
+                    }
 
-                        override fun onPermissionDenied(list: List<String>) {
-                            Log.e("Permission:", "Permission Denied!")
-                        }
-                    }).check()
-                } catch (e: ActivityNotFoundException) {
-                    e.printStackTrace()
-                }
-                dialog.dismiss()
-            } else {
-                try {
-                    TedPermission.create().setPermissions(
-                        "android.permission.WRITE_EXTERNAL_STORAGE",
-                        "android.permission.READ_EXTERNAL_STORAGE",
-                        "android.permission.CAMERA"
-                    ).setPermissionListener(object : PermissionListener {
-                        override fun onPermissionGranted() {
-                            startActivity(AddProfileActivity::class.java)
-                        }
+                    override fun onPermissionDenied(list: List<String>) {
+                        Log.e("Permission:", "Permission Denied!")
+                    }
+                }).check()
+            } catch (e: ActivityNotFoundException) {
+                e.printStackTrace()
+            }
+        } else {
+            try {
+                TedPermission.create().setPermissions(
+                    "android.permission.WRITE_EXTERNAL_STORAGE",
+                    "android.permission.READ_EXTERNAL_STORAGE",
+                    "android.permission.CAMERA"
+                ).setPermissionListener(object : PermissionListener {
+                    override fun onPermissionGranted() {
+                        startActivity(MedicineDataActivity::class.java)
+                    }
 
-                        override fun onPermissionDenied(list: List<String>) {
-                            Log.e("Permission:", "Permission Denied!")
-                        }
-                    }).check()
-                } catch (e: ActivityNotFoundException) {
-                    e.printStackTrace()
-                }
-                dialog.dismiss()
+                    override fun onPermissionDenied(list: List<String>) {
+                        Log.e("Permission:", "Permission Denied!")
+                    }
+                }).check()
+            } catch (e: ActivityNotFoundException) {
+                e.printStackTrace()
             }
         }
-        button2.setOnClickListener { dialog.dismiss() }
-        dialog.show()
     }
 
 
