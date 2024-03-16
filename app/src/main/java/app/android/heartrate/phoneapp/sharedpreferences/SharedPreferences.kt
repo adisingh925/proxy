@@ -2,6 +2,9 @@ package app.android.heartrate.phoneapp.sharedpreferences
 
 import android.content.Context
 import android.preference.PreferenceManager
+import app.android.heartrate.phoneapp.model.ProfileData
+import app.android.heartrate.phoneapp.model.classes.UserProfileData
+import com.google.gson.Gson
 
 object SharedPreferences {
 
@@ -40,6 +43,20 @@ object SharedPreferences {
         with(prefsEditor) {
             clear()
             apply()
+        }
+    }
+
+    fun getUserProfile(): ProfileData? {
+        val strProfile = read("profile", "")
+        if (strProfile.isNullOrEmpty()) {
+            return null
+        }
+        return Gson().fromJson(strProfile, ProfileData::class.java)
+    }
+
+    fun setUserProfile(profileData: ProfileData) {
+        Gson().toJson(profileData).let {
+            write("profile", it)
         }
     }
 }

@@ -47,7 +47,7 @@ class HomeFragment : Fragment() {
                 if (response.isSuccessful) {
                     val getProfileResponse = response.body()
                     if (getProfileResponse?.data != null) {
-                        SharedPreferences.write("profile", Gson().toJson(getProfileResponse))
+                        SharedPreferences.setUserProfile(getProfileResponse.data)
                     }
                 }
             }

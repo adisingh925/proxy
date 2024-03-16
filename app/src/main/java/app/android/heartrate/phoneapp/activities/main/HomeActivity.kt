@@ -14,6 +14,7 @@ import androidx.navigation.ui.setupWithNavController
 import app.android.heartrate.phoneapp.R
 import app.android.heartrate.phoneapp.databinding.ActivityHomeBinding
 import app.android.heartrate.phoneapp.fragments.profile.ProfileActivity
+import app.android.heartrate.phoneapp.sharedpreferences.SharedPreferences
 import com.google.android.material.navigation.NavigationView
 
 
@@ -62,14 +63,25 @@ class HomeActivity : AppCompatActivity() {
     private fun handleProfileClicks() {
         val header = binding.navView.getHeaderView(0)
         var editProfile = header.findViewById<TextView>(R.id.tvEditProfile)
+        val userName = header.findViewById<TextView>(R.id.tvUserName)
+        val userEmail = header.findViewById<TextView>(R.id.tvUserEmail)
         editProfile.setOnClickListener {
             drawerLayout.closeDrawers()
             startActivity(Intent(this, ProfileActivity::class.java))
         }
+        val userProfile = SharedPreferences.getUserProfile()
+        userProfile.let {
+            userName.text = (it?.firstName + " " + it?.lastName) ?: "Unknown User"
+            userEmail.text = it?.email ?: "Unknown Email"
+        }
+
+
     }
 
     override fun onSupportNavigateUp(): Boolean {
         val navController = findNavController(R.id.nav_host_fragment_content_main)
         return navController.navigateUp(appBarConfiguration) || super.onSupportNavigateUp()
     }
+
+
 }
