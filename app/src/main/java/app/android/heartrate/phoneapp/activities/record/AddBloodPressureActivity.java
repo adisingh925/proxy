@@ -34,8 +34,10 @@ import java.util.Date;
 import app.android.heartrate.phoneapp.AdAdmob;
 import app.android.heartrate.phoneapp.R;
 import app.android.heartrate.phoneapp.adapters.SpinnerProfileAdapter;
+import app.android.heartrate.phoneapp.model.ProfileData;
 import app.android.heartrate.phoneapp.model.classes.BloodPressureData;
 import app.android.heartrate.phoneapp.model.classes.UserProfileData;
+import app.android.heartrate.phoneapp.sharedpreferences.SharedPreferences;
 import app.android.heartrate.phoneapp.sqlite.SQLiteHealthTracker;
 import app.android.heartrate.phoneapp.utils.AppConstants;
 import app.android.heartrate.phoneapp.utils.EUGeneralClass;
@@ -43,9 +45,6 @@ import app.android.heartrate.phoneapp.utils.EUGeneralClass;
 public class AddBloodPressureActivity extends AppCompatActivity {
     public static Activity activity_add_blood_pressure;
     SQLiteHealthTracker SQLite_health_tracker;
-    int[] arrayProfileIds;
-    String[] arrayProfileNames;
-    ArrayList<UserProfileData> array_profiles = new ArrayList<>();
 
     String blood_pressure_result = "";
     String date = "";
@@ -70,9 +69,6 @@ public class AddBloodPressureActivity extends AppCompatActivity {
     Animation push_animation;
     RelativeLayout rel_select_date;
     RelativeLayout rel_select_time;
-    int selected_user_id;
-    String selected_user_name = "";
-    SpinnerProfileAdapter spinner_profile_adapter;
     Spinner spinner_profiles;
     String status_color = "#8CC63F";
     String systolic_string = "";
@@ -82,6 +78,7 @@ public class AddBloodPressureActivity extends AppCompatActivity {
     TextView txt_mean_arterial_level;
     TextView txt_pulse_pressure_level;
     TextView txt_time;
+    TextView spinner_txt_name;
     int year;
     private String current_date_time = "";
     private int save_entry_day;
@@ -89,6 +86,7 @@ public class AddBloodPressureActivity extends AppCompatActivity {
     private int save_entry_minute;
     private int save_entry_month;
     private int save_entry_year;
+    private SharedPreferences sharedPreferencesUtils;
 
     @Override
 
@@ -107,11 +105,13 @@ public class AddBloodPressureActivity extends AppCompatActivity {
         activity_add_blood_pressure = this;
         this.push_animation = AnimationUtils.loadAnimation(this, R.anim.view_push);
         setUpActionBar();
+        sharedPreferencesUtils = SharedPreferences.INSTANCE;
         SQLiteHealthTracker sQLiteHealthTracker = new SQLiteHealthTracker(this);
         this.SQLite_health_tracker = sQLiteHealthTracker;
         sQLiteHealthTracker.openToWrite();
         this.spinner_profiles = findViewById(R.id.add_bp_spinner_profiles);
         this.et_systolic_level = findViewById(R.id.add_bp_et_systolic_value);
+        this.spinner_txt_name = findViewById(R.id.spinner_txt_name);
         this.et_diastolic_level = findViewById(R.id.add_bp_et_diastolic_value);
         this.et_pulse_rate_level = findViewById(R.id.add_bp_et_pulse_rate);
         this.rel_select_date = findViewById(R.id.add_bp_rel_select_date);
@@ -216,34 +216,8 @@ public class AddBloodPressureActivity extends AppCompatActivity {
     }
 
     private void SetProfileSpinner() {
-        this.array_profiles.clear();
-        ArrayList<UserProfileData> arrayList = (ArrayList) this.SQLite_health_tracker.GetUserProfileData();
-        this.array_profiles = arrayList;
-        if (arrayList.size() > 0) {
-            this.arrayProfileIds = new int[this.array_profiles.size()];
-            this.arrayProfileNames = new String[this.array_profiles.size()];
-            for (int i = 0; i < this.array_profiles.size(); i++) {
-                this.arrayProfileIds[i] = this.array_profiles.get(i).user_id;
-                this.arrayProfileNames[i] = this.array_profiles.get(i).user_name.trim();
-            }
-            SpinnerProfileAdapter spinnerProfileAdapter = new SpinnerProfileAdapter(this, this.array_profiles);
-            this.spinner_profile_adapter = spinnerProfileAdapter;
-            this.spinner_profiles.setAdapter(spinnerProfileAdapter);
-        }
-        this.spinner_profiles.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-
-
-            @Override
-            public void onNothingSelected(AdapterView<?> adapterView) {
-            }
-
-            @Override
-            public void onItemSelected(AdapterView<?> adapterView, View view, int i, long j) {
-                int i2 = AddBloodPressureActivity.this.arrayProfileIds[i];
-                String trim = AddBloodPressureActivity.this.arrayProfileNames[i].trim();
-                Log.e("selected Profile :", "ID :" + i2 + "\nName :" + trim);
-            }
-        });
+        String name = sharedPreferencesUtils.getUserName();
+        spinner_txt_name.setText(name);
     }
 
     public void hideSoftKeyboard() {
@@ -276,20 +250,6 @@ public class AddBloodPressureActivity extends AppCompatActivity {
             this.txt_pulse_pressure_level.setText(String.valueOf(this.pulse_pressure_value));
             this.txt_mean_arterial_level.setText(String.valueOf(this.mean_arterial_value));
             this.et_notes.setText(this.notes);
-            int i = AppConstants.selected_bp_data.user_id;
-            this.selected_user_id = i;
-            String GetProfileNameByID = this.SQLite_health_tracker.GetProfileNameByID(i);
-            this.selected_user_name = GetProfileNameByID;
-            if (GetProfileNameByID != null) {
-                int i2 = 0;
-                for (int i3 = 0; i3 < this.array_profiles.size(); i3++) {
-                    if (this.array_profiles.get(i3).user_name.trim().equals(this.selected_user_name)) {
-                        i2 = i3;
-                    }
-                }
-                this.spinner_profiles.setSelection(i2);
-                return;
-            }
             return;
         }
         EUGeneralClass.ShowErrorToast(this, "Something went wrong!");
@@ -316,10 +276,8 @@ public class AddBloodPressureActivity extends AppCompatActivity {
             GetResult();
             BloodPressureData bloodPressureData = new BloodPressureData();
             int selectedItemPosition = this.spinner_profiles.getSelectedItemPosition();
-            this.selected_user_id = this.arrayProfileIds[selectedItemPosition];
-            this.selected_user_name = this.arrayProfileNames[selectedItemPosition];
             if (!AppConstants.is_bp_edit_mode) {
-                bloodPressureData.user_id = this.selected_user_id;
+                bloodPressureData.user_id = sharedPreferencesUtils.getUserId();
                 bloodPressureData.date = this.date.trim();
                 bloodPressureData.time = this.time.trim();
                 bloodPressureData.systolic_value = this.systolic_value;
@@ -342,7 +300,7 @@ public class AddBloodPressureActivity extends AppCompatActivity {
                 return;
             }
             int i = AppConstants.selected_bp_data.row_id;
-            bloodPressureData.user_id = this.selected_user_id;
+            bloodPressureData.user_id = this.sharedPreferencesUtils.getUserId();
             bloodPressureData.date = this.date.trim();
             bloodPressureData.time = this.time.trim();
             bloodPressureData.systolic_value = this.systolic_value;
@@ -359,7 +317,7 @@ public class AddBloodPressureActivity extends AppCompatActivity {
             bloodPressureData.month = this.month;
             bloodPressureData.year = this.year;
             bloodPressureData.hour = this.hour;
-            this.SQLite_health_tracker.UpdateBloodPressureData(i, this.selected_user_id, bloodPressureData);
+            this.SQLite_health_tracker.UpdateBloodPressureData(i, this.sharedPreferencesUtils.getUserId(), bloodPressureData);
             EUGeneralClass.ShowSuccessToast(this, AppConstants.data_updated_messages);
             onBackPressed();
         } catch (Exception e) {
@@ -475,7 +433,6 @@ public class AddBloodPressureActivity extends AppCompatActivity {
     @Override
     public void onResume() {
         super.onResume();
-
     }
 
 

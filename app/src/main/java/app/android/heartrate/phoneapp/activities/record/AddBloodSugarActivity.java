@@ -41,8 +41,10 @@ import java.util.Date;
 import app.android.heartrate.phoneapp.AdAdmob;
 import app.android.heartrate.phoneapp.R;
 import app.android.heartrate.phoneapp.adapters.SpinnerProfileAdapter;
+import app.android.heartrate.phoneapp.model.ProfileData;
 import app.android.heartrate.phoneapp.model.classes.BloodSugarData;
 import app.android.heartrate.phoneapp.model.classes.UserProfileData;
+import app.android.heartrate.phoneapp.sharedpreferences.SharedPreferences;
 import app.android.heartrate.phoneapp.sqlite.SQLiteHealthTracker;
 import app.android.heartrate.phoneapp.sqlite.rulerpicker.RulerValuePicker;
 import app.android.heartrate.phoneapp.sqlite.rulerpicker.RulerValuePickerListener;
@@ -54,9 +56,6 @@ public class AddBloodSugarActivity extends AppCompatActivity {
     SQLiteHealthTracker SQLite_health_tracker;
     String adagValue = "";
     ArrayList<String> arrayListCurrentStatus = new ArrayList<>(Arrays.asList(AppConstants.pre_meal_testing, AppConstants.post_meal_testing, AppConstants.fasting_testing, AppConstants.general_testing));
-    int[] arrayProfileIds;
-    String[] arrayProfileNames;
-    ArrayList<UserProfileData> array_profiles = new ArrayList<>();
 
     String blood_sugar_result;
     float blood_sugar_value = 0.0f;
@@ -81,8 +80,6 @@ public class AddBloodSugarActivity extends AppCompatActivity {
     RelativeLayout rel_select_date;
     RelativeLayout rel_select_time;
     RulerValuePicker ruler_sugar_level;
-    int selected_user_id;
-    String selected_user_name = "";
     Spinner spinner_current_status;
     SpinnerProfileAdapter spinner_profile_adapter;
     Spinner spinner_profiles;
@@ -92,6 +89,7 @@ public class AddBloodSugarActivity extends AppCompatActivity {
     TextView txt_adag_level;
     TextView txt_bs_level;
     TextView txt_date;
+    TextView spinner_txt_name;
     TextView txt_dcct_level;
     TextView txt_time;
     int year;
@@ -101,6 +99,8 @@ public class AddBloodSugarActivity extends AppCompatActivity {
     private int save_entry_minute;
     private int save_entry_month;
     private int save_entry_year;
+
+    private SharedPreferences sharedPreferencesUtils;
 
     public double CalculateADAG(double d) {
         return (d * 28.7d) - 46.7d;
@@ -127,6 +127,7 @@ public class AddBloodSugarActivity extends AppCompatActivity {
         activity_add_blood_sugar = this;
         this.push_animation = AnimationUtils.loadAnimation(this, R.anim.view_push);
         setUpActionBar();
+        sharedPreferencesUtils = SharedPreferences.INSTANCE;
         SQLiteHealthTracker sQLiteHealthTracker = new SQLiteHealthTracker(this);
         this.SQLite_health_tracker = sQLiteHealthTracker;
         sQLiteHealthTracker.openToWrite();
@@ -145,6 +146,7 @@ public class AddBloodSugarActivity extends AppCompatActivity {
         this.et_notes = findViewById(R.id.add_bs_et_notes);
         this.rel_select_date = findViewById(R.id.add_bs_rel_select_date);
         this.txt_date = findViewById(R.id.add_bs_txt_date);
+        this.spinner_txt_name = findViewById(R.id.spinner_txt_name);
         this.rel_select_time = findViewById(R.id.add_bs_rel_select_time);
         this.txt_time = findViewById(R.id.add_bs_txt_time);
         SetProfileSpinner();
@@ -153,27 +155,23 @@ public class AddBloodSugarActivity extends AppCompatActivity {
         if (AppConstants.is_bs_edit_mode) {
             SetBloodSugarData();
         }
-        this.rel_select_date.setOnClickListener(new View.OnClickListener() {
+        this.rel_select_date.setOnClickListener(view -> {
+            AddBloodSugarActivity.this.hideSoftKeyboard();
+            Calendar instance = Calendar.getInstance();
+            AddBloodSugarActivity.this.save_entry_year = instance.get(1);
+            AddBloodSugarActivity.this.save_entry_month = instance.get(2);
+            AddBloodSugarActivity.this.save_entry_day = instance.get(5);
+            new DatePickerDialog(AddBloodSugarActivity.this, R.style.DialogTheme, new DatePickerDialog.OnDateSetListener() {
 
 
-            public void onClick(View view) {
-                AddBloodSugarActivity.this.hideSoftKeyboard();
-                Calendar instance = Calendar.getInstance();
-                AddBloodSugarActivity.this.save_entry_year = instance.get(1);
-                AddBloodSugarActivity.this.save_entry_month = instance.get(2);
-                AddBloodSugarActivity.this.save_entry_day = instance.get(5);
-                new DatePickerDialog(AddBloodSugarActivity.this, R.style.DialogTheme, new DatePickerDialog.OnDateSetListener() {
-
-
-                    public void onDateSet(DatePicker datePicker, int i, int i2, int i3) {
-                        try {
-                            AddBloodSugarActivity.this.txt_date.setText(new SimpleDateFormat("dd/MM/yyyy").format(new SimpleDateFormat("dd/MM/yyyy").parse((i3 + "/" + (i2 + 1) + "/" + i).trim())));
-                        } catch (Exception e) {
-                            e.printStackTrace();
-                        }
+                public void onDateSet(DatePicker datePicker, int i, int i2, int i3) {
+                    try {
+                        AddBloodSugarActivity.this.txt_date.setText(new SimpleDateFormat("dd/MM/yyyy").format(new SimpleDateFormat("dd/MM/yyyy").parse((i3 + "/" + (i2 + 1) + "/" + i).trim())));
+                    } catch (Exception e) {
+                        e.printStackTrace();
                     }
-                }, AddBloodSugarActivity.this.save_entry_year, AddBloodSugarActivity.this.save_entry_month, AddBloodSugarActivity.this.save_entry_day).show();
-            }
+                }
+            }, AddBloodSugarActivity.this.save_entry_year, AddBloodSugarActivity.this.save_entry_month, AddBloodSugarActivity.this.save_entry_day).show();
         });
         this.rel_select_time.setOnClickListener(new View.OnClickListener() {
 
@@ -237,34 +235,8 @@ public class AddBloodSugarActivity extends AppCompatActivity {
     }
 
     private void SetProfileSpinner() {
-        this.array_profiles.clear();
-        ArrayList<UserProfileData> arrayList = (ArrayList) this.SQLite_health_tracker.GetUserProfileData();
-        this.array_profiles = arrayList;
-        if (arrayList.size() > 0) {
-            this.arrayProfileIds = new int[this.array_profiles.size()];
-            this.arrayProfileNames = new String[this.array_profiles.size()];
-            for (int i = 0; i < this.array_profiles.size(); i++) {
-                this.arrayProfileIds[i] = this.array_profiles.get(i).user_id;
-                this.arrayProfileNames[i] = this.array_profiles.get(i).user_name.trim();
-            }
-            SpinnerProfileAdapter spinnerProfileAdapter = new SpinnerProfileAdapter(this, this.array_profiles);
-            this.spinner_profile_adapter = spinnerProfileAdapter;
-            this.spinner_profiles.setAdapter(spinnerProfileAdapter);
-        }
-        this.spinner_profiles.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-
-
-            @Override
-            public void onNothingSelected(AdapterView<?> adapterView) {
-            }
-
-            @Override
-            public void onItemSelected(AdapterView<?> adapterView, View view, int i, long j) {
-                int i2 = AddBloodSugarActivity.this.arrayProfileIds[i];
-                String trim = AddBloodSugarActivity.this.arrayProfileNames[i].trim();
-                Log.e("selected Profile :", "ID :" + i2 + "\nName :" + trim);
-            }
-        });
+        String name = sharedPreferencesUtils.getUserName();
+        spinner_txt_name.setText(name);
     }
 
     @SuppressLint("WrongConstant")
@@ -307,20 +279,6 @@ public class AddBloodSugarActivity extends AppCompatActivity {
             this.txt_adag_level.setText(this.adagValue);
             this.txt_dcct_level.setText(this.dcctValue);
             this.et_notes.setText(this.notes);
-            int i = AppConstants.selected_bs_data.user_id;
-            this.selected_user_id = i;
-            String GetProfileNameByID = this.SQLite_health_tracker.GetProfileNameByID(i);
-            this.selected_user_name = GetProfileNameByID;
-            if (GetProfileNameByID != null) {
-                int i2 = 0;
-                for (int i3 = 0; i3 < this.array_profiles.size(); i3++) {
-                    if (this.array_profiles.get(i3).user_name.trim().equals(this.selected_user_name)) {
-                        i2 = i3;
-                    }
-                }
-                this.spinner_profiles.setSelection(i2);
-                return;
-            }
             return;
         }
         EUGeneralClass.ShowErrorToast(this, "Something went wrong!");
@@ -360,11 +318,8 @@ public class AddBloodSugarActivity extends AppCompatActivity {
             String str = this.blood_sugar_result;
             if (str != null) {
                 if (str.length() != 0) {
-                    int selectedItemPosition = this.spinner_profiles.getSelectedItemPosition();
-                    this.selected_user_id = this.arrayProfileIds[selectedItemPosition];
-                    this.selected_user_name = this.arrayProfileNames[selectedItemPosition];
                     if (!AppConstants.is_bs_edit_mode) {
-                        bloodSugarData.user_id = this.selected_user_id;
+                        bloodSugarData.user_id = this.sharedPreferencesUtils.getUserId();
                         bloodSugarData.date = this.date.trim();
                         bloodSugarData.time = this.time.trim();
                         bloodSugarData.current_status = this.current_status.trim();
@@ -394,7 +349,7 @@ public class AddBloodSugarActivity extends AppCompatActivity {
 
 
                     int i = AppConstants.selected_bs_data.row_id;
-                    bloodSugarData.user_id = this.selected_user_id;
+                    bloodSugarData.user_id = this.sharedPreferencesUtils.getUserId();
                     bloodSugarData.date = this.date.trim();
                     bloodSugarData.time = this.time.trim();
                     bloodSugarData.current_status = this.current_status.trim();
@@ -416,7 +371,7 @@ public class AddBloodSugarActivity extends AppCompatActivity {
                         EUGeneralClass.ShowErrorToast(this, "");
                         return;
                     }
-                    this.SQLite_health_tracker.UpdateBloodSugarData(i, this.selected_user_id, bloodSugarData);
+                    this.SQLite_health_tracker.UpdateBloodSugarData(i, this.sharedPreferencesUtils.getUserId(), bloodSugarData);
                     EUGeneralClass.ShowSuccessToast(this, "Blood Sugar Data updated successfully!");
                     onBackPressed();
                     return;
@@ -720,8 +675,6 @@ public class AddBloodSugarActivity extends AppCompatActivity {
     @Override
     public void onResume() {
         super.onResume();
-
-
     }
 
 

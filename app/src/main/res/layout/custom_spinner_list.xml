@@ -36,6 +36,7 @@
         android:layout_marginTop="@dimen/_5sdp"
         android:gravity="center_horizontal"
         android:paddingTop="@dimen/_5sdp"
+        android:visibility="gone"
         android:paddingBottom="@dimen/_5sdp">
 
         <RelativeLayout

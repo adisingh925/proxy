@@ -36,8 +36,10 @@ import java.util.Date;
 import app.android.heartrate.phoneapp.AdAdmob;
 import app.android.heartrate.phoneapp.R;
 import app.android.heartrate.phoneapp.adapters.SpinnerProfileAdapter;
+import app.android.heartrate.phoneapp.model.ProfileData;
 import app.android.heartrate.phoneapp.model.classes.UserProfileData;
 import app.android.heartrate.phoneapp.model.classes.WeightData;
+import app.android.heartrate.phoneapp.sharedpreferences.SharedPreferences;
 import app.android.heartrate.phoneapp.sqlite.SQLiteHealthTracker;
 import app.android.heartrate.phoneapp.utils.AppConstants;
 import app.android.heartrate.phoneapp.utils.EUGeneralClass;
@@ -46,9 +48,6 @@ public class AddWeightActivity extends AppCompatActivity {
     public static Activity activity_add_profile;
     public int weightIndex = 0;
     SQLiteHealthTracker SQLite_health_tracker;
-    int[] arrayProfileIds;
-    String[] arrayProfileNames;
-    ArrayList<UserProfileData> array_profiles = new ArrayList<>();
     String date_time = "";
     int day;
     EditText et_notes;
@@ -59,12 +58,12 @@ public class AddWeightActivity extends AppCompatActivity {
     Animation push_animation;
     RelativeLayout rel_select_date;
     RelativeLayout rel_select_time;
-    int selected_user_id;
-    String selected_user_name = "";
+
     SpinnerProfileAdapter spinner_profile_adapter;
     Spinner spinner_profiles;
     TextView txt_date;
     TextView txt_time;
+    TextView spinner_txt_name;
     TextView txt_weight;
     int weight_default_value = 55;
     int weight_max_value = 300;
@@ -77,6 +76,8 @@ public class AddWeightActivity extends AppCompatActivity {
     private int save_entry_minute;
     private int save_entry_month;
     private int save_entry_year;
+
+    private SharedPreferences sharedPreferencesUtils;
 
     @Override
     public void onCreate(Bundle bundle) {
@@ -94,12 +95,14 @@ public class AddWeightActivity extends AppCompatActivity {
         activity_add_profile = this;
         this.push_animation = AnimationUtils.loadAnimation(this, R.anim.view_push);
         setUpActionBar();
+        sharedPreferencesUtils = SharedPreferences.INSTANCE;
         SQLiteHealthTracker sQLiteHealthTracker = new SQLiteHealthTracker(this);
         this.SQLite_health_tracker = sQLiteHealthTracker;
         sQLiteHealthTracker.openToWrite();
         this.spinner_profiles = findViewById(R.id.weight_spinner_profiles);
         this.np_weight = findViewById(R.id.add_weight_np_weight_value);
         this.txt_weight = findViewById(R.id.add_weight_txt_weight);
+        this.spinner_txt_name = findViewById(R.id.spinner_txt_name);
         this.et_notes = findViewById(R.id.add_weight_et_notes);
         this.rel_select_date = findViewById(R.id.weight_rel_select_date);
         this.txt_date = findViewById(R.id.weight_txt_date);
@@ -196,34 +199,8 @@ public class AddWeightActivity extends AppCompatActivity {
     }
 
     private void SetProfileSpinner() {
-        this.array_profiles.clear();
-        ArrayList<UserProfileData> arrayList = (ArrayList) this.SQLite_health_tracker.GetUserProfileData();
-        this.array_profiles = arrayList;
-        if (arrayList.size() > 0) {
-            this.arrayProfileIds = new int[this.array_profiles.size()];
-            this.arrayProfileNames = new String[this.array_profiles.size()];
-            for (int i = 0; i < this.array_profiles.size(); i++) {
-                this.arrayProfileIds[i] = this.array_profiles.get(i).user_id;
-                this.arrayProfileNames[i] = this.array_profiles.get(i).user_name.trim();
-            }
-            SpinnerProfileAdapter spinnerProfileAdapter = new SpinnerProfileAdapter(this, this.array_profiles);
-            this.spinner_profile_adapter = spinnerProfileAdapter;
-            this.spinner_profiles.setAdapter(spinnerProfileAdapter);
-        }
-        this.spinner_profiles.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-
-
-            @Override
-            public void onNothingSelected(AdapterView<?> adapterView) {
-            }
-
-            @Override
-            public void onItemSelected(AdapterView<?> adapterView, View view, int i, long j) {
-                int i2 = AddWeightActivity.this.arrayProfileIds[i];
-                String trim = AddWeightActivity.this.arrayProfileNames[i].trim();
-                Log.e("selected Profile :", "ID :" + i2 + "\nName :" + trim);
-            }
-        });
+        String name = sharedPreferencesUtils.getUserName();
+        spinner_txt_name.setText(name);
     }
 
     @SuppressLint("WrongConstant")
@@ -262,20 +239,6 @@ public class AddWeightActivity extends AppCompatActivity {
             this.np_weight.setValue(this.weightIndex + 1);
             this.txt_weight.setText(String.valueOf(this.weight_default_value));
             this.et_notes.setText(trim3);
-            int i2 = AppConstants.selected_weight_data.user_id;
-            this.selected_user_id = i2;
-            String GetProfileNameByID = this.SQLite_health_tracker.GetProfileNameByID(i2);
-            this.selected_user_name = GetProfileNameByID;
-            if (GetProfileNameByID != null) {
-                int i3 = 0;
-                for (int i4 = 0; i4 < this.array_profiles.size(); i4++) {
-                    if (this.array_profiles.get(i4).user_name.trim().equals(this.selected_user_name)) {
-                        i3 = i4;
-                    }
-                }
-                this.spinner_profiles.setSelection(i3);
-                return;
-            }
             return;
         }
         EUGeneralClass.ShowErrorToast(this, "Something went wrong!");
@@ -300,11 +263,8 @@ public class AddWeightActivity extends AppCompatActivity {
                 return;
             }
             WeightData weightData = new WeightData();
-            int selectedItemPosition = this.spinner_profiles.getSelectedItemPosition();
-            this.selected_user_id = this.arrayProfileIds[selectedItemPosition];
-            this.selected_user_name = this.arrayProfileNames[selectedItemPosition];
             if (!AppConstants.is_weight_edit_mode) {
-                weightData.user_id = this.selected_user_id;
+                weightData.user_id = this.sharedPreferencesUtils.getUserId();
                 weightData.date = trim.trim();
                 weightData.time = trim2.trim();
                 weightData.weight = Float.parseFloat(trim3.trim());
@@ -322,7 +282,7 @@ public class AddWeightActivity extends AppCompatActivity {
             }
             int i = AppConstants.selected_weight_data.row_id;
             weightData.row_id = i;
-            weightData.user_id = this.selected_user_id;
+            weightData.user_id = this.sharedPreferencesUtils.getUserId();
             weightData.date = trim.trim();
             weightData.time = trim2.trim();
             weightData.weight = Float.parseFloat(trim3.trim());
@@ -333,7 +293,7 @@ public class AddWeightActivity extends AppCompatActivity {
             weightData.month = this.month;
             weightData.year = this.year;
             weightData.hour = this.hour;
-            this.SQLite_health_tracker.UpdateWeightData(i, this.selected_user_id, weightData);
+            this.SQLite_health_tracker.UpdateWeightData(i, this.sharedPreferencesUtils.getUserId(), weightData);
             EUGeneralClass.ShowSuccessToast(this, "Weight Data updated successfully!");
             onBackPressed();
         } catch (Exception e) {
@@ -415,8 +375,6 @@ public class AddWeightActivity extends AppCompatActivity {
     @Override
     public void onResume() {
         super.onResume();
-
-
     }
 
 

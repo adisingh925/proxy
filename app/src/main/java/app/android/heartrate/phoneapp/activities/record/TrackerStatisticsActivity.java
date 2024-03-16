@@ -43,6 +43,7 @@ import java.util.List;
 import app.android.heartrate.phoneapp.AdAdmob;
 import app.android.heartrate.phoneapp.R;
 import app.android.heartrate.phoneapp.adapters.SpinnerProfileAdapter;
+import app.android.heartrate.phoneapp.model.ProfileData;
 import app.android.heartrate.phoneapp.model.classes.BMIChartData;
 import app.android.heartrate.phoneapp.model.classes.BloodCountChartData;
 import app.android.heartrate.phoneapp.model.classes.BloodPressureChartData;
@@ -53,6 +54,7 @@ import app.android.heartrate.phoneapp.model.classes.HeartRateChartData;
 import app.android.heartrate.phoneapp.model.classes.UserProfileData;
 import app.android.heartrate.phoneapp.model.classes.WeightChartData;
 import app.android.heartrate.phoneapp.model.classes.WeightData;
+import app.android.heartrate.phoneapp.sharedpreferences.SharedPreferences;
 import app.android.heartrate.phoneapp.sqlite.SQLiteHealthTracker;
 import app.android.heartrate.phoneapp.utils.AppConstants;
 import app.android.heartrate.phoneapp.utils.customviews.MyMarkerView;
@@ -63,11 +65,9 @@ public class TrackerStatisticsActivity extends AppCompatActivity {
 
     ArrayAdapter<String> adapter_report_duration = null;
     ArrayAdapter<String> adapter_report_type = null;
-    int[] arrayProfileIds;
-    String[] arrayProfileNames;
     String[] arrayReportDuration;
     String[] arrayReportTypes;
-    ArrayList<UserProfileData> array_profiles = new ArrayList<>();
+
     ArrayList<WeightData> array_temp_saved_data;
 
     float bar_width = 0.25f;
@@ -86,10 +86,10 @@ public class TrackerStatisticsActivity extends AppCompatActivity {
     int chart_top_color_3;
     int chart_top_color_4;
     String cholesterol_legend_text = "Cholesterol";
-    String current_profile_name;
+
     String current_report_duration = "All";
     String current_report_type;
-    int current_user_id;
+
     String custom_end_date = "";
     String custom_start_date = "";
     ArrayList<IBarDataSet> dataSets = new ArrayList<>();
@@ -119,6 +119,7 @@ public class TrackerStatisticsActivity extends AppCompatActivity {
     Typeface tf_roboto;
     String triglyceride_legend_text = "Triglyceride";
     TextView txt_chart_type;
+    TextView spinner_txt_name;
     String weight_legend_text = "Weight";
     private BarChart graph_view_all;
     private BarChart graph_view_custom;
@@ -128,6 +129,8 @@ public class TrackerStatisticsActivity extends AppCompatActivity {
     private int start_date_day;
     private int start_date_month;
     private int start_date_year;
+
+    private SharedPreferences sharedPreferencesUtils;
 
     @Override
     public void onCreate(Bundle bundle) {
@@ -143,6 +146,7 @@ public class TrackerStatisticsActivity extends AppCompatActivity {
 
         statistics_activity = this;
         setUpActionBar();
+        sharedPreferencesUtils = SharedPreferences.INSTANCE;
         this.push_animation = AnimationUtils.loadAnimation(this, R.anim.view_push);
         this.tf_roboto = Typeface.createFromAsset(getAssets(), AppConstants.roboto_font_path);
         this.tf_quick_bold = Typeface.createFromAsset(getAssets(), AppConstants.quick_bold_font_path);
@@ -153,6 +157,7 @@ public class TrackerStatisticsActivity extends AppCompatActivity {
         this.lbl_no_data = textView;
         textView.setVisibility(View.GONE);
         this.txt_chart_type = findViewById(R.id.statistics_txt_tracker_type);
+        this.spinner_txt_name = findViewById(R.id.spinner_txt_name);
         this.chart_bottom_color = ContextCompat.getColor(this, R.color.chart_bar_gradient_color_bottom);
         this.chart_top_color = ContextCompat.getColor(this, R.color.chart_bar_gradient_color_top);
         this.chart_bottom_color_1 = ContextCompat.getColor(this, R.color.bar_gradient_color_bottom_1);
@@ -198,45 +203,9 @@ public class TrackerStatisticsActivity extends AppCompatActivity {
     }
 
     private void SetProfileSpinner() {
-        this.array_profiles.clear();
-        ArrayList<UserProfileData> arrayList = (ArrayList) this.SQLite_health_tracker.GetUserProfileData();
-        this.array_profiles = arrayList;
-        if (arrayList.size() > 0) {
-            this.arrayProfileIds = new int[this.array_profiles.size()];
-            this.arrayProfileNames = new String[this.array_profiles.size()];
-            for (int i = 0; i < this.array_profiles.size(); i++) {
-                this.arrayProfileIds[i] = this.array_profiles.get(i).user_id;
-                this.arrayProfileNames[i] = this.array_profiles.get(i).user_name.trim();
-            }
-            SpinnerProfileAdapter spinnerProfileAdapter = new SpinnerProfileAdapter(this, this.array_profiles);
-            this.spinner_profile_adapter = spinnerProfileAdapter;
-            this.spinner_profiles.setAdapter(spinnerProfileAdapter);
-        }
-        this.spinner_profiles.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-
-
-            @Override
-            public void onNothingSelected(AdapterView<?> adapterView) {
-            }
-
-            @Override
-            public void onItemSelected(AdapterView<?> adapterView, View view, int i, long j) {
-                if (TrackerStatisticsActivity.this.is_user_interact) {
-                    TrackerStatisticsActivity trackerStatisticsActivity = TrackerStatisticsActivity.this;
-                    trackerStatisticsActivity.current_user_id = trackerStatisticsActivity.arrayProfileIds[i];
-                    TrackerStatisticsActivity trackerStatisticsActivity2 = TrackerStatisticsActivity.this;
-                    trackerStatisticsActivity2.current_profile_name = trackerStatisticsActivity2.arrayProfileNames[i].trim();
-                    int selectedItemPosition = TrackerStatisticsActivity.this.spinner_report_types.getSelectedItemPosition();
-                    TrackerStatisticsActivity trackerStatisticsActivity3 = TrackerStatisticsActivity.this;
-                    trackerStatisticsActivity3.current_report_type = trackerStatisticsActivity3.arrayReportTypes[selectedItemPosition].trim();
-                    int selectedItemPosition2 = TrackerStatisticsActivity.this.spinner_report_duration.getSelectedItemPosition();
-                    TrackerStatisticsActivity trackerStatisticsActivity4 = TrackerStatisticsActivity.this;
-                    trackerStatisticsActivity4.current_report_duration = trackerStatisticsActivity4.arrayReportDuration[selectedItemPosition2].trim();
-                    TrackerStatisticsActivity trackerStatisticsActivity5 = TrackerStatisticsActivity.this;
-                    trackerStatisticsActivity5.SetChartByUserIDReportType(trackerStatisticsActivity5.current_user_id, TrackerStatisticsActivity.this.current_report_type, TrackerStatisticsActivity.this.current_report_duration);
-                }
-            }
-        });
+        ProfileData profileData = SQLite_health_tracker.GetUserProfileData();
+        String name = profileData.getFirstName() + " " + profileData.getLastName();
+        spinner_txt_name.setText(name);
     }
 
     private void SetReportTypesSpinner() {
@@ -258,11 +227,6 @@ public class TrackerStatisticsActivity extends AppCompatActivity {
             @Override
             public void onItemSelected(AdapterView<?> adapterView, View view, int i, long j) {
                 if (TrackerStatisticsActivity.this.is_user_interact) {
-                    int selectedItemPosition = TrackerStatisticsActivity.this.spinner_profiles.getSelectedItemPosition();
-                    TrackerStatisticsActivity trackerStatisticsActivity = TrackerStatisticsActivity.this;
-                    trackerStatisticsActivity.current_user_id = trackerStatisticsActivity.arrayProfileIds[selectedItemPosition];
-                    TrackerStatisticsActivity trackerStatisticsActivity2 = TrackerStatisticsActivity.this;
-                    trackerStatisticsActivity2.current_profile_name = trackerStatisticsActivity2.arrayProfileNames[selectedItemPosition].trim();
                     int selectedItemPosition2 = TrackerStatisticsActivity.this.spinner_report_types.getSelectedItemPosition();
                     TrackerStatisticsActivity trackerStatisticsActivity3 = TrackerStatisticsActivity.this;
                     trackerStatisticsActivity3.current_report_type = trackerStatisticsActivity3.arrayReportTypes[selectedItemPosition2].trim();
@@ -270,7 +234,7 @@ public class TrackerStatisticsActivity extends AppCompatActivity {
                     TrackerStatisticsActivity trackerStatisticsActivity4 = TrackerStatisticsActivity.this;
                     trackerStatisticsActivity4.current_report_duration = trackerStatisticsActivity4.arrayReportDuration[selectedItemPosition3].trim();
                     TrackerStatisticsActivity trackerStatisticsActivity5 = TrackerStatisticsActivity.this;
-                    trackerStatisticsActivity5.SetChartByUserIDReportType(trackerStatisticsActivity5.current_user_id, TrackerStatisticsActivity.this.current_report_type, TrackerStatisticsActivity.this.current_report_duration);
+                    trackerStatisticsActivity5.SetChartByUserIDReportType(trackerStatisticsActivity5.sharedPreferencesUtils.getUserId(), TrackerStatisticsActivity.this.current_report_type, TrackerStatisticsActivity.this.current_report_duration);
                 }
             }
         });
@@ -295,11 +259,6 @@ public class TrackerStatisticsActivity extends AppCompatActivity {
             @Override
             public void onItemSelected(AdapterView<?> adapterView, View view, int i, long j) {
                 if (TrackerStatisticsActivity.this.is_user_interact) {
-                    int selectedItemPosition = TrackerStatisticsActivity.this.spinner_profiles.getSelectedItemPosition();
-                    TrackerStatisticsActivity trackerStatisticsActivity = TrackerStatisticsActivity.this;
-                    trackerStatisticsActivity.current_user_id = trackerStatisticsActivity.arrayProfileIds[selectedItemPosition];
-                    TrackerStatisticsActivity trackerStatisticsActivity2 = TrackerStatisticsActivity.this;
-                    trackerStatisticsActivity2.current_profile_name = trackerStatisticsActivity2.arrayProfileNames[selectedItemPosition].trim();
                     int selectedItemPosition2 = TrackerStatisticsActivity.this.spinner_report_types.getSelectedItemPosition();
                     TrackerStatisticsActivity trackerStatisticsActivity3 = TrackerStatisticsActivity.this;
                     trackerStatisticsActivity3.current_report_type = trackerStatisticsActivity3.arrayReportTypes[selectedItemPosition2].trim();
@@ -4136,12 +4095,9 @@ public class TrackerStatisticsActivity extends AppCompatActivity {
 
 
     private void GetDefaultSpinnerValues() {
-        int selectedItemPosition = this.spinner_profiles.getSelectedItemPosition();
-        this.current_user_id = this.arrayProfileIds[selectedItemPosition];
-        this.current_profile_name = this.arrayProfileNames[selectedItemPosition].trim();
         String trim = this.arrayReportTypes[this.spinner_report_types.getSelectedItemPosition()].trim();
         this.current_report_type = trim;
-        SetChartByUserIDReportType(this.current_user_id, trim, this.current_report_duration);
+        SetChartByUserIDReportType(this.sharedPreferencesUtils.getUserId(), trim, this.current_report_duration);
     }
 
 

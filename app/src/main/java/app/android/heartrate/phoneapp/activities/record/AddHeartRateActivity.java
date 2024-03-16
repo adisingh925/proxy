@@ -37,8 +37,10 @@ import java.util.Date;
 import app.android.heartrate.phoneapp.AdAdmob;
 import app.android.heartrate.phoneapp.R;
 import app.android.heartrate.phoneapp.adapters.SpinnerProfileAdapter;
+import app.android.heartrate.phoneapp.model.ProfileData;
 import app.android.heartrate.phoneapp.model.classes.HeartRateData;
 import app.android.heartrate.phoneapp.model.classes.UserProfileData;
+import app.android.heartrate.phoneapp.sharedpreferences.SharedPreferences;
 import app.android.heartrate.phoneapp.sqlite.SQLiteHealthTracker;
 import app.android.heartrate.phoneapp.utils.AppConstants;
 import app.android.heartrate.phoneapp.utils.EUGeneralClass;
@@ -57,9 +59,7 @@ public class AddHeartRateActivity extends AppCompatActivity {
     int age_value = 0;
     ArrayList<String> arrayListCurrentStatus = new ArrayList<>(Arrays.asList(AppConstants.hr_status_resting, AppConstants.hr_status_general, AppConstants.hr_status_after_exercise, AppConstants.hr_status_before_exercise, AppConstants.hr_status_tired, AppConstants.hr_status_unwell, AppConstants.hr_status_surprised, AppConstants.hr_status_sad, AppConstants.hr_status_angry, AppConstants.hr_status_fear_full, AppConstants.hr_status_in_love));
     ArrayList<String> arrayListGender = new ArrayList<>(Arrays.asList(AppConstants.hr_gender_male, AppConstants.hr_gender_female, AppConstants.hr_gender_child));
-    int[] arrayProfileIds;
-    String[] arrayProfileNames;
-    ArrayList<UserProfileData> array_profiles = new ArrayList<>();
+
     String color_string = "";
     String current_status = "";
     String date = "";
@@ -80,8 +80,6 @@ public class AddHeartRateActivity extends AppCompatActivity {
     RelativeLayout rel_select_date;
     RelativeLayout rel_select_time;
     String result_string = "";
-    int selected_user_id;
-    String selected_user_name = "";
     Spinner spinner_current_status;
     Spinner spinner_gender;
     SpinnerProfileAdapter spinner_profile_adapter;
@@ -90,6 +88,7 @@ public class AddHeartRateActivity extends AppCompatActivity {
     TextView txt_age;
     TextView txt_age_unit;
     TextView txt_date;
+    TextView spinner_txt_name;
     TextView txt_time;
     int year;
     private String[] array_age_range;
@@ -99,6 +98,8 @@ public class AddHeartRateActivity extends AppCompatActivity {
     private int save_entry_minute;
     private int save_entry_month;
     private int save_entry_year;
+
+    private SharedPreferences sharedPreferencesUtils;
 
     @Override
     public void onCreate(Bundle bundle) {
@@ -115,6 +116,7 @@ public class AddHeartRateActivity extends AppCompatActivity {
         activity_add_heart_rate = this;
         this.push_animation = AnimationUtils.loadAnimation(this, R.anim.view_push);
         setUpActionBar();
+        sharedPreferencesUtils = SharedPreferences.INSTANCE;
         SQLiteHealthTracker sQLiteHealthTracker = new SQLiteHealthTracker(this);
         this.SQLite_health_tracker = sQLiteHealthTracker;
         sQLiteHealthTracker.openToWrite();
@@ -134,6 +136,7 @@ public class AddHeartRateActivity extends AppCompatActivity {
         this.rel_select_time = findViewById(R.id.add_hr_rel_select_time);
         this.txt_time = findViewById(R.id.add_hr_txt_time);
         this.et_notes = findViewById(R.id.add_hr_et_notes);
+        this.spinner_txt_name = findViewById(R.id.spinner_txt_name);
         SetProfileSpinner();
         SetAgePicker();
         SetGenderSpinner();
@@ -250,34 +253,8 @@ public class AddHeartRateActivity extends AppCompatActivity {
     }
 
     private void SetProfileSpinner() {
-        this.array_profiles.clear();
-        ArrayList<UserProfileData> arrayList = (ArrayList) this.SQLite_health_tracker.GetUserProfileData();
-        this.array_profiles = arrayList;
-        if (arrayList.size() > 0) {
-            this.arrayProfileIds = new int[this.array_profiles.size()];
-            this.arrayProfileNames = new String[this.array_profiles.size()];
-            for (int i = 0; i < this.array_profiles.size(); i++) {
-                this.arrayProfileIds[i] = this.array_profiles.get(i).user_id;
-                this.arrayProfileNames[i] = this.array_profiles.get(i).user_name.trim();
-            }
-            SpinnerProfileAdapter spinnerProfileAdapter = new SpinnerProfileAdapter(this, this.array_profiles);
-            this.spinner_profile_adapter = spinnerProfileAdapter;
-            this.spinner_profiles.setAdapter(spinnerProfileAdapter);
-        }
-        this.spinner_profiles.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-
-
-            @Override
-            public void onNothingSelected(AdapterView<?> adapterView) {
-            }
-
-            @Override
-            public void onItemSelected(AdapterView<?> adapterView, View view, int i, long j) {
-                int i2 = AddHeartRateActivity.this.arrayProfileIds[i];
-                String trim = AddHeartRateActivity.this.arrayProfileNames[i].trim();
-                Log.e("selected Profile :", "ID :" + i2 + "\nName :" + trim);
-            }
-        });
+        String name = sharedPreferencesUtils.getUserName();
+        spinner_txt_name.setText(name);
     }
 
     @SuppressLint("WrongConstant")
@@ -368,20 +345,6 @@ public class AddHeartRateActivity extends AppCompatActivity {
             this.txt_date.setText(this.date);
             this.txt_time.setText(this.time);
             this.et_notes.setText(this.notes);
-            int i5 = AppConstants.selected_heart_rate_data.user_id;
-            this.selected_user_id = i5;
-            String GetProfileNameByID = this.SQLite_health_tracker.GetProfileNameByID(i5);
-            this.selected_user_name = GetProfileNameByID;
-            if (GetProfileNameByID != null) {
-                int i6 = 0;
-                for (int i7 = 0; i7 < this.array_profiles.size(); i7++) {
-                    if (this.array_profiles.get(i7).user_name.trim().equals(this.selected_user_name)) {
-                        i6 = i7;
-                    }
-                }
-                this.spinner_profiles.setSelection(i6);
-                return;
-            }
             return;
         }
         EUGeneralClass.ShowErrorToast(this, "Something went wrong!");
@@ -402,11 +365,8 @@ public class AddHeartRateActivity extends AppCompatActivity {
             this.notes = this.et_notes.getText().toString().trim();
             HeartRateData heartRateData = new HeartRateData();
             GetResult();
-            int selectedItemPosition = this.spinner_profiles.getSelectedItemPosition();
-            this.selected_user_id = this.arrayProfileIds[selectedItemPosition];
-            this.selected_user_name = this.arrayProfileNames[selectedItemPosition];
             if (!AppConstants.is_heart_rate_edit_mode) {
-                heartRateData.user_id = this.selected_user_id;
+                heartRateData.user_id = this.sharedPreferencesUtils.getUserId();
                 heartRateData.date = this.date.trim();
                 heartRateData.time = this.time.trim();
                 heartRateData.age = this.age_value;
@@ -429,7 +389,7 @@ public class AddHeartRateActivity extends AppCompatActivity {
                 return;
             }
             int i = AppConstants.selected_heart_rate_data.row_id;
-            heartRateData.user_id = this.selected_user_id;
+            heartRateData.user_id = this.sharedPreferencesUtils.getUserId();
             heartRateData.date = this.date.trim();
             heartRateData.time = this.time.trim();
             heartRateData.heart_rate_value = this.heart_rate_value;
@@ -446,7 +406,7 @@ public class AddHeartRateActivity extends AppCompatActivity {
             heartRateData.month = this.month;
             heartRateData.year = this.year;
             heartRateData.hour = this.hour;
-            this.SQLite_health_tracker.UpdateHeartRateData(i, this.selected_user_id, heartRateData);
+            this.SQLite_health_tracker.UpdateHeartRateData(i, this.sharedPreferencesUtils.getUserId(), heartRateData);
             EUGeneralClass.ShowSuccessToast(this, "Heart Rate Data updated successfully!");
             onBackPressed();
         } catch (Exception e) {
@@ -941,8 +901,6 @@ public class AddHeartRateActivity extends AppCompatActivity {
     @Override
     public void onResume() {
         super.onResume();
-
-
     }
 
 

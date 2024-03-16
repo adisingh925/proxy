@@ -30,37 +30,6 @@ class HomeFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        getProfile()
-    }
-
-    private fun getProfile() {
-        val getUserProfile = ApiClient.apiService.getProfile(
-            SharedPreferences.read("token", "")
-                .toString()
-        )
-
-        getUserProfile.enqueue(object : Callback<GetProfileResponse> {
-            override fun onResponse(
-                call: Call<GetProfileResponse>,
-                response: Response<GetProfileResponse>
-            ) {
-                if (response.isSuccessful) {
-                    val getProfileResponse = response.body()
-                    if (getProfileResponse?.data != null) {
-                        SharedPreferences.setUserProfile(getProfileResponse.data)
-                    }
-                }
-            }
-
-            override fun onFailure(call: Call<GetProfileResponse>, t: Throwable) {
-            }
-
-        })
-
-    }
-
-    private fun showMessage(message: String) {
-        Toast.makeText(requireContext(), message, Toast.LENGTH_SHORT).show()
     }
 
 

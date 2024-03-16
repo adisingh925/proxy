@@ -721,7 +721,7 @@
     <dimen name="item_touch_helper_swipe_escape_velocity">120dp</dimen>
 
 
-    <dimen name="profile_spinner_rel_height">@dimen/_120sdp</dimen>
+    <dimen name="profile_spinner_rel_height">@dimen/_100sdp</dimen>
     <dimen name="profile_spinner_rel_width">@dimen/_220sdp</dimen>
     <dimen name="radio_tab_height">@dimen/_30sdp</dimen>
     <dimen name="radio_tab_view_line_height">@dimen/_4sdp</dimen>

@@ -46,6 +46,32 @@ object SharedPreferences {
         }
     }
 
+
+    fun setUserId(userId: Int) {
+        write("user_id", userId)
+    }
+
+    fun setUserName(username: String) {
+        write("user_name", username)
+    }
+
+    fun setUserEmail(userEmail: String) {
+        write("user_email", userEmail)
+
+    }
+
+    fun getUserId(): Int {
+        return read("user_id", 1)
+    }
+
+    fun getUserName(): String? {
+        return read("user_name", "")
+    }
+
+    fun getUserEmail(): String? {
+        return read("user_email", "")
+    }
+
     fun getUserProfile(): ProfileData? {
         val strProfile = read("profile", "")
         if (strProfile.isNullOrEmpty()) {

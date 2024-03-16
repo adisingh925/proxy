@@ -9,10 +9,10 @@
         android:id="@+id/toolbar_actionbar"
         layout="@layout/layout_toolbar_add" />
 
-    <RelativeLayout
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_above="@+id/banner1"
+        android:orientation="vertical"
         android:layout_below="@+id/toolbar_actionbar"
         android:layout_marginBottom="@dimen/ad_margin_below">
 
@@ -52,11 +52,33 @@
                                 android:layout_height="match_parent"
                                 android:gravity="center"
                                 android:orientation="vertical">
+                                <de.hdodenhof.circleimageview.CircleImageView
+                                    android:id="@+id/spinner_img_user"
+                                    android:layout_width="@dimen/_50sdp"
+                                    android:layout_height="@dimen/_50sdp"
+                                    android:layout_centerHorizontal="true"
+                                    android:src="@drawable/ic_default_user"
+                                    app:civ_border_color="@color/transparent"
+                                    app:civ_border_width="0dp" />
 
+                                <TextView
+                                    android:id="@+id/spinner_txt_name"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_below="@+id/spinner_img_user"
+                                    android:layout_centerHorizontal="true"
+                                    android:layout_marginLeft="@dimen/_5sdp"
+                                    android:layout_marginTop="@dimen/_5sdp"
+                                    android:layout_marginRight="@dimen/_5sdp"
+                                    android:lines="1"
+                                    android:text="@string/lbl_name"
+                                    android:textColor="@color/row_header_text_color"
+                                    android:textSize="@dimen/_13sdp" />
                                 <Spinner
                                     android:id="@+id/add_bc_spinner_profiles"
                                     android:layout_width="match_parent"
                                     android:layout_height="match_parent"
+                                    android:visibility="gone"
                                     android:backgroundTint="@color/tool_bar_color_dark"
                                     android:dropDownVerticalOffset="@dimen/_100sdp"
                                     android:spinnerMode="dropdown" />
@@ -545,7 +567,7 @@
                 </LinearLayout>
             </RelativeLayout>
         </ScrollView>
-    </RelativeLayout>
+    </LinearLayout>
 
 
 

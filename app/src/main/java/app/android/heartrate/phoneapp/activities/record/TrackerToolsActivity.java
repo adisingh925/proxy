@@ -34,6 +34,7 @@ public class TrackerToolsActivity extends AppCompatActivity {
     RelativeLayout rel_heart_rate;
     RelativeLayout rel_medicines;
     RelativeLayout rel_weight;
+    TextView spinner_txt_name;
 
 
     @Override
@@ -60,6 +61,7 @@ public class TrackerToolsActivity extends AppCompatActivity {
         this.rel_heart_rate = findViewById(R.id.tracker_tools_rel_heart_rate);
         this.rel_weight = findViewById(R.id.tracker_tools_rel_weight);
         this.rel_medicines = findViewById(R.id.tracker_tools_rel_medicine);
+        this.spinner_txt_name = findViewById(R.id.spinner_txt_name);
         this.rel_blood_count.setOnClickListener(new View.OnClickListener() {
 
 

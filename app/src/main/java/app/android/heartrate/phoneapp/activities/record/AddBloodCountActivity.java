@@ -34,8 +34,10 @@ import java.util.Date;
 import app.android.heartrate.phoneapp.AdAdmob;
 import app.android.heartrate.phoneapp.R;
 import app.android.heartrate.phoneapp.adapters.SpinnerProfileAdapter;
+import app.android.heartrate.phoneapp.model.ProfileData;
 import app.android.heartrate.phoneapp.model.classes.BloodCountData;
 import app.android.heartrate.phoneapp.model.classes.UserProfileData;
+import app.android.heartrate.phoneapp.sharedpreferences.SharedPreferences;
 import app.android.heartrate.phoneapp.sqlite.SQLiteHealthTracker;
 import app.android.heartrate.phoneapp.utils.AppConstants;
 import app.android.heartrate.phoneapp.utils.EUGeneralClass;
@@ -43,9 +45,6 @@ import app.android.heartrate.phoneapp.utils.EUGeneralClass;
 public class AddBloodCountActivity extends AppCompatActivity {
     public static Activity activity_add_blood_count;
     SQLiteHealthTracker SQLite_health_tracker;
-    int[] arrayProfileIds;
-    String[] arrayProfileNames;
-    ArrayList<UserProfileData> array_profiles = new ArrayList<>();
     String date_time = "";
     int day;
     EditText et_hemoglobin_value;
@@ -59,12 +58,10 @@ public class AddBloodCountActivity extends AppCompatActivity {
     Animation push_animation;
     RelativeLayout rel_select_date;
     RelativeLayout rel_select_time;
-    int selected_user_id;
-    String selected_user_name = "";
-    SpinnerProfileAdapter spinner_profile_adapter;
     Spinner spinner_profiles;
     TextView txt_date;
     TextView txt_time;
+    TextView spinner_txt_name;
     int year;
     private String current_date_time = "";
     private int save_entry_day;
@@ -73,11 +70,13 @@ public class AddBloodCountActivity extends AppCompatActivity {
     private int save_entry_month;
     private int save_entry_year;
 
+    private SharedPreferences sharedPreferencesUtils;
+
+
     @Override
     public void onCreate(Bundle bundle) {
         super.onCreate(bundle);
         SetView();
-
 
 
         AppConstants.overridePendingTransitionEnter(this);
@@ -85,11 +84,11 @@ public class AddBloodCountActivity extends AppCompatActivity {
 
     private void SetView() {
         setContentView(R.layout.activity_add_blood_count);
-
         this.mContext = this;
         activity_add_blood_count = this;
         this.push_animation = AnimationUtils.loadAnimation(this, R.anim.view_push);
         setUpActionBar();
+        sharedPreferencesUtils = SharedPreferences.INSTANCE;
         SQLiteHealthTracker sQLiteHealthTracker = new SQLiteHealthTracker(this);
         this.SQLite_health_tracker = sQLiteHealthTracker;
         sQLiteHealthTracker.openToWrite();
@@ -103,6 +102,7 @@ public class AddBloodCountActivity extends AppCompatActivity {
         this.txt_date = findViewById(R.id.add_bc_txt_date);
         this.rel_select_time = findViewById(R.id.add_bc_rel_select_time);
         this.txt_time = findViewById(R.id.add_bc_txt_time);
+        this.spinner_txt_name = findViewById(R.id.spinner_txt_name);
         SetProfileSpinner();
         SetCurrentDateTime();
         if (AppConstants.is_blood_count_edit_mode) {
@@ -153,34 +153,8 @@ public class AddBloodCountActivity extends AppCompatActivity {
     }
 
     private void SetProfileSpinner() {
-        this.array_profiles.clear();
-        ArrayList<UserProfileData> arrayList = (ArrayList) this.SQLite_health_tracker.GetUserProfileData();
-        this.array_profiles = arrayList;
-        if (arrayList.size() > 0) {
-            this.arrayProfileIds = new int[this.array_profiles.size()];
-            this.arrayProfileNames = new String[this.array_profiles.size()];
-            for (int i = 0; i < this.array_profiles.size(); i++) {
-                this.arrayProfileIds[i] = this.array_profiles.get(i).user_id;
-                this.arrayProfileNames[i] = this.array_profiles.get(i).user_name.trim();
-            }
-            SpinnerProfileAdapter spinnerProfileAdapter = new SpinnerProfileAdapter(this, this.array_profiles);
-            this.spinner_profile_adapter = spinnerProfileAdapter;
-            this.spinner_profiles.setAdapter(spinnerProfileAdapter);
-        }
-        this.spinner_profiles.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-
-
-            @Override
-            public void onNothingSelected(AdapterView<?> adapterView) {
-            }
-
-            @Override
-            public void onItemSelected(AdapterView<?> adapterView, View view, int i, long j) {
-                int i2 = AddBloodCountActivity.this.arrayProfileIds[i];
-                String trim = AddBloodCountActivity.this.arrayProfileNames[i].trim();
-                Log.e("selected Profile :", "ID :" + i2 + "\nName :" + trim);
-            }
-        });
+        String name = sharedPreferencesUtils.getUserName();
+        spinner_txt_name.setText(name);
     }
 
     @SuppressLint("WrongConstant")
@@ -217,20 +191,6 @@ public class AddBloodCountActivity extends AppCompatActivity {
             editText4.setSelection(editText4.getText().toString().trim().length());
             EditText editText5 = this.et_notes;
             editText5.setSelection(editText5.getText().toString().trim().length());
-            int i = AppConstants.selected_blood_count_data.user_id;
-            this.selected_user_id = i;
-            String GetProfileNameByID = this.SQLite_health_tracker.GetProfileNameByID(i);
-            this.selected_user_name = GetProfileNameByID;
-            if (GetProfileNameByID != null) {
-                int i2 = 0;
-                for (int i3 = 0; i3 < this.array_profiles.size(); i3++) {
-                    if (this.array_profiles.get(i3).user_name.trim().equals(this.selected_user_name)) {
-                        i2 = i3;
-                    }
-                }
-                this.spinner_profiles.setSelection(i2);
-                return;
-            }
             return;
         }
         EUGeneralClass.ShowErrorToast(this, "Something went wrong!");
@@ -258,11 +218,8 @@ public class AddBloodCountActivity extends AppCompatActivity {
                 return;
             }
             BloodCountData bloodCountData = new BloodCountData();
-            int selectedItemPosition = this.spinner_profiles.getSelectedItemPosition();
-            this.selected_user_id = this.arrayProfileIds[selectedItemPosition];
-            this.selected_user_name = this.arrayProfileNames[selectedItemPosition];
             if (!AppConstants.is_blood_count_edit_mode) {
-                bloodCountData.user_id = this.selected_user_id;
+                bloodCountData.user_id = sharedPreferencesUtils.getUserId();
                 bloodCountData.date = trim.trim();
                 bloodCountData.time = trim2.trim();
                 bloodCountData.rbc_value = Float.parseFloat(trim3.trim());
@@ -282,7 +239,7 @@ public class AddBloodCountActivity extends AppCompatActivity {
                 return;
             }
             int i = AppConstants.selected_blood_count_data.row_id;
-            bloodCountData.user_id = this.selected_user_id;
+            bloodCountData.user_id = this.sharedPreferencesUtils.getUserId();
             bloodCountData.date = trim.trim();
             bloodCountData.time = trim2.trim();
             bloodCountData.rbc_value = Float.parseFloat(trim3.trim());
@@ -297,7 +254,7 @@ public class AddBloodCountActivity extends AppCompatActivity {
             bloodCountData.year = this.year;
             bloodCountData.hour = this.hour;
             bloodCountData.minute = this.hour;
-            this.SQLite_health_tracker.UpdateBloodCountData(i, this.selected_user_id, bloodCountData);
+            this.SQLite_health_tracker.UpdateBloodCountData(i, this.sharedPreferencesUtils.getUserId(), bloodCountData);
             EUGeneralClass.ShowSuccessToast(this, "Blood Count Data updated successfully!");
             onBackPressed();
         } catch (Exception e) {
@@ -379,8 +336,6 @@ public class AddBloodCountActivity extends AppCompatActivity {
     @Override
     public void onResume() {
         super.onResume();
-
-
     }
 
 
@@ -391,7 +346,6 @@ public class AddBloodCountActivity extends AppCompatActivity {
     }
 
     private void BackScreen() {
-
         finish();
         AppConstants.overridePendingTransitionExit(this);
     }

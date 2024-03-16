@@ -29,8 +29,10 @@ import app.android.heartrate.phoneapp.AdAdmob;
 import app.android.heartrate.phoneapp.R;
 import app.android.heartrate.phoneapp.adapters.BloodPressureDataAdapter;
 import app.android.heartrate.phoneapp.adapters.SpinnerProfileAdapter;
+import app.android.heartrate.phoneapp.model.ProfileData;
 import app.android.heartrate.phoneapp.model.classes.BloodPressureData;
 import app.android.heartrate.phoneapp.model.classes.UserProfileData;
+import app.android.heartrate.phoneapp.sharedpreferences.SharedPreferences;
 import app.android.heartrate.phoneapp.sqlite.SQLiteHealthTracker;
 import app.android.heartrate.phoneapp.utils.AppConstants;
 import app.android.heartrate.phoneapp.utils.EUGeneralClass;
@@ -39,13 +41,9 @@ public class BloodPressureDataActivity extends AppCompatActivity {
     SQLiteHealthTracker SQLite_health_tracker;
 
     BloodPressureDataAdapter adapter_bp_data;
-    int[] arrayProfileIds;
-    String[] arrayProfileNames;
     ArrayList<BloodPressureData> array_bp_data = new ArrayList<>();
-    ArrayList<UserProfileData> array_profiles = new ArrayList<>();
 
-    String current_profile_name;
-    int current_user_id;
+    private SharedPreferences sharedPreferencesUtils;
     ImageView img_status_info;
     boolean is_user_interact = false;
     Context mContext;
@@ -55,6 +53,7 @@ public class BloodPressureDataActivity extends AppCompatActivity {
     SpinnerProfileAdapter spinner_profile_adapter;
     Spinner spinner_profiles;
     TextView txt_no_data;
+    TextView spinner_txt_name;
 
 
     @Override
@@ -72,10 +71,12 @@ public class BloodPressureDataActivity extends AppCompatActivity {
         this.mContext = this;
         this.push_animation = AnimationUtils.loadAnimation(this, R.anim.view_push);
         setUpActionBar();
+        sharedPreferencesUtils = SharedPreferences.INSTANCE;
         SQLiteHealthTracker sQLiteHealthTracker = new SQLiteHealthTracker(this);
         this.SQLite_health_tracker = sQLiteHealthTracker;
         sQLiteHealthTracker.openToWrite();
         this.spinner_profiles = findViewById(R.id.bp_spinner_profiles);
+        this.spinner_txt_name = findViewById(R.id.spinner_txt_name);
         this.recycler_blood_pressure = findViewById(R.id.bp_rv_data);
         this.recycler_blood_pressure.setLayoutManager(new LinearLayoutManager(this));
         this.recycler_blood_pressure.setItemAnimator(new DefaultItemAnimator());
@@ -117,46 +118,14 @@ public class BloodPressureDataActivity extends AppCompatActivity {
     }
 
     private void SetProfileSpinner() {
-        this.array_profiles.clear();
-        ArrayList<UserProfileData> arrayList = (ArrayList) this.SQLite_health_tracker.GetUserProfileData();
-        Log.e(" list ", " ==> " + arrayList.size());
-        this.array_profiles = arrayList;
-        if (arrayList.size() > 0) {
-            this.arrayProfileIds = new int[this.array_profiles.size()];
-            this.arrayProfileNames = new String[this.array_profiles.size()];
-            for (int i = 0; i < this.array_profiles.size(); i++) {
-                this.arrayProfileIds[i] = this.array_profiles.get(i).user_id;
-                this.arrayProfileNames[i] = this.array_profiles.get(i).user_name.trim();
-            }
-            SpinnerProfileAdapter spinnerProfileAdapter = new SpinnerProfileAdapter(this, this.array_profiles);
-            this.spinner_profile_adapter = spinnerProfileAdapter;
-            this.spinner_profiles.setAdapter(spinnerProfileAdapter);
-        }
-        this.spinner_profiles.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-
-
-            @Override
-            public void onNothingSelected(AdapterView<?> adapterView) {
-            }
-
-            @Override
-            public void onItemSelected(AdapterView<?> adapterView, View view, int i, long j) {
-                if (BloodPressureDataActivity.this.is_user_interact) {
-                    BloodPressureDataActivity bloodPressureDataActivity = BloodPressureDataActivity.this;
-                    bloodPressureDataActivity.current_user_id = bloodPressureDataActivity.arrayProfileIds[i];
-                    BloodPressureDataActivity bloodPressureDataActivity2 = BloodPressureDataActivity.this;
-                    bloodPressureDataActivity2.current_profile_name = bloodPressureDataActivity2.arrayProfileNames[i].trim();
-                    Log.e("selected Profile :", "ID :" + BloodPressureDataActivity.this.current_user_id + "\nName :" + BloodPressureDataActivity.this.current_profile_name);
-                    BloodPressureDataActivity.this.SetBloodPressureList();
-                }
-            }
-        });
+        String name = sharedPreferencesUtils.getUserName();
+        spinner_txt_name.setText(name);
     }
 
 
     private void SetBloodPressureList() {
         this.array_bp_data.clear();
-        ArrayList<BloodPressureData> arrayList = (ArrayList) this.SQLite_health_tracker.GetBloodPressureDataByUserID(this.current_user_id);
+        ArrayList<BloodPressureData> arrayList = (ArrayList) this.SQLite_health_tracker.GetBloodPressureDataByUserID(this.sharedPreferencesUtils.getUserId());
         this.array_bp_data = arrayList;
         if (arrayList.size() > 0) {
             this.txt_no_data.setVisibility(View.GONE);
@@ -208,13 +177,7 @@ public class BloodPressureDataActivity extends AppCompatActivity {
                 dialog.dismiss();
             }
         });
-        button2.setOnClickListener(new View.OnClickListener() {
-
-
-            public void onClick(View view) {
-                dialog.dismiss();
-            }
-        });
+        button2.setOnClickListener(view -> dialog.dismiss());
         dialog.show();
     }
 
@@ -263,12 +226,7 @@ public class BloodPressureDataActivity extends AppCompatActivity {
     @Override
     public void onResume() {
         super.onResume();
-        int selectedItemPosition = this.spinner_profiles.getSelectedItemPosition();
-        this.current_user_id = this.arrayProfileIds[selectedItemPosition];
-        this.current_profile_name = this.arrayProfileNames[selectedItemPosition].trim();
         SetBloodPressureList();
-
-
     }
 
 
