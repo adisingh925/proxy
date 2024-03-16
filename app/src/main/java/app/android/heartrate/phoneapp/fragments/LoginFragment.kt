@@ -118,7 +118,7 @@ class LoginFragment : Fragment() {
                                                                 )
                                                                 if (body != null) {
                                                                     if (body.code == 1) {
-                                                                        getProfile()
+                                                                        proceedToHomeActivity()
                                                                     } else {
                                                                         findNavController().navigate(
                                                                             R.id.action_loginFragment3_to_profileFragment
@@ -185,39 +185,4 @@ class LoginFragment : Fragment() {
         startActivity(intent)
     }
 
-    private fun getProfile() {
-        val getUserProfile = ApiClient.apiService.getProfile(
-            SharedPreferences.read("token", "")
-                .toString()
-        )
-
-        getUserProfile.enqueue(object : Callback<GetProfileResponse> {
-            override fun onResponse(
-                call: Call<GetProfileResponse>,
-                response: Response<GetProfileResponse>
-            ) {
-                if (response.isSuccessful) {
-                    val getProfileResponse = response.body()
-                    if (getProfileResponse?.data != null) {
-                        SharedPreferences.write("profile", Gson().toJson(getProfileResponse))
-                        proceedToHomeActivity()
-                    } else {
-                        showMessage(getProfileResponse?.msg ?: "Unable to fetch profile")
-                    }
-                } else {
-                    showMessage("Unable to get profile ")
-                }
-            }
-
-            override fun onFailure(call: Call<GetProfileResponse>, t: Throwable) {
-                showMessage("Failed to fetch profile, Please try again later")
-            }
-
-        })
-
-    }
-
-    private fun showMessage(message: String) {
-        Toast.makeText(requireContext(), message, Toast.LENGTH_SHORT).show()
-    }
 }
