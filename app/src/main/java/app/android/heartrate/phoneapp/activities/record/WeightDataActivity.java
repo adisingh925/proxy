@@ -166,21 +166,11 @@ public class WeightDataActivity extends AppCompatActivity {
     private void setUpActionBar() {
         ((TextView) findViewById(R.id.toolbar_txt_title_1)).setText(getResources().getString(R.string.lbl_header_weight));
         ((TextView) findViewById(R.id.toolbar_txt_title_2)).setText(getResources().getString(R.string.lbl_header_data));
-        findViewById(R.id.tool_bar_rel_add_user).setOnClickListener(new View.OnClickListener() {
-
-
-            public void onClick(View view) {
-                AppConstants.is_weight_edit_mode = false;
-                WeightDataActivity.this.AddWeightScreen();
-            }
+        findViewById(R.id.tool_bar_rel_add_user).setOnClickListener(view -> {
+            AppConstants.is_weight_edit_mode = false;
+            WeightDataActivity.this.AddWeightScreen();
         });
-        findViewById(R.id.toolbar_rel_back).setOnClickListener(new View.OnClickListener() {
-
-
-            public void onClick(View view) {
-                WeightDataActivity.this.onBackPressed();
-            }
-        });
+        findViewById(R.id.toolbar_rel_back).setOnClickListener(view -> WeightDataActivity.this.onBackPressed());
         setSupportActionBar(findViewById(R.id.toolbar_actionbar));
         ActionBar supportActionBar = getSupportActionBar();
         supportActionBar.setDisplayShowTitleEnabled(false);
