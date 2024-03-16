@@ -28,8 +28,10 @@ import app.android.heartrate.phoneapp.AdAdmob;
 import app.android.heartrate.phoneapp.R;
 import app.android.heartrate.phoneapp.adapters.CholesterolDataAdapter;
 import app.android.heartrate.phoneapp.adapters.SpinnerProfileAdapter;
+import app.android.heartrate.phoneapp.model.ProfileData;
 import app.android.heartrate.phoneapp.model.classes.CholesterolData;
 import app.android.heartrate.phoneapp.model.classes.UserProfileData;
+import app.android.heartrate.phoneapp.sharedpreferences.SharedPreferences;
 import app.android.heartrate.phoneapp.sqlite.SQLiteHealthTracker;
 import app.android.heartrate.phoneapp.utils.AppConstants;
 import app.android.heartrate.phoneapp.utils.EUGeneralClass;
@@ -38,13 +40,8 @@ public class CholesterolDataActivity extends AppCompatActivity {
     SQLiteHealthTracker SQLite_health_tracker;
 
     CholesterolDataAdapter adapter_cholesterol_data;
-    int[] arrayProfileIds;
-    String[] arrayProfileNames;
     ArrayList<CholesterolData> array_cholesterol_data = new ArrayList<>();
-    ArrayList<UserProfileData> array_profiles = new ArrayList<>();
 
-    String current_profile_name;
-    int current_user_id;
 
     boolean is_user_interact = false;
     Context mContext;
@@ -54,6 +51,9 @@ public class CholesterolDataActivity extends AppCompatActivity {
     SpinnerProfileAdapter spinner_profile_adapter;
     Spinner spinner_profiles;
     TextView txt_no_data;
+    TextView spinner_txt_name;
+
+    private SharedPreferences sharedPreferencesUtils;
 
 
     @Override
@@ -71,11 +71,13 @@ public class CholesterolDataActivity extends AppCompatActivity {
         this.mContext = this;
         this.push_animation = AnimationUtils.loadAnimation(this, R.anim.view_push);
         setUpActionBar();
+        sharedPreferencesUtils = SharedPreferences.INSTANCE;
         SQLiteHealthTracker sQLiteHealthTracker = new SQLiteHealthTracker(this);
         this.SQLite_health_tracker = sQLiteHealthTracker;
         sQLiteHealthTracker.openToWrite();
         this.spinner_profiles = findViewById(R.id.cholesterol_spinner_profiles);
         this.recycler_cholesterol = findViewById(R.id.cholesterol_rv_data);
+        this.spinner_txt_name = findViewById(R.id.spinner_txt_name);
         this.recycler_cholesterol.setLayoutManager(new LinearLayoutManager(this));
         this.recycler_cholesterol.setItemAnimator(new DefaultItemAnimator());
         TextView textView = findViewById(R.id.txt_no_data);
@@ -90,45 +92,15 @@ public class CholesterolDataActivity extends AppCompatActivity {
     }
 
     private void SetProfileSpinner() {
-        this.array_profiles.clear();
-        ArrayList<UserProfileData> arrayList = (ArrayList) this.SQLite_health_tracker.GetUserProfileData();
-        this.array_profiles = arrayList;
-        if (arrayList.size() > 0) {
-            this.arrayProfileIds = new int[this.array_profiles.size()];
-            this.arrayProfileNames = new String[this.array_profiles.size()];
-            for (int i = 0; i < this.array_profiles.size(); i++) {
-                this.arrayProfileIds[i] = this.array_profiles.get(i).user_id;
-                this.arrayProfileNames[i] = this.array_profiles.get(i).user_name.trim();
-            }
-            SpinnerProfileAdapter spinnerProfileAdapter = new SpinnerProfileAdapter(this, this.array_profiles);
-            this.spinner_profile_adapter = spinnerProfileAdapter;
-            this.spinner_profiles.setAdapter(spinnerProfileAdapter);
-        }
-        this.spinner_profiles.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-
-
-            @Override
-            public void onNothingSelected(AdapterView<?> adapterView) {
-            }
-
-            @Override
-            public void onItemSelected(AdapterView<?> adapterView, View view, int i, long j) {
-                if (CholesterolDataActivity.this.is_user_interact) {
-                    CholesterolDataActivity cholesterolDataActivity = CholesterolDataActivity.this;
-                    cholesterolDataActivity.current_user_id = cholesterolDataActivity.arrayProfileIds[i];
-                    CholesterolDataActivity cholesterolDataActivity2 = CholesterolDataActivity.this;
-                    cholesterolDataActivity2.current_profile_name = cholesterolDataActivity2.arrayProfileNames[i].trim();
-                    Log.e("selected Profile :", "ID :" + CholesterolDataActivity.this.current_user_id + "\nName :" + CholesterolDataActivity.this.current_profile_name);
-                    CholesterolDataActivity.this.SetCholesterolDataList();
-                }
-            }
-        });
+        ProfileData profileData = SQLite_health_tracker.GetUserProfileData();
+        String name = profileData.getFirstName() +" "+ profileData.getLastName();
+        spinner_txt_name.setText(name);
     }
 
 
     private void SetCholesterolDataList() {
         this.array_cholesterol_data.clear();
-        ArrayList<CholesterolData> arrayList = (ArrayList) this.SQLite_health_tracker.GetCholesterolDataByUserID(this.current_user_id);
+        ArrayList<CholesterolData> arrayList = (ArrayList) this.SQLite_health_tracker.GetCholesterolDataByUserID(this.sharedPreferencesUtils.getUserId());
         this.array_cholesterol_data = arrayList;
         if (arrayList.size() > 0) {
             this.txt_no_data.setVisibility(View.GONE);
@@ -234,12 +206,7 @@ public class CholesterolDataActivity extends AppCompatActivity {
     @Override
     public void onResume() {
         super.onResume();
-        int selectedItemPosition = this.spinner_profiles.getSelectedItemPosition();
-        this.current_user_id = this.arrayProfileIds[selectedItemPosition];
-        this.current_profile_name = this.arrayProfileNames[selectedItemPosition].trim();
         SetCholesterolDataList();
-
-
     }
 
 

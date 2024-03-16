@@ -89,6 +89,7 @@ public class AddProfileActivity extends AppCompatActivity {
     TextView txt_birth_date;
     TextView txt_btn_save;
     TextView txt_height;
+    TextView spinner_txt_name;
     TextView txt_height_label;
     String user_gender = AppConstants.hr_gender_male;
     String user_photo_path = "";
@@ -125,6 +126,7 @@ public class AddProfileActivity extends AppCompatActivity {
         this.et_weight = findViewById(R.id.add_profile_et_weight);
         this.rel_get_height = findViewById(R.id.add_profile_rel_get_height);
         this.txt_height = findViewById(R.id.add_profile_txt_height);
+        this.spinner_txt_name = findViewById(R.id.spinner_txt_name);
         this.txt_height_label = findViewById(R.id.add_profile_txt_height_label);
         this.txt_birth_date = findViewById(R.id.add_profile_txt_birth_date);
         this.lin_select_date = findViewById(R.id.add_profile_lin_birth_date);

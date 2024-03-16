@@ -47,7 +47,12 @@ class HomeFragment : Fragment() {
                 if (response.isSuccessful) {
                     val getProfileResponse = response.body()
                     if (getProfileResponse?.data != null) {
-                        SharedPreferences.setUserProfile(getProfileResponse.data)
+                        val profileData = getProfileResponse.data
+                        val sharedPreferencesUtils = SharedPreferences
+                        sharedPreferencesUtils.setUserProfile(profileData)
+                        sharedPreferencesUtils.setUserId(profileData.userId)
+                        sharedPreferencesUtils.setUserName(profileData.firstName + " " + profileData.lastName)
+                        sharedPreferencesUtils.setUserEmail(profileData.email)
                     }
                 }
             }

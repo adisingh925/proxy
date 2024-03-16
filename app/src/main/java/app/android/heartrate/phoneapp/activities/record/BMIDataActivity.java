@@ -29,8 +29,10 @@ import app.android.heartrate.phoneapp.AdAdmob;
 import app.android.heartrate.phoneapp.R;
 import app.android.heartrate.phoneapp.adapters.BMIDataAdapter;
 import app.android.heartrate.phoneapp.adapters.SpinnerProfileAdapter;
+import app.android.heartrate.phoneapp.model.ProfileData;
 import app.android.heartrate.phoneapp.model.classes.BMIData;
 import app.android.heartrate.phoneapp.model.classes.UserProfileData;
+import app.android.heartrate.phoneapp.sharedpreferences.SharedPreferences;
 import app.android.heartrate.phoneapp.sqlite.SQLiteHealthTracker;
 import app.android.heartrate.phoneapp.utils.AppConstants;
 import app.android.heartrate.phoneapp.utils.EUGeneralClass;
@@ -38,12 +40,7 @@ import app.android.heartrate.phoneapp.utils.EUGeneralClass;
 public class BMIDataActivity extends AppCompatActivity {
     SQLiteHealthTracker SQLite_health_tracker;
     BMIDataAdapter adapter_bmi_data;
-    int[] arrayProfileIds;
-    String[] arrayProfileNames;
     ArrayList<BMIData> array_bmi_data = new ArrayList<>();
-    ArrayList<UserProfileData> array_profiles = new ArrayList<>();
-    String current_profile_name;
-    int current_user_id;
     ImageView img_status_info;
     boolean is_user_interact = false;
     Context mContext;
@@ -52,6 +49,9 @@ public class BMIDataActivity extends AppCompatActivity {
     SpinnerProfileAdapter spinner_profile_adapter;
     Spinner spinner_profiles;
     TextView txt_no_data;
+    TextView spinner_txt_name;
+
+    private SharedPreferences sharedPreferencesUtils;
 
 
     @Override
@@ -69,11 +69,13 @@ public class BMIDataActivity extends AppCompatActivity {
         this.mContext = this;
         this.push_animation = AnimationUtils.loadAnimation(this, R.anim.view_push);
         setUpActionBar();
+        sharedPreferencesUtils = SharedPreferences.INSTANCE;
         SQLiteHealthTracker sQLiteHealthTracker = new SQLiteHealthTracker(this);
         this.SQLite_health_tracker = sQLiteHealthTracker;
         sQLiteHealthTracker.openToWrite();
         this.spinner_profiles = findViewById(R.id.bmi_spinner_profiles);
         this.recycler_bmi = findViewById(R.id.bmi_rv_data);
+        this.spinner_txt_name = findViewById(R.id.spinner_txt_name);
         this.recycler_bmi.setLayoutManager(new LinearLayoutManager(this));
         this.recycler_bmi.setItemAnimator(new DefaultItemAnimator());
         TextView textView = findViewById(R.id.txt_no_data);
@@ -115,45 +117,14 @@ public class BMIDataActivity extends AppCompatActivity {
     }
 
     private void SetProfileSpinner() {
-        this.array_profiles.clear();
-        ArrayList<UserProfileData> arrayList = (ArrayList) this.SQLite_health_tracker.GetUserProfileData();
-        this.array_profiles = arrayList;
-        if (arrayList.size() > 0) {
-            this.arrayProfileIds = new int[this.array_profiles.size()];
-            this.arrayProfileNames = new String[this.array_profiles.size()];
-            for (int i = 0; i < this.array_profiles.size(); i++) {
-                this.arrayProfileIds[i] = this.array_profiles.get(i).user_id;
-                this.arrayProfileNames[i] = this.array_profiles.get(i).user_name.trim();
-            }
-            SpinnerProfileAdapter spinnerProfileAdapter = new SpinnerProfileAdapter(this, this.array_profiles);
-            this.spinner_profile_adapter = spinnerProfileAdapter;
-            this.spinner_profiles.setAdapter(spinnerProfileAdapter);
-        }
-        this.spinner_profiles.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-
-
-            @Override
-            public void onNothingSelected(AdapterView<?> adapterView) {
-            }
-
-            @Override
-            public void onItemSelected(AdapterView<?> adapterView, View view, int i, long j) {
-                if (BMIDataActivity.this.is_user_interact) {
-                    BMIDataActivity bMIDataActivity = BMIDataActivity.this;
-                    bMIDataActivity.current_user_id = bMIDataActivity.arrayProfileIds[i];
-                    BMIDataActivity bMIDataActivity2 = BMIDataActivity.this;
-                    bMIDataActivity2.current_profile_name = bMIDataActivity2.arrayProfileNames[i].trim();
-                    Log.e("selected Profile :", "ID :" + BMIDataActivity.this.current_user_id + "\nName :" + BMIDataActivity.this.current_profile_name);
-                    BMIDataActivity.this.SetBMIDataList();
-                }
-            }
-        });
+        String name = sharedPreferencesUtils.getUserName();
+        spinner_txt_name.setText(name);
     }
 
 
     private void SetBMIDataList() {
         this.array_bmi_data.clear();
-        ArrayList<BMIData> arrayList = (ArrayList) this.SQLite_health_tracker.GetBMIDataByUserID(this.current_user_id);
+        ArrayList<BMIData> arrayList = (ArrayList) this.SQLite_health_tracker.GetBMIDataByUserID(this.sharedPreferencesUtils.getUserId());
         this.array_bmi_data = arrayList;
         if (arrayList.size() > 0) {
             this.txt_no_data.setVisibility(View.GONE);
@@ -268,9 +239,6 @@ public class BMIDataActivity extends AppCompatActivity {
     @Override
     public void onResume() {
         super.onResume();
-        int selectedItemPosition = this.spinner_profiles.getSelectedItemPosition();
-        this.current_user_id = this.arrayProfileIds[selectedItemPosition];
-        this.current_profile_name = this.arrayProfileNames[selectedItemPosition].trim();
         SetBMIDataList();
     }
 

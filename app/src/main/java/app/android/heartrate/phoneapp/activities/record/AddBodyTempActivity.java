@@ -35,8 +35,10 @@ import java.util.Date;
 import app.android.heartrate.phoneapp.AdAdmob;
 import app.android.heartrate.phoneapp.R;
 import app.android.heartrate.phoneapp.adapters.SpinnerProfileAdapter;
+import app.android.heartrate.phoneapp.model.ProfileData;
 import app.android.heartrate.phoneapp.model.classes.BodyTempData;
 import app.android.heartrate.phoneapp.model.classes.UserProfileData;
+import app.android.heartrate.phoneapp.sharedpreferences.SharedPreferences;
 import app.android.heartrate.phoneapp.sqlite.SQLiteHealthTracker;
 import app.android.heartrate.phoneapp.utils.AppConstants;
 import app.android.heartrate.phoneapp.utils.EUGeneralClass;
@@ -44,9 +46,7 @@ import app.android.heartrate.phoneapp.utils.StoredPreferencesValue;
 
 public class AddBodyTempActivity extends AppCompatActivity {
     SQLiteHealthTracker SQLite_health_tracker;
-    int[] arrayProfileIds;
-    String[] arrayProfileNames;
-    ArrayList<UserProfileData> array_profiles = new ArrayList<>();
+
     float cel_max_value = 42.0f;
     float cel_min_value = 33.0f;
     float cel_value = 37.0f;
@@ -64,6 +64,7 @@ public class AddBodyTempActivity extends AppCompatActivity {
     TextView lbl_seek_fahrenheit_min;
     TextView lbl_seek_pulse_max;
     TextView lbl_seek_pulse_min;
+    TextView spinner_txt_name;
     Context mContext;
     int month;
     float pulse_max_value = 250.0f;
@@ -78,8 +79,6 @@ public class AddBodyTempActivity extends AppCompatActivity {
     SeekBar seek_celsius;
     SeekBar seek_fahrenheit;
     SeekBar seek_pulse;
-    int selected_user_id;
-    String selected_user_name = "";
     SimpleDateFormat simple_data_format;
     SpinnerProfileAdapter spinner_profile_adapter;
     Spinner spinner_profiles;
@@ -101,6 +100,8 @@ public class AddBodyTempActivity extends AppCompatActivity {
     private int save_entry_month;
     private int save_entry_year;
 
+    private SharedPreferences sharedPreferencesUtils;
+
     @Override
     public void onCreate(Bundle bundle) {
         super.onCreate(bundle);
@@ -116,6 +117,7 @@ public class AddBodyTempActivity extends AppCompatActivity {
         this.mContext = this;
         this.push_animation = AnimationUtils.loadAnimation(this, R.anim.view_push);
         setUpActionBar();
+        sharedPreferencesUtils = SharedPreferences.INSTANCE;
         this.simple_data_format = new SimpleDateFormat("dd/MM/yyy hh:mm:ss aa");
         SQLiteHealthTracker sQLiteHealthTracker = new SQLiteHealthTracker(this);
         this.SQLite_health_tracker = sQLiteHealthTracker;
@@ -163,6 +165,7 @@ public class AddBodyTempActivity extends AppCompatActivity {
         this.txt_seek_celsius_progress = findViewById(R.id.add_temp_txt_cel_progress);
         this.lbl_seek_fahrenheit_min = findViewById(R.id.add_temp_lbl_fah_min);
         this.lbl_seek_fahrenheit_max = findViewById(R.id.add_temp_lbl_fah_max);
+        this.spinner_txt_name = findViewById(R.id.spinner_txt_name);
         this.txt_seek_fahrenheit_progress = findViewById(R.id.add_temp_txt_fah_progress);
         SetProfileSpinner();
         SetNumberPickers();
@@ -251,54 +254,14 @@ public class AddBodyTempActivity extends AppCompatActivity {
             this.txt_seek_fahrenheit_progress.setText(String.valueOf(this.fah_value));
             SetEditDateTime(this.save_txt_date, this.save_txt_time, AppConstants.selected_body_temp_data.dateTime.trim());
             SetFeverStatus(this.cel_value);
-            int i = AppConstants.selected_body_temp_data.user_id;
-            this.selected_user_id = i;
-            String GetProfileNameByID = this.SQLite_health_tracker.GetProfileNameByID(i);
-            this.selected_user_name = GetProfileNameByID;
-            if (GetProfileNameByID != null) {
-                int i2 = 0;
-                for (int i3 = 0; i3 < this.array_profiles.size(); i3++) {
-                    if (this.array_profiles.get(i3).user_name.trim().equals(this.selected_user_name)) {
-                        i2 = i3;
-                    }
-                }
-                this.spinner_profiles.setSelection(i2);
-                return;
-            }
             return;
         }
         EUGeneralClass.ShowErrorToast(this, "Something went wrong!");
     }
 
     private void SetProfileSpinner() {
-        this.array_profiles.clear();
-        ArrayList<UserProfileData> arrayList = (ArrayList) this.SQLite_health_tracker.GetUserProfileData();
-        this.array_profiles = arrayList;
-        if (arrayList.size() > 0) {
-            this.arrayProfileIds = new int[this.array_profiles.size()];
-            this.arrayProfileNames = new String[this.array_profiles.size()];
-            for (int i = 0; i < this.array_profiles.size(); i++) {
-                this.arrayProfileIds[i] = this.array_profiles.get(i).user_id;
-                this.arrayProfileNames[i] = this.array_profiles.get(i).user_name.trim();
-            }
-            SpinnerProfileAdapter spinnerProfileAdapter = new SpinnerProfileAdapter(this, this.array_profiles);
-            this.spinner_profile_adapter = spinnerProfileAdapter;
-            this.spinner_profiles.setAdapter(spinnerProfileAdapter);
-        }
-        this.spinner_profiles.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-
-
-            @Override
-            public void onNothingSelected(AdapterView<?> adapterView) {
-            }
-
-            @Override
-            public void onItemSelected(AdapterView<?> adapterView, View view, int i, long j) {
-                int i2 = AddBodyTempActivity.this.arrayProfileIds[i];
-                String trim = AddBodyTempActivity.this.arrayProfileNames[i].trim();
-                Log.e("selected Profile :", "ID :" + i2 + "\nName :" + trim);
-            }
-        });
+        String name = sharedPreferencesUtils.getUserName();
+        spinner_txt_name.setText(name);
     }
 
     private void SetCurrentDateTime() {
@@ -438,12 +401,9 @@ public class AddBodyTempActivity extends AppCompatActivity {
             String trim4 = this.save_txt_date.getText().toString().trim();
             String trim5 = this.save_txt_time.getText().toString().trim();
             BodyTempData bodyTempData = new BodyTempData();
-            int selectedItemPosition = this.spinner_profiles.getSelectedItemPosition();
-            this.selected_user_id = this.arrayProfileIds[selectedItemPosition];
-            this.selected_user_name = this.arrayProfileNames[selectedItemPosition];
             if (!AppConstants.is_body_temp_edit_mode) {
-                bodyTempData.user_id = this.selected_user_id;
-                bodyTempData.name = this.selected_user_name.trim();
+                bodyTempData.user_id = this.sharedPreferencesUtils.getUserId();
+                bodyTempData.name = this.sharedPreferencesUtils.getUserName();
                 bodyTempData.date = this.date_time.trim();
                 bodyTempData.celsius = trim;
                 bodyTempData.fahrenheit = trim2;
@@ -468,13 +428,13 @@ public class AddBodyTempActivity extends AppCompatActivity {
                 bodyTempData.month = this.month;
                 bodyTempData.year = this.year;
                 bodyTempData.hour = this.hour;
-                bodyTempData.tags = this.selected_user_name.trim();
+                bodyTempData.tags = this.sharedPreferencesUtils.getUserName();
                 this.SQLite_health_tracker.InsertTemperatureData(bodyTempData);
                 EUGeneralClass.ShowSuccessToast(this, AppConstants.data_saved_messages);
             } else {
                 int i = AppConstants.selected_body_temp_data.row_id;
-                bodyTempData.user_id = this.selected_user_id;
-                bodyTempData.name = this.selected_user_name.trim();
+                bodyTempData.user_id = this.sharedPreferencesUtils.getUserId();
+                bodyTempData.name = this.sharedPreferencesUtils.getUserName();
                 bodyTempData.celsius = trim;
                 bodyTempData.fahrenheit = trim2;
                 bodyTempData.pulse = trim3;
@@ -498,8 +458,8 @@ public class AddBodyTempActivity extends AppCompatActivity {
                 bodyTempData.month = this.month;
                 bodyTempData.year = this.year;
                 bodyTempData.hour = this.hour;
-                bodyTempData.tags = this.selected_user_name.trim();
-                this.SQLite_health_tracker.UpdateTemperatureData(i, this.selected_user_id, bodyTempData);
+                bodyTempData.tags = this.sharedPreferencesUtils.getUserName();
+                this.SQLite_health_tracker.UpdateTemperatureData(i, this.sharedPreferencesUtils.getUserId(), bodyTempData);
                 EUGeneralClass.ShowSuccessToast(this, AppConstants.data_updated_messages);
             }
             StoredPreferencesValue.setDefaultCelsiusValue(this.cel_value, this);

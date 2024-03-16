@@ -34,6 +34,7 @@ public class BMIResultActivity extends AppCompatActivity {
     Animation push_animation;
     String resultText;
     TextView txt_bmi_result;
+    TextView spinner_txt_name;
     TextView txt_bmi_result_text;
 
 
@@ -59,6 +60,7 @@ public class BMIResultActivity extends AppCompatActivity {
         this.img_arrow_normal = findViewById(R.id.bmi_result_img_normal);
         this.img_arrow_overweight = findViewById(R.id.bmi_result_img_overweight);
         this.img_arrow_moderately_obese = findViewById(R.id.bmi_result_img_moderately_obese);
+        this.spinner_txt_name = findViewById(R.id.spinner_txt_name);
         this.img_arrow_severely_obese = findViewById(R.id.bmi_result_img_severely_obese);
         this.img_arrow_very_severely_obese = findViewById(R.id.bmi_result_img_very_severely_obese);
         this.img_share = findViewById(R.id.bmi_result_img_share);

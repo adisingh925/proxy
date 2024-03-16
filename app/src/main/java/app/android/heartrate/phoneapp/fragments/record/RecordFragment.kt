@@ -91,63 +91,6 @@ class RecordFragment : BaseFragment() {
         button.text = "Create"
         button2.text = "Cancel"
         button.setOnClickListener {
-            if (Build.VERSION.SDK_INT >= 33) {
-                try {
-                    TedPermission.create().setPermissions(
-                        "android.permission.READ_MEDIA_IMAGES",
-                        "android.permission.CAMERA"
-                    ).setPermissionListener(object : PermissionListener {
-                        override fun onPermissionGranted() {
-                            startActivity(AddProfileActivity::class.java)
-                        }
-
-                        override fun onPermissionDenied(list: List<String>) {
-                            Log.e("Permission:", "Permission Denied!")
-                        }
-                    }).check()
-                } catch (e: ActivityNotFoundException) {
-                    e.printStackTrace()
-                }
-                dialog.dismiss()
-            } else if (Build.VERSION.SDK_INT >= 30) {
-                try {
-                    TedPermission.create().setPermissions(
-                        "android.permission.WRITE_EXTERNAL_STORAGE",
-                        "android.permission.READ_EXTERNAL_STORAGE",
-                        "android.permission.CAMERA"
-                    ).setPermissionListener(object : PermissionListener {
-                        override fun onPermissionGranted() {
-                            startActivity(AddProfileActivity::class.java)
-                        }
-
-                        override fun onPermissionDenied(list: List<String>) {
-                            Log.e("Permission:", "Permission Denied!")
-                        }
-                    }).check()
-                } catch (e: ActivityNotFoundException) {
-                    e.printStackTrace()
-                }
-                dialog.dismiss()
-            } else {
-                try {
-                    TedPermission.create().setPermissions(
-                        "android.permission.WRITE_EXTERNAL_STORAGE",
-                        "android.permission.READ_EXTERNAL_STORAGE",
-                        "android.permission.CAMERA"
-                    ).setPermissionListener(object : PermissionListener {
-                        override fun onPermissionGranted() {
-                            startActivity(AddProfileActivity::class.java)
-                        }
-
-                        override fun onPermissionDenied(list: List<String>) {
-                            Log.e("Permission:", "Permission Denied!")
-                        }
-                    }).check()
-                } catch (e: ActivityNotFoundException) {
-                    e.printStackTrace()
-                }
-                dialog.dismiss()
-            }
         }
         button2.setOnClickListener { dialog.dismiss() }
         dialog.show()

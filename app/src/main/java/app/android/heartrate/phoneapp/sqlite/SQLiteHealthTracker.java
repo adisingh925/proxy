@@ -22,6 +22,7 @@ import java.util.List;
 import java.util.Map;
 
 import app.android.heartrate.phoneapp.R;
+import app.android.heartrate.phoneapp.model.ProfileData;
 import app.android.heartrate.phoneapp.model.classes.BMIChartData;
 import app.android.heartrate.phoneapp.model.classes.BMIData;
 import app.android.heartrate.phoneapp.model.classes.BloodCountChartData;
@@ -42,6 +43,7 @@ import app.android.heartrate.phoneapp.model.classes.UserProfileData;
 import app.android.heartrate.phoneapp.model.classes.UserProfileSpinnerData;
 import app.android.heartrate.phoneapp.model.classes.WeightChartData;
 import app.android.heartrate.phoneapp.model.classes.WeightData;
+import app.android.heartrate.phoneapp.sharedpreferences.SharedPreferences;
 import app.android.heartrate.phoneapp.utils.AppConstants;
 
 public class SQLiteHealthTracker {
@@ -279,58 +281,59 @@ public class SQLiteHealthTracker {
         return sqLiteDatabase.update(USER_PROFILE_TABLE, contentValues, "row_id=" + i + " AND " + KEY_USER_ID + "=" + i2, null);
     }
 
-    public List GetUserProfileData() {
-        Bitmap bitmap;
-        ArrayList arrayList = new ArrayList();
-        try {
-            SQLiteDatabase readableDatabase = sqLiteHelper.getReadableDatabase();
-            sqLiteDatabase = readableDatabase;
-            Cursor rawQuery = readableDatabase.rawQuery("SELECT * FROM user_profiles ORDER BY row_id DESC", null);
-            if (rawQuery != null) {
-                if (rawQuery.getCount() <= 0) {
-                    Log.e("Cursor ::", "Cursor null...");
-                } else if (rawQuery.moveToFirst()) {
-                    do {
-                        int i = rawQuery.getInt(rawQuery.getColumnIndexOrThrow(KEY_ROW_ID));
-                        int i2 = rawQuery.getInt(rawQuery.getColumnIndexOrThrow(KEY_USER_ID));
-                        String string = rawQuery.getString(rawQuery.getColumnIndexOrThrow(KEY_USER_PHOTO_PATH));
-                        String string2 = rawQuery.getString(rawQuery.getColumnIndexOrThrow(KEY_USER_NAME));
-                        String string3 = rawQuery.getString(rawQuery.getColumnIndexOrThrow(KEY_GENDER));
-                        String string4 = rawQuery.getString(rawQuery.getColumnIndexOrThrow(KEY_BIRTH_DATE));
-                        int i3 = rawQuery.getInt(rawQuery.getColumnIndexOrThrow(KEY_WEIGHT));
-                        int i4 = rawQuery.getInt(rawQuery.getColumnIndexOrThrow(KEY_HEIGHT));
-                        String string5 = rawQuery.getString(rawQuery.getColumnIndexOrThrow(KEY_HEIGHT_UNIT));
-                        String string6 = rawQuery.getString(rawQuery.getColumnIndexOrThrow(KEY_HEIGHT_FEET));
-                        UserProfileData userProfileData = new UserProfileData();
-                        userProfileData.row_id = i;
-                        userProfileData.user_id = i2;
-                        userProfileData.user_name = string2.trim();
-                        userProfileData.user_photo_path = string.trim();
-                        userProfileData.user_gender = string3.trim();
-                        userProfileData.user_birth_date = string4.trim();
-                        userProfileData.user_weight = i3;
-                        userProfileData.user_height = i4;
-                        userProfileData.user_height_unit = string5.trim();
-                        userProfileData.user_height_feet = string6.trim();
-                        if (string.contains("file://")) {
-                            string = string.replaceAll("file://", "");
-                        }
-                        Log.e("Image Path:", string);
-                        File file = new File(string);
-                        if (file.exists()) {
-                            bitmap = BitmapFactory.decodeFile(file.getAbsolutePath());
-                        } else {
-                            bitmap = BitmapFactory.decodeResource(this.mContext.getResources(), R.drawable.ic_default_user);
-                        }
-                        userProfileData.bmp_user_photo = bitmap;
-                        arrayList.add(userProfileData);
-                    } while (rawQuery.moveToNext());
-                }
-            }
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        return arrayList;
+    public ProfileData GetUserProfileData() {
+//        Bitmap bitmap;
+//        ArrayList arrayList = new ArrayList();
+//        try {
+//            SQLiteDatabase readableDatabase = sqLiteHelper.getReadableDatabase();
+//            sqLiteDatabase = readableDatabase;
+//            Cursor rawQuery = readableDatabase.rawQuery("SELECT * FROM user_profiles ORDER BY row_id DESC", null);
+//            if (rawQuery != null) {
+//                if (rawQuery.getCount() <= 0) {
+//                    Log.e("Cursor ::", "Cursor null...");
+//                } else if (rawQuery.moveToFirst()) {
+//                    do {
+//                        int i = rawQuery.getInt(rawQuery.getColumnIndexOrThrow(KEY_ROW_ID));
+//                        int i2 = rawQuery.getInt(rawQuery.getColumnIndexOrThrow(KEY_USER_ID));
+//                        String string = rawQuery.getString(rawQuery.getColumnIndexOrThrow(KEY_USER_PHOTO_PATH));
+//                        String string2 = rawQuery.getString(rawQuery.getColumnIndexOrThrow(KEY_USER_NAME));
+//                        String string3 = rawQuery.getString(rawQuery.getColumnIndexOrThrow(KEY_GENDER));
+//                        String string4 = rawQuery.getString(rawQuery.getColumnIndexOrThrow(KEY_BIRTH_DATE));
+//                        int i3 = rawQuery.getInt(rawQuery.getColumnIndexOrThrow(KEY_WEIGHT));
+//                        int i4 = rawQuery.getInt(rawQuery.getColumnIndexOrThrow(KEY_HEIGHT));
+//                        String string5 = rawQuery.getString(rawQuery.getColumnIndexOrThrow(KEY_HEIGHT_UNIT));
+//                        String string6 = rawQuery.getString(rawQuery.getColumnIndexOrThrow(KEY_HEIGHT_FEET));
+//                        UserProfileData userProfileData = new UserProfileData();
+//                        userProfileData.row_id = i;
+//                        userProfileData.user_id = i2;
+//                        userProfileData.user_name = string2.trim();
+//                        userProfileData.user_photo_path = string.trim();
+//                        userProfileData.user_gender = string3.trim();
+//                        userProfileData.user_birth_date = string4.trim();
+//                        userProfileData.user_weight = i3;
+//                        userProfileData.user_height = i4;
+//                        userProfileData.user_height_unit = string5.trim();
+//                        userProfileData.user_height_feet = string6.trim();
+//                        if (string.contains("file://")) {
+//                            string = string.replaceAll("file://", "");
+//                        }
+//                        Log.e("Image Path:", string);
+//                        File file = new File(string);
+//                        if (file.exists()) {
+//                            bitmap = BitmapFactory.decodeFile(file.getAbsolutePath());
+//                        } else {
+//                            bitmap = BitmapFactory.decodeResource(this.mContext.getResources(), R.drawable.ic_default_user);
+//                        }
+//                        userProfileData.bmp_user_photo = bitmap;
+//                        arrayList.add(userProfileData);
+//                    } while (rawQuery.moveToNext());
+//                }
+//            }
+//        } catch (Exception e) {
+//            e.printStackTrace();
+//        }
+
+        return SharedPreferences.INSTANCE.getUserProfile();
     }
 
     public List GetUserProfileDataByID(int i) {

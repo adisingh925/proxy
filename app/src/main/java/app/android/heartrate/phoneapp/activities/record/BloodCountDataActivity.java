@@ -5,13 +5,11 @@ import android.content.ActivityNotFoundException;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
-import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.Spinner;
 import android.widget.TextView;
@@ -24,12 +22,10 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.ArrayList;
 
-import app.android.heartrate.phoneapp.AdAdmob;
 import app.android.heartrate.phoneapp.R;
 import app.android.heartrate.phoneapp.adapters.BloodCountDataAdapter;
-import app.android.heartrate.phoneapp.adapters.SpinnerProfileAdapter;
 import app.android.heartrate.phoneapp.model.classes.BloodCountData;
-import app.android.heartrate.phoneapp.model.classes.UserProfileData;
+import app.android.heartrate.phoneapp.sharedpreferences.SharedPreferences;
 import app.android.heartrate.phoneapp.sqlite.SQLiteHealthTracker;
 import app.android.heartrate.phoneapp.utils.AppConstants;
 import app.android.heartrate.phoneapp.utils.EUGeneralClass;
@@ -39,40 +35,27 @@ public class BloodCountDataActivity extends AppCompatActivity {
 
     BloodCountDataAdapter adapter_blood_count_data;
 
-    int[] arrayProfileIds;
-
-    String[] arrayProfileNames;
-
     ArrayList<BloodCountData> array_blood_count_data = new ArrayList<>();
-
-    ArrayList<UserProfileData> array_profiles = new ArrayList<>();
-
-    String current_profile_name;
-    int current_user_id;
 
     boolean is_user_interact = false;
     Context mContext;
     Animation push_animation;
     RecyclerView recycler_blood_count_data;
-
-    SpinnerProfileAdapter spinner_profile_adapter;
     Spinner spinner_profiles;
     TextView txt_no_data;
-
+    TextView spinner_txt_name;
+    private SharedPreferences sharedPreferencesUtils;
 
     @Override
     public void onCreate(Bundle bundle) {
         super.onCreate(bundle);
         SetView();
-
-
         AppConstants.overridePendingTransitionEnter(this);
-
     }
 
     private void SetView() {
+        sharedPreferencesUtils = SharedPreferences.INSTANCE;
         setContentView(R.layout.activity_blood_count_list);
-
         this.mContext = this;
         this.push_animation = AnimationUtils.loadAnimation(this, R.anim.view_push);
         setUpActionBar();
@@ -81,6 +64,7 @@ public class BloodCountDataActivity extends AppCompatActivity {
         sQLiteHealthTracker.openToWrite();
         this.spinner_profiles = findViewById(R.id.bc_spinner_profiles);
         this.recycler_blood_count_data = findViewById(R.id.bc_rv_data);
+        this.spinner_txt_name = findViewById(R.id.spinner_txt_name);
         this.recycler_blood_count_data.setLayoutManager(new LinearLayoutManager(this));
         this.recycler_blood_count_data.setItemAnimator(new DefaultItemAnimator());
         TextView textView = findViewById(R.id.txt_no_data);
@@ -97,45 +81,14 @@ public class BloodCountDataActivity extends AppCompatActivity {
 
 
     private void SetProfileSpinner() {
-        this.array_profiles.clear();
-        ArrayList<UserProfileData> arrayList = (ArrayList) this.SQLite_health_tracker.GetUserProfileData();
-        this.array_profiles = arrayList;
-        if (arrayList.size() > 0) {
-            this.arrayProfileIds = new int[this.array_profiles.size()];
-            this.arrayProfileNames = new String[this.array_profiles.size()];
-            for (int i = 0; i < this.array_profiles.size(); i++) {
-                this.arrayProfileIds[i] = this.array_profiles.get(i).user_id;
-                this.arrayProfileNames[i] = this.array_profiles.get(i).user_name.trim();
-            }
-            SpinnerProfileAdapter spinnerProfileAdapter = new SpinnerProfileAdapter(this, this.array_profiles);
-            this.spinner_profile_adapter = spinnerProfileAdapter;
-            this.spinner_profiles.setAdapter(spinnerProfileAdapter);
-        }
-        this.spinner_profiles.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-
-
-            @Override
-            public void onNothingSelected(AdapterView<?> adapterView) {
-            }
-
-            @Override
-            public void onItemSelected(AdapterView<?> adapterView, View view, int i, long j) {
-                if (BloodCountDataActivity.this.is_user_interact) {
-                    BloodCountDataActivity bloodCountDataActivity = BloodCountDataActivity.this;
-                    bloodCountDataActivity.current_user_id = bloodCountDataActivity.arrayProfileIds[i];
-                    BloodCountDataActivity bloodCountDataActivity2 = BloodCountDataActivity.this;
-                    bloodCountDataActivity2.current_profile_name = bloodCountDataActivity2.arrayProfileNames[i].trim();
-                    Log.e("selected Profile :", "ID :" + BloodCountDataActivity.this.current_user_id + "\nName :" + BloodCountDataActivity.this.current_profile_name);
-                    BloodCountDataActivity.this.SetBloodCountDataList();
-                }
-            }
-        });
+        String name = sharedPreferencesUtils.getUserName();
+        spinner_txt_name.setText(name);
     }
 
 
     private void SetBloodCountDataList() {
         this.array_blood_count_data.clear();
-        ArrayList<BloodCountData> arrayList = (ArrayList) this.SQLite_health_tracker.GetBloodCountDataByUserID(this.current_user_id);
+        ArrayList<BloodCountData> arrayList = (ArrayList) this.SQLite_health_tracker.GetBloodCountDataByUserID(this.sharedPreferencesUtils.getUserId());
         this.array_blood_count_data = arrayList;
         if (arrayList.size() > 0) {
             this.txt_no_data.setVisibility(View.GONE);
@@ -232,9 +185,6 @@ public class BloodCountDataActivity extends AppCompatActivity {
     @Override
     public void onResume() {
         super.onResume();
-        int selectedItemPosition = this.spinner_profiles.getSelectedItemPosition();
-        this.current_user_id = this.arrayProfileIds[selectedItemPosition];
-        this.current_profile_name = this.arrayProfileNames[selectedItemPosition].trim();
         SetBloodCountDataList();
     }
 

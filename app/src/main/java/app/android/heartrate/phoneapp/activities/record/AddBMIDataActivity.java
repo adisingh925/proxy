@@ -34,11 +34,13 @@ import java.util.Date;
 
 import app.android.heartrate.phoneapp.R;
 import app.android.heartrate.phoneapp.adapters.SpinnerProfileAdapter;
+import app.android.heartrate.phoneapp.model.ProfileData;
 import app.android.heartrate.phoneapp.model.classes.BMICalcForKg;
 import app.android.heartrate.phoneapp.model.classes.BMICalcForPound;
 import app.android.heartrate.phoneapp.model.classes.BMIData;
 import app.android.heartrate.phoneapp.model.classes.IBMICalc;
 import app.android.heartrate.phoneapp.model.classes.UserProfileData;
+import app.android.heartrate.phoneapp.sharedpreferences.SharedPreferences;
 import app.android.heartrate.phoneapp.sqlite.SQLiteHealthTracker;
 import app.android.heartrate.phoneapp.utils.AppConstants;
 import app.android.heartrate.phoneapp.utils.EUGeneralClass;
@@ -51,9 +53,6 @@ public class AddBMIDataActivity extends AppCompatActivity {
     SQLiteHealthTracker SQLite_health_tracker;
     String age_unit = "";
     int age_value = 0;
-    int[] arrayProfileIds;
-    String[] arrayProfileNames;
-    ArrayList<UserProfileData> array_profiles = new ArrayList<>();
     String current_date = "";
     String current_time = "";
     String date = "";
@@ -76,13 +75,12 @@ public class AddBMIDataActivity extends AppCompatActivity {
     Animation push_animation;
     RelativeLayout rel_select_date;
     RelativeLayout rel_select_time;
-    int selected_user_id;
-    String selected_user_name = "";
     SpinnerProfileAdapter spinner_profile_adapter;
     Spinner spinner_profiles;
     String time = "";
     TextView txt_age_unit;
     TextView txt_date;
+    TextView spinner_txt_name;
     TextView txt_height_unit;
     TextView txt_time;
     TextView txt_weight_unit;
@@ -98,6 +96,8 @@ public class AddBMIDataActivity extends AppCompatActivity {
     private int save_entry_minute;
     private int save_entry_month;
     private int save_entry_year;
+
+    private  SharedPreferences sharedPreferencesUtils;
 
     public double CalculateADAG(double d) {
         return (d * 28.7d) - 46.7d;
@@ -124,6 +124,7 @@ public class AddBMIDataActivity extends AppCompatActivity {
         activity_add_bmi = this;
         this.push_animation = AnimationUtils.loadAnimation(this, R.anim.view_push);
         setUpActionBar();
+        sharedPreferencesUtils = SharedPreferences.INSTANCE;
         this.indexOfCheckedItemInMenu = 1;
         SQLiteHealthTracker sQLiteHealthTracker = new SQLiteHealthTracker(this);
         this.SQLite_health_tracker = sQLiteHealthTracker;
@@ -140,6 +141,7 @@ public class AddBMIDataActivity extends AppCompatActivity {
         this.view_line_metric = findViewById(R.id.add_bmi_hr_metric);
         this.view_line_imperial = findViewById(R.id.add_bmi_hr_imperial);
         this.txt_age_unit = findViewById(R.id.add_bmi_txt_age_unit);
+        this.spinner_txt_name = findViewById(R.id.spinner_txt_name);
         this.et_age = findViewById(R.id.add_bmi_et_age);
         this.et_weight = findViewById(R.id.add_bmi_et_weight);
         this.txt_age_unit.setText(AppConstants.age_unit_years);
@@ -251,34 +253,8 @@ public class AddBMIDataActivity extends AppCompatActivity {
     }
 
     private void SetProfileSpinner() {
-        this.array_profiles.clear();
-        ArrayList<UserProfileData> arrayList = (ArrayList) this.SQLite_health_tracker.GetUserProfileData();
-        this.array_profiles = arrayList;
-        if (arrayList.size() > 0) {
-            this.arrayProfileIds = new int[this.array_profiles.size()];
-            this.arrayProfileNames = new String[this.array_profiles.size()];
-            for (int i = 0; i < this.array_profiles.size(); i++) {
-                this.arrayProfileIds[i] = this.array_profiles.get(i).user_id;
-                this.arrayProfileNames[i] = this.array_profiles.get(i).user_name.trim();
-            }
-            SpinnerProfileAdapter spinnerProfileAdapter = new SpinnerProfileAdapter(this, this.array_profiles);
-            this.spinner_profile_adapter = spinnerProfileAdapter;
-            this.spinner_profiles.setAdapter(spinnerProfileAdapter);
-        }
-        this.spinner_profiles.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-
-
-            @Override
-            public void onNothingSelected(AdapterView<?> adapterView) {
-            }
-
-            @Override
-            public void onItemSelected(AdapterView<?> adapterView, View view, int i, long j) {
-                int i2 = AddBMIDataActivity.this.arrayProfileIds[i];
-                String trim = AddBMIDataActivity.this.arrayProfileNames[i].trim();
-                Log.e("selected Profile :", "ID :" + i2 + "\nName :" + trim);
-            }
-        });
+        String name = sharedPreferencesUtils.getUserName();
+        spinner_txt_name.setText(name);
     }
 
     @SuppressLint("WrongConstant")
@@ -321,20 +297,6 @@ public class AddBMIDataActivity extends AppCompatActivity {
             this.et_height.setText(trim3);
             EditText editText = this.et_height;
             editText.setSelection(editText.getText().toString().length());
-            int i2 = AppConstants.selected_bmi_data.user_id;
-            this.selected_user_id = i2;
-            String GetProfileNameByID = this.SQLite_health_tracker.GetProfileNameByID(i2);
-            this.selected_user_name = GetProfileNameByID;
-            if (GetProfileNameByID != null) {
-                int i3 = 0;
-                for (int i4 = 0; i4 < this.array_profiles.size(); i4++) {
-                    if (this.array_profiles.get(i4).user_name.trim().equals(this.selected_user_name)) {
-                        i3 = i4;
-                    }
-                }
-                this.spinner_profiles.setSelection(i3);
-                return;
-            }
             return;
         }
         EUGeneralClass.ShowErrorToast(this, "Something went wrong!");
@@ -404,11 +366,8 @@ public class AddBMIDataActivity extends AppCompatActivity {
                         }
                         SetCurrentDateTime();
                         String format = new SimpleDateFormat("dd/MM/yyyy").format(Calendar.getInstance().getTime());
-                        int selectedItemPosition = this.spinner_profiles.getSelectedItemPosition();
-                        this.selected_user_id = this.arrayProfileIds[selectedItemPosition];
-                        this.selected_user_name = this.arrayProfileNames[selectedItemPosition];
                         if (!AppConstants.is_bmi_edit_mode) {
-                            bMIData.user_id = this.selected_user_id;
+                            bMIData.user_id = this.sharedPreferencesUtils.getUserId();
                             bMIData.date = this.date.trim();
                             bMIData.time = this.time.trim();
                             bMIData.weight = String.valueOf(this.weight_value);
@@ -440,7 +399,7 @@ public class AddBMIDataActivity extends AppCompatActivity {
                             }
                         } else {
                             int i4 = AppConstants.selected_bmi_data.row_id;
-                            bMIData.user_id = this.selected_user_id;
+                            bMIData.user_id = this.sharedPreferencesUtils.getUserId();
                             bMIData.date = this.date.trim();
                             bMIData.time = this.time.trim();
                             bMIData.weight = String.valueOf(this.weight_value);
@@ -460,7 +419,7 @@ public class AddBMIDataActivity extends AppCompatActivity {
                                 EUGeneralClass.ShowErrorToast(this, toastMessage);
                                 return;
                             } else if (i2 != 0) {
-                                this.SQLite_health_tracker.UpdateBMIData(i4, this.selected_user_id, bMIData);
+                                this.SQLite_health_tracker.UpdateBMIData(i4, this.sharedPreferencesUtils.getUserId(), bMIData);
                                 toastMessage = "BMI Data updated successfully!";
                                 EUGeneralClass.ShowSuccessToast(this, "BMI Data updated successfully!");
                                 onBackPressed();

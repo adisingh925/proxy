@@ -25,7 +25,6 @@ class HomeActivity : AppCompatActivity() {
     private lateinit var drawerLayout: DrawerLayout
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
         binding = ActivityHomeBinding.inflate(layoutInflater)
         setContentView(binding.root)
         setSupportActionBar(binding.appBarMain.toolbar)
@@ -50,7 +49,6 @@ class HomeActivity : AppCompatActivity() {
         )
         setupActionBarWithNavController(navController, appBarConfiguration)
         navView.setupWithNavController(navController)
-
         handleProfileClicks()
     }
 
@@ -62,7 +60,7 @@ class HomeActivity : AppCompatActivity() {
 
     private fun handleProfileClicks() {
         val header = binding.navView.getHeaderView(0)
-        var editProfile = header.findViewById<TextView>(R.id.tvEditProfile)
+        val editProfile = header.findViewById<TextView>(R.id.tvEditProfile)
         val userName = header.findViewById<TextView>(R.id.tvUserName)
         val userEmail = header.findViewById<TextView>(R.id.tvUserEmail)
         editProfile.setOnClickListener {
@@ -74,8 +72,6 @@ class HomeActivity : AppCompatActivity() {
             userName.text = (it?.firstName + " " + it?.lastName) ?: "Unknown User"
             userEmail.text = it?.email ?: "Unknown Email"
         }
-
-
     }
 
     override fun onSupportNavigateUp(): Boolean {

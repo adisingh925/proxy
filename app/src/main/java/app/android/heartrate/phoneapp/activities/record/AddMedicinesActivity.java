@@ -36,9 +36,11 @@ import java.util.Date;
 import app.android.heartrate.phoneapp.AdAdmob;
 import app.android.heartrate.phoneapp.R;
 import app.android.heartrate.phoneapp.adapters.SpinnerProfileAdapter;
+import app.android.heartrate.phoneapp.model.ProfileData;
 import app.android.heartrate.phoneapp.model.classes.MedicineData;
 import app.android.heartrate.phoneapp.model.classes.MedicineNameData;
 import app.android.heartrate.phoneapp.model.classes.UserProfileData;
+import app.android.heartrate.phoneapp.sharedpreferences.SharedPreferences;
 import app.android.heartrate.phoneapp.sqlite.SQLiteHealthTracker;
 import app.android.heartrate.phoneapp.utils.AppConstants;
 import app.android.heartrate.phoneapp.utils.EUGeneralClass;
@@ -47,9 +49,6 @@ public class AddMedicinesActivity extends AppCompatActivity {
     public static Activity activity_add_medicine;
     SQLiteHealthTracker SQLite_health_tracker;
     ArrayList<String> arrayListUnitOfMeasure = new ArrayList<>(Arrays.asList("mg", "tablet", "unit", "g", "mcg", "ml", "pill", "drop", "capsule"));
-    int[] arrayProfileIds;
-    String[] arrayProfileNames;
-    ArrayList<UserProfileData> array_profiles = new ArrayList<>();
     String date_time = "";
     int day;
     EditText et_medicine_dosage;
@@ -62,12 +61,13 @@ public class AddMedicinesActivity extends AppCompatActivity {
     Animation push_animation;
     RelativeLayout rel_select_date;
     RelativeLayout rel_select_time;
-    int selected_user_id;
-    String selected_user_name = "";
+
+    private SharedPreferences sharedPreferencesUtils;
     SpinnerProfileAdapter spinner_profile_adapter;
     Spinner spinner_profiles;
     Spinner spinner_unit_measure;
     TextView txt_date;
+    TextView spinner_txt_name;
     TextView txt_dosage_unit_title;
     TextView txt_time;
     ArrayAdapter<String> unit_measure_spinner_adapter;
@@ -95,12 +95,14 @@ public class AddMedicinesActivity extends AppCompatActivity {
         activity_add_medicine = this;
         this.push_animation = AnimationUtils.loadAnimation(this, R.anim.view_push);
         setUpActionBar();
+        sharedPreferencesUtils = SharedPreferences.INSTANCE;
         SQLiteHealthTracker sQLiteHealthTracker = new SQLiteHealthTracker(this);
         this.SQLite_health_tracker = sQLiteHealthTracker;
         sQLiteHealthTracker.openToWrite();
         this.spinner_profiles = findViewById(R.id.add_medicine_spinner_profiles);
         this.rel_select_date = findViewById(R.id.add_medicine_rel_select_date);
         this.txt_date = findViewById(R.id.add_medicine_txt_date);
+        this.spinner_txt_name = findViewById(R.id.spinner_txt_name);
         this.rel_select_time = findViewById(R.id.add_medicine_rel_select_time);
         this.txt_time = findViewById(R.id.add_medicine_txt_time);
         this.spinner_unit_measure = findViewById(R.id.add_medicine_spinner_unit_measure);
@@ -165,34 +167,8 @@ public class AddMedicinesActivity extends AppCompatActivity {
     }
 
     private void SetProfileSpinner() {
-        this.array_profiles.clear();
-        ArrayList<UserProfileData> arrayList = (ArrayList) this.SQLite_health_tracker.GetUserProfileData();
-        this.array_profiles = arrayList;
-        if (arrayList.size() > 0) {
-            this.arrayProfileIds = new int[this.array_profiles.size()];
-            this.arrayProfileNames = new String[this.array_profiles.size()];
-            for (int i = 0; i < this.array_profiles.size(); i++) {
-                this.arrayProfileIds[i] = this.array_profiles.get(i).user_id;
-                this.arrayProfileNames[i] = this.array_profiles.get(i).user_name.trim();
-            }
-            SpinnerProfileAdapter spinnerProfileAdapter = new SpinnerProfileAdapter(this, this.array_profiles);
-            this.spinner_profile_adapter = spinnerProfileAdapter;
-            this.spinner_profiles.setAdapter(spinnerProfileAdapter);
-        }
-        this.spinner_profiles.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-
-
-            @Override
-            public void onNothingSelected(AdapterView<?> adapterView) {
-            }
-
-            @Override
-            public void onItemSelected(AdapterView<?> adapterView, View view, int i, long j) {
-                int i2 = AddMedicinesActivity.this.arrayProfileIds[i];
-                String trim = AddMedicinesActivity.this.arrayProfileNames[i].trim();
-                Log.e("selected Profile :", "ID :" + i2 + "\nName :" + trim);
-            }
-        });
+        String name = sharedPreferencesUtils.getUserName();
+        spinner_txt_name.setText(name);
     }
 
     @SuppressLint("WrongConstant")
@@ -213,19 +189,6 @@ public class AddMedicinesActivity extends AppCompatActivity {
             String trim5 = medicineData.measure_unit.trim();
             String trim6 = medicineData.times_day.trim();
             String trim7 = medicineData.notes.trim();
-            int i = AppConstants.selected_medicine_data.user_id;
-            this.selected_user_id = i;
-            String GetProfileNameByID = this.SQLite_health_tracker.GetProfileNameByID(i);
-            this.selected_user_name = GetProfileNameByID;
-            if (GetProfileNameByID != null) {
-                int i2 = 0;
-                for (int i3 = 0; i3 < this.array_profiles.size(); i3++) {
-                    if (this.array_profiles.get(i3).user_name.trim().equals(this.selected_user_name)) {
-                        i2 = i3;
-                    }
-                }
-                this.spinner_profiles.setSelection(i2);
-            }
             if (trim5.equals("mg")) {
                 this.spinner_unit_measure.setSelection(0);
             } else if (trim5.equals("tablet")) {
@@ -290,11 +253,8 @@ public class AddMedicinesActivity extends AppCompatActivity {
                 return;
             }
             MedicineData medicineData = new MedicineData();
-            int selectedItemPosition = this.spinner_profiles.getSelectedItemPosition();
-            this.selected_user_id = this.arrayProfileIds[selectedItemPosition];
-            this.selected_user_name = this.arrayProfileNames[selectedItemPosition];
             if (!AppConstants.is_medicine_edit_mode) {
-                medicineData.user_id = this.selected_user_id;
+                medicineData.user_id = this.sharedPreferencesUtils.getUserId();
                 medicineData.date = trim.trim();
                 medicineData.time = trim2.trim();
                 medicineData.medicine_name = trim3.trim();
@@ -321,7 +281,7 @@ public class AddMedicinesActivity extends AppCompatActivity {
             }
             int i = AppConstants.selected_medicine_data.row_id;
             medicineData.row_id = i;
-            medicineData.user_id = this.selected_user_id;
+            medicineData.user_id = this.sharedPreferencesUtils.getUserId();
             medicineData.date = trim.trim();
             medicineData.time = trim2.trim();
             medicineData.medicine_name = trim3.trim();
@@ -335,7 +295,7 @@ public class AddMedicinesActivity extends AppCompatActivity {
             medicineData.month = this.month;
             medicineData.year = this.year;
             medicineData.hour = this.hour;
-            this.SQLite_health_tracker.UpdateMedicineData(i, this.selected_user_id, medicineData);
+            this.SQLite_health_tracker.UpdateMedicineData(i, this.sharedPreferencesUtils.getUserId(), medicineData);
             if (!this.SQLite_health_tracker.CheckMedicineNameExist(trim3)) {
                 MedicineNameData medicineNameData2 = new MedicineNameData();
                 medicineNameData2.medicine_id = this.SQLite_health_tracker.GetLastMedicineId();
@@ -423,8 +383,6 @@ public class AddMedicinesActivity extends AppCompatActivity {
     @Override
     public void onResume() {
         super.onResume();
-
-
     }
 
 
