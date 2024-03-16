@@ -167,7 +167,7 @@
     <string name="lbl_header_sugar_data">Sugar Data</string>
     <string name="lbl_header_temp_data">Temperature Data</string>
     <string name="lbl_header_user">User</string>
-    <string name="lbl_header_weight">Weight Data</string>
+    <string name="lbl_header_weight">Weight</string>
     <string name="lbl_heading_ADAG_formula">A1c-Derived Average Glucose [ADAG] \nAG = 28.7 × HbA1c − 46.7</string>
     <string name="lbl_heading_DCCT_formula">Diabetes Control and Complications Trial [DCCT] \nAG = 35.6 × HbA1c − 77.3</string>
     <string name="lbl_heading_age">Age :</string>
