@@ -10,6 +10,7 @@ import app.android.heartrate.phoneapp.model.UpdateRoleRequest
 import app.android.heartrate.phoneapp.model.classes.BloodCountData
 import retrofit2.Call
 import retrofit2.http.Body
+import retrofit2.http.DELETE
 import retrofit2.http.GET
 import retrofit2.http.Header
 import retrofit2.http.POST
@@ -57,6 +58,12 @@ interface ApiService {
 
     @POST("updateBloodCount")
     fun updateBloodCount(
+        @Header("Authorization") bearerToken: String,
+        @Body bloodCountData: BloodCountData
+    ): Call<BloodCountData>
+
+    @DELETE("deleteBloodCount")
+    fun deleteBloodCount(
         @Header("Authorization") bearerToken: String,
         @Body bloodCountData: BloodCountData
     ): Call<BloodCountData>

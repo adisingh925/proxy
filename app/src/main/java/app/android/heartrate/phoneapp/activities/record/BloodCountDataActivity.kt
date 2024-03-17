@@ -1,196 +1,218 @@
-package app.android.heartrate.phoneapp.activities.record;
+package app.android.heartrate.phoneapp.activities.record
 
-import android.app.Dialog;
-import android.content.ActivityNotFoundException;
-import android.content.Context;
-import android.content.Intent;
-import android.os.Bundle;
-import android.view.Menu;
-import android.view.MenuItem;
-import android.view.View;
-import android.view.animation.Animation;
-import android.view.animation.AnimationUtils;
-import android.widget.Button;
-import android.widget.Spinner;
-import android.widget.TextView;
+import android.app.Dialog
+import android.content.ActivityNotFoundException
+import android.content.Context
+import android.content.Intent
+import android.os.Bundle
+import android.util.Log
+import android.view.Menu
+import android.view.MenuItem
+import android.view.View
+import android.view.animation.Animation
+import android.view.animation.AnimationUtils
+import android.widget.Button
+import android.widget.Spinner
+import android.widget.TextView
+import androidx.appcompat.app.AppCompatActivity
+import androidx.recyclerview.widget.DefaultItemAnimator
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
+import app.android.heartrate.phoneapp.R
+import app.android.heartrate.phoneapp.adapters.BloodCountDataAdapter
+import app.android.heartrate.phoneapp.databinding.ActivityBloodCountListBinding
+import app.android.heartrate.phoneapp.model.classes.BloodCountData
+import app.android.heartrate.phoneapp.retrofit.ApiClient
+import app.android.heartrate.phoneapp.sharedpreferences.SharedPreferences
+import app.android.heartrate.phoneapp.sqlite.SQLiteHealthTracker
+import app.android.heartrate.phoneapp.utils.AppConstants
+import app.android.heartrate.phoneapp.utils.EUGeneralClass
+import retrofit2.Call
+import retrofit2.Callback
+import retrofit2.Response
 
-import androidx.appcompat.app.ActionBar;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.recyclerview.widget.DefaultItemAnimator;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
+class BloodCountDataActivity : AppCompatActivity() {
+    var SQLite_health_tracker: SQLiteHealthTracker? = null
 
-import java.util.ArrayList;
+    var adapter_blood_count_data: BloodCountDataAdapter? = null
 
-import app.android.heartrate.phoneapp.R;
-import app.android.heartrate.phoneapp.adapters.BloodCountDataAdapter;
-import app.android.heartrate.phoneapp.model.classes.BloodCountData;
-import app.android.heartrate.phoneapp.sharedpreferences.SharedPreferences;
-import app.android.heartrate.phoneapp.sqlite.SQLiteHealthTracker;
-import app.android.heartrate.phoneapp.utils.AppConstants;
-import app.android.heartrate.phoneapp.utils.EUGeneralClass;
+    var array_blood_count_data: ArrayList<BloodCountData> = ArrayList()
 
-public class BloodCountDataActivity extends AppCompatActivity {
-    SQLiteHealthTracker SQLite_health_tracker;
+    var is_user_interact: Boolean = false
+    var mContext: Context? = null
+    var push_animation: Animation? = null
+    private lateinit var recycler_blood_count_data: RecyclerView
+    var spinner_profiles: Spinner? = null
+    var txt_no_data: TextView? = null
+    var spinner_txt_name: TextView? = null
+    private lateinit var sharedPreferencesUtils: SharedPreferences
 
-    BloodCountDataAdapter adapter_blood_count_data;
+    private lateinit var binding: ActivityBloodCountListBinding
 
-    ArrayList<BloodCountData> array_blood_count_data = new ArrayList<>();
-
-    boolean is_user_interact = false;
-    Context mContext;
-    Animation push_animation;
-    RecyclerView recycler_blood_count_data;
-    Spinner spinner_profiles;
-    TextView txt_no_data;
-    TextView spinner_txt_name;
-    private SharedPreferences sharedPreferencesUtils;
-
-    @Override
-    public void onCreate(Bundle bundle) {
-        super.onCreate(bundle);
-        SetView();
-        AppConstants.overridePendingTransitionEnter(this);
+    public override fun onCreate(bundle: Bundle?) {
+        super.onCreate(bundle)
+        binding = ActivityBloodCountListBinding.inflate(layoutInflater)
+        setContentView(binding.root)
+        SetView()
+        AppConstants.overridePendingTransitionEnter(this)
     }
 
-    private void SetView() {
-        sharedPreferencesUtils = SharedPreferences.INSTANCE;
-        setContentView(R.layout.activity_blood_count_list);
-        this.mContext = this;
-        this.push_animation = AnimationUtils.loadAnimation(this, R.anim.view_push);
-        setUpActionBar();
-        SQLiteHealthTracker sQLiteHealthTracker = new SQLiteHealthTracker(this);
-        this.SQLite_health_tracker = sQLiteHealthTracker;
-        sQLiteHealthTracker.openToWrite();
-        this.spinner_profiles = findViewById(R.id.bc_spinner_profiles);
-        this.recycler_blood_count_data = findViewById(R.id.bc_rv_data);
-        this.spinner_txt_name = findViewById(R.id.spinner_txt_name);
-        this.recycler_blood_count_data.setLayoutManager(new LinearLayoutManager(this));
-        this.recycler_blood_count_data.setItemAnimator(new DefaultItemAnimator());
-        TextView textView = findViewById(R.id.txt_no_data);
-        this.txt_no_data = textView;
-        textView.setVisibility(View.GONE);
-        SetProfileSpinner();
-    }
-
-
-    public void onUserInteraction() {
-        super.onUserInteraction();
-        this.is_user_interact = true;
+    private fun SetView() {
+        sharedPreferencesUtils = SharedPreferences
+        this.mContext = this
+        this.push_animation = AnimationUtils.loadAnimation(this, R.anim.view_push)
+        setUpActionBar()
+        val sQLiteHealthTracker = SQLiteHealthTracker(this)
+        this.SQLite_health_tracker = sQLiteHealthTracker
+        sQLiteHealthTracker.openToWrite()
+        this.spinner_profiles = findViewById(R.id.bc_spinner_profiles)
+        this.recycler_blood_count_data = findViewById(R.id.bc_rv_data)
+        this.spinner_txt_name = findViewById(R.id.spinner_txt_name)
+        recycler_blood_count_data.setLayoutManager(LinearLayoutManager(this))
+        recycler_blood_count_data.setItemAnimator(DefaultItemAnimator())
+        val textView = findViewById<TextView>(R.id.txt_no_data)
+        this.txt_no_data = textView
+        textView.visibility = View.GONE
+        SetProfileSpinner()
     }
 
 
-    private void SetProfileSpinner() {
-        String name = sharedPreferencesUtils.getUserName();
-        spinner_txt_name.setText(name);
+    override fun onUserInteraction() {
+        super.onUserInteraction()
+        this.is_user_interact = true
     }
 
 
-    private void SetBloodCountDataList() {
-        this.array_blood_count_data.clear();
-        ArrayList<BloodCountData> arrayList = (ArrayList) this.SQLite_health_tracker.GetBloodCountDataByUserID(this.sharedPreferencesUtils.getUserId());
-        this.array_blood_count_data = arrayList;
-        if (arrayList.size() > 0) {
-            this.txt_no_data.setVisibility(View.GONE);
-            BloodCountDataAdapter r0 = new BloodCountDataAdapter(this, this.array_blood_count_data) {
+    private fun SetProfileSpinner() {
+        val name = sharedPreferencesUtils!!.getUserName()
+        spinner_txt_name!!.text = name
+    }
 
 
-                @Override
-                public void onBloodCountAdapterClickItem(int i, View view) {
-                    if (view.getId() == R.id.row_bc_rel_edit) {
-                        AppConstants.selected_blood_count_data = BloodCountDataActivity.this.array_blood_count_data.get(i);
-                        AppConstants.is_blood_count_edit_mode = true;
-                        BloodCountDataActivity.this.AddBloodCountScreen();
-                    }
-                    if (view.getId() == R.id.row_bc_rel_delete) {
-                        BloodCountDataActivity.this.ConformDeleteDialog(BloodCountDataActivity.this.array_blood_count_data.get(i).row_id, BloodCountDataActivity.this.array_blood_count_data.get(i).user_id);
+    private fun SetBloodCountDataList() {
+        array_blood_count_data.clear()
+        val arrayList: ArrayList<BloodCountData> =
+            SQLite_health_tracker!!.GetBloodCountDataByUserID(sharedPreferencesUtils!!.getUserId()) as ArrayList<*>
+        this.array_blood_count_data = arrayList
+        if (arrayList.size > 0) {
+            txt_no_data!!.visibility = View.GONE
+            val r0: BloodCountDataAdapter =
+                object : BloodCountDataAdapter(this, this.array_blood_count_data) {
+                    override fun onBloodCountAdapterClickItem(i: Int, view: View) {
+                        if (view.id == R.id.row_bc_rel_edit) {
+                            AppConstants.selected_blood_count_data =
+                                array_blood_count_data[i]
+                            AppConstants.is_blood_count_edit_mode = true
+                            this@BloodCountDataActivity.AddBloodCountScreen()
+                        }
+                        if (view.id == R.id.row_bc_rel_delete) {
+                            this@BloodCountDataActivity.ConformDeleteDialog(
+                                array_blood_count_data[i].row_id,
+                                array_blood_count_data[i].user_id
+                            )
+                        }
                     }
                 }
-            };
-            this.adapter_blood_count_data = r0;
-            this.recycler_blood_count_data.setAdapter(r0);
-            return;
+            this.adapter_blood_count_data = r0
+            recycler_blood_count_data!!.adapter = r0
+            return
         }
-        this.txt_no_data.setVisibility(View.VISIBLE);
+        txt_no_data!!.visibility = View.VISIBLE
     }
 
 
-    private void ConformDeleteDialog(final int i, int i2) {
-        final Dialog dialog = new Dialog(this, R.style.TransparentBackground);
-        dialog.requestWindowFeature(1);
-        dialog.setContentView(R.layout.dialog_rate);
-        Button button = dialog.findViewById(R.id.dialog_conform_btn_yes);
-        Button button2 = dialog.findViewById(R.id.dialog_conform_btn_no);
-        ((TextView) dialog.findViewById(R.id.dialog_conform_txt_header)).setText("Delete");
-        ((TextView) dialog.findViewById(R.id.dialog_conform_txt_message)).setText("Do you want to delete selected data?");
-        button.setText("Delete");
-        button2.setText("Cancel");
-        button.setOnClickListener(new View.OnClickListener() {
+    private fun ConformDeleteDialog(i: Int, i2: Int) {
+        val dialog = Dialog(this, R.style.TransparentBackground)
+        dialog.requestWindowFeature(1)
+        dialog.setContentView(R.layout.dialog_rate)
+        val button = dialog.findViewById<Button>(R.id.dialog_conform_btn_yes)
+        val button2 = dialog.findViewById<Button>(R.id.dialog_conform_btn_no)
+        (dialog.findViewById<View>(R.id.dialog_conform_txt_header) as TextView).text = "Delete"
+        (dialog.findViewById<View>(R.id.dialog_conform_txt_message) as TextView).text =
+            "Do you want to delete selected data?"
+        button.text = "Delete"
+        button2.text = "Cancel"
+        button.setOnClickListener {
+            try {
+                SQLite_health_tracker!!.deleteBloodCountByID(i)
+                EUGeneralClass.ShowSuccessToast(
+                    this@BloodCountDataActivity,
+                    AppConstants.data_deleted_messages
+                )
+                this@BloodCountDataActivity.SetBloodCountDataList()
+            } catch (e: ActivityNotFoundException) {
+                e.printStackTrace()
+            }
+            dialog.dismiss()
+        }
+        button2.setOnClickListener { dialog.dismiss() }
+        dialog.show()
+    }
 
 
-            public void onClick(View view) {
-                try {
-                    BloodCountDataActivity.this.SQLite_health_tracker.deleteBloodCountByID(i);
-                    EUGeneralClass.ShowSuccessToast(BloodCountDataActivity.this, AppConstants.data_deleted_messages);
-                    BloodCountDataActivity.this.SetBloodCountDataList();
-                } catch (ActivityNotFoundException e) {
-                    e.printStackTrace();
+    private fun AddBloodCountScreen() {
+        startActivity(Intent(this, AddBloodCountActivity::class.java))
+    }
+
+    private fun setUpActionBar() {
+        (findViewById<View>(R.id.toolbar_txt_title_1) as TextView).text =
+            resources.getString(R.string.lbl_header_blood)
+        (findViewById<View>(R.id.toolbar_txt_title_2) as TextView).text =
+            resources.getString(R.string.lbl_header_count_data)
+        findViewById<View>(R.id.tool_bar_rel_add_user).setOnClickListener {
+            AppConstants.is_blood_count_edit_mode = false
+            this@BloodCountDataActivity.AddBloodCountScreen()
+        }
+        findViewById<View>(R.id.toolbar_rel_back).setOnClickListener { view: View? -> this@BloodCountDataActivity.onBackPressed() }
+        setSupportActionBar(findViewById(R.id.toolbar_actionbar))
+        val supportActionBar = supportActionBar
+        supportActionBar!!.setDisplayShowTitleEnabled(false)
+        supportActionBar.setDisplayHomeAsUpEnabled(false)
+    }
+
+    override fun onCreateOptionsMenu(menu: Menu): Boolean {
+        menuInflater.inflate(R.menu.blank_menu, menu)
+        return super.onCreateOptionsMenu(menu)
+    }
+
+    override fun onOptionsItemSelected(menuItem: MenuItem): Boolean {
+        if (menuItem.itemId == 16908332) {
+            onBackPressed()
+        }
+        return super.onOptionsItemSelected(menuItem)
+    }
+
+    public override fun onResume() {
+        super.onResume()
+        SetBloodCountDataList()
+    }
+
+
+    override fun onBackPressed() {
+        super.onBackPressed()
+    }
+
+    private fun deleteBloodCount(rowId: Int){
+        val token = sharedPreferencesUtils.read("token", "")
+        if (!token.isNullOrEmpty()) {
+            val call = ApiClient.apiService.deleteBloodCount(token, rowId)
+            call.enqueue(object : Callback<BloodCountData> {
+                override fun onResponse(
+                    call: Call<BloodCountData>,
+                    response: Response<BloodCountData>
+                ) {
+                    Log.e(" bloodcount ", " is successful ")
+                    onBackPressed()
+                    return
                 }
-                dialog.dismiss();
-            }
-        });
-        button2.setOnClickListener(new View.OnClickListener() {
-            public void onClick(View view) {
-                dialog.dismiss();
-            }
-        });
-        dialog.show();
-    }
 
+                override fun onFailure(call: Call<BloodCountData>, t: Throwable) {
+                    Log.e(" bloodcount ", " error " + t.localizedMessage)
+                    onBackPressed()
+                    return
+                }
 
-    private void AddBloodCountScreen() {
-        startActivity(new Intent(this, AddBloodCountActivity.class));
-    }
-
-    private void setUpActionBar() {
-        ((TextView) findViewById(R.id.toolbar_txt_title_1)).setText(getResources().getString(R.string.lbl_header_blood));
-        ((TextView) findViewById(R.id.toolbar_txt_title_2)).setText(getResources().getString(R.string.lbl_header_count_data));
-        findViewById(R.id.tool_bar_rel_add_user).setOnClickListener(new View.OnClickListener() {
-
-
-            public void onClick(View view) {
-                AppConstants.is_blood_count_edit_mode = false;
-                BloodCountDataActivity.this.AddBloodCountScreen();
-            }
-        });
-        findViewById(R.id.toolbar_rel_back).setOnClickListener(view -> BloodCountDataActivity.this.onBackPressed());
-        setSupportActionBar(findViewById(R.id.toolbar_actionbar));
-        ActionBar supportActionBar = getSupportActionBar();
-        supportActionBar.setDisplayShowTitleEnabled(false);
-        supportActionBar.setDisplayHomeAsUpEnabled(false);
-    }
-
-    public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.blank_menu, menu);
-        return super.onCreateOptionsMenu(menu);
-    }
-
-    public boolean onOptionsItemSelected(MenuItem menuItem) {
-        if (menuItem.getItemId() == 16908332) {
-            onBackPressed();
+            })
         }
-        return super.onOptionsItemSelected(menuItem);
-    }
-
-    @Override
-    public void onResume() {
-        super.onResume();
-        SetBloodCountDataList();
-    }
-
-
-    @Override
-    public void onBackPressed() {
-        super.onBackPressed();
     }
 }
