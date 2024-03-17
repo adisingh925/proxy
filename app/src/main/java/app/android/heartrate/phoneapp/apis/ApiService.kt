@@ -8,12 +8,15 @@ import app.android.heartrate.phoneapp.model.SignupResponse
 import app.android.heartrate.phoneapp.model.UpdateProfileRequest
 import app.android.heartrate.phoneapp.model.UpdateRoleRequest
 import app.android.heartrate.phoneapp.model.classes.BloodCountData
+import app.android.heartrate.phoneapp.model.classes.BloodCountResponse
+import app.android.heartrate.phoneapp.model.classes.UserId
 import retrofit2.Call
 import retrofit2.http.Body
 import retrofit2.http.DELETE
 import retrofit2.http.GET
 import retrofit2.http.Header
 import retrofit2.http.POST
+import retrofit2.http.Path
 
 interface ApiService {
 
@@ -54,7 +57,12 @@ interface ApiService {
     fun postBloodCount(
         @Header("Authorization") bearerToken: String,
         @Body bloodCountData: BloodCountData
-    ): Call<BloodCountData>
+    ): Call<BloodCountResponse>
+
+    @GET("getBloodCountsByUserId")
+    fun getBloodCountsByUserId(
+        @Header("Authorization") bearerToken: String,
+    ): Call<BloodCountResponse>
 
     @POST("updateBloodCount")
     fun updateBloodCount(
@@ -62,9 +70,9 @@ interface ApiService {
         @Body bloodCountData: BloodCountData
     ): Call<BloodCountData>
 
-    @DELETE("deleteBloodCount")
+    @DELETE("deleteBloodCountByID/{row_id}")
     fun deleteBloodCount(
         @Header("Authorization") bearerToken: String,
-        @Body bloodCountData: BloodCountData
+        @Path("row_id") rowId: Int
     ): Call<BloodCountData>
 }

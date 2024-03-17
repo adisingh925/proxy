@@ -47,7 +47,7 @@ public abstract class BloodCountDataAdapter extends RecyclerView.Adapter<BloodCo
         BloodCountData bloodCountData = this.array_data.get(i);
         bloodCountData.date.trim();
         String trim = String.valueOf(bloodCountData.day).trim();
-        String trim2 = bloodCountData.month_string.trim();
+        String trim2 = String.valueOf(bloodCountData.month).trim();
         String trim3 = String.valueOf(bloodCountData.year).trim();
         String trim4 = bloodCountData.time.trim();
         String valueOf = String.valueOf(bloodCountData.rbc_value);
@@ -62,7 +62,7 @@ public abstract class BloodCountDataAdapter extends RecyclerView.Adapter<BloodCo
         }
         bloodCountViewHolder.txt_day.setText(trim);
         TextView textView = bloodCountViewHolder.txt_month;
-        textView.setText(trim2 + ",");
+        textView.setText("- "+trim2+" -");
         bloodCountViewHolder.txt_year.setText(trim3);
         bloodCountViewHolder.txt_time.setText(trim4);
         bloodCountViewHolder.txt_rbc.setText(valueOf);

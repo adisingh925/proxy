@@ -21,10 +21,12 @@ import android.widget.RelativeLayout
 import android.widget.Spinner
 import android.widget.TextView
 import android.widget.TimePicker
+import android.widget.Toast
 import app.android.heartrate.phoneapp.R
 import app.android.heartrate.phoneapp.databinding.ActivityAddBloodCountBinding
 import app.android.heartrate.phoneapp.fragments.base.BaseActivity
 import app.android.heartrate.phoneapp.model.classes.BloodCountData
+import app.android.heartrate.phoneapp.model.classes.BloodCountResponse
 import app.android.heartrate.phoneapp.retrofit.ApiClient
 import app.android.heartrate.phoneapp.sharedpreferences.SharedPreferences
 import app.android.heartrate.phoneapp.sqlite.SQLiteHealthTracker
@@ -363,20 +365,26 @@ class AddBloodCountActivity() : BaseActivity() {
         val token = sharedPreferencesUtils.read("token", "")
         if (!token.isNullOrEmpty()) {
             val call = ApiClient.apiService.postBloodCount(token, bloodCountData)
-            call.enqueue(object : Callback<BloodCountData> {
+            call.enqueue(object : Callback<BloodCountResponse> {
                 override fun onResponse(
-                    call: Call<BloodCountData>,
-                    response: Response<BloodCountData>
+                    call: Call<BloodCountResponse>,
+                    response: Response<BloodCountResponse>
                 ) {
-                    Log.e(" bloodcount ", " is successful ")
-//                    onBackPressed()
-//                    return
+                    if(response.isSuccessful) {
+                        if(response.body()?.code == 1) {
+                            onBackPressed()
+                            return
+                        }else{
+                            showMessage(response.body()?.msg ?: "Unable to save blood count")
+                        }
+                    }else{
+                        showMessage("An error occurred trying to save blood count")
+                    }
                 }
 
-                override fun onFailure(call: Call<BloodCountData>, t: Throwable) {
-                    Log.e(" bloodcount ", " error " + t.localizedMessage)
-//                    onBackPressed()
-//                    return
+                override fun onFailure(call: Call<BloodCountResponse>, t: Throwable) {
+                    showMessage("An error occurred trying to save blood count "+t.localizedMessage)
+
                 }
 
             })
@@ -404,5 +412,9 @@ class AddBloodCountActivity() : BaseActivity() {
 
     }
 
+
+    private fun showMessage(message: String){
+        Toast.makeText(mContext,message, Toast.LENGTH_SHORT).show()
+    }
 
 }

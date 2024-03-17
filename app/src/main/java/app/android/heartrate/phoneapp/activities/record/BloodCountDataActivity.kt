@@ -14,6 +14,7 @@ import android.view.animation.AnimationUtils
 import android.widget.Button
 import android.widget.Spinner
 import android.widget.TextView
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.DefaultItemAnimator
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -22,6 +23,8 @@ import app.android.heartrate.phoneapp.R
 import app.android.heartrate.phoneapp.adapters.BloodCountDataAdapter
 import app.android.heartrate.phoneapp.databinding.ActivityBloodCountListBinding
 import app.android.heartrate.phoneapp.model.classes.BloodCountData
+import app.android.heartrate.phoneapp.model.classes.BloodCountResponse
+import app.android.heartrate.phoneapp.model.classes.UserId
 import app.android.heartrate.phoneapp.retrofit.ApiClient
 import app.android.heartrate.phoneapp.sharedpreferences.SharedPreferences
 import app.android.heartrate.phoneapp.sqlite.SQLiteHealthTracker
@@ -89,11 +92,10 @@ class BloodCountDataActivity : AppCompatActivity() {
     }
 
 
-    private fun SetBloodCountDataList() {
+    private fun SetBloodCountDataList(arrayList: List<BloodCountData>?) {
         array_blood_count_data.clear()
-        val arrayList = SQLite_health_tracker?.GetBloodCountDataByUserID(sharedPreferencesUtils.getUserId())
         this.array_blood_count_data = arrayList as ArrayList<BloodCountData>
-        if (arrayList.size > 0) {
+        if (arrayList.isNotEmpty()) {
             txt_no_data!!.visibility = View.GONE
             val r0: BloodCountDataAdapter =
                 object : BloodCountDataAdapter(this, this.array_blood_count_data) {
@@ -102,7 +104,8 @@ class BloodCountDataActivity : AppCompatActivity() {
                             AppConstants.selected_blood_count_data =
                                 array_blood_count_data[i]
                             AppConstants.is_blood_count_edit_mode = true
-                            this@BloodCountDataActivity.AddBloodCountScreen()
+                            showMessage("Work in progress")
+//                            this@BloodCountDataActivity.AddBloodCountScreen()
                         }
                         if (view.id == R.id.row_bc_rel_delete) {
                             this@BloodCountDataActivity.ConformDeleteDialog(
@@ -133,12 +136,10 @@ class BloodCountDataActivity : AppCompatActivity() {
         button2.text = "Cancel"
         button.setOnClickListener {
             try {
-                SQLite_health_tracker!!.deleteBloodCountByID(i)
-                EUGeneralClass.ShowSuccessToast(
-                    this@BloodCountDataActivity,
-                    AppConstants.data_deleted_messages
-                )
-                this@BloodCountDataActivity.SetBloodCountDataList()
+                deleteBloodCount(i)
+//                SQLite_health_tracker!!.deleteBloodCountByID(i)
+
+                fetchBloodCountData()
             } catch (e: ActivityNotFoundException) {
                 e.printStackTrace()
             }
@@ -183,7 +184,7 @@ class BloodCountDataActivity : AppCompatActivity() {
 
     public override fun onResume() {
         super.onResume()
-        SetBloodCountDataList()
+        fetchBloodCountData()
     }
 
 
@@ -192,30 +193,64 @@ class BloodCountDataActivity : AppCompatActivity() {
     }
 
     private fun fetchBloodCountData(){
+        val token = sharedPreferencesUtils.read("token", "")
+        if (!token.isNullOrEmpty()) {
+            val call = ApiClient.apiService.getBloodCountsByUserId(token)
+            call.enqueue(object : Callback<BloodCountResponse> {
+                override fun onResponse(
+                    call: Call<BloodCountResponse>,
+                    response: Response<BloodCountResponse>
+                ) {
+                    if(response.isSuccessful){
+                        val dResponse = response.body()
+
+                        if(dResponse?.code == 1){
+                            SetBloodCountDataList(dResponse.data)
+                        }else{
+                            showMessage(dResponse?.msg ?: "An error occurred ")
+                        }
+                    }else{
+                        showMessage("Unable to fetch blood count")
+                    }
+                }
+
+                override fun onFailure(call: Call<BloodCountResponse>, t: Throwable) {
+                    showMessage("Unable to fetch blood count, Please try again later")
+                }
+
+            })
+        }
 
     }
 
     private fun deleteBloodCount(rowId: Int){
-//        val token = sharedPreferencesUtils.read("token", "")
-//        if (!token.isNullOrEmpty()) {
-//            val call = ApiClient.apiService.deleteBloodCount(token, rowId)
-//            call.enqueue(object : Callback<BloodCountData> {
-//                override fun onResponse(
-//                    call: Call<BloodCountData>,
-//                    response: Response<BloodCountData>
-//                ) {
-//                    Log.e(" bloodcount ", " is successful ")
-//                    onBackPressed()
-//                    return
-//                }
-//
-//                override fun onFailure(call: Call<BloodCountData>, t: Throwable) {
-//                    Log.e(" bloodcount ", " error " + t.localizedMessage)
-//                    onBackPressed()
-//                    return
-//                }
-//
-//            })
-//        }
+        val token = sharedPreferencesUtils.read("token", "")
+        if (!token.isNullOrEmpty()) {
+            val call = ApiClient.apiService.deleteBloodCount(token, rowId)
+            call.enqueue(object : Callback<BloodCountData> {
+                override fun onResponse(
+                    call: Call<BloodCountData>,
+                    response: Response<BloodCountData>
+                ) {
+                    if(response.isSuccessful) {
+                        EUGeneralClass.ShowSuccessToast(
+                            this@BloodCountDataActivity,
+                            AppConstants.data_deleted_messages
+                        )
+                    }else{
+                        showMessage("Unable to delete")
+                    }
+                }
+
+                override fun onFailure(call: Call<BloodCountData>, t: Throwable) {
+                    showMessage("Unable to delete this blood count, Please try again later ..")
+                }
+
+            })
+        }
+    }
+
+    private fun showMessage(message: String){
+        Toast.makeText(mContext,message,Toast.LENGTH_SHORT).show()
     }
 }
