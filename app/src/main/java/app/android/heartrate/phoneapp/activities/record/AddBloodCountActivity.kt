@@ -48,6 +48,7 @@ class AddBloodCountActivity() : BaseActivity() {
     private lateinit var et_rbc_value: EditText
     private lateinit var et_wbc_value: EditText
     var hour: Int = 0
+    var minute: Int = 0
     var mContext: Context? = null
     var month: Int = 0
     var push_animation: Animation? = null
@@ -113,9 +114,10 @@ class AddBloodCountActivity() : BaseActivity() {
                     OnDateSetListener { datePicker, i, i2, i3 ->
                         try {
                             txt_date.setText(
-                                SimpleDateFormat("dd/MM/yyyy").format(
+                                SimpleDateFormat("yyyy-MM-dd").format(
                                     SimpleDateFormat("dd/MM/yyyy").parse(
-                                        (i3.toString() + "/" + (i2 + 1) + "/" + i).trim { it <= ' ' })
+                                        (i3.toString() + "/" + (i2 + 1) + "/" + i).trim()
+                                    )
                                 )
                             )
                         } catch (e: Exception) {
@@ -140,7 +142,7 @@ class AddBloodCountActivity() : BaseActivity() {
                         override fun onTimeSet(timePicker: TimePicker, i: Int, i2: Int) {
                             try {
                                 txt_time.setText(
-                                    SimpleDateFormat("hh:mm aa").format(
+                                    SimpleDateFormat("hh:mm:ss aa").format(
                                         SimpleDateFormat("hh:mm").parse(
                                             "$i:$i2"
                                         )
@@ -245,7 +247,8 @@ class AddBloodCountActivity() : BaseActivity() {
                 bloodCountData.month = this.month
                 bloodCountData.year = this.year
                 bloodCountData.hour = this.hour
-                SQLite_health_tracker!!.InsertBloodCountData(bloodCountData)
+                bloodCountData.minute = this.minute
+//                SQLite_health_tracker!!.InsertBloodCountData(bloodCountData)
                 EUGeneralClass.ShowSuccessToast(this, "Blood Count Data saved successfully!")
                 insertData(bloodCountData)
 
@@ -265,7 +268,7 @@ class AddBloodCountActivity() : BaseActivity() {
             bloodCountData.month = this.month
             bloodCountData.year = this.year
             bloodCountData.hour = this.hour
-            bloodCountData.minute = this.hour
+            bloodCountData.minute = this.minute
             SQLite_health_tracker!!.UpdateBloodCountData(
                 i,
                 sharedPreferencesUtils!!.getUserId(), bloodCountData
@@ -280,17 +283,17 @@ class AddBloodCountActivity() : BaseActivity() {
     private fun SetCurrentDateTime() {
         try {
             val instance = Calendar.getInstance()
-            val simpleDateFormat = SimpleDateFormat("dd/MM/yyyy hh:mm:ss aa")
+            val simpleDateFormat = SimpleDateFormat("yyyy-MM-dd hh:mm:ss aa")
             val format = simpleDateFormat.format(instance.time)
             this.current_date_time = format
             val parse = simpleDateFormat.parse(format)
-            val simpleDateFormat2 = SimpleDateFormat("dd/MM/yyyy")
-            val simpleDateFormat3 = SimpleDateFormat("hh:mm aa")
+            val simpleDateFormat2 = SimpleDateFormat("yyyy-MM-dd")
+            val simpleDateFormat3 = SimpleDateFormat("hh:mm:ss aa")
             val format2 = simpleDateFormat2.format(parse)
             simpleDateFormat3.format(parse)
             Log.e("Current Date Time:", this.current_date_time)
             txt_date!!.text = format2
-            txt_time!!.text = DateFormat.format("hh:mm aaa", Calendar.getInstance().time)
+            txt_time!!.text = DateFormat.format("hh:mm:ss aaa", Calendar.getInstance().time)
         } catch (e: ParseException) {
             e.printStackTrace()
         }
@@ -299,18 +302,20 @@ class AddBloodCountActivity() : BaseActivity() {
     private fun GetDateTime(str: String, str2: String) {
         try {
             val str3 = "$str $str2"
-            val simpleDateFormat = SimpleDateFormat("dd/MM/yyyy")
+            val simpleDateFormat = SimpleDateFormat("yyyy-MM-dd")
             val simpleDateFormat2 = SimpleDateFormat("dd")
             val simpleDateFormat3 = SimpleDateFormat("MM")
             val simpleDateFormat4 = SimpleDateFormat("yyyy")
-            val simpleDateFormat5 = SimpleDateFormat("hh:mm aa")
+            val simpleDateFormat5 = SimpleDateFormat("hh:mm:ss aa")
             val simpleDateFormat6 = SimpleDateFormat("hh")
-            val parse = SimpleDateFormat("dd/MM/yyyy hh:mm aa").parse(str3)
+            val simpleDateFormat7 = SimpleDateFormat("mm")
+            val parse = SimpleDateFormat("yyyy-MM-dd hh:mm:ss aa").parse(str3)
             this.date_time = simpleDateFormat.format(parse) + " " + simpleDateFormat5.format(parse)
             this.day = simpleDateFormat2.format(parse).toInt()
             this.month = simpleDateFormat3.format(parse).toInt()
             this.year = simpleDateFormat4.format(parse).toInt()
             this.hour = simpleDateFormat6.format(parse).toInt()
+            this.minute = simpleDateFormat7.format(parse).toInt()
         } catch (e: ParseException) {
             e.printStackTrace()
         }
@@ -364,14 +369,14 @@ class AddBloodCountActivity() : BaseActivity() {
                     response: Response<BloodCountData>
                 ) {
                     Log.e(" bloodcount ", " is successful ")
-                    onBackPressed()
-                    return
+//                    onBackPressed()
+//                    return
                 }
 
                 override fun onFailure(call: Call<BloodCountData>, t: Throwable) {
                     Log.e(" bloodcount ", " error " + t.localizedMessage)
-                    onBackPressed()
-                    return
+//                    onBackPressed()
+//                    return
                 }
 
             })

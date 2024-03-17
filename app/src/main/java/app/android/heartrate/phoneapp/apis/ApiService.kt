@@ -50,7 +50,7 @@ interface ApiService {
         @Header("Authorization") bearerToken: String,
     ): Call<SignupResponse>
 
-    @POST("bloodCount")
+    @POST("saveBloodCount")
     fun postBloodCount(
         @Header("Authorization") bearerToken: String,
         @Body bloodCountData: BloodCountData
