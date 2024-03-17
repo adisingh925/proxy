@@ -7,6 +7,7 @@ import app.android.heartrate.phoneapp.model.LoginSuccessResponse
 import app.android.heartrate.phoneapp.model.SignupResponse
 import app.android.heartrate.phoneapp.model.UpdateProfileRequest
 import app.android.heartrate.phoneapp.model.UpdateRoleRequest
+import app.android.heartrate.phoneapp.model.classes.BloodCountData
 import retrofit2.Call
 import retrofit2.http.Body
 import retrofit2.http.GET
@@ -47,4 +48,16 @@ interface ApiService {
     fun checkProfile(
         @Header("Authorization") bearerToken: String,
     ): Call<SignupResponse>
+
+    @POST("bloodCount")
+    fun postBloodCount(
+        @Header("Authorization") bearerToken: String,
+        @Body bloodCountData: BloodCountData
+    ): Call<BloodCountData>
+
+    @POST("updateBloodCount")
+    fun updateBloodCount(
+        @Header("Authorization") bearerToken: String,
+        @Body bloodCountData: BloodCountData
+    ): Call<BloodCountData>
 }
