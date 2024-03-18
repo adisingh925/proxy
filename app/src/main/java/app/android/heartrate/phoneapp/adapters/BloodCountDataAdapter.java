@@ -50,9 +50,6 @@ public abstract class BloodCountDataAdapter extends RecyclerView.Adapter<BloodCo
     public void onBindViewHolder(BloodCountViewHolder bloodCountViewHolder, @SuppressLint("RecyclerView") final int i) {
         BloodCountData bloodCountData = this.array_data.get(i);
         bloodCountData.date.trim();
-        String trim = String.valueOf(bloodCountData.day).trim();
-        String trim2 = String.valueOf(bloodCountData.month).trim();
-        String trim3 = String.valueOf(bloodCountData.year).trim();
         String trim4 = bloodCountData.time.trim();
         String valueOf = String.valueOf(bloodCountData.rbc_value);
         String valueOf2 = String.valueOf(bloodCountData.wbc_value);

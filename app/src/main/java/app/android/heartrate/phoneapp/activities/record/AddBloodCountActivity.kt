@@ -144,7 +144,7 @@ class AddBloodCountActivity() : BaseActivity() {
                         override fun onTimeSet(timePicker: TimePicker, i: Int, i2: Int) {
                             try {
                                 txt_time.setText(
-                                    SimpleDateFormat("hh:mm:ss aa").format(
+                                    SimpleDateFormat("hh:mm aa").format(
                                         SimpleDateFormat("hh:mm").parse(
                                             "$i:$i2"
                                         )
@@ -284,17 +284,17 @@ class AddBloodCountActivity() : BaseActivity() {
     private fun SetCurrentDateTime() {
         try {
             val instance = Calendar.getInstance()
-            val simpleDateFormat = SimpleDateFormat("yyyy-MM-dd hh:mm:ss aa")
+            val simpleDateFormat = SimpleDateFormat("yyyy-MM-dd hh:mm aa")
             val format = simpleDateFormat.format(instance.time)
             this.current_date_time = format
             val parse = simpleDateFormat.parse(format)
             val simpleDateFormat2 = SimpleDateFormat("yyyy-MM-dd")
-            val simpleDateFormat3 = SimpleDateFormat("hh:mm:ss aa")
+            val simpleDateFormat3 = SimpleDateFormat("hh:mm aa")
             val format2 = simpleDateFormat2.format(parse)
             simpleDateFormat3.format(parse)
             Log.e("Current Date Time:", this.current_date_time)
             txt_date!!.text = format2
-            txt_time!!.text = DateFormat.format("hh:mm:ss aaa", Calendar.getInstance().time)
+            txt_time!!.text = DateFormat.format("hh:mm aaa", Calendar.getInstance().time)
         } catch (e: ParseException) {
             e.printStackTrace()
         }
@@ -307,10 +307,10 @@ class AddBloodCountActivity() : BaseActivity() {
             val simpleDateFormat2 = SimpleDateFormat("dd")
             val simpleDateFormat3 = SimpleDateFormat("MM")
             val simpleDateFormat4 = SimpleDateFormat("yyyy")
-            val simpleDateFormat5 = SimpleDateFormat("hh:mm:ss aa")
+            val simpleDateFormat5 = SimpleDateFormat("hh:mm aa")
             val simpleDateFormat6 = SimpleDateFormat("hh")
             val simpleDateFormat7 = SimpleDateFormat("mm")
-            val parse = SimpleDateFormat("yyyy-MM-dd hh:mm:ss aa").parse(str3)
+            val parse = SimpleDateFormat("yyyy-MM-dd hh:mm aa").parse(str3)
             this.date_time = simpleDateFormat.format(parse) + " " + simpleDateFormat5.format(parse)
             this.day = simpleDateFormat2.format(parse).toInt()
             this.month = simpleDateFormat3.format(parse).toInt()
