@@ -21,13 +21,21 @@ import android.widget.RelativeLayout
 import android.widget.Spinner
 import android.widget.TextView
 import android.widget.TimePicker
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import app.android.heartrate.phoneapp.R
+import app.android.heartrate.phoneapp.model.bloodpressure.BloodPressureResponse
+import app.android.heartrate.phoneapp.model.classes.BloodCountData
+import app.android.heartrate.phoneapp.model.classes.BloodCountResponse
 import app.android.heartrate.phoneapp.model.classes.BloodPressureData
+import app.android.heartrate.phoneapp.retrofit.ApiClient
 import app.android.heartrate.phoneapp.sharedpreferences.SharedPreferences
 import app.android.heartrate.phoneapp.sqlite.SQLiteHealthTracker
 import app.android.heartrate.phoneapp.utils.AppConstants
 import app.android.heartrate.phoneapp.utils.EUGeneralClass
+import retrofit2.Call
+import retrofit2.Callback
+import retrofit2.Response
 import java.text.ParseException
 import java.text.SimpleDateFormat
 import java.util.Calendar
@@ -75,7 +83,7 @@ class AddBloodPressureActivity() : AppCompatActivity() {
     private var save_entry_minute = 0
     private var save_entry_month = 0
     private var save_entry_year = 0
-    private var sharedPreferencesUtils: SharedPreferences? = null
+    private lateinit var sharedPreferencesUtils: SharedPreferences
 
     public override fun onCreate(bundle: Bundle?) {
         super.onCreate(bundle)
@@ -140,7 +148,7 @@ class AddBloodPressureActivity() : AppCompatActivity() {
                     OnDateSetListener { datePicker, i, i2, i3 ->
                         try {
                             txt_date.setText(
-                                SimpleDateFormat("dd/MM/yyyy").format(
+                                SimpleDateFormat("yyyy-MM-dd").format(
                                     SimpleDateFormat("dd/MM/yyyy").parse(
                                         (i3.toString() + "/" + (i2 + 1) + "/" + i).trim { it <= ' ' })
                                 )
@@ -333,10 +341,11 @@ class AddBloodPressureActivity() : AppCompatActivity() {
                 bloodPressureData.month = this.month
                 bloodPressureData.year = this.year
                 bloodPressureData.hour = this.hour
-                SQLite_health_tracker!!.InsertBloodPressureData(bloodPressureData)
-                EUGeneralClass.ShowSuccessToast(this, AppConstants.data_saved_messages)
-                onBackPressed()
-                return
+                insertData(bloodPressureData)
+//                SQLite_health_tracker!!.InsertBloodPressureData(bloodPressureData)
+//                EUGeneralClass.ShowSuccessToast(this, AppConstants.data_saved_messages)
+//                onBackPressed()
+//                return
             }
             val i = AppConstants.selected_bp_data.row_id
             bloodPressureData.user_id = sharedPreferencesUtils!!.getUserId()
@@ -397,11 +406,11 @@ class AddBloodPressureActivity() : AppCompatActivity() {
     private fun SetCurrentDateTime() {
         try {
             val instance = Calendar.getInstance()
-            val simpleDateFormat = SimpleDateFormat("dd/MM/yyyy hh:mm:ss aa")
+            val simpleDateFormat = SimpleDateFormat("yyyy-MM-dd hh:mm:ss aa")
             val format = simpleDateFormat.format(instance.time)
             this.current_date_time = format
             val parse = simpleDateFormat.parse(format)
-            val simpleDateFormat2 = SimpleDateFormat("dd/MM/yyyy")
+            val simpleDateFormat2 = SimpleDateFormat("yyyy-MM-dd")
             val simpleDateFormat3 = SimpleDateFormat("hh:mm aa")
             val format2 = simpleDateFormat2.format(parse)
             simpleDateFormat3.format(parse)
@@ -415,13 +424,13 @@ class AddBloodPressureActivity() : AppCompatActivity() {
     private fun GetDateTime(str: String, str2: String) {
         try {
             val str3 = "$str $str2"
-            val simpleDateFormat = SimpleDateFormat("dd/MM/yyyy")
+            val simpleDateFormat = SimpleDateFormat("yyyy-MM-dd")
             val simpleDateFormat2 = SimpleDateFormat("dd")
             val simpleDateFormat3 = SimpleDateFormat("MM")
             val simpleDateFormat4 = SimpleDateFormat("yyyy")
             val simpleDateFormat5 = SimpleDateFormat("hh:mm aa")
             val simpleDateFormat6 = SimpleDateFormat("hh")
-            val parse = SimpleDateFormat("dd/MM/yyyy hh:mm aa").parse(str3)
+            val parse = SimpleDateFormat("yyyy-MM-dd hh:mm aa").parse(str3)
             this.date_time = simpleDateFormat.format(parse) + " " + simpleDateFormat5.format(parse)
             this.day = simpleDateFormat2.format(parse).toInt()
             this.month = simpleDateFormat3.format(parse).toInt()
@@ -488,4 +497,37 @@ class AddBloodPressureActivity() : AppCompatActivity() {
     companion object {
         var activity_add_blood_pressure: Activity? = null
     }
+
+    private fun insertData(bloodPressureData: BloodPressureData) {
+        val token = sharedPreferencesUtils.read("token", "")
+        if (!token.isNullOrEmpty()) {
+            val call = ApiClient.apiService.saveBloodPressure(token, bloodPressureData)
+            call.enqueue(object : Callback<BloodPressureResponse> {
+                override fun onResponse(
+                    call: Call<BloodPressureResponse>,
+                    response: Response<BloodPressureResponse>
+                ) {
+                    if(response.isSuccessful) {
+                        showMessage(response.body()?.msg ?: "Saved successfully ")
+                            onBackPressed()
+                            return
+                    }else{
+                        showMessage("An error occurred trying to save data")
+                    }
+                }
+
+                override fun onFailure(call: Call<BloodPressureResponse>, t: Throwable) {
+                    showMessage("An error occurred trying to save data "+t.localizedMessage)
+
+                }
+
+            })
+        }
+    }
+
+    private fun showMessage(message: String){
+        Toast.makeText(mContext,message, Toast.LENGTH_SHORT).show()
+    }
+
+
 }

@@ -7,8 +7,12 @@ import app.android.heartrate.phoneapp.model.LoginSuccessResponse
 import app.android.heartrate.phoneapp.model.SignupResponse
 import app.android.heartrate.phoneapp.model.UpdateProfileRequest
 import app.android.heartrate.phoneapp.model.UpdateRoleRequest
+import app.android.heartrate.phoneapp.model.bloodcount.chart.BloodCountChartRequest
+import app.android.heartrate.phoneapp.model.bloodcount.chart.BloodCountChartResponse
+import app.android.heartrate.phoneapp.model.bloodpressure.BloodPressureResponse
 import app.android.heartrate.phoneapp.model.classes.BloodCountData
 import app.android.heartrate.phoneapp.model.classes.BloodCountResponse
+import app.android.heartrate.phoneapp.model.classes.BloodPressureData
 import app.android.heartrate.phoneapp.model.classes.UserId
 import retrofit2.Call
 import retrofit2.http.Body
@@ -75,4 +79,54 @@ interface ApiService {
         @Header("Authorization") bearerToken: String,
         @Path("row_id") rowId: Int
     ): Call<BloodCountData>
+
+    @POST("getBloodCountChartAllData")
+    fun getBloodCountChartAllData(
+        @Header("Authorization") bearerToken: String,
+        @Body bloodCountChartRequest: BloodCountChartRequest
+    ): Call<BloodCountChartResponse>
+
+
+    @POST("getBloodCountChartTodayData")
+    fun getBloodCountChartTodayData(
+        @Header("Authorization") bearerToken: String,
+        @Body bloodCountChartRequest: BloodCountChartRequest
+    ): Call<BloodCountChartResponse>
+
+
+    @POST("getBloodCountChartMonthlyData")
+    fun getBloodCountChartMonthlyData(
+        @Header("Authorization") bearerToken: String,
+        @Body bloodCountChartRequest: BloodCountChartRequest
+    ): Call<BloodCountChartResponse>
+
+
+    @POST("getBloodCountChartYearlyData")
+    fun getBloodCountChartYearlyData(
+        @Header("Authorization") bearerToken: String,
+        @Body bloodCountChartRequest: BloodCountChartRequest
+    ): Call<BloodCountChartResponse>
+
+
+    @POST("getBloodCountChartCustomData")
+    fun getBloodCountChartCustomData(
+        @Header("Authorization") bearerToken: String,
+        @Body bloodCountChartRequest: BloodCountChartRequest
+    ): Call<BloodCountChartResponse>
+
+
+    @POST("saveBloodPressure")
+    fun saveBloodPressure(
+        @Header("Authorization") bearerToken: String,
+        @Body bloodPressureData: BloodPressureData
+    ): Call<BloodPressureResponse>
+
+
+    @GET("getBloodPressureDataByUserId")
+    fun getBloodPressureDataByUserId(
+        @Header("Authorization") bearerToken: String
+    ): Call<BloodPressureResponse>
+
+
+
 }

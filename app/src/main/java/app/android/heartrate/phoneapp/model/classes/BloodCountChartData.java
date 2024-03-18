@@ -1,19 +1,27 @@
 package app.android.heartrate.phoneapp.model.classes;
 
+import com.google.gson.annotations.SerializedName;
+
 public class BloodCountChartData {
     public String date = "";
+    @SerializedName("date_time")
     public String dateTime = "";
     public int day = 0;
+    @SerializedName("hemoglobin")
     public float hemoglobin_value = 0.0f;
     public int hour = 0;
     public int month = 0;
     public String month_string = "";
     public String notes = "";
+
+    @SerializedName("platelets")
     public float platelets_value = 0.0f;
+    @SerializedName("RBC")
     public float rbc_value = 0.0f;
     public int row_id = 0;
     public String time = "";
     public int user_id = 0;
+    @SerializedName("WBC")
     public float wbc_value = 0.0f;
     public int year = 0;
 }

@@ -15,6 +15,7 @@ import android.widget.Button
 import android.widget.ImageView
 import android.widget.Spinner
 import android.widget.TextView
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.DefaultItemAnimator
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -24,11 +25,17 @@ import app.android.heartrate.phoneapp.adapters.BloodPressureDataAdapter
 import app.android.heartrate.phoneapp.adapters.SpinnerProfileAdapter
 import app.android.heartrate.phoneapp.databinding.ActivityBpDataListBinding
 import app.android.heartrate.phoneapp.fragments.base.BaseActivity
+import app.android.heartrate.phoneapp.model.bloodpressure.BloodPressureResponse
+import app.android.heartrate.phoneapp.model.classes.BloodCountResponse
 import app.android.heartrate.phoneapp.model.classes.BloodPressureData
+import app.android.heartrate.phoneapp.retrofit.ApiClient
 import app.android.heartrate.phoneapp.sharedpreferences.SharedPreferences
 import app.android.heartrate.phoneapp.sqlite.SQLiteHealthTracker
 import app.android.heartrate.phoneapp.utils.AppConstants
 import app.android.heartrate.phoneapp.utils.EUGeneralClass
+import retrofit2.Call
+import retrofit2.Callback
+import retrofit2.Response
 
 class BloodPressureDataActivity : BaseActivity() {
     var SQLite_health_tracker: SQLiteHealthTracker? = null
@@ -101,15 +108,12 @@ class BloodPressureDataActivity : BaseActivity() {
     }
 
 
-    private fun SetBloodPressureList() {
+    private fun SetBloodPressureList(bloodPressureData: List<BloodPressureData>?) {
         array_bp_data.clear()
-        val arrayList = SQLite_health_tracker!!.GetBloodPressureDataByUserID(
-                sharedPreferencesUtils!!.getUserId()
-            )
+        val arrayList = bloodPressureData
         this.array_bp_data = arrayList as ArrayList<BloodPressureData>
-        if (arrayList.size > 0) {
+        if (arrayList.isNotEmpty()) {
             txt_no_data!!.visibility = View.GONE
-            Log.e(" arrayList ", " ===> " + arrayList.size)
             val r0: BloodPressureDataAdapter =
                 object : BloodPressureDataAdapter(this, this.array_bp_data) {
                     override fun onBloodPressureAdapterClickItem(i: Int, view: View) {
@@ -117,10 +121,10 @@ class BloodPressureDataActivity : BaseActivity() {
                             AppConstants.selected_bp_data =
                                 array_bp_data[i]
                             AppConstants.is_bp_edit_mode = true
-                            this@BloodPressureDataActivity.AddBloodPressureScreen()
+                            AddBloodPressureScreen()
                         }
                         if (view.id == R.id.row_bp_rel_delete) {
-                            this@BloodPressureDataActivity.ConformDeleteDialog(
+                            ConformDeleteDialog(
                                 array_bp_data[i].row_id,
                                 array_bp_data[i].user_id
                             )
@@ -128,7 +132,7 @@ class BloodPressureDataActivity : BaseActivity() {
                     }
                 }
             this.adapter_bp_data = r0
-            recycler_blood_pressure!!.adapter = r0
+            recycler_blood_pressure.adapter = r0
             return
         }
         txt_no_data!!.visibility = View.VISIBLE
@@ -153,7 +157,7 @@ class BloodPressureDataActivity : BaseActivity() {
                     this@BloodPressureDataActivity,
                     AppConstants.data_deleted_messages
                 )
-                this@BloodPressureDataActivity.SetBloodPressureList()
+                fetchBloodPressureData()
             } catch (e: ActivityNotFoundException) {
                 e.printStackTrace()
             }
@@ -199,7 +203,44 @@ class BloodPressureDataActivity : BaseActivity() {
 
     public override fun onResume() {
         super.onResume()
-        SetBloodPressureList()
+        fetchBloodPressureData()
+    }
+
+
+    private fun fetchBloodPressureData() {
+        val token = sharedPreferencesUtils?.read("token", "")
+        if (!token.isNullOrEmpty()) {
+            val call = ApiClient.apiService.getBloodPressureDataByUserId(token)
+            call.enqueue(object : Callback<BloodPressureResponse> {
+                override fun onResponse(
+                    call: Call<BloodPressureResponse>,
+                    response: Response<BloodPressureResponse>
+                ) {
+                    if (response.isSuccessful) {
+                        val dResponse = response.body()
+
+                        if (dResponse?.code == 1) {
+                            SetBloodPressureList(dResponse.data)
+                        } else {
+                            showMessage(dResponse?.msg ?: "An error occurred ")
+                        }
+                    } else {
+                        showMessage("Unable to fetch blood count")
+                    }
+                }
+
+                override fun onFailure(call: Call<BloodPressureResponse>, t: Throwable) {
+                    showMessage("Unable to fetch blood count, Please try again later")
+                }
+
+            })
+        }
+
+    }
+
+
+    private fun showMessage(message: String) {
+        Toast.makeText(mContext, message, Toast.LENGTH_SHORT).show()
     }
 
 
