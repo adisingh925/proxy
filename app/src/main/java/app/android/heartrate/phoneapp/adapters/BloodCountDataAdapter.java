@@ -2,6 +2,7 @@ package app.android.heartrate.phoneapp.adapters;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
+import android.icu.text.SimpleDateFormat;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -13,8 +14,11 @@ import android.widget.TextView;
 
 import androidx.recyclerview.widget.RecyclerView;
 
+import java.text.ParseException;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
+import java.util.Locale;
 
 import app.android.heartrate.phoneapp.R;
 import app.android.heartrate.phoneapp.model.classes.BloodCountData;
@@ -60,10 +64,22 @@ public abstract class BloodCountDataAdapter extends RecyclerView.Adapter<BloodCo
         } else {
             bloodCountViewHolder.lin_note.setVisibility(View.VISIBLE);
         }
-        bloodCountViewHolder.txt_day.setText(trim);
-        TextView textView = bloodCountViewHolder.txt_month;
-        textView.setText("- "+trim2+" -");
-        bloodCountViewHolder.txt_year.setText(trim3);
+
+        SimpleDateFormat inputFormat = new SimpleDateFormat("yyyy-MM-dd", Locale.ENGLISH);
+        SimpleDateFormat outputFormat = new SimpleDateFormat("dd MMMM, yyyy", Locale.ENGLISH);
+        // Parse the input date string into a Date object
+        Date date = null;
+        try {
+            date = inputFormat.parse(bloodCountData.date);
+            // Format the Date object into the desired output format
+            String formattedDateStr = outputFormat.format(date);
+            bloodCountViewHolder.txt_day.setText(formattedDateStr);
+        } catch (ParseException e) {
+            throw new RuntimeException(e);
+        }
+//        TextView textView = bloodCountViewHolder.txt_month;
+//        textView.setText("- "+trim2+" -");
+//        bloodCountViewHolder.txt_year.setText(trim3);
         bloodCountViewHolder.txt_time.setText(trim4);
         bloodCountViewHolder.txt_rbc.setText(valueOf);
         bloodCountViewHolder.txt_wbc.setText(valueOf2);

@@ -104,8 +104,7 @@ class BloodCountDataActivity : AppCompatActivity() {
                             AppConstants.selected_blood_count_data =
                                 array_blood_count_data[i]
                             AppConstants.is_blood_count_edit_mode = true
-                            showMessage("Work in progress")
-//                            this@BloodCountDataActivity.AddBloodCountScreen()
+                            AddBloodCountScreen()
                         }
                         if (view.id == R.id.row_bc_rel_delete) {
                             this@BloodCountDataActivity.ConformDeleteDialog(
@@ -137,9 +136,6 @@ class BloodCountDataActivity : AppCompatActivity() {
         button.setOnClickListener {
             try {
                 deleteBloodCount(i)
-//                SQLite_health_tracker!!.deleteBloodCountByID(i)
-
-                fetchBloodCountData()
             } catch (e: ActivityNotFoundException) {
                 e.printStackTrace()
             }
@@ -192,7 +188,7 @@ class BloodCountDataActivity : AppCompatActivity() {
         super.onBackPressed()
     }
 
-    private fun fetchBloodCountData(){
+    private fun fetchBloodCountData() {
         val token = sharedPreferencesUtils.read("token", "")
         if (!token.isNullOrEmpty()) {
             val call = ApiClient.apiService.getBloodCountsByUserId(token)
@@ -201,15 +197,15 @@ class BloodCountDataActivity : AppCompatActivity() {
                     call: Call<BloodCountResponse>,
                     response: Response<BloodCountResponse>
                 ) {
-                    if(response.isSuccessful){
+                    if (response.isSuccessful) {
                         val dResponse = response.body()
 
-                        if(dResponse?.code == 1){
+                        if (dResponse?.code == 1) {
                             SetBloodCountDataList(dResponse.data)
-                        }else{
+                        } else {
                             showMessage(dResponse?.msg ?: "An error occurred ")
                         }
-                    }else{
+                    } else {
                         showMessage("Unable to fetch blood count")
                     }
                 }
@@ -223,7 +219,7 @@ class BloodCountDataActivity : AppCompatActivity() {
 
     }
 
-    private fun deleteBloodCount(rowId: Int){
+    private fun deleteBloodCount(rowId: Int) {
         val token = sharedPreferencesUtils.read("token", "")
         if (!token.isNullOrEmpty()) {
             val call = ApiClient.apiService.deleteBloodCount(token, rowId)
@@ -232,12 +228,14 @@ class BloodCountDataActivity : AppCompatActivity() {
                     call: Call<BloodCountData>,
                     response: Response<BloodCountData>
                 ) {
-                    if(response.isSuccessful) {
+                    if (response.isSuccessful) {
                         EUGeneralClass.ShowSuccessToast(
                             this@BloodCountDataActivity,
                             AppConstants.data_deleted_messages
                         )
-                    }else{
+
+                        fetchBloodCountData()
+                    } else {
                         showMessage("Unable to delete")
                     }
                 }
@@ -250,7 +248,7 @@ class BloodCountDataActivity : AppCompatActivity() {
         }
     }
 
-    private fun showMessage(message: String){
-        Toast.makeText(mContext,message,Toast.LENGTH_SHORT).show()
+    private fun showMessage(message: String) {
+        Toast.makeText(mContext, message, Toast.LENGTH_SHORT).show()
     }
 }

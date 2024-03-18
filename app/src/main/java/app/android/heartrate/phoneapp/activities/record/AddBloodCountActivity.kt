@@ -255,8 +255,8 @@ class AddBloodCountActivity() : BaseActivity() {
                 insertData(bloodCountData)
 
             }
-            val i = AppConstants.selected_blood_count_data.row_id
-            bloodCountData.user_id = sharedPreferencesUtils!!.getUserId()
+            bloodCountData.user_id = sharedPreferencesUtils.getUserId()
+            bloodCountData.row_id = AppConstants.selected_blood_count_data.row_id
             bloodCountData.date = trim.trim { it <= ' ' }
             bloodCountData.time = trim2.trim { it <= ' ' }
             bloodCountData.rbc_value = trim3.trim { it <= ' ' }.toFloat()
@@ -271,11 +271,10 @@ class AddBloodCountActivity() : BaseActivity() {
             bloodCountData.year = this.year
             bloodCountData.hour = this.hour
             bloodCountData.minute = this.minute
-            SQLite_health_tracker!!.UpdateBloodCountData(
-                i,
-                sharedPreferencesUtils!!.getUserId(), bloodCountData
-            )
-            EUGeneralClass.ShowSuccessToast(this, "Blood Count Data updated successfully!")
+//            SQLite_health_tracker!!.UpdateBloodCountData(
+//                i,
+//                sharedPreferencesUtils!!.getUserId(), bloodCountData
+//            )
             updateBloodCount(bloodCountData)
         } catch (e: Exception) {
             e.printStackTrace()
@@ -400,11 +399,16 @@ class AddBloodCountActivity() : BaseActivity() {
                     call: Call<BloodCountData>,
                     response: Response<BloodCountData>
                 ) {
-                    onBackPressed()
+                    if(response.isSuccessful) {
+                        showMessage("Blood Count Data updated successfully!")
+                    }else{
+                        showMessage("Unable to update blood count data")
+                    }
                 }
 
                 override fun onFailure(call: Call<BloodCountData>, t: Throwable) {
-                    onBackPressed()
+                    showMessage("An error occurred updating blood count. Try again later")
+
                 }
 
             })
