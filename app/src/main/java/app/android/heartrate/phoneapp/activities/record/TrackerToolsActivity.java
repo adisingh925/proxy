@@ -14,8 +14,10 @@ import android.widget.TextView;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 
-import app.android.heartrate.phoneapp.AdAdmob;
 import app.android.heartrate.phoneapp.R;
+import app.android.heartrate.phoneapp.activities.record.blood_count.BloodCountDataActivity;
+import app.android.heartrate.phoneapp.activities.record.blood_pressure.BloodPressureDataActivity;
+import app.android.heartrate.phoneapp.activities.record.blood_sugar.BloodSugarDataActivity;
 import app.android.heartrate.phoneapp.utils.AppConstants;
 
 

@@ -1,11 +1,10 @@
-package app.android.heartrate.phoneapp.activities.record
+package app.android.heartrate.phoneapp.activities.record.blood_count
 
 import android.app.Dialog
 import android.content.ActivityNotFoundException
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
-import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View
@@ -24,7 +23,6 @@ import app.android.heartrate.phoneapp.adapters.BloodCountDataAdapter
 import app.android.heartrate.phoneapp.databinding.ActivityBloodCountListBinding
 import app.android.heartrate.phoneapp.model.classes.BloodCountData
 import app.android.heartrate.phoneapp.model.classes.BloodCountResponse
-import app.android.heartrate.phoneapp.model.classes.UserId
 import app.android.heartrate.phoneapp.retrofit.ApiClient
 import app.android.heartrate.phoneapp.sharedpreferences.SharedPreferences
 import app.android.heartrate.phoneapp.sqlite.SQLiteHealthTracker

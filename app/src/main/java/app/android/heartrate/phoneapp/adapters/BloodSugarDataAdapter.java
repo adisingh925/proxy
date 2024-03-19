@@ -2,6 +2,7 @@ package app.android.heartrate.phoneapp.adapters;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
+import android.icu.text.SimpleDateFormat;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -14,8 +15,11 @@ import android.widget.TextView;
 
 import androidx.recyclerview.widget.RecyclerView;
 
+import java.text.ParseException;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
+import java.util.Locale;
 
 import app.android.heartrate.phoneapp.R;
 import app.android.heartrate.phoneapp.model.classes.BloodSugarData;
@@ -85,11 +89,25 @@ public abstract class BloodSugarDataAdapter extends RecyclerView.Adapter<BloodSu
             bloodSugarViewHolder.img_arrow_low.setVisibility(View.INVISIBLE);
             bloodSugarViewHolder.img_arrow_diabetes.setVisibility(View.VISIBLE);
         }
-        bloodSugarViewHolder.txt_day.setText(trim);
-        TextView textView = bloodSugarViewHolder.txt_month;
-        textView.setText(trim2 + ",");
-        bloodSugarViewHolder.txt_year.setText(trim3);
-        bloodSugarViewHolder.txt_time.setText(trim4);
+
+        SimpleDateFormat inputFormat = new SimpleDateFormat("yyyy-MM-dd", Locale.ENGLISH);
+        SimpleDateFormat outputFormat = new SimpleDateFormat("dd MMMM, yyyy", Locale.ENGLISH);
+        // Parse the input date string into a Date object
+        Date date = null;
+        try {
+            date = inputFormat.parse(bloodSugarData.date);
+            // Format the Date object into the desired output format
+            String formattedDateStr = outputFormat.format(date);
+            bloodSugarViewHolder.txt_day.setText(formattedDateStr);
+        } catch (ParseException e) {
+            throw new RuntimeException(e);
+        }
+
+//        bloodSugarViewHolder.txt_day.setText(trim);
+//        TextView textView = bloodSugarViewHolder.txt_month;
+//        textView.setText(trim2 + ",");
+//        bloodSugarViewHolder.txt_year.setText(trim3);
+//        bloodSugarViewHolder.txt_time.setText(trim4);
         bloodSugarViewHolder.txt_current_status.setText(trim5);
         bloodSugarViewHolder.txt_sugar_level.setText(valueOf);
         bloodSugarViewHolder.txt_ketone_level.setText(valueOf2);

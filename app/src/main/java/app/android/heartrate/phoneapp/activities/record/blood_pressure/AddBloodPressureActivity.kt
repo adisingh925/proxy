@@ -1,4 +1,4 @@
-package app.android.heartrate.phoneapp.activities.record
+package app.android.heartrate.phoneapp.activities.record.blood_pressure
 
 import android.app.Activity
 import android.app.DatePickerDialog
@@ -25,8 +25,6 @@ import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import app.android.heartrate.phoneapp.R
 import app.android.heartrate.phoneapp.model.bloodpressure.BloodPressureResponse
-import app.android.heartrate.phoneapp.model.classes.BloodCountData
-import app.android.heartrate.phoneapp.model.classes.BloodCountResponse
 import app.android.heartrate.phoneapp.model.classes.BloodPressureData
 import app.android.heartrate.phoneapp.retrofit.ApiClient
 import app.android.heartrate.phoneapp.sharedpreferences.SharedPreferences

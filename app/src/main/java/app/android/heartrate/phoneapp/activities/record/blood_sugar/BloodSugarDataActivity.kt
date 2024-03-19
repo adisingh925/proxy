@@ -1,11 +1,10 @@
-package app.android.heartrate.phoneapp.activities.record
+package app.android.heartrate.phoneapp.activities.record.blood_sugar
 
 import android.app.Dialog
 import android.content.ActivityNotFoundException
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
-import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View
@@ -21,14 +20,12 @@ import androidx.recyclerview.widget.DefaultItemAnimator
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import app.android.heartrate.phoneapp.R
-import app.android.heartrate.phoneapp.adapters.BloodPressureDataAdapter
+import app.android.heartrate.phoneapp.adapters.BloodSugarDataAdapter
 import app.android.heartrate.phoneapp.adapters.SpinnerProfileAdapter
-import app.android.heartrate.phoneapp.databinding.ActivityBpDataListBinding
-import app.android.heartrate.phoneapp.fragments.base.BaseActivity
 import app.android.heartrate.phoneapp.model.bloodpressure.BloodPressureResponse
-import app.android.heartrate.phoneapp.model.classes.BloodCountData
-import app.android.heartrate.phoneapp.model.classes.BloodCountResponse
+import app.android.heartrate.phoneapp.model.bloodsugar.BloodSugarResponse
 import app.android.heartrate.phoneapp.model.classes.BloodPressureData
+import app.android.heartrate.phoneapp.model.classes.BloodSugarData
 import app.android.heartrate.phoneapp.retrofit.ApiClient
 import app.android.heartrate.phoneapp.sharedpreferences.SharedPreferences
 import app.android.heartrate.phoneapp.sqlite.SQLiteHealthTracker
@@ -38,32 +35,37 @@ import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 
-class BloodPressureDataActivity : BaseActivity() {
+class BloodSugarDataActivity : AppCompatActivity() {
     var SQLite_health_tracker: SQLiteHealthTracker? = null
-    var adapter_bp_data: BloodPressureDataAdapter? = null
-    var array_bp_data: ArrayList<BloodPressureData> = ArrayList()
-    private var sharedPreferencesUtils: SharedPreferences? = null
-    private lateinit var img_status_info: ImageView
+
+    var adapter_bs_data: BloodSugarDataAdapter? = null
+    var array_bs_data: ArrayList<BloodSugarData> = ArrayList()
+    var img_status_info: ImageView? = null
+
     var is_user_interact: Boolean = false
     var mContext: Context? = null
     var push_animation: Animation? = null
-    private lateinit var recycler_blood_pressure: RecyclerView
+    private lateinit var recycler_blood_sugar: RecyclerView
+
     var spinner_profile_adapter: SpinnerProfileAdapter? = null
     var spinner_profiles: Spinner? = null
     var txt_no_data: TextView? = null
     var spinner_txt_name: TextView? = null
-    private lateinit var binding: ActivityBpDataListBinding
+
+    private var sharedPreferencesUtils: SharedPreferences? = null
 
 
     public override fun onCreate(bundle: Bundle?) {
         super.onCreate(bundle)
-        binding = ActivityBpDataListBinding.inflate(layoutInflater)
-        setContentView(binding.root)
         SetView()
+
+
         AppConstants.overridePendingTransitionEnter(this)
     }
 
     private fun SetView() {
+        setContentView(R.layout.activity_bs_data_list)
+
         this.mContext = this
         this.push_animation = AnimationUtils.loadAnimation(this, R.anim.view_push)
         setUpActionBar()
@@ -71,19 +73,20 @@ class BloodPressureDataActivity : BaseActivity() {
         val sQLiteHealthTracker = SQLiteHealthTracker(this)
         this.SQLite_health_tracker = sQLiteHealthTracker
         sQLiteHealthTracker.openToWrite()
-        this.spinner_profiles = findViewById(R.id.bp_spinner_profiles)
+        this.spinner_profiles = findViewById(R.id.bs_spinner_profiles)
         this.spinner_txt_name = findViewById(R.id.spinner_txt_name)
-        this.recycler_blood_pressure = findViewById(R.id.bp_rv_data)
-        recycler_blood_pressure.setLayoutManager(LinearLayoutManager(this))
-        recycler_blood_pressure.setItemAnimator(DefaultItemAnimator())
+        this.recycler_blood_sugar = findViewById(R.id.bs_rv_data)
+        recycler_blood_sugar.setLayoutManager(LinearLayoutManager(this))
+        recycler_blood_sugar.setItemAnimator(DefaultItemAnimator())
         val textView = findViewById<TextView>(R.id.txt_no_data)
         this.txt_no_data = textView
         textView.visibility = View.GONE
-        this.img_status_info = findViewById(R.id.bp_img_status_info)
         SetProfileSpinner()
-        img_status_info.setOnClickListener { view ->
-            view.startAnimation(push_animation)
-            StatusInfoDialog()
+        val imageView = findViewById<ImageView>(R.id.bs_img_status_info)
+        this.img_status_info = imageView
+        imageView.setOnClickListener { view ->
+            view.startAnimation(this@BloodSugarDataActivity.push_animation)
+            this@BloodSugarDataActivity.StatusInfoDialog()
         }
     }
 
@@ -91,8 +94,8 @@ class BloodPressureDataActivity : BaseActivity() {
     private fun StatusInfoDialog() {
         val dialog = Dialog(this, R.style.TransparentBackground)
         dialog.requestWindowFeature(1)
-        dialog.setContentView(R.layout.dialog_bp_status_info)
-        val button = dialog.findViewById<Button>(R.id.dialog_bp_status_btn_ok)
+        dialog.setContentView(R.layout.dialog_bs_status_info)
+        val button = dialog.findViewById<Button>(R.id.dialog_bs_status_btn_ok)
         button.text = "OK"
         button.setOnClickListener { dialog.dismiss() }
         dialog.show()
@@ -109,31 +112,33 @@ class BloodPressureDataActivity : BaseActivity() {
     }
 
 
-    private fun SetBloodPressureList(bloodPressureData: List<BloodPressureData>?) {
-        array_bp_data.clear()
-        val arrayList = bloodPressureData
-        this.array_bp_data = arrayList as ArrayList<BloodPressureData>
-        if (arrayList.isNotEmpty()) {
+    private fun SetBloodSugarList(bloodSugarList: List<BloodSugarData>?) {
+        array_bs_data.clear()
+        val arrayList = bloodSugarList
+//            SQLite_health_tracker!!.GetBloodSugarDataByUserID(sharedPreferencesUtils!!.getUserId()) as ArrayList<*>
+        this.array_bs_data = arrayList as ArrayList<BloodSugarData>
+        if (arrayList.size > 0) {
             txt_no_data!!.visibility = View.GONE
-            val r0: BloodPressureDataAdapter =
-                object : BloodPressureDataAdapter(this, this.array_bp_data) {
-                    override fun onBloodPressureAdapterClickItem(i: Int, view: View) {
-                        if (view.id == R.id.row_bp_rel_edit) {
-                            AppConstants.selected_bp_data =
-                                array_bp_data[i]
-                            AppConstants.is_bp_edit_mode = true
-                            AddBloodPressureScreen()
+            val r0: BloodSugarDataAdapter =
+                object : BloodSugarDataAdapter(this, this.array_bs_data) {
+                    override fun onBloodSugarAdapterClickItem(i: Int, view: View) {
+                        if (view.id == R.id.row_bs_rel_edit) {
+
+                            AppConstants.selected_bs_data =
+                                array_bs_data[i]
+                            AppConstants.is_bs_edit_mode = true
+                            this@BloodSugarDataActivity.AddBloodSugarScreen()
                         }
-                        if (view.id == R.id.row_bp_rel_delete) {
+                        if (view.id == R.id.row_bs_rel_delete) {
                             ConformDeleteDialog(
-                                array_bp_data[i].row_id,
-                                array_bp_data[i].user_id
+                                array_bs_data[i].row_id,
+                                array_bs_data[i].user_id
                             )
                         }
                     }
                 }
-            this.adapter_bp_data = r0
-            recycler_blood_pressure.adapter = r0
+            this.adapter_bs_data = r0
+            recycler_blood_sugar!!.adapter = r0
             return
         }
         txt_no_data!!.visibility = View.VISIBLE
@@ -153,31 +158,40 @@ class BloodPressureDataActivity : BaseActivity() {
         button2.text = "Cancel"
         button.setOnClickListener {
             try {
-                deleteBloodPressure(i)
+
+
+                deleteData(i)
+//                SQLite_health_tracker!!.deleteBloodSugarByID(i)
+//                EUGeneralClass.ShowSuccessToast(
+//                    this@BloodSugarDataActivity,
+//                    AppConstants.data_deleted_messages
+//                )
+//
+//                this@BloodSugarDataActivity.SetBloodSugarList()
             } catch (e: ActivityNotFoundException) {
                 e.printStackTrace()
             }
             dialog.dismiss()
         }
-        button2.setOnClickListener { view: View? -> dialog.dismiss() }
+        button2.setOnClickListener { dialog.dismiss() }
         dialog.show()
     }
 
 
-    private fun AddBloodPressureScreen() {
-        startActivity(Intent(this, AddBloodPressureActivity::class.java))
+    private fun AddBloodSugarScreen() {
+        startActivity(Intent(this, AddBloodSugarActivity::class.java))
     }
 
     private fun setUpActionBar() {
         (findViewById<View>(R.id.toolbar_txt_title_1) as TextView).text =
             resources.getString(R.string.lbl_header_blood)
         (findViewById<View>(R.id.toolbar_txt_title_2) as TextView).text =
-            resources.getString(R.string.lbl_header_pressure_data)
+            resources.getString(R.string.lbl_header_sugar_data)
         findViewById<View>(R.id.tool_bar_rel_add_user).setOnClickListener {
-            AppConstants.is_bp_edit_mode = false
-            this@BloodPressureDataActivity.AddBloodPressureScreen()
+            AppConstants.is_bs_edit_mode = false
+            this@BloodSugarDataActivity.AddBloodSugarScreen()
         }
-        findViewById<View>(R.id.toolbar_rel_back).setOnClickListener { this@BloodPressureDataActivity.onBackPressed() }
+        findViewById<View>(R.id.toolbar_rel_back).setOnClickListener { this@BloodSugarDataActivity.onBackPressed() }
         setSupportActionBar(findViewById(R.id.toolbar_actionbar))
         val supportActionBar = supportActionBar
         supportActionBar!!.setDisplayShowTitleEnabled(false)
@@ -199,24 +213,28 @@ class BloodPressureDataActivity : BaseActivity() {
 
     public override fun onResume() {
         super.onResume()
-        fetchBloodPressureData()
+        fetchData()
     }
 
 
-    private fun fetchBloodPressureData() {
+    override fun onBackPressed() {
+        super.onBackPressed()
+    }
+
+    private fun fetchData() {
         val token = sharedPreferencesUtils?.read("token", "")
         if (!token.isNullOrEmpty()) {
-            val call = ApiClient.apiService.getBloodPressureDataByUserId(token)
-            call.enqueue(object : Callback<BloodPressureResponse> {
+            val call = ApiClient.apiService.getBloodSugarsByUserId(token)
+            call.enqueue(object : Callback<BloodSugarResponse> {
                 override fun onResponse(
-                    call: Call<BloodPressureResponse>,
-                    response: Response<BloodPressureResponse>
+                    call: Call<BloodSugarResponse>,
+                    response: Response<BloodSugarResponse>
                 ) {
                     if (response.isSuccessful) {
                         val dResponse = response.body()
 
                         if (dResponse?.code == 1) {
-                            SetBloodPressureList(dResponse.data)
+                            SetBloodSugarList(dResponse.data)
                         } else {
                             showMessage(dResponse?.msg ?: "An error occurred ")
                         }
@@ -225,7 +243,7 @@ class BloodPressureDataActivity : BaseActivity() {
                     }
                 }
 
-                override fun onFailure(call: Call<BloodPressureResponse>, t: Throwable) {
+                override fun onFailure(call: Call<BloodSugarResponse>, t: Throwable) {
                     showMessage("Unable to fetch blood count, Please try again later")
                 }
 
@@ -235,28 +253,27 @@ class BloodPressureDataActivity : BaseActivity() {
     }
 
 
-    private fun deleteBloodPressure(rowId: Int) {
+    private fun deleteData(rowId: Int) {
         val token = sharedPreferencesUtils?.read("token", "")
         if (!token.isNullOrEmpty()) {
-            val call = ApiClient.apiService.deleteBloodPressure(token, rowId)
-            call.enqueue(object : Callback<BloodPressureData> {
+            val call = ApiClient.apiService.deleteBloodSugar(token, rowId)
+            call.enqueue(object : Callback<BloodSugarData> {
                 override fun onResponse(
-                    call: Call<BloodPressureData>,
-                    response: Response<BloodPressureData>
+                    call: Call<BloodSugarData>,
+                    response: Response<BloodSugarData>
                 ) {
                     if (response.isSuccessful) {
                         EUGeneralClass.ShowSuccessToast(
                             mContext,
                             AppConstants.data_deleted_messages
                         )
-
-                        fetchBloodPressureData()
+                        fetchData()
                     } else {
                         showMessage("Unable to delete")
                     }
                 }
 
-                override fun onFailure(call: Call<BloodPressureData>, t: Throwable) {
+                override fun onFailure(call: Call<BloodSugarData>, t: Throwable) {
                     showMessage("Unable to delete this blood pressure, Please try again later ..")
                 }
 
@@ -264,14 +281,9 @@ class BloodPressureDataActivity : BaseActivity() {
         }
     }
 
-
-
     private fun showMessage(message: String) {
         Toast.makeText(mContext, message, Toast.LENGTH_SHORT).show()
     }
 
 
-    override fun onBackPressed() {
-        super.onBackPressed()
-    }
 }

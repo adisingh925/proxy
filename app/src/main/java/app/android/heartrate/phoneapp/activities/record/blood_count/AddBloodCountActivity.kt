@@ -1,4 +1,4 @@
-package app.android.heartrate.phoneapp.activities.record
+package app.android.heartrate.phoneapp.activities.record.blood_count
 
 import android.annotation.SuppressLint
 import android.app.DatePickerDialog
@@ -251,7 +251,7 @@ class AddBloodCountActivity() : BaseActivity() {
                 bloodCountData.hour = this.hour
                 bloodCountData.minute = this.minute
 //                SQLite_health_tracker!!.InsertBloodCountData(bloodCountData)
-                EUGeneralClass.ShowSuccessToast(this, "Blood Count Data saved successfully!")
+//                EUGeneralClass.ShowSuccessToast(this, "Blood Count Data saved successfully!")
                 insertData(bloodCountData)
 
             }

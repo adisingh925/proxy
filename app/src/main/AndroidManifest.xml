@@ -174,23 +174,23 @@
             android:exported="false" />
 
         <activity
-            android:name=".activities.record.BloodCountDataActivity"
+            android:name=".activities.record.blood_count.BloodCountDataActivity"
             android:exported="false"
             />
         <activity
-            android:name=".activities.record.AddBloodCountActivity"
+            android:name=".activities.record.blood_count.AddBloodCountActivity"
             android:exported="false" />
         <activity
-            android:name=".activities.record.BloodPressureDataActivity"
+            android:name=".activities.record.blood_pressure.BloodPressureDataActivity"
             android:exported="false" />
         <activity
-            android:name=".activities.record.AddBloodPressureActivity"
+            android:name=".activities.record.blood_pressure.AddBloodPressureActivity"
             android:exported="false" />
         <activity
-            android:name=".activities.record.BloodSugarDataActivity"
+            android:name=".activities.record.blood_sugar.BloodSugarDataActivity"
             android:exported="false" />
         <activity
-            android:name=".activities.record.AddBloodSugarActivity"
+            android:name=".activities.record.blood_sugar.AddBloodSugarActivity"
             android:exported="false" />
         <activity
             android:name=".activities.record.BMIDataActivity"
