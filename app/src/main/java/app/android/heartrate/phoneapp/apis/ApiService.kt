@@ -18,6 +18,10 @@ import app.android.heartrate.phoneapp.model.classes.BloodPressureData
 import app.android.heartrate.phoneapp.model.bloodpressure.BloodPressureChartRequest
 import app.android.heartrate.phoneapp.model.bloodpressure.BloodPressureChartResponse
 
+import app.android.heartrate.phoneapp.model.bloodsugar.BloodSugarResponse
+import app.android.heartrate.phoneapp.model.classes.BloodSugarData
+import app.android.heartrate.phoneapp.model.bloodsugar.BloodSugarChartRequest
+import app.android.heartrate.phoneapp.model.bloodsugar.BloodSugarChartResponse
 
 import retrofit2.Call
 import retrofit2.http.Body
@@ -177,6 +181,63 @@ interface ApiService {
         @Header("Authorization") bearerToken: String,
         @Body bloodPressureChartRequest: BloodPressureChartRequest
     ): Call<BloodPressureChartResponse>
+
+    @POST("saveBloodSugar")
+    fun postBloodSugar(
+        @Header("Authorization") bearerToken: String,
+        @Body bloodSugarData: BloodSugarData
+    ): Call<BloodSugarResponse>
+
+    @GET("getBloodSugarsByUserId")
+    fun getBloodSugarsByUserId(
+        @Header("Authorization") bearerToken: String,
+    ): Call<BloodSugarResponse>
+
+    @POST("updateBloodSugar")
+    fun updateBloodSugar(
+        @Header("Authorization") bearerToken: String,
+        @Body bloodSugarData: BloodSugarData
+    ): Call<BloodSugarData>
+
+    @DELETE("deleteBloodSugarByID/{row_id}")
+    fun deleteBloodSugar(
+        @Header("Authorization") bearerToken: String,
+        @Path("row_id") rowId: Int
+    ): Call<BloodSugarData>
+
+    @POST("getBloodSugarChartAllData")
+    fun getBloodSugarChartAllData(
+        @Header("Authorization") bearerToken: String,
+        @Body bloodSugarChartRequest: BloodSugarChartRequest
+    ): Call<BloodSugarChartResponse>
+
+
+    @POST("getBloodSugarChartTodayData")
+    fun getBloodSugarChartTodayData(
+        @Header("Authorization") bearerToken: String,
+        @Body bloodSugarChartRequest: BloodSugarChartRequest
+    ): Call<BloodSugarChartResponse>
+
+
+    @POST("getBloodSugarChartMonthlyData")
+    fun getBloodSugarChartMonthlyData(
+        @Header("Authorization") bearerToken: String,
+        @Body bloodSugarChartRequest: BloodSugarChartRequest
+    ): Call<BloodSugarChartResponse>
+
+
+    @POST("getBloodSugarChartYearlyData")
+    fun getBloodSugarChartYearlyData(
+        @Header("Authorization") bearerToken: String,
+        @Body bloodSugarChartRequest: BloodSugarChartRequest
+    ): Call<BloodSugarChartResponse>
+
+
+    @POST("getBloodSugarChartCustomData")
+    fun getBloodSugarChartCustomData(
+        @Header("Authorization") bearerToken: String,
+        @Body bloodSugarChartRequest: BloodSugarChartRequest
+    ): Call<BloodSugarChartResponse>
 
 
 
