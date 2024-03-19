@@ -365,12 +365,14 @@ class AddBloodPressureActivity() : AppCompatActivity() {
             bloodPressureData.month = this.month
             bloodPressureData.year = this.year
             bloodPressureData.hour = this.hour
-            SQLite_health_tracker!!.UpdateBloodPressureData(
-                i,
-                sharedPreferencesUtils!!.getUserId(), bloodPressureData
-            )
-            EUGeneralClass.ShowSuccessToast(this, AppConstants.data_updated_messages)
-            onBackPressed()
+            bloodPressureData.row_id = i
+            updateBloodPressure(bloodPressureData)
+//            SQLite_health_tracker!!.UpdateBloodPressureData(
+//                i,
+//                sharedPreferencesUtils!!.getUserId(), bloodPressureData
+//            )
+//            EUGeneralClass.ShowSuccessToast(this, AppConstants.data_updated_messages)
+//            onBackPressed()
         } catch (e: Exception) {
             e.printStackTrace()
         }
@@ -524,6 +526,33 @@ class AddBloodPressureActivity() : AppCompatActivity() {
             })
         }
     }
+
+    private fun updateBloodPressure(bloodPressureData: BloodPressureData) {
+        val token = sharedPreferencesUtils.read("token", "")
+        if (!token.isNullOrEmpty()) {
+            val call = ApiClient.apiService.updateBloodPressure(token, bloodPressureData)
+            call.enqueue(object : Callback<BloodPressureData> {
+                override fun onResponse(
+                    call: Call<BloodPressureData>,
+                    response: Response<BloodPressureData>
+                ) {
+                    if(response.isSuccessful) {
+                        showMessage("Updated successfully!")
+                        onBackPressed()
+                    }else{
+                        showMessage("Unable to update")
+                    }
+                }
+
+                override fun onFailure(call: Call<BloodPressureData>, t: Throwable) {
+                    showMessage("An error occurred updating. Try again later")
+                }
+
+            })
+        }
+
+    }
+
 
     private fun showMessage(message: String){
         Toast.makeText(mContext,message, Toast.LENGTH_SHORT).show()

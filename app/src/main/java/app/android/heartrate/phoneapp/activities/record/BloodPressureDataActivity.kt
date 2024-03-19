@@ -26,6 +26,7 @@ import app.android.heartrate.phoneapp.adapters.SpinnerProfileAdapter
 import app.android.heartrate.phoneapp.databinding.ActivityBpDataListBinding
 import app.android.heartrate.phoneapp.fragments.base.BaseActivity
 import app.android.heartrate.phoneapp.model.bloodpressure.BloodPressureResponse
+import app.android.heartrate.phoneapp.model.classes.BloodCountData
 import app.android.heartrate.phoneapp.model.classes.BloodCountResponse
 import app.android.heartrate.phoneapp.model.classes.BloodPressureData
 import app.android.heartrate.phoneapp.retrofit.ApiClient
@@ -152,12 +153,7 @@ class BloodPressureDataActivity : BaseActivity() {
         button2.text = "Cancel"
         button.setOnClickListener {
             try {
-                SQLite_health_tracker!!.deleteBloodPressureByID(i)
-                EUGeneralClass.ShowSuccessToast(
-                    this@BloodPressureDataActivity,
-                    AppConstants.data_deleted_messages
-                )
-                fetchBloodPressureData()
+                deleteBloodPressure(i)
             } catch (e: ActivityNotFoundException) {
                 e.printStackTrace()
             }
@@ -237,6 +233,37 @@ class BloodPressureDataActivity : BaseActivity() {
         }
 
     }
+
+
+    private fun deleteBloodPressure(rowId: Int) {
+        val token = sharedPreferencesUtils?.read("token", "")
+        if (!token.isNullOrEmpty()) {
+            val call = ApiClient.apiService.deleteBloodPressure(token, rowId)
+            call.enqueue(object : Callback<BloodPressureData> {
+                override fun onResponse(
+                    call: Call<BloodPressureData>,
+                    response: Response<BloodPressureData>
+                ) {
+                    if (response.isSuccessful) {
+                        EUGeneralClass.ShowSuccessToast(
+                            mContext,
+                            AppConstants.data_deleted_messages
+                        )
+
+                        fetchBloodPressureData()
+                    } else {
+                        showMessage("Unable to delete")
+                    }
+                }
+
+                override fun onFailure(call: Call<BloodPressureData>, t: Throwable) {
+                    showMessage("Unable to delete this blood pressure, Please try again later ..")
+                }
+
+            })
+        }
+    }
+
 
 
     private fun showMessage(message: String) {

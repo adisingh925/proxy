@@ -136,7 +136,7 @@ interface ApiService {
         @Header("Authorization") bearerToken: String
     ): Call<BloodPressureResponse>
 
-    @POST("updateBloodPressure")
+    @POST("updateBloodPressureData")
     fun updateBloodPressure(
         @Header("Authorization") bearerToken: String,
         @Body bloodPressureData: BloodPressureData
