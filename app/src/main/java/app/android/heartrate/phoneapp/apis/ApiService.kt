@@ -7,13 +7,18 @@ import app.android.heartrate.phoneapp.model.LoginSuccessResponse
 import app.android.heartrate.phoneapp.model.SignupResponse
 import app.android.heartrate.phoneapp.model.UpdateProfileRequest
 import app.android.heartrate.phoneapp.model.UpdateRoleRequest
+
+import app.android.heartrate.phoneapp.model.classes.BloodCountResponse
+import app.android.heartrate.phoneapp.model.classes.BloodCountData
 import app.android.heartrate.phoneapp.model.bloodcount.chart.BloodCountChartRequest
 import app.android.heartrate.phoneapp.model.bloodcount.chart.BloodCountChartResponse
+
 import app.android.heartrate.phoneapp.model.bloodpressure.BloodPressureResponse
-import app.android.heartrate.phoneapp.model.classes.BloodCountData
-import app.android.heartrate.phoneapp.model.classes.BloodCountResponse
 import app.android.heartrate.phoneapp.model.classes.BloodPressureData
-import app.android.heartrate.phoneapp.model.classes.UserId
+import app.android.heartrate.phoneapp.model.bloodpressure.BloodPressureChartRequest
+import app.android.heartrate.phoneapp.model.bloodpressure.BloodPressureChartResponse
+
+
 import retrofit2.Call
 import retrofit2.http.Body
 import retrofit2.http.DELETE
@@ -126,6 +131,52 @@ interface ApiService {
     fun getBloodPressureDataByUserId(
         @Header("Authorization") bearerToken: String
     ): Call<BloodPressureResponse>
+
+    @POST("updateBloodPressure")
+    fun updateBloodPressure(
+        @Header("Authorization") bearerToken: String,
+        @Body bloodPressureData: BloodPressureData
+    ): Call<BloodPressureData>
+
+    @DELETE("deleteBloodPressureByID/{row_id}")
+    fun deleteBloodPressure(
+        @Header("Authorization") bearerToken: String,
+        @Path("row_id") rowId: Int
+    ): Call<BloodPressureData>
+
+    @POST("getBloodPressureChartAllData")
+    fun getBloodPressureChartAllData(
+        @Header("Authorization") bearerToken: String,
+        @Body bloodPressureChartRequest: BloodPressureChartRequest
+    ): Call<BloodPressureChartResponse>
+
+
+    @POST("getBloodPressureChartTodayData")
+    fun getBloodPressureChartTodayData(
+        @Header("Authorization") bearerToken: String,
+        @Body bloodPressureChartRequest: BloodPressureChartRequest
+    ): Call<BloodPressureChartResponse>
+
+
+    @POST("getBloodPressureChartMonthlyData")
+    fun getBloodPressureChartMonthlyData(
+        @Header("Authorization") bearerToken: String,
+        @Body bloodPressureChartRequest: BloodPressureChartRequest
+    ): Call<BloodPressureChartResponse>
+
+
+    @POST("getBloodPressureChartYearlyData")
+    fun getBloodPressureChartYearlyData(
+        @Header("Authorization") bearerToken: String,
+        @Body bloodPressureChartRequest: BloodPressureChartRequest
+    ): Call<BloodPressureChartResponse>
+
+
+    @POST("getBloodPressureChartCustomData")
+    fun getBloodPressureChartCustomData(
+        @Header("Authorization") bearerToken: String,
+        @Body bloodPressureChartRequest: BloodPressureChartRequest
+    ): Call<BloodPressureChartResponse>
 
 
 
