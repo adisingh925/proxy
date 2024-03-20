@@ -170,7 +170,7 @@
             android:name=".activities.record.TrackerToolsActivity"
             android:exported="false" />
         <activity
-            android:name=".activities.record.TrackerStatisticsActivity"
+            android:name=".activities.record.statistics.TrackerStatisticsActivity"
             android:exported="false" />
 
         <activity

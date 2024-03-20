@@ -66,7 +66,7 @@ public class AppConstants {
     public static int default_hr_age_value = 25;
     public static int default_hr_value = 70;
     public static int default_pulse_rate_value = 60;
-    public static int default_sugar_level_value = 150;
+    public static int default_sugar_level_value = 0;
     public static int default_systolic_value = 150;
     public static int default_weight_value = 40;
     public static String error_field_require = "This field is required!";
