@@ -1,4 +1,4 @@
-package app.android.heartrate.phoneapp.activities.record;
+package app.android.heartrate.phoneapp.activities.record.statistics;
 
 import android.content.Context;
 import android.content.Intent;
@@ -22,6 +22,8 @@ import app.android.heartrate.phoneapp.activities.record.bmi.BMIDataActivity;
 import app.android.heartrate.phoneapp.activities.record.body_temp.BodyTempDataActivity;
 import app.android.heartrate.phoneapp.activities.record.cholestrol.CholesterolDataActivity;
 import app.android.heartrate.phoneapp.activities.record.heart_rate.HeartRateDataActivity;
+import app.android.heartrate.phoneapp.activities.record.medicine.MedicineDataActivity;
+import app.android.heartrate.phoneapp.activities.record.weight.WeightDataActivity;
 import app.android.heartrate.phoneapp.utils.AppConstants;
 
 

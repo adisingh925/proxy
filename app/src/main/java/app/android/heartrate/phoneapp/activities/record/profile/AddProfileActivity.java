@@ -1,4 +1,4 @@
-package app.android.heartrate.phoneapp.activities.record;
+package app.android.heartrate.phoneapp.activities.record.profile;
 
 import android.annotation.SuppressLint;
 import android.app.Activity;
@@ -46,7 +46,6 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Calendar;
 
-import app.android.heartrate.phoneapp.AdAdmob;
 import app.android.heartrate.phoneapp.R;
 import app.android.heartrate.phoneapp.model.classes.UserProfileData;
 import app.android.heartrate.phoneapp.sqlite.SQLiteHealthTracker;
