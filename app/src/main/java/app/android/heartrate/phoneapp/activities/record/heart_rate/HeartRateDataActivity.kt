@@ -13,6 +13,7 @@ import android.view.animation.AnimationUtils
 import android.widget.Button
 import android.widget.Spinner
 import android.widget.TextView
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.DefaultItemAnimator
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -21,11 +22,18 @@ import app.android.heartrate.phoneapp.R
 import app.android.heartrate.phoneapp.activities.record.heart_rate.AddHeartRateActivity
 import app.android.heartrate.phoneapp.adapters.HeartRateDataAdapter
 import app.android.heartrate.phoneapp.adapters.SpinnerProfileAdapter
+import app.android.heartrate.phoneapp.model.cholesterol.CholesterolResponse
+import app.android.heartrate.phoneapp.model.classes.CholesterolData
 import app.android.heartrate.phoneapp.model.classes.HeartRateData
+import app.android.heartrate.phoneapp.model.heartrate.HeartRateResponse
+import app.android.heartrate.phoneapp.retrofit.ApiClient
 import app.android.heartrate.phoneapp.sharedpreferences.SharedPreferences
 import app.android.heartrate.phoneapp.sqlite.SQLiteHealthTracker
 import app.android.heartrate.phoneapp.utils.AppConstants
 import app.android.heartrate.phoneapp.utils.EUGeneralClass
+import retrofit2.Call
+import retrofit2.Callback
+import retrofit2.Response
 
 class HeartRateDataActivity : AppCompatActivity() {
     var SQLite_health_tracker: SQLiteHealthTracker? = null
@@ -43,7 +51,7 @@ class HeartRateDataActivity : AppCompatActivity() {
     var txt_no_data: TextView? = null
     var spinner_txt_name: TextView? = null
 
-    var sharedPreferencesUtils: SharedPreferences? = null
+    private lateinit var sharedPreferencesUtils: SharedPreferences
 
     public override fun onCreate(bundle: Bundle?) {
         super.onCreate(bundle)
@@ -85,10 +93,10 @@ class HeartRateDataActivity : AppCompatActivity() {
     }
 
 
-    private fun SetHeartRateDataList() {
+    private fun SetHeartRateDataList(data: List<HeartRateData>?) {
         array_heart_rate_data.clear()
-        val arrayList =
-            SQLite_health_tracker!!.GetHeartRateDataByUserID(sharedPreferencesUtils!!.getUserId()) as ArrayList<HeartRateData>
+        val arrayList = data as ArrayList<HeartRateData>
+            //SQLite_health_tracker!!.GetHeartRateDataByUserID(sharedPreferencesUtils!!.getUserId()) as ArrayList<HeartRateData>
         this.array_heart_rate_data = arrayList
         if (arrayList.size > 0) {
             txt_no_data!!.visibility = View.GONE
@@ -130,12 +138,13 @@ class HeartRateDataActivity : AppCompatActivity() {
         button2.text = "Cancel"
         button.setOnClickListener {
             try {
-                SQLite_health_tracker!!.deleteHeartRateByID(i)
-                EUGeneralClass.ShowSuccessToast(
-                    this@HeartRateDataActivity,
-                    AppConstants.data_deleted_messages
-                )
-                this@HeartRateDataActivity.SetHeartRateDataList()
+                deleteData(i)
+//                SQLite_health_tracker!!.deleteHeartRateByID(i)
+//                EUGeneralClass.ShowSuccessToast(
+//                    this@HeartRateDataActivity,
+//                    AppConstants.data_deleted_messages
+//                )
+//                SetHeartRateDataList()
             } catch (e: ActivityNotFoundException) {
                 e.printStackTrace()
             }
@@ -181,11 +190,77 @@ class HeartRateDataActivity : AppCompatActivity() {
 
     public override fun onResume() {
         super.onResume()
-        SetHeartRateDataList()
+        fetchData()
     }
 
 
     override fun onBackPressed() {
         super.onBackPressed()
+    }
+
+
+
+    private fun fetchData() {
+        val token = sharedPreferencesUtils?.read("token", "")
+        if (!token.isNullOrEmpty()) {
+            val call = ApiClient.apiService.getHeartRatesByUserId(token)
+            call.enqueue(object : Callback<HeartRateResponse> {
+                override fun onResponse(
+                    call: Call<HeartRateResponse>,
+                    response: Response<HeartRateResponse>
+                ) {
+                    if (response.isSuccessful) {
+                        val dResponse = response.body()
+
+                        if (dResponse?.code == 1) {
+                            SetHeartRateDataList(dResponse.data)
+                        } else {
+                            showMessage(dResponse?.msg ?: "An error occurred ")
+                        }
+                    } else {
+                        showMessage("Unable to fetch blood count")
+                    }
+                }
+
+                override fun onFailure(call: Call<HeartRateResponse>, t: Throwable) {
+                    showMessage("Unable to fetch, Please try again later")
+                }
+
+            })
+        }
+
+    }
+
+
+    private fun deleteData(rowId: Int) {
+        val token = sharedPreferencesUtils.read("token", "")
+        if (!token.isNullOrEmpty()) {
+            val call = ApiClient.apiService.deleteHeartRate(token, rowId)
+            call.enqueue(object : Callback<HeartRateData> {
+                override fun onResponse(
+                    call: Call<HeartRateData>,
+                    response: Response<HeartRateData>
+                ) {
+                    if (response.isSuccessful) {
+                        EUGeneralClass.ShowSuccessToast(
+                            mContext,
+                            AppConstants.data_deleted_messages
+                        )
+                        fetchData()
+                    } else {
+                        showMessage("Unable to delete")
+                    }
+                }
+
+                override fun onFailure(call: Call<HeartRateData>, t: Throwable) {
+                    showMessage("Unable to delete, Please try again later ..")
+                }
+
+            })
+        }
+    }
+
+    private fun showMessage(message: String) {
+        Toast.makeText(mContext, message, Toast.LENGTH_SHORT).show()
     }
 }

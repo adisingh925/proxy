@@ -321,7 +321,7 @@ interface ApiService {
     fun updateHeartRate(
         @Header("Authorization") bearerToken: String,
         @Body heartRateData: HeartRateData
-    ): Call<HeartRateData>
+    ): Call<HeartRateResponse>
 
     @DELETE("deleteHeartRateByID/{row_id}")
     fun deleteHeartRate(
