@@ -949,7 +949,7 @@ public class TrackerStatisticsActivity extends AppCompatActivity {
         ArrayList arrayList2 = new ArrayList();
         for (int i4 = 0; i4 < arrayList.size(); i4++) {
             try {
-                arrayList2.add(new SimpleDateFormat("HH:mm").format(new SimpleDateFormat("dd/MM/yyyy hh:mm a").parse(String.valueOf(arrayList.get(i4).dateTime))).trim());
+                arrayList2.add(new SimpleDateFormat("HH:mm").format(new SimpleDateFormat("yyyy-MM-dd hh:mm a").parse(String.valueOf(arrayList.get(i4).dateTime))).trim());
             } catch (ParseException e) {
                 e.printStackTrace();
             }
@@ -1036,7 +1036,7 @@ public class TrackerStatisticsActivity extends AppCompatActivity {
         ArrayList arrayList2 = new ArrayList();
         for (int i3 = 0; i3 < arrayList.size(); i3++) {
             try {
-                Date parse = new SimpleDateFormat("dd/MM/yyyy hh:mm a").parse(String.valueOf(arrayList.get(i3).dateTime));
+                Date parse = new SimpleDateFormat("yyyy-MM-dd hh:mm a").parse(String.valueOf(arrayList.get(i3).dateTime));
                 SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd-MM-yy");
                 SimpleDateFormat simpleDateFormat2 = new SimpleDateFormat("HH:mm");
                 String trim = simpleDateFormat.format(parse).trim();
@@ -1130,8 +1130,8 @@ public class TrackerStatisticsActivity extends AppCompatActivity {
         ArrayList arrayList2 = new ArrayList();
         for (int i3 = 0; i3 < arrayList.size(); i3++) {
             try {
-                Date parse = new SimpleDateFormat("dd/MM/yyyy hh:mm a").parse(String.valueOf(arrayList.get(i3).dateTime));
-                SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd-MM-yy");
+                Date parse = new SimpleDateFormat("yyyy-MM-dd hh:mm a").parse(String.valueOf(arrayList.get(i3).dateTime));
+                SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd");
                 SimpleDateFormat simpleDateFormat2 = new SimpleDateFormat("HH:mm");
                 String trim = simpleDateFormat.format(parse).trim();
                 simpleDateFormat2.format(parse).trim();
@@ -1218,8 +1218,8 @@ public class TrackerStatisticsActivity extends AppCompatActivity {
         ArrayList arrayList2 = new ArrayList();
         for (int i2 = 0; i2 < arrayList.size(); i2++) {
             try {
-                Date parse = new SimpleDateFormat("dd/MM/yyyy hh:mm a").parse(String.valueOf(arrayList.get(i2).dateTime));
-                SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd-MM-yyyy");
+                Date parse = new SimpleDateFormat("yyyy-MM-dd hh:mm a").parse(String.valueOf(arrayList.get(i2).dateTime));
+                SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd");
                 SimpleDateFormat simpleDateFormat2 = new SimpleDateFormat("HH:mm a");
                 String trim = simpleDateFormat.format(parse).trim();
                 simpleDateFormat2.format(parse).trim();
@@ -1424,7 +1424,7 @@ public class TrackerStatisticsActivity extends AppCompatActivity {
         ArrayList arrayList2 = new ArrayList();
         for (int i4 = 0; i4 < arrayList.size(); i4++) {
             try {
-                arrayList2.add(new SimpleDateFormat("HH:mm").format(new SimpleDateFormat("dd/MM/yyyy hh:mm a").parse(String.valueOf(arrayList.get(i4).dateTime))).trim());
+                arrayList2.add(new SimpleDateFormat("HH:mm").format(new SimpleDateFormat("yyyy-MM-dd hh:mm a").parse(String.valueOf(arrayList.get(i4).dateTime))).trim());
             } catch (ParseException e) {
                 e.printStackTrace();
             }
@@ -1504,8 +1504,8 @@ public class TrackerStatisticsActivity extends AppCompatActivity {
         ArrayList arrayList2 = new ArrayList();
         for (int i3 = 0; i3 < arrayList.size(); i3++) {
             try {
-                Date parse = new SimpleDateFormat("dd/MM/yyyy hh:mm a").parse(String.valueOf(arrayList.get(i3).dateTime));
-                SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd-MM-yy");
+                Date parse = new SimpleDateFormat("yyyy-MM-dd hh:mm a").parse(String.valueOf(arrayList.get(i3).dateTime));
+                SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd");
                 SimpleDateFormat simpleDateFormat2 = new SimpleDateFormat("HH:mm");
                 String trim = simpleDateFormat.format(parse).trim();
                 String trim2 = simpleDateFormat2.format(parse).trim();
@@ -1590,8 +1590,8 @@ public class TrackerStatisticsActivity extends AppCompatActivity {
         ArrayList arrayList2 = new ArrayList();
         for (int i3 = 0; i3 < arrayList.size(); i3++) {
             try {
-                Date parse = new SimpleDateFormat("dd/MM/yyyy hh:mm a").parse(String.valueOf(arrayList.get(i3).dateTime));
-                SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd-MM-yy");
+                Date parse = new SimpleDateFormat("yyyy-MM-dd hh:mm a").parse(String.valueOf(arrayList.get(i3).dateTime));
+                SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd");
                 SimpleDateFormat simpleDateFormat2 = new SimpleDateFormat("HH:mm");
                 String trim = simpleDateFormat.format(parse).trim();
                 simpleDateFormat2.format(parse).trim();
@@ -4599,14 +4599,6 @@ public class TrackerStatisticsActivity extends AppCompatActivity {
         super.onBackPressed();
 
     }
-
-
-    private void BackScreen() {
-
-        finish();
-        AppConstants.overridePendingTransitionExit(this);
-    }
-
 
     private void getBloodCountChartAllData(BloodCountChartRequest bloodCountChartRequest) {
         String token = sharedPreferencesUtils.read("token", "");
