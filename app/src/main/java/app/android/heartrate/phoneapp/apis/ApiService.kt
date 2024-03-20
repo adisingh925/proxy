@@ -28,6 +28,11 @@ import app.android.heartrate.phoneapp.model.classes.CholesterolData
 import app.android.heartrate.phoneapp.model.cholesterol.CholesterolChartRequest
 import app.android.heartrate.phoneapp.model.cholesterol.CholesterolChartResponse
 
+import app.android.heartrate.phoneapp.model.heartrate.HeartRateResponse
+import app.android.heartrate.phoneapp.model.classes.HeartRateData
+import app.android.heartrate.phoneapp.model.heartrate.HeartRateChartRequest
+import app.android.heartrate.phoneapp.model.heartrate.HeartRateChartResponse
+
 import retrofit2.Call
 import retrofit2.http.Body
 import retrofit2.http.DELETE
@@ -247,7 +252,7 @@ interface ApiService {
     @POST("saveCholesterol")
     fun postCholesterol(
         @Header("Authorization") bearerToken: String,
-        @Body bloodSugarData: CholesterolData
+        @Body cholesterolData: CholesterolData
     ): Call<CholesterolResponse>
 
     @GET("getCholesterolsByUserId")
@@ -258,7 +263,7 @@ interface ApiService {
     @POST("updateCholesterol")
     fun updateCholesterol(
         @Header("Authorization") bearerToken: String,
-        @Body bloodSugarData: CholesterolData
+        @Body cholesterolData: CholesterolData
     ): Call<CholesterolData>
 
     @DELETE("deleteCholesterolByID/{row_id}")
@@ -270,35 +275,93 @@ interface ApiService {
     @POST("getCholesterolChartAllData")
     fun getCholesterolChartAllData(
         @Header("Authorization") bearerToken: String,
-        @Body bloodSugarChartRequest: CholesterolChartRequest
+        @Body cholesterolChartRequest: CholesterolChartRequest
     ): Call<CholesterolChartResponse>
 
 
     @POST("getCholesterolChartTodayData")
     fun getCholesterolChartTodayData(
         @Header("Authorization") bearerToken: String,
-        @Body bloodSugarChartRequest: CholesterolChartRequest
+        @Body cholesterolChartRequest: CholesterolChartRequest
     ): Call<CholesterolChartResponse>
 
 
     @POST("getCholesterolChartMonthlyData")
     fun getCholesterolChartMonthlyData(
         @Header("Authorization") bearerToken: String,
-        @Body bloodSugarChartRequest: CholesterolChartRequest
+        @Body cholesterolChartRequest: CholesterolChartRequest
     ): Call<CholesterolChartResponse>
 
 
     @POST("getCholesterolChartYearlyData")
     fun getCholesterolChartYearlyData(
         @Header("Authorization") bearerToken: String,
-        @Body bloodSugarChartRequest: CholesterolChartRequest
+        @Body cholesterolChartRequest: CholesterolChartRequest
     ): Call<CholesterolChartResponse>
 
 
     @POST("getCholesterolChartCustomData")
     fun getCholesterolChartCustomData(
         @Header("Authorization") bearerToken: String,
-        @Body bloodSugarChartRequest: CholesterolChartRequest
+        @Body cholesterolChartRequest: CholesterolChartRequest
     ): Call<CholesterolChartResponse>
+
+    @POST("saveHeartRate")
+    fun postHeartRate(
+        @Header("Authorization") bearerToken: String,
+        @Body heartRateData: HeartRateData
+    ): Call<HeartRateResponse>
+
+    @GET("getHeartRatesByUserId")
+    fun getHeartRatesByUserId(
+        @Header("Authorization") bearerToken: String,
+    ): Call<HeartRateResponse>
+
+    @POST("updateHeartRate")
+    fun updateHeartRate(
+        @Header("Authorization") bearerToken: String,
+        @Body heartRateData: HeartRateData
+    ): Call<HeartRateData>
+
+    @DELETE("deleteHeartRateByID/{row_id}")
+    fun deleteHeartRate(
+        @Header("Authorization") bearerToken: String,
+        @Path("row_id") rowId: Int
+    ): Call<HeartRateData>
+
+    @POST("getHeartRateChartAllData")
+    fun getHeartRateChartAllData(
+        @Header("Authorization") bearerToken: String,
+        @Body heartRateChartRequest: HeartRateChartRequest
+    ): Call<HeartRateChartResponse>
+
+
+    @POST("getHeartRateChartTodayData")
+    fun getHeartRateChartTodayData(
+        @Header("Authorization") bearerToken: String,
+        @Body heartRateChartRequest: HeartRateChartRequest
+    ): Call<HeartRateChartResponse>
+
+
+    @POST("getHeartRateChartMonthlyData")
+    fun getHeartRateChartMonthlyData(
+        @Header("Authorization") bearerToken: String,
+        @Body heartRateChartRequest: HeartRateChartRequest
+    ): Call<HeartRateChartResponse>
+
+
+    @POST("getHeartRateChartYearlyData")
+    fun getHeartRateChartYearlyData(
+        @Header("Authorization") bearerToken: String,
+        @Body heartRateChartRequest: HeartRateChartRequest
+    ): Call<HeartRateChartResponse>
+
+
+    @POST("getHeartRateChartCustomData")
+    fun getHeartRateChartCustomData(
+        @Header("Authorization") bearerToken: String,
+        @Body heartRateChartRequest: HeartRateChartRequest
+    ): Call<HeartRateChartResponse>
+
 
 }
