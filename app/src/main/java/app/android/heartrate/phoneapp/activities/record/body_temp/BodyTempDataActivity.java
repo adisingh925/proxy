@@ -1,4 +1,4 @@
-package app.android.heartrate.phoneapp.activities.record;
+package app.android.heartrate.phoneapp.activities.record.body_temp;
 
 import android.app.Activity;
 import android.app.Dialog;
@@ -12,7 +12,6 @@ import android.os.Message;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.Spinner;
 import android.widget.TextView;
@@ -28,13 +27,10 @@ import com.airbnb.lottie.LottieAnimationView;
 
 import java.util.ArrayList;
 
-import app.android.heartrate.phoneapp.AdAdmob;
 import app.android.heartrate.phoneapp.R;
 import app.android.heartrate.phoneapp.adapters.BodyTempDataAdapter;
 import app.android.heartrate.phoneapp.adapters.SpinnerProfileAdapter;
-import app.android.heartrate.phoneapp.model.ProfileData;
 import app.android.heartrate.phoneapp.model.classes.BodyTempData;
-import app.android.heartrate.phoneapp.model.classes.UserProfileData;
 import app.android.heartrate.phoneapp.sharedpreferences.SharedPreferences;
 import app.android.heartrate.phoneapp.sqlite.SQLiteHealthTracker;
 import app.android.heartrate.phoneapp.utils.AppConstants;

@@ -1,4 +1,4 @@
-package app.android.heartrate.phoneapp.activities.record;
+package app.android.heartrate.phoneapp.activities.record.bmi;
 
 import android.content.Intent;
 import android.os.Bundle;

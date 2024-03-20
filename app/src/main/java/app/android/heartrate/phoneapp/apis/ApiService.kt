@@ -264,7 +264,7 @@ interface ApiService {
     fun updateCholesterol(
         @Header("Authorization") bearerToken: String,
         @Body cholesterolData: CholesterolData
-    ): Call<CholesterolData>
+    ): Call<CholesterolResponse>
 
     @DELETE("deleteCholesterolByID/{row_id}")
     fun deleteCholesterol(

@@ -193,25 +193,25 @@
             android:name=".activities.record.blood_sugar.AddBloodSugarActivity"
             android:exported="false" />
         <activity
-            android:name=".activities.record.BMIDataActivity"
+            android:name=".activities.record.bmi.BMIDataActivity"
             android:exported="false" />
         <activity
-            android:name=".activities.record.BMIResultActivity"
+            android:name=".activities.record.bmi.BMIResultActivity"
             android:exported="false" />
         <activity
             android:name=".activities.record.AddBMIDataActivity"
             android:exported="false" />
         <activity
-            android:name=".activities.record.BodyTempDataActivity"
+            android:name=".activities.record.body_temp.BodyTempDataActivity"
             android:exported="false" />
         <activity
-            android:name=".activities.record.AddBodyTempActivity"
+            android:name=".activities.record.body_temp.AddBodyTempActivity"
             android:exported="false" />
         <activity
-            android:name=".activities.record.CholesterolDataActivity"
+            android:name=".activities.record.cholestrol.CholesterolDataActivity"
             android:exported="false" />
         <activity
-            android:name=".activities.record.AddCholesterolActivity"
+            android:name=".activities.record.cholestrol.AddCholesterolActivity"
             android:exported="false" />
         <activity
             android:name=".activities.record.HeartRateDataActivity"

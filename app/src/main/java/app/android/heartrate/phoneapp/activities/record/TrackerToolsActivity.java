@@ -18,6 +18,9 @@ import app.android.heartrate.phoneapp.R;
 import app.android.heartrate.phoneapp.activities.record.blood_count.BloodCountDataActivity;
 import app.android.heartrate.phoneapp.activities.record.blood_pressure.BloodPressureDataActivity;
 import app.android.heartrate.phoneapp.activities.record.blood_sugar.BloodSugarDataActivity;
+import app.android.heartrate.phoneapp.activities.record.bmi.BMIDataActivity;
+import app.android.heartrate.phoneapp.activities.record.body_temp.BodyTempDataActivity;
+import app.android.heartrate.phoneapp.activities.record.cholestrol.CholesterolDataActivity;
 import app.android.heartrate.phoneapp.utils.AppConstants;
 
 
