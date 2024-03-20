@@ -332,35 +332,35 @@ interface ApiService {
     @POST("getHeartRateChartAllData")
     fun getHeartRateChartAllData(
         @Header("Authorization") bearerToken: String,
-        @Body heartRateChartRequest: HeartRateChartRequest
+        @Body heartRateChartRequest: BloodCountChartRequest
     ): Call<HeartRateChartResponse>
 
 
     @POST("getHeartRateChartTodayData")
     fun getHeartRateChartTodayData(
         @Header("Authorization") bearerToken: String,
-        @Body heartRateChartRequest: HeartRateChartRequest
+        @Body heartRateChartRequest: BloodCountChartRequest
     ): Call<HeartRateChartResponse>
 
 
     @POST("getHeartRateChartMonthlyData")
     fun getHeartRateChartMonthlyData(
         @Header("Authorization") bearerToken: String,
-        @Body heartRateChartRequest: HeartRateChartRequest
+        @Body heartRateChartRequest: BloodCountChartRequest
     ): Call<HeartRateChartResponse>
 
 
     @POST("getHeartRateChartYearlyData")
     fun getHeartRateChartYearlyData(
         @Header("Authorization") bearerToken: String,
-        @Body heartRateChartRequest: HeartRateChartRequest
+        @Body heartRateChartRequest: BloodCountChartRequest
     ): Call<HeartRateChartResponse>
 
 
     @POST("getHeartRateChartCustomData")
     fun getHeartRateChartCustomData(
         @Header("Authorization") bearerToken: String,
-        @Body heartRateChartRequest: HeartRateChartRequest
+        @Body heartRateChartRequest: BloodCountChartRequest
     ): Call<HeartRateChartResponse>
 
 

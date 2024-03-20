@@ -5283,32 +5283,44 @@ public class SQLiteHealthTracker {
         }
     }
 
-    public int GetMaxHeartRateValue(int i) {
-        Exception e;
-        int i2 = 0;
-        try {
-            sqLiteDatabase = sqLiteHelper.getReadableDatabase();
-            Cursor rawQuery = sqLiteDatabase.rawQuery("SELECT MAX(heart_rate) FROM heart_rate_data WHERE user_id=" + i, null);
-            if (rawQuery == null || rawQuery.getCount() <= 0 || !rawQuery.moveToFirst()) {
-                return 0;
+    public float GetMaxHeartRateValue(List<HeartRateChartData> data) {
+
+        float highVlaue = Float.MIN_VALUE;
+
+        for (int i = 0; i < data.size(); i++) {
+            float max = data.get(i).heart_rate_value;
+            if (max > highVlaue) {
+                highVlaue = max;
             }
-            int i3 = 0;
-            do {
-                try {
-                    i3 = rawQuery.getInt(0);
-                } catch (Exception e2) {
-                    e = e2;
-                    i2 = i3;
-                    e.printStackTrace();
-                    return i2;
-                }
-            } while (rawQuery.moveToNext());
-            return i3;
-        } catch (Exception e3) {
-            e = e3;
-            e.printStackTrace();
-            return i2;
         }
+
+        return highVlaue;
+//
+//        Exception e;
+//        int i2 = 0;
+//        try {
+//            sqLiteDatabase = sqLiteHelper.getReadableDatabase();
+//            Cursor rawQuery =  sqLiteDatabase.rawQuery("SELECT MAX(heart_rate) FROM heart_rate_data WHERE user_id=" + i, null);
+//            if (rawQuery == null || rawQuery.getCount() <= 0 || !rawQuery.moveToFirst()) {
+//                return 0;
+//            }
+//            int i3 = 0;
+//            do {
+//                try {
+//                    i3 = rawQuery.getInt(0);
+//                } catch (Exception e2) {
+//                    e = e2;
+//                    i2 = i3;
+//                    e.printStackTrace();
+//                    return i2;
+//                }
+//            } while (data);
+//            return i3;
+//        } catch (Exception e3) {
+//            e = e3;
+//            e.printStackTrace();
+//            return i2;
+//        }
     }
 
     public void deleteHeartRateByID(int i) {
