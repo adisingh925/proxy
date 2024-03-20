@@ -275,35 +275,35 @@ interface ApiService {
     @POST("getCholesterolChartAllData")
     fun getCholesterolChartAllData(
         @Header("Authorization") bearerToken: String,
-        @Body cholesterolChartRequest: CholesterolChartRequest
+        @Body cholesterolChartRequest: BloodCountChartRequest
     ): Call<CholesterolChartResponse>
 
 
     @POST("getCholesterolChartTodayData")
     fun getCholesterolChartTodayData(
         @Header("Authorization") bearerToken: String,
-        @Body cholesterolChartRequest: CholesterolChartRequest
+        @Body cholesterolChartRequest: BloodCountChartRequest
     ): Call<CholesterolChartResponse>
 
 
     @POST("getCholesterolChartMonthlyData")
     fun getCholesterolChartMonthlyData(
         @Header("Authorization") bearerToken: String,
-        @Body cholesterolChartRequest: CholesterolChartRequest
+        @Body cholesterolChartRequest: BloodCountChartRequest
     ): Call<CholesterolChartResponse>
 
 
     @POST("getCholesterolChartYearlyData")
     fun getCholesterolChartYearlyData(
         @Header("Authorization") bearerToken: String,
-        @Body cholesterolChartRequest: CholesterolChartRequest
+        @Body cholesterolChartRequest: BloodCountChartRequest
     ): Call<CholesterolChartResponse>
 
 
     @POST("getCholesterolChartCustomData")
     fun getCholesterolChartCustomData(
         @Header("Authorization") bearerToken: String,
-        @Body cholesterolChartRequest: CholesterolChartRequest
+        @Body cholesterolChartRequest: BloodCountChartRequest
     ): Call<CholesterolChartResponse>
 
     @POST("saveHeartRate")

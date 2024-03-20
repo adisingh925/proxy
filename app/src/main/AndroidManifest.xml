@@ -214,10 +214,10 @@
             android:name=".activities.record.cholestrol.AddCholesterolActivity"
             android:exported="false" />
         <activity
-            android:name=".activities.record.HeartRateDataActivity"
+            android:name=".activities.record.heart_rate.HeartRateDataActivity"
             android:exported="false" />
         <activity
-            android:name=".activities.record.AddHeartRateActivity"
+            android:name=".activities.record.heart_rate.AddHeartRateActivity"
             android:exported="false" />
         <activity
             android:name=".activities.record.WeightDataActivity"
