@@ -33,6 +33,11 @@ import app.android.heartrate.phoneapp.model.classes.HeartRateData
 import app.android.heartrate.phoneapp.model.heartrate.HeartRateChartRequest
 import app.android.heartrate.phoneapp.model.heartrate.HeartRateChartResponse
 
+import app.android.heartrate.phoneapp.model.weight.WeightResponse
+import app.android.heartrate.phoneapp.model.classes.WeightData
+import app.android.heartrate.phoneapp.model.weight.WeightChartRequest
+import app.android.heartrate.phoneapp.model.weight.WeightChartResponse
+
 import retrofit2.Call
 import retrofit2.http.Body
 import retrofit2.http.DELETE
@@ -362,6 +367,63 @@ interface ApiService {
         @Header("Authorization") bearerToken: String,
         @Body heartRateChartRequest: HeartRateChartRequest
     ): Call<HeartRateChartResponse>
+
+    @POST("saveWeight")
+    fun postWeight(
+        @Header("Authorization") bearerToken: String,
+        @Body weightData: WeightData
+    ): Call<WeightResponse>
+
+    @GET("getWeightsByUserId")
+    fun getWeightsByUserId(
+        @Header("Authorization") bearerToken: String,
+    ): Call<WeightResponse>
+
+    @POST("updateWeight")
+    fun updateWeight(
+        @Header("Authorization") bearerToken: String,
+        @Body weightData: WeightData
+    ): Call<WeightData>
+
+    @DELETE("deleteWeightByID/{row_id}")
+    fun deleteWeight(
+        @Header("Authorization") bearerToken: String,
+        @Path("row_id") rowId: Int
+    ): Call<WeightData>
+
+    @POST("getWeightChartAllData")
+    fun getWeightChartAllData(
+        @Header("Authorization") bearerToken: String,
+        @Body weightChartRequest: WeightChartRequest
+    ): Call<WeightChartResponse>
+
+
+    @POST("getWeightChartTodayData")
+    fun getWeightChartTodayData(
+        @Header("Authorization") bearerToken: String,
+        @Body weightChartRequest: WeightChartRequest
+    ): Call<WeightChartResponse>
+
+
+    @POST("getWeightChartMonthlyData")
+    fun getWeightChartMonthlyData(
+        @Header("Authorization") bearerToken: String,
+        @Body weightChartRequest: WeightChartRequest
+    ): Call<WeightChartResponse>
+
+
+    @POST("getWeightChartYearlyData")
+    fun getWeightChartYearlyData(
+        @Header("Authorization") bearerToken: String,
+        @Body weightChartRequest: WeightChartRequest
+    ): Call<WeightChartResponse>
+
+
+    @POST("getWeightChartCustomData")
+    fun getWeightChartCustomData(
+        @Header("Authorization") bearerToken: String,
+        @Body weightChartRequest: WeightChartRequest
+    ): Call<WeightChartResponse>
 
 
 }
