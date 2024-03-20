@@ -1,4 +1,4 @@
-package app.android.heartrate.phoneapp.activities.record;
+package app.android.heartrate.phoneapp.activities.record.statistics;
 
 import android.annotation.SuppressLint;
 import android.app.Activity;
@@ -6,7 +6,6 @@ import android.app.DatePickerDialog;
 import android.app.Dialog;
 import android.graphics.Typeface;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -35,8 +34,6 @@ import com.github.mikephil.charting.data.BarEntry;
 import com.github.mikephil.charting.formatter.IndexAxisValueFormatter;
 import com.github.mikephil.charting.interfaces.datasets.IBarDataSet;
 
-import org.json.JSONObject;
-
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -44,21 +41,20 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
-import app.android.heartrate.phoneapp.AdAdmob;
 import app.android.heartrate.phoneapp.R;
 import app.android.heartrate.phoneapp.adapters.SpinnerProfileAdapter;
 import app.android.heartrate.phoneapp.model.ProfileData;
 import app.android.heartrate.phoneapp.model.bloodcount.chart.BloodCountChartRequest;
 import app.android.heartrate.phoneapp.model.bloodcount.chart.BloodCountChartResponse;
+import app.android.heartrate.phoneapp.model.bloodpressure.BloodPressureChartResponse;
+import app.android.heartrate.phoneapp.model.bloodsugar.BloodSugarChartResponse;
 import app.android.heartrate.phoneapp.model.classes.BMIChartData;
 import app.android.heartrate.phoneapp.model.classes.BloodCountChartData;
-import app.android.heartrate.phoneapp.model.classes.BloodCountData;
 import app.android.heartrate.phoneapp.model.classes.BloodPressureChartData;
 import app.android.heartrate.phoneapp.model.classes.BloodSugarChartData;
 import app.android.heartrate.phoneapp.model.classes.BodyTempChartAllData;
 import app.android.heartrate.phoneapp.model.classes.CholesterolChartData;
 import app.android.heartrate.phoneapp.model.classes.HeartRateChartData;
-import app.android.heartrate.phoneapp.model.classes.UserProfileData;
 import app.android.heartrate.phoneapp.model.classes.WeightChartData;
 import app.android.heartrate.phoneapp.model.classes.WeightData;
 import app.android.heartrate.phoneapp.retrofit.ApiClient;
@@ -800,13 +796,14 @@ public class TrackerStatisticsActivity extends AppCompatActivity {
         return arrayList2.subList(0, arrayList.size());
     }
 
-    private void SetBloodPressureAllChart(int i) {
+    private void SetBloodPressureAllChart(float MaxBloodPressure, List<BloodPressureChartData> bloodPressureChartDataList) {
         Calendar instance = Calendar.getInstance();
         instance.setTime(new Date());
         instance.get(1);
         instance.get(2);
         instance.get(5);
-        ArrayList<BloodPressureChartData> arrayList = (ArrayList) this.SQLite_health_tracker.GetBloodPressureChartAllData(i);
+        ArrayList<BloodPressureChartData> arrayList = (ArrayList) bloodPressureChartDataList;
+//                (ArrayList) this.SQLite_health_tracker.GetBloodPressureChartAllData(i);
         if (arrayList.size() == 0) {
             this.lbl_no_data.setVisibility(View.VISIBLE);
             this.lbl_no_data.setText("No data available for All!");
@@ -877,18 +874,20 @@ public class TrackerStatisticsActivity extends AppCompatActivity {
         axisLeft.setTextSize(this.graph_left_axis_text_size);
         axisLeft.setTextColor(getResources().getColor(R.color.axis_label_color));
         axisLeft.setDrawGridLines(false);
-        axisLeft.setAxisMaximum((float) (this.SQLite_health_tracker.GetMaxBloodPressureValue(i) + this.extra_y_axis_value));
+//        axisLeft.setAxisMaximum((float) (this.SQLite_health_tracker.GetMaxBloodPressureValue(i) + this.extra_y_axis_value));
+        axisLeft.setAxisMaximum((float) (MaxBloodPressure + this.extra_y_axis_value));
         this.graph_view_all.getAxisRight().setEnabled(false);
         SetBloodPressureBarWidth(this.graph_view_all, barData, arrayList);
         this.graph_view_all.invalidate();
     }
 
-    private void SetBloodPressureTodayChart(int i) {
+    private void SetBloodPressureTodayChart(float MaxBloodPressure, List<BloodPressureChartData> bloodPressureChartDataList) {
         Calendar instance = Calendar.getInstance();
         instance.setTime(new Date());
         int i2 = instance.get(1);
         int i3 = instance.get(5);
-        ArrayList<BloodPressureChartData> arrayList = (ArrayList) this.SQLite_health_tracker.GetBloodPressureChartTodayData(i, i3, instance.get(2) + 1, i2);
+        ArrayList<BloodPressureChartData> arrayList = (ArrayList) bloodPressureChartDataList;
+//                (ArrayList) this.SQLite_health_tracker.GetBloodPressureChartTodayData(i, i3, instance.get(2) + 1, i2);
         if (arrayList.size() == 0) {
             this.lbl_no_data.setVisibility(View.VISIBLE);
             this.lbl_no_data.setText("No data available for Today!");
@@ -963,18 +962,19 @@ public class TrackerStatisticsActivity extends AppCompatActivity {
         axisLeft.setTextSize(this.graph_left_axis_text_size);
         axisLeft.setTextColor(getResources().getColor(R.color.axis_label_color));
         axisLeft.setDrawGridLines(false);
-        axisLeft.setAxisMaximum((float) (this.SQLite_health_tracker.GetMaxBloodPressureValue(i) + this.extra_y_axis_value));
+        axisLeft.setAxisMaximum((float) (MaxBloodPressure + this.extra_y_axis_value));
         this.graph_view_today.getAxisRight().setEnabled(false);
         SetBloodPressureBarWidth(this.graph_view_today, barData, arrayList);
         this.graph_view_today.invalidate();
     }
 
-    private void SetBloodPressureMonthlyChart(int i) {
+    private void SetBloodPressureMonthlyChart(float MaxBloodPressure, List<BloodPressureChartData> bloodPressureChartDataList) {
         Calendar instance = Calendar.getInstance();
         instance.setTime(new Date());
         int i2 = instance.get(1);
         instance.get(5);
-        ArrayList<BloodPressureChartData> arrayList = (ArrayList) this.SQLite_health_tracker.GetBloodPressureChartMonthlyData(i, instance.get(2) + 1, i2);
+        ArrayList<BloodPressureChartData> arrayList = (ArrayList) bloodPressureChartDataList;
+//                (ArrayList) this.SQLite_health_tracker.GetBloodPressureChartMonthlyData(i, instance.get(2) + 1, i2);
         if (arrayList.size() == 0) {
             this.lbl_no_data.setVisibility(View.VISIBLE);
             this.lbl_no_data.setText("No Monthly data available!");
@@ -1054,19 +1054,21 @@ public class TrackerStatisticsActivity extends AppCompatActivity {
         axisLeft.setTextSize(this.graph_left_axis_text_size);
         axisLeft.setTextColor(getResources().getColor(R.color.axis_label_color));
         axisLeft.setDrawGridLines(false);
-        axisLeft.setAxisMaximum((float) (this.SQLite_health_tracker.GetMaxBloodPressureValue(i) + this.extra_y_axis_value));
+        axisLeft.setAxisMaximum((float) (MaxBloodPressure + this.extra_y_axis_value));
+//        axisLeft.setAxisMaximum((float) (this.SQLite_health_tracker.GetMaxBloodPressureValue(i) + this.extra_y_axis_value));
         this.graph_view_monthly.getAxisRight().setEnabled(false);
         SetBloodPressureBarWidth(this.graph_view_monthly, barData, arrayList);
         this.graph_view_monthly.invalidate();
     }
 
-    private void SetBloodPressureYearlyChart(int i) {
+    private void SetBloodPressureYearlyChart(float MaxBloodPressure, List<BloodPressureChartData> bloodPressureChartDataList) {
         Calendar instance = Calendar.getInstance();
         instance.setTime(new Date());
         int i2 = instance.get(1);
         instance.get(2);
         instance.get(5);
-        ArrayList<BloodPressureChartData> arrayList = (ArrayList) this.SQLite_health_tracker.GetBloodPressureChartYearlyData(i, i2);
+        ArrayList<BloodPressureChartData> arrayList = (ArrayList) bloodPressureChartDataList;
+//                (ArrayList) this.SQLite_health_tracker.GetBloodPressureChartYearlyData(i, i2);
         if (arrayList.size() == 0) {
             this.lbl_no_data.setVisibility(View.VISIBLE);
             this.lbl_no_data.setText("No Yearly data available!");
@@ -1146,14 +1148,15 @@ public class TrackerStatisticsActivity extends AppCompatActivity {
         axisLeft.setTextSize(this.graph_left_axis_text_size);
         axisLeft.setTextColor(getResources().getColor(R.color.axis_label_color));
         axisLeft.setDrawGridLines(false);
-        axisLeft.setAxisMaximum((float) (this.SQLite_health_tracker.GetMaxBloodPressureValue(i) + this.extra_y_axis_value));
+        axisLeft.setAxisMaximum((float) (MaxBloodPressure + this.extra_y_axis_value));
         this.graph_view_yearly.getAxisRight().setEnabled(false);
         SetBloodPressureBarWidth(this.graph_view_yearly, barData, arrayList);
         this.graph_view_yearly.invalidate();
     }
 
-    private void SetBloodPressureCustomChart(int i) {
-        ArrayList<BloodPressureChartData> arrayList = (ArrayList) this.SQLite_health_tracker.GetBloodPressureChartCustomData(i, this.custom_start_date, this.custom_end_date);
+    private void SetBloodPressureCustomChart(float MaxBloodPressure, List<BloodPressureChartData> bloodPressureChartDataList) {
+        ArrayList<BloodPressureChartData> arrayList = (ArrayList) bloodPressureChartDataList;
+//                this.SQLite_health_tracker.GetBloodPressureChartCustomData(i, this.custom_start_date, this.custom_end_date);
         if (arrayList.size() == 0) {
             this.lbl_no_data.setVisibility(View.VISIBLE);
             this.lbl_no_data.setText("No Yearly data available!");
@@ -1233,7 +1236,7 @@ public class TrackerStatisticsActivity extends AppCompatActivity {
         axisLeft.setTextSize(this.graph_left_axis_text_size);
         axisLeft.setTextColor(getResources().getColor(R.color.axis_label_color));
         axisLeft.setDrawGridLines(false);
-        axisLeft.setAxisMaximum((float) (this.SQLite_health_tracker.GetMaxBloodPressureValue(i) + this.extra_y_axis_value));
+        axisLeft.setAxisMaximum((float) (MaxBloodPressure + this.extra_y_axis_value));
         this.graph_view_custom.getAxisRight().setEnabled(false);
         SetBloodPressureBarWidth(this.graph_view_custom, barData, arrayList);
         this.graph_view_custom.invalidate();
@@ -1281,13 +1284,14 @@ public class TrackerStatisticsActivity extends AppCompatActivity {
         return arrayList2.subList(0, arrayList.size());
     }
 
-    private void SetBloodSugarAllChart(int i) {
+    private void SetBloodSugarAllChart(float i, List<BloodSugarChartData> dataArray) {
         Calendar instance = Calendar.getInstance();
         instance.setTime(new Date());
         instance.get(1);
         instance.get(2);
         instance.get(5);
-        ArrayList<BloodSugarChartData> arrayList = (ArrayList) this.SQLite_health_tracker.GetBloodSugarChartAllData(i);
+        ArrayList<BloodSugarChartData> arrayList = (ArrayList) dataArray;
+//                this.SQLite_health_tracker.GetBloodSugarChartAllData(i);
         if (arrayList.size() == 0) {
             this.lbl_no_data.setVisibility(View.VISIBLE);
             this.lbl_no_data.setText("No data available for All!");
@@ -1352,18 +1356,19 @@ public class TrackerStatisticsActivity extends AppCompatActivity {
         axisLeft.setTextSize(this.graph_left_axis_text_size);
         axisLeft.setTextColor(getResources().getColor(R.color.axis_label_color));
         axisLeft.setDrawGridLines(false);
-        axisLeft.setAxisMaximum((float) (this.SQLite_health_tracker.GetMaxBloodSugarValue(i) + this.extra_y_axis_value));
+        axisLeft.setAxisMaximum((float) (i + this.extra_y_axis_value));
         this.graph_view_all.getAxisRight().setEnabled(false);
         SetBloodSugarBarWidth(this.graph_view_all, barData, arrayList);
         this.graph_view_all.invalidate();
     }
 
-    private void SetBloodSugarTodayChart(int i) {
+    private void SetBloodSugarTodayChart(float i, List<BloodSugarChartData> dataArray) {
         Calendar instance = Calendar.getInstance();
         instance.setTime(new Date());
         int i2 = instance.get(1);
         int i3 = instance.get(5);
-        ArrayList<BloodSugarChartData> arrayList = (ArrayList) this.SQLite_health_tracker.GetBloodSugarChartTodayData(i, i3, instance.get(2) + 1, i2);
+        ArrayList<BloodSugarChartData> arrayList = (ArrayList) dataArray;
+//                this.SQLite_health_tracker.GetBloodSugarChartTodayData(i, i3, instance.get(2) + 1, i2);
         if (arrayList.size() == 0) {
             this.lbl_no_data.setVisibility(View.VISIBLE);
             this.lbl_no_data.setText("No data available for Today!");
@@ -1432,18 +1437,19 @@ public class TrackerStatisticsActivity extends AppCompatActivity {
         axisLeft.setTextSize(this.graph_left_axis_text_size);
         axisLeft.setTextColor(getResources().getColor(R.color.axis_label_color));
         axisLeft.setDrawGridLines(false);
-        axisLeft.setAxisMaximum((float) (this.SQLite_health_tracker.GetMaxBloodSugarValue(i) + this.extra_y_axis_value));
+        axisLeft.setAxisMaximum((float) (i + this.extra_y_axis_value));
         this.graph_view_today.getAxisRight().setEnabled(false);
         SetBloodSugarBarWidth(this.graph_view_today, barData, arrayList);
         this.graph_view_today.invalidate();
     }
 
-    private void SetBloodSugarMonthlyChart(int i) {
+    private void SetBloodSugarMonthlyChart(float i, List<BloodSugarChartData> dataArray) {
         Calendar instance = Calendar.getInstance();
         instance.setTime(new Date());
         int i2 = instance.get(1);
         instance.get(5);
-        ArrayList<BloodSugarChartData> arrayList = (ArrayList) this.SQLite_health_tracker.GetBloodSugarChartMonthlyData(i, instance.get(2) + 1, i2);
+        ArrayList<BloodSugarChartData> arrayList = (ArrayList) dataArray;
+//                this.SQLite_health_tracker.GetBloodSugarChartMonthlyData(i, instance.get(2) + 1, i2);
         if (arrayList.size() == 0) {
             this.lbl_no_data.setVisibility(View.VISIBLE);
             this.lbl_no_data.setText("No Monthly data available!");
@@ -1516,19 +1522,20 @@ public class TrackerStatisticsActivity extends AppCompatActivity {
         axisLeft.setTextSize(this.graph_left_axis_text_size);
         axisLeft.setTextColor(getResources().getColor(R.color.axis_label_color));
         axisLeft.setDrawGridLines(false);
-        axisLeft.setAxisMaximum((float) (this.SQLite_health_tracker.GetMaxBloodSugarValue(i) + this.extra_y_axis_value));
+        axisLeft.setAxisMaximum((float) (i + this.extra_y_axis_value));
         this.graph_view_monthly.getAxisRight().setEnabled(false);
         SetBloodSugarBarWidth(this.graph_view_monthly, barData, arrayList);
         this.graph_view_monthly.invalidate();
     }
 
-    private void SetBloodSugarYearlyChart(int i) {
+    private void SetBloodSugarYearlyChart(float i, List<BloodSugarChartData> dataArray) {
         Calendar instance = Calendar.getInstance();
         instance.setTime(new Date());
         int i2 = instance.get(1);
         instance.get(2);
         instance.get(5);
-        ArrayList<BloodSugarChartData> arrayList = (ArrayList) this.SQLite_health_tracker.GetBloodSugarChartYearlyData(i, i2);
+        ArrayList<BloodSugarChartData> arrayList = (ArrayList) dataArray;
+//                this.SQLite_health_tracker.GetBloodSugarChartYearlyData(i, i2);
         if (arrayList.size() == 0) {
             this.lbl_no_data.setVisibility(View.VISIBLE);
             this.lbl_no_data.setText("No Yearly data available!");
@@ -1601,14 +1608,15 @@ public class TrackerStatisticsActivity extends AppCompatActivity {
         axisLeft.setTextSize(this.graph_left_axis_text_size);
         axisLeft.setTextColor(getResources().getColor(R.color.axis_label_color));
         axisLeft.setDrawGridLines(false);
-        axisLeft.setAxisMaximum((float) (this.SQLite_health_tracker.GetMaxBloodSugarValue(i) + this.extra_y_axis_value));
+        axisLeft.setAxisMaximum((float) (i + this.extra_y_axis_value));
         this.graph_view_yearly.getAxisRight().setEnabled(false);
         SetBloodSugarBarWidth(this.graph_view_yearly, barData, arrayList);
         this.graph_view_yearly.invalidate();
     }
 
-    private void SetBloodSugarCustomChart(int i) {
-        ArrayList<BloodSugarChartData> arrayList = (ArrayList) this.SQLite_health_tracker.GetBloodSugarChartCustomData(i, this.custom_start_date, this.custom_end_date);
+    private void SetBloodSugarCustomChart(float i, List<BloodSugarChartData> dataArray) {
+        ArrayList<BloodSugarChartData> arrayList = (ArrayList) dataArray;
+//                this.SQLite_health_tracker.GetBloodSugarChartCustomData(i, this.custom_start_date, this.custom_end_date);
         if (arrayList.size() == 0) {
             this.lbl_no_data.setVisibility(View.VISIBLE);
             this.lbl_no_data.setText("No Yearly data available!");
@@ -1676,7 +1684,7 @@ public class TrackerStatisticsActivity extends AppCompatActivity {
         axisLeft.setTextSize(this.graph_left_axis_text_size);
         axisLeft.setTextColor(getResources().getColor(R.color.axis_label_color));
         axisLeft.setDrawGridLines(false);
-        axisLeft.setAxisMaximum((float) (this.SQLite_health_tracker.GetMaxBloodSugarValue(i) + this.extra_y_axis_value));
+        axisLeft.setAxisMaximum((float) (i + this.extra_y_axis_value));
         this.graph_view_custom.getAxisRight().setEnabled(false);
         SetBloodSugarBarWidth(this.graph_view_custom, barData, arrayList);
         this.graph_view_custom.invalidate();
@@ -4116,18 +4124,19 @@ public class TrackerStatisticsActivity extends AppCompatActivity {
 
 
     private void SetChartByUserIDReportType(int i, String str, String str2) {
+        Calendar instance = Calendar.getInstance();
+        instance.setTime(new Date());
+        int day = instance.get(Calendar.DAY_OF_MONTH);
+        int month = instance.get(Calendar.MONTH) + 1; // Month starts from 0, so we add 1
+        int year = instance.get(Calendar.YEAR);
+
+        BloodCountChartRequest bloodCountChartRequest = new BloodCountChartRequest(
+                sharedPreferencesUtils.getUserId(), day, month, year, custom_start_date, custom_end_date);
+
         if (str.equalsIgnoreCase(getResources().getString(R.string.lbl_chart_blood_count))) {
             String string = getResources().getString(R.string.lbl_m_mm3);
             TextView textView = this.txt_chart_type;
             textView.setText(getResources().getString(R.string.lbl_chart_blood_count) + " (" + string + ")");
-
-            Calendar instance = Calendar.getInstance();
-            instance.setTime(new Date());
-
-            int day = instance.get(Calendar.DAY_OF_MONTH);
-            int month = instance.get(Calendar.MONTH) + 1; // Month starts from 0, so we add 1
-            int year = instance.get(Calendar.YEAR);
-
 
             if (str2.equalsIgnoreCase(getResources().getString(R.string.lbl_all))) {
                 this.graph_view_today.setVisibility(View.GONE);
@@ -4137,8 +4146,6 @@ public class TrackerStatisticsActivity extends AppCompatActivity {
                 this.graph_view_custom.setVisibility(View.GONE);
                 this.graph_view_all.invalidate();
                 this.graph_view_all.clear();
-                BloodCountChartRequest bloodCountChartRequest = new BloodCountChartRequest(
-                        sharedPreferencesUtils.getUserId(), day, month, year, custom_start_date, custom_end_date);
                 getBloodCountChartAllData(bloodCountChartRequest);
 //                SetBloodCountAllChart(i);
             } else if (str2.equalsIgnoreCase(getResources().getString(R.string.lbl_today))) {
@@ -4149,8 +4156,6 @@ public class TrackerStatisticsActivity extends AppCompatActivity {
                 this.graph_view_custom.setVisibility(View.GONE);
                 this.graph_view_today.invalidate();
                 this.graph_view_today.clear();
-                BloodCountChartRequest bloodCountChartRequest = new BloodCountChartRequest(
-                        sharedPreferencesUtils.getUserId(), day, month, year, custom_start_date, custom_end_date);
                 getBloodCountChartTodayData(bloodCountChartRequest);
 //                SetBloodCountTodayChart(i);
             } else if (str2.equalsIgnoreCase(getResources().getString(R.string.lbl_month))) {
@@ -4162,8 +4167,6 @@ public class TrackerStatisticsActivity extends AppCompatActivity {
                 this.graph_view_monthly.invalidate();
                 this.graph_view_monthly.clear();
 
-                BloodCountChartRequest bloodCountChartRequest = new BloodCountChartRequest(
-                        sharedPreferencesUtils.getUserId(), day, month, year, custom_start_date, custom_end_date);
                 getBloodCountChartMonthlyData(bloodCountChartRequest);
 
 //                SetBloodCountMonthlyChart(i);
@@ -4176,8 +4179,7 @@ public class TrackerStatisticsActivity extends AppCompatActivity {
                 this.graph_view_custom.setVisibility(View.GONE);
                 this.graph_view_yearly.invalidate();
                 this.graph_view_yearly.clear();
-                BloodCountChartRequest bloodCountChartRequest = new BloodCountChartRequest(
-                        sharedPreferencesUtils.getUserId(), day, month, year, custom_start_date, custom_end_date);
+
                 getBloodCountChartYearlyData(bloodCountChartRequest);
 //                SetBloodCountYearlyChart(i);
             } else if (str2.equalsIgnoreCase(getResources().getString(R.string.lbl_custom))) {
@@ -4188,8 +4190,7 @@ public class TrackerStatisticsActivity extends AppCompatActivity {
                 this.graph_view_custom.setVisibility(View.VISIBLE);
                 this.graph_view_custom.invalidate();
                 this.graph_view_custom.clear();
-                BloodCountChartRequest bloodCountChartRequest = new BloodCountChartRequest(
-                        sharedPreferencesUtils.getUserId(), day, month, year, custom_start_date, custom_end_date);
+
                 getBloodCountChartCustomData(bloodCountChartRequest);
 //                SetBloodCountCustomChart(i);
             }
@@ -4205,7 +4206,8 @@ public class TrackerStatisticsActivity extends AppCompatActivity {
                 this.graph_view_custom.setVisibility(View.GONE);
                 this.graph_view_all.invalidate();
                 this.graph_view_all.clear();
-                SetBloodPressureAllChart(i);
+                getBloodPressureChartAllData(bloodCountChartRequest);
+//                 SetBloodPressureAllChart(i);
             } else if (str2.equalsIgnoreCase(getResources().getString(R.string.lbl_today))) {
                 this.graph_view_today.setVisibility(View.VISIBLE);
                 this.graph_view_monthly.setVisibility(View.GONE);
@@ -4214,7 +4216,8 @@ public class TrackerStatisticsActivity extends AppCompatActivity {
                 this.graph_view_custom.setVisibility(View.GONE);
                 this.graph_view_today.invalidate();
                 this.graph_view_today.clear();
-                SetBloodPressureTodayChart(i);
+                getBloodPressureTodayData(bloodCountChartRequest);
+//                SetBloodPressureTodayChart(i);
             } else if (str2.equalsIgnoreCase(getResources().getString(R.string.lbl_month))) {
                 this.graph_view_today.setVisibility(View.GONE);
                 this.graph_view_monthly.setVisibility(View.VISIBLE);
@@ -4223,7 +4226,8 @@ public class TrackerStatisticsActivity extends AppCompatActivity {
                 this.graph_view_custom.setVisibility(View.GONE);
                 this.graph_view_monthly.invalidate();
                 this.graph_view_monthly.clear();
-                SetBloodPressureMonthlyChart(i);
+                getBloodPressureMonthlyData(bloodCountChartRequest);
+//                SetBloodPressureMonthlyChart(i);
             } else if (str2.equalsIgnoreCase(getResources().getString(R.string.lbl_year))) {
                 this.graph_view_today.setVisibility(View.GONE);
                 this.graph_view_monthly.setVisibility(View.GONE);
@@ -4232,7 +4236,9 @@ public class TrackerStatisticsActivity extends AppCompatActivity {
                 this.graph_view_custom.setVisibility(View.GONE);
                 this.graph_view_yearly.invalidate();
                 this.graph_view_yearly.clear();
-                SetBloodPressureYearlyChart(i);
+                getBloodPressureYearlyData(bloodCountChartRequest);
+
+//                SetBloodPressureYearlyChart(i);
             } else if (str2.equalsIgnoreCase(getResources().getString(R.string.lbl_custom))) {
                 this.graph_view_today.setVisibility(View.GONE);
                 this.graph_view_monthly.setVisibility(View.GONE);
@@ -4241,12 +4247,15 @@ public class TrackerStatisticsActivity extends AppCompatActivity {
                 this.graph_view_custom.setVisibility(View.VISIBLE);
                 this.graph_view_custom.invalidate();
                 this.graph_view_custom.clear();
-                SetBloodPressureCustomChart(i);
+                getBloodPressureCustomData(bloodCountChartRequest);
+
+//                SetBloodPressureCustomChart(i);
             }
         } else if (str.equalsIgnoreCase(getResources().getString(R.string.lbl_chart_blood_sugar))) {
             String string3 = getResources().getString(R.string.lbl_mg_dl);
             TextView textView3 = this.txt_chart_type;
             textView3.setText(getResources().getString(R.string.lbl_chart_blood_sugar) + " (" + string3 + ")");
+
             if (str2.equalsIgnoreCase(getResources().getString(R.string.lbl_all))) {
                 this.graph_view_today.setVisibility(View.GONE);
                 this.graph_view_monthly.setVisibility(View.GONE);
@@ -4255,7 +4264,8 @@ public class TrackerStatisticsActivity extends AppCompatActivity {
                 this.graph_view_custom.setVisibility(View.GONE);
                 this.graph_view_all.invalidate();
                 this.graph_view_all.clear();
-                SetBloodSugarAllChart(i);
+                getBloodSugarChartAllData(bloodCountChartRequest);
+//                SetBloodSugarAllChart(i);
             } else if (str2.equalsIgnoreCase(getResources().getString(R.string.lbl_today))) {
                 this.graph_view_today.setVisibility(View.VISIBLE);
                 this.graph_view_monthly.setVisibility(View.GONE);
@@ -4264,7 +4274,8 @@ public class TrackerStatisticsActivity extends AppCompatActivity {
                 this.graph_view_custom.setVisibility(View.GONE);
                 this.graph_view_today.invalidate();
                 this.graph_view_today.clear();
-                SetBloodSugarTodayChart(i);
+                getBloodSugarChartTodayData(bloodCountChartRequest);
+//                SetBloodSugarTodayChart(i);
             } else if (str2.equalsIgnoreCase(getResources().getString(R.string.lbl_month))) {
                 this.graph_view_today.setVisibility(View.GONE);
                 this.graph_view_monthly.setVisibility(View.VISIBLE);
@@ -4273,7 +4284,8 @@ public class TrackerStatisticsActivity extends AppCompatActivity {
                 this.graph_view_custom.setVisibility(View.GONE);
                 this.graph_view_monthly.invalidate();
                 this.graph_view_monthly.clear();
-                SetBloodSugarMonthlyChart(i);
+                getBloodSugarChartMonthlyData(bloodCountChartRequest);
+//                SetBloodSugarMonthlyChart(i);
             } else if (str2.equalsIgnoreCase(getResources().getString(R.string.lbl_year))) {
                 this.graph_view_today.setVisibility(View.GONE);
                 this.graph_view_monthly.setVisibility(View.GONE);
@@ -4282,7 +4294,8 @@ public class TrackerStatisticsActivity extends AppCompatActivity {
                 this.graph_view_custom.setVisibility(View.GONE);
                 this.graph_view_yearly.invalidate();
                 this.graph_view_yearly.clear();
-                SetBloodSugarYearlyChart(i);
+                getBloodSugarChartYearlyData(bloodCountChartRequest);
+//                SetBloodSugarYearlyChart(i);
             } else if (str2.equalsIgnoreCase(getResources().getString(R.string.lbl_custom))) {
                 this.graph_view_today.setVisibility(View.GONE);
                 this.graph_view_monthly.setVisibility(View.GONE);
@@ -4291,7 +4304,9 @@ public class TrackerStatisticsActivity extends AppCompatActivity {
                 this.graph_view_custom.setVisibility(View.VISIBLE);
                 this.graph_view_custom.invalidate();
                 this.graph_view_custom.clear();
-                SetBloodSugarCustomChart(i);
+                getBloodSugarChartCustomData(bloodCountChartRequest);
+
+//                SetBloodSugarCustomChart(i);
             }
         } else if (str.equalsIgnoreCase(getResources().getString(R.string.lbl_chart_bmi))) {
             this.txt_chart_type.setText(getResources().getString(R.string.lbl_chart_bmi));
@@ -4643,7 +4658,6 @@ public class TrackerStatisticsActivity extends AppCompatActivity {
         }
     }
 
-
     private void getBloodCountChartMonthlyData(BloodCountChartRequest bloodCountChartRequest) {
         String token = sharedPreferencesUtils.read("token", "");
         if (!token.equals("")) {
@@ -4780,6 +4794,388 @@ public class TrackerStatisticsActivity extends AppCompatActivity {
             }
         }
         SetBloodCountCustomChart(dataArray, highestWBC);
+    }
+
+
+    //bp
+    private void getBloodPressureChartAllData(BloodCountChartRequest bloodCountChartRequest) {
+        String token = sharedPreferencesUtils.read("token", "");
+        if (!token.equals("")) {
+            ApiClient.INSTANCE.getApiService().getBloodPressureChartAllData(token, bloodCountChartRequest)
+                    .enqueue(new Callback<BloodPressureChartResponse>() {
+                        @Override
+                        public void onResponse(Call<BloodPressureChartResponse> call, Response<BloodPressureChartResponse> response) {
+                            if (response.isSuccessful()) {
+                                getHighestBloodPressureValueAll(response.body().getData());
+                            } else {
+                                showMessage("Failed");
+
+                            }
+                        }
+
+                        @Override
+                        public void onFailure(Call<BloodPressureChartResponse> call, Throwable t) {
+                            showMessage("Failed ...");
+
+                        }
+                    });
+
+        }
+    }
+
+    private void getBloodPressureTodayData(BloodCountChartRequest bloodCountChartRequest) {
+        String token = sharedPreferencesUtils.read("token", "");
+        if (!token.equals("")) {
+            ApiClient.INSTANCE.getApiService().getBloodPressureChartTodayData(token, bloodCountChartRequest)
+                    .enqueue(new Callback<BloodPressureChartResponse>() {
+                        @Override
+                        public void onResponse(Call<BloodPressureChartResponse> call, Response<BloodPressureChartResponse> response) {
+                            if (response.isSuccessful()) {
+                                getHighestBloodPressureValueToday(response.body().getData());
+                            } else {
+                                showMessage("Failed");
+
+                            }
+                        }
+
+                        @Override
+                        public void onFailure(Call<BloodPressureChartResponse> call, Throwable t) {
+                            showMessage("Failed ...");
+
+                        }
+                    });
+
+        }
+    }
+
+    private void getBloodPressureMonthlyData(BloodCountChartRequest bloodCountChartRequest) {
+        String token = sharedPreferencesUtils.read("token", "");
+        if (!token.equals("")) {
+            ApiClient.INSTANCE.getApiService().getBloodPressureChartMonthlyData(token, bloodCountChartRequest)
+                    .enqueue(new Callback<BloodPressureChartResponse>() {
+                        @Override
+                        public void onResponse(Call<BloodPressureChartResponse> call, Response<BloodPressureChartResponse> response) {
+                            if (response.isSuccessful()) {
+                                getHighestBloodPressureValueMonth(response.body().getData());
+                            } else {
+                                showMessage("Failed");
+
+                            }
+                        }
+
+                        @Override
+                        public void onFailure(Call<BloodPressureChartResponse> call, Throwable t) {
+                            showMessage("Failed ...");
+
+                        }
+                    });
+
+        }
+    }
+
+    private void getBloodPressureYearlyData(BloodCountChartRequest bloodCountChartRequest) {
+        String token = sharedPreferencesUtils.read("token", "");
+        if (!token.equals("")) {
+            ApiClient.INSTANCE.getApiService().getBloodPressureChartYearlyData(token, bloodCountChartRequest)
+                    .enqueue(new Callback<BloodPressureChartResponse>() {
+                        @Override
+                        public void onResponse(Call<BloodPressureChartResponse> call, Response<BloodPressureChartResponse> response) {
+                            if (response.isSuccessful()) {
+                                getHighestBloodPressureValueYear(response.body().getData());
+                            } else {
+                                showMessage("Failed");
+
+                            }
+                        }
+
+                        @Override
+                        public void onFailure(Call<BloodPressureChartResponse> call, Throwable t) {
+                            showMessage("Failed ...");
+
+                        }
+                    });
+
+        }
+    }
+
+    private void getBloodPressureCustomData(BloodCountChartRequest bloodCountChartRequest) {
+        String token = sharedPreferencesUtils.read("token", "");
+        if (!token.equals("")) {
+            ApiClient.INSTANCE.getApiService().getBloodPressureChartCustomData(token, bloodCountChartRequest)
+                    .enqueue(new Callback<BloodPressureChartResponse>() {
+                        @Override
+                        public void onResponse(Call<BloodPressureChartResponse> call, Response<BloodPressureChartResponse> response) {
+                            if (response.isSuccessful()) {
+                                getHighestBloodPressureValueCustom(response.body().getData());
+                            } else {
+                                showMessage("Failed");
+
+                            }
+                        }
+
+                        @Override
+                        public void onFailure(Call<BloodPressureChartResponse> call, Throwable t) {
+                            showMessage("Failed ...");
+
+                        }
+                    });
+
+        }
+    }
+
+
+    private void getHighestBloodPressureValueAll(List<BloodPressureChartData> dataArray) {
+        float highestBp = Float.MIN_VALUE;
+
+        for (int i = 0; i < dataArray.size(); i++) {
+            float bp = dataArray.get(i).pulse_pressure_value;
+            if (bp > highestBp) {
+                highestBp = bp;
+            }
+        }
+        SetBloodPressureAllChart(highestBp, dataArray);
+    }
+
+    private void getHighestBloodPressureValueToday(List<BloodPressureChartData> dataArray) {
+        float highestBp = Float.MIN_VALUE;
+
+        for (int i = 0; i < dataArray.size(); i++) {
+            float bp = dataArray.get(i).pulse_pressure_value;
+            if (bp > highestBp) {
+                highestBp = bp;
+            }
+        }
+        SetBloodPressureTodayChart(highestBp, dataArray);
+    }
+
+    private void getHighestBloodPressureValueMonth(List<BloodPressureChartData> dataArray) {
+        float highestBp = Float.MIN_VALUE;
+
+        for (int i = 0; i < dataArray.size(); i++) {
+            float bp = dataArray.get(i).pulse_pressure_value;
+            if (bp > highestBp) {
+                highestBp = bp;
+            }
+        }
+        SetBloodPressureMonthlyChart(highestBp, dataArray);
+    }
+
+
+    private void getHighestBloodPressureValueYear(List<BloodPressureChartData> dataArray) {
+        float highestBp = Float.MIN_VALUE;
+
+        for (int i = 0; i < dataArray.size(); i++) {
+            float bp = dataArray.get(i).pulse_pressure_value;
+            if (bp > highestBp) {
+                highestBp = bp;
+            }
+        }
+        SetBloodPressureYearlyChart(highestBp, dataArray);
+    }
+
+
+    private void getHighestBloodPressureValueCustom(List<BloodPressureChartData> dataArray) {
+        float highestBp = Float.MIN_VALUE;
+
+        for (int i = 0; i < dataArray.size(); i++) {
+            float bp = dataArray.get(i).pulse_pressure_value;
+            if (bp > highestBp) {
+                highestBp = bp;
+            }
+        }
+        SetBloodPressureCustomChart(highestBp, dataArray);
+    }
+
+
+    //bs
+    private void getBloodSugarChartAllData(BloodCountChartRequest bloodCountChartRequest) {
+        String token = sharedPreferencesUtils.read("token", "");
+        if (!token.equals("")) {
+            ApiClient.INSTANCE.getApiService().getBloodSugarChartAllData(token, bloodCountChartRequest)
+                    .enqueue(new Callback<BloodSugarChartResponse>() {
+                        @Override
+                        public void onResponse(Call<BloodSugarChartResponse> call, Response<BloodSugarChartResponse> response) {
+                            if (response.isSuccessful()) {
+                                getBsHighestValueAll(response.body().getData());
+                            } else {
+                                showMessage("Failed");
+
+                            }
+                        }
+
+                        @Override
+                        public void onFailure(Call<BloodSugarChartResponse> call, Throwable t) {
+                            showMessage("Failed ...");
+
+                        }
+                    });
+
+        }
+    }
+
+    private void getBloodSugarChartTodayData(BloodCountChartRequest bloodCountChartRequest) {
+        String token = sharedPreferencesUtils.read("token", "");
+        if (!token.equals("")) {
+            ApiClient.INSTANCE.getApiService().getBloodSugarChartTodayData(token, bloodCountChartRequest)
+                    .enqueue(new Callback<BloodSugarChartResponse>() {
+                        @Override
+                        public void onResponse(Call<BloodSugarChartResponse> call, Response<BloodSugarChartResponse> response) {
+                            if (response.isSuccessful()) {
+                                getBsHighestValueToday(response.body().getData());
+                            } else {
+                                showMessage("Failed");
+
+                            }
+                        }
+
+                        @Override
+                        public void onFailure(Call<BloodSugarChartResponse> call, Throwable t) {
+                            showMessage("Failed ...");
+
+                        }
+                    });
+
+        }
+    }
+
+    private void getBloodSugarChartMonthlyData(BloodCountChartRequest bloodCountChartRequest) {
+        String token = sharedPreferencesUtils.read("token", "");
+        if (!token.equals("")) {
+            ApiClient.INSTANCE.getApiService().getBloodSugarChartMonthlyData(token, bloodCountChartRequest)
+                    .enqueue(new Callback<BloodSugarChartResponse>() {
+                        @Override
+                        public void onResponse(Call<BloodSugarChartResponse> call, Response<BloodSugarChartResponse> response) {
+                            if (response.isSuccessful()) {
+                                getBsHighestValueMonth(response.body().getData());
+                            } else {
+                                showMessage("Failed");
+
+                            }
+                        }
+
+                        @Override
+                        public void onFailure(Call<BloodSugarChartResponse> call, Throwable t) {
+                            showMessage("Failed ...");
+
+                        }
+                    });
+
+        }
+    }
+
+    private void getBloodSugarChartYearlyData(BloodCountChartRequest bloodCountChartRequest) {
+        String token = sharedPreferencesUtils.read("token", "");
+        if (!token.equals("")) {
+            ApiClient.INSTANCE.getApiService().getBloodSugarChartYearlyData(token, bloodCountChartRequest)
+                    .enqueue(new Callback<BloodSugarChartResponse>() {
+                        @Override
+                        public void onResponse(Call<BloodSugarChartResponse> call, Response<BloodSugarChartResponse> response) {
+                            if (response.isSuccessful()) {
+                                getBsHighestValueYear(response.body().getData());
+                            } else {
+                                showMessage("Failed");
+
+                            }
+                        }
+
+                        @Override
+                        public void onFailure(Call<BloodSugarChartResponse> call, Throwable t) {
+                            showMessage("Failed ...");
+
+                        }
+                    });
+
+        }
+    }
+
+    private void getBloodSugarChartCustomData(BloodCountChartRequest bloodCountChartRequest) {
+        String token = sharedPreferencesUtils.read("token", "");
+        if (!token.equals("")) {
+            ApiClient.INSTANCE.getApiService().getBloodSugarChartCustomData(token, bloodCountChartRequest)
+                    .enqueue(new Callback<BloodSugarChartResponse>() {
+                        @Override
+                        public void onResponse(Call<BloodSugarChartResponse> call, Response<BloodSugarChartResponse> response) {
+                            if (response.isSuccessful()) {
+                                getBsHighestValueCustom(response.body().getData());
+                            } else {
+                                showMessage("Failed");
+
+                            }
+                        }
+
+                        @Override
+                        public void onFailure(Call<BloodSugarChartResponse> call, Throwable t) {
+                            showMessage("Failed ...");
+
+                        }
+                    });
+
+        }
+    }
+
+    private void getBsHighestValueAll(List<BloodSugarChartData> dataArray) {
+        float highestSugar = Float.MIN_VALUE;
+
+        for (int i = 0; i < dataArray.size(); i++) {
+            float max = dataArray.get(i).sugar_level;
+            if (max > highestSugar) {
+                highestSugar = max;
+            }
+        }
+        SetBloodSugarAllChart(highestSugar, dataArray);
+    }
+
+    private void getBsHighestValueToday(List<BloodSugarChartData> dataArray) {
+
+
+        float highestSugar = Float.MIN_VALUE;
+
+        for (int i = 0; i < dataArray.size(); i++) {
+            float max = dataArray.get(i).sugar_level;
+            if (max > highestSugar) {
+                highestSugar = max;
+            }
+        }
+
+        SetBloodSugarTodayChart(highestSugar, dataArray);
+    }
+
+    private void getBsHighestValueMonth(List<BloodSugarChartData> dataArray) {
+        float highestSugar = Float.MIN_VALUE;
+
+        for (int i = 0; i < dataArray.size(); i++) {
+            float max = dataArray.get(i).sugar_level;
+            if (max > highestSugar) {
+                highestSugar = max;
+            }
+        }
+        SetBloodSugarMonthlyChart(highestSugar, dataArray);
+    }
+
+
+    private void getBsHighestValueYear(List<BloodSugarChartData> dataArray) {
+        float highestSugar = Float.MIN_VALUE;
+
+        for (int i = 0; i < dataArray.size(); i++) {
+            float max = dataArray.get(i).sugar_level;
+            if (max > highestSugar) {
+                highestSugar = max;
+            }
+        }
+        SetBloodSugarYearlyChart(highestSugar, dataArray);
+    }
+
+
+    private void getBsHighestValueCustom(List<BloodSugarChartData> dataArray) {
+        float highestSugar = Float.MIN_VALUE;
+
+        for (int i = 0; i < dataArray.size(); i++) {
+            float max = dataArray.get(i).sugar_level;
+            if (max > highestSugar) {
+                highestSugar = max;
+            }
+        }
+        SetBloodSugarCustomChart(highestSugar, dataArray);
     }
 
 

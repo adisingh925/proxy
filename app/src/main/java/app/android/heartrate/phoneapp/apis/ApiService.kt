@@ -151,35 +151,35 @@ interface ApiService {
     @POST("getBloodPressureChartAllData")
     fun getBloodPressureChartAllData(
         @Header("Authorization") bearerToken: String,
-        @Body bloodPressureChartRequest: BloodPressureChartRequest
+        @Body bloodPressureChartRequest: BloodCountChartRequest
     ): Call<BloodPressureChartResponse>
 
 
     @POST("getBloodPressureChartTodayData")
     fun getBloodPressureChartTodayData(
         @Header("Authorization") bearerToken: String,
-        @Body bloodPressureChartRequest: BloodPressureChartRequest
+        @Body bloodPressureChartRequest: BloodCountChartRequest
     ): Call<BloodPressureChartResponse>
 
 
     @POST("getBloodPressureChartMonthlyData")
     fun getBloodPressureChartMonthlyData(
         @Header("Authorization") bearerToken: String,
-        @Body bloodPressureChartRequest: BloodPressureChartRequest
+        @Body bloodPressureChartRequest: BloodCountChartRequest
     ): Call<BloodPressureChartResponse>
 
 
     @POST("getBloodPressureChartYearlyData")
     fun getBloodPressureChartYearlyData(
         @Header("Authorization") bearerToken: String,
-        @Body bloodPressureChartRequest: BloodPressureChartRequest
+        @Body bloodPressureChartRequest: BloodCountChartRequest
     ): Call<BloodPressureChartResponse>
 
 
     @POST("getBloodPressureChartCustomData")
     fun getBloodPressureChartCustomData(
         @Header("Authorization") bearerToken: String,
-        @Body bloodPressureChartRequest: BloodPressureChartRequest
+        @Body bloodPressureChartRequest: BloodCountChartRequest
     ): Call<BloodPressureChartResponse>
 
     @POST("saveBloodSugar")
@@ -208,35 +208,35 @@ interface ApiService {
     @POST("getBloodSugarChartAllData")
     fun getBloodSugarChartAllData(
         @Header("Authorization") bearerToken: String,
-        @Body bloodSugarChartRequest: BloodSugarChartRequest
+        @Body bloodSugarChartRequest: BloodCountChartRequest
     ): Call<BloodSugarChartResponse>
 
 
     @POST("getBloodSugarChartTodayData")
     fun getBloodSugarChartTodayData(
         @Header("Authorization") bearerToken: String,
-        @Body bloodSugarChartRequest: BloodSugarChartRequest
+        @Body bloodSugarChartRequest: BloodCountChartRequest
     ): Call<BloodSugarChartResponse>
 
 
     @POST("getBloodSugarChartMonthlyData")
     fun getBloodSugarChartMonthlyData(
         @Header("Authorization") bearerToken: String,
-        @Body bloodSugarChartRequest: BloodSugarChartRequest
+        @Body bloodSugarChartRequest: BloodCountChartRequest
     ): Call<BloodSugarChartResponse>
 
 
     @POST("getBloodSugarChartYearlyData")
     fun getBloodSugarChartYearlyData(
         @Header("Authorization") bearerToken: String,
-        @Body bloodSugarChartRequest: BloodSugarChartRequest
+        @Body bloodSugarChartRequest: BloodCountChartRequest
     ): Call<BloodSugarChartResponse>
 
 
     @POST("getBloodSugarChartCustomData")
     fun getBloodSugarChartCustomData(
         @Header("Authorization") bearerToken: String,
-        @Body bloodSugarChartRequest: BloodSugarChartRequest
+        @Body bloodSugarChartRequest: BloodCountChartRequest
     ): Call<BloodSugarChartResponse>
 
 
