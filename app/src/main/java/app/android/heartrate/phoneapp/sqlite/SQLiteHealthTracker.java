@@ -3060,32 +3060,43 @@ public class SQLiteHealthTracker {
         }
     }
 
-    public int GetMaxBMIValue(int i) {
-        Exception e;
-        int i2 = 0;
-        try {
-            sqLiteDatabase = sqLiteHelper.getReadableDatabase();
-            Cursor rawQuery = sqLiteDatabase.rawQuery("SELECT MAX(bmi) FROM bmi_data WHERE user_id=" + i, null);
-            if (rawQuery == null || rawQuery.getCount() <= 0 || !rawQuery.moveToFirst()) {
-                return 0;
+    public float GetMaxBMIValue(List<BMIChartData> list) {
+
+        float highestBmi = Float.MIN_VALUE;
+        for (int i = 0; i < list.size(); i++) {
+            float max = Float.valueOf(list.get(i).bmi);
+            if (max > highestBmi) {
+                highestBmi = max;
             }
-            int i3 = 0;
-            do {
-                try {
-                    i3 = rawQuery.getInt(0);
-                } catch (Exception e2) {
-                    e = e2;
-                    i2 = i3;
-                    e.printStackTrace();
-                    return i2;
-                }
-            } while (rawQuery.moveToNext());
-            return i3;
-        } catch (Exception e3) {
-            e = e3;
-            e.printStackTrace();
-            return i2;
         }
+
+        return highestBmi;
+//
+//        Exception e;
+//        int i2 = 0;
+//        try {
+//            sqLiteDatabase = sqLiteHelper.getReadableDatabase();
+//            Cursor rawQuery = sqLiteDatabase.rawQuery("SELECT MAX(bmi) FROM bmi_data WHERE user_id=" + i, null);
+//            if (rawQuery == null || rawQuery.getCount() <= 0 || !rawQuery.moveToFirst()) {
+//                return 0;
+//            }
+//            int i3 = 0;
+//            do {
+//                try {
+//                    i3 = rawQuery.getInt(0);
+//                } catch (Exception e2) {
+//                    e = e2;
+//                    i2 = i3;
+//                    e.printStackTrace();
+//                    return i2;
+//                }
+//            } while (rawQuery.moveToNext());
+//            return i3;
+//        } catch (Exception e3) {
+//            e = e3;
+//            e.printStackTrace();
+//            return i2;
+//        }
     }
 
     public int GetMaximumBMI() {
@@ -3795,51 +3806,67 @@ public class SQLiteHealthTracker {
         return arrayList;
     }
 
-    public int GetMaxBodyTempValue(int i) {
-        int i2;
-        int i3;
-        int i4;
-        int[] iArr = new int[3];
-        try {
-            sqLiteDatabase = sqLiteHelper.getReadableDatabase();
-            Cursor rawQuery = sqLiteDatabase.rawQuery("SELECT MAX(celsius) FROM body_temp_data WHERE user_id=" + i, null);
-            if (rawQuery == null || rawQuery.getCount() <= 0 || !rawQuery.moveToFirst()) {
-                i2 = 0;
-            } else {
-                do {
-                    i2 = rawQuery.getInt(0);
-                } while (rawQuery.moveToNext());
+    public float GetMaxBodyTempValue(List<BodyTempChartAllData> list) {
+
+
+        float highestSugar = Float.MIN_VALUE;
+
+        for (int i = 0; i < list.size(); i++) {
+            float maxCelsius = Float.parseFloat(list.get(i).celsius);
+            float maxFahrenheit = Float.parseFloat(list.get(i).fahrenheit);
+            float maxPulse = Float.parseFloat(list.get(i).pulse);
+            float max = maxCelsius + maxFahrenheit + maxPulse;
+            if (max > highestSugar) {
+                highestSugar = max;
             }
-            Cursor rawQuery2 = sqLiteDatabase.rawQuery("SELECT MAX(fahrenheit) FROM body_temp_data WHERE user_id=" + i, null);
-            if (rawQuery2 == null || rawQuery2.getCount() <= 0 || !rawQuery2.moveToFirst()) {
-                i3 = 0;
-            } else {
-                do {
-                    i3 = rawQuery2.getInt(0);
-                } while (rawQuery2.moveToNext());
-            }
-            Cursor rawQuery3 = sqLiteDatabase.rawQuery("SELECT MAX(pulse) FROM body_temp_data WHERE user_id=" + i, null);
-            if (rawQuery3 == null || rawQuery3.getCount() <= 0 || !rawQuery3.moveToFirst()) {
-                i4 = 0;
-            } else {
-                do {
-                    i4 = rawQuery3.getInt(0);
-                } while (rawQuery3.moveToNext());
-            }
-            iArr[0] = i2;
-            iArr[1] = i3;
-            iArr[2] = i4;
-            ArrayList arrayList = new ArrayList();
-            for (int i5 = 0; i5 < 3; i5++) {
-                arrayList.add(Integer.valueOf(iArr[i5]));
-            }
-            int intValue = ((Integer) Collections.max(arrayList)).intValue();
-            Log.e("Body Temp :", "Graph Max Y Axis :- " + intValue);
-            return intValue;
-        } catch (Exception e) {
-            e.printStackTrace();
-            return 0;
         }
+
+        return highestSugar;
+//
+//        int i2;
+//        int i3;
+//        int i4;
+//        int[] iArr = new int[3];
+//        try {
+//            sqLiteDatabase = sqLiteHelper.getReadableDatabase();
+//            Cursor rawQuery = sqLiteDatabase.rawQuery("SELECT MAX(celsius) FROM body_temp_data WHERE user_id=" + i, null);
+//            if (rawQuery == null || rawQuery.getCount() <= 0 || !rawQuery.moveToFirst()) {
+//                i2 = 0;
+//            } else {
+//                do {
+//                    i2 = rawQuery.getInt(0);
+//                } while (rawQuery.moveToNext());
+//            }
+//            Cursor rawQuery2 = sqLiteDatabase.rawQuery("SELECT MAX(fahrenheit) FROM body_temp_data WHERE user_id=" + i, null);
+//            if (rawQuery2 == null || rawQuery2.getCount() <= 0 || !rawQuery2.moveToFirst()) {
+//                i3 = 0;
+//            } else {
+//                do {
+//                    i3 = rawQuery2.getInt(0);
+//                } while (rawQuery2.moveToNext());
+//            }
+//            Cursor rawQuery3 = sqLiteDatabase.rawQuery("SELECT MAX(pulse) FROM body_temp_data WHERE user_id=" + i, null);
+//            if (rawQuery3 == null || rawQuery3.getCount() <= 0 || !rawQuery3.moveToFirst()) {
+//                i4 = 0;
+//            } else {
+//                do {
+//                    i4 = rawQuery3.getInt(0);
+//                } while (rawQuery3.moveToNext());
+//            }
+//            iArr[0] = i2;
+//            iArr[1] = i3;
+//            iArr[2] = i4;
+//            ArrayList arrayList = new ArrayList();
+//            for (int i5 = 0; i5 < 3; i5++) {
+//                arrayList.add(Integer.valueOf(iArr[i5]));
+//            }
+//            int intValue = ((Integer) Collections.max(arrayList)).intValue();
+//            Log.e("Body Temp :", "Graph Max Y Axis :- " + intValue);
+//            return intValue;
+//        } catch (Exception e) {
+//            e.printStackTrace();
+//            return 0;
+//        }
     }
 
     public void deleteDataByID(int i) {
@@ -6010,32 +6037,46 @@ public class SQLiteHealthTracker {
         return i + 50;
     }
 
-    public int GetMaxWeightValue(int i) {
-        Exception e;
-        int i2 = 0;
-        try {
-            sqLiteDatabase = sqLiteHelper.getReadableDatabase();
-            Cursor rawQuery = sqLiteDatabase.rawQuery("SELECT MAX(weight) FROM weight_data WHERE user_id=" + i, null);
-            if (rawQuery == null || rawQuery.getCount() <= 0 || !rawQuery.moveToFirst()) {
-                return 0;
+    public float GetMaxWeightValue(List<WeightChartData> data) {
+
+
+        float highestWeight = Float.MIN_VALUE;
+
+        for (int i = 0; i < data.size(); i++) {
+            float wbc = data.get(i).weight;
+            if (wbc > highestWeight) {
+                highestWeight = wbc;
             }
-            int i3 = 0;
-            do {
-                try {
-                    i3 = rawQuery.getInt(0);
-                } catch (Exception e2) {
-                    e = e2;
-                    i2 = i3;
-                    e.printStackTrace();
-                    return i2;
-                }
-            } while (rawQuery.moveToNext());
-            return i3;
-        } catch (Exception e3) {
-            e = e3;
-            e.printStackTrace();
-            return i2;
         }
+
+        return highestWeight;
+//        List<WeightChartData> data
+//
+//        Exception e;
+//        int i2 = 0;
+//        try {
+//            sqLiteDatabase = sqLiteHelper.getReadableDatabase();
+//            Cursor rawQuery = sqLiteDatabase.rawQuery("SELECT MAX(weight) FROM weight_data WHERE user_id=" + i, null);
+//            if (rawQuery == null || rawQuery.getCount() <= 0 || !rawQuery.moveToFirst()) {
+//                return 0;
+//            }
+//            int i3 = 0;
+//            do {
+//                try {
+//                    i3 = rawQuery.getInt(0);
+//                } catch (Exception e2) {
+//                    e = e2;
+//                    i2 = i3;
+//                    e.printStackTrace();
+//                    return i2;
+//                }
+//            } while (rawQuery.moveToNext());
+//            return i3;
+//        } catch (Exception e3) {
+//            e = e3;
+//            e.printStackTrace();
+//            return i2;
+//        }
     }
 
     public void deleteWeightByID(int i) {
