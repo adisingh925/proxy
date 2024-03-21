@@ -1,10 +1,13 @@
 package app.android.heartrate.phoneapp.model.classes;
 
+import com.google.gson.annotations.SerializedName;
+
 public class BloodSugarChartData {
     public float blood_ADAG = 0.0f;
     public float blood_DCCT = 0.0f;
     public String current_status = "";
     public String date = "";
+    @SerializedName("date_time")
     public String dateTime = "";
     public int day = 0;
     public float hemoglobin_level = 0.0f;

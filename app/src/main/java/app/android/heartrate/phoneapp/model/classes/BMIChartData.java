@@ -1,10 +1,13 @@
 package app.android.heartrate.phoneapp.model.classes;
 
+import com.google.gson.annotations.SerializedName;
+
 public class BMIChartData {
     public String age = "";
     public String birth_date = "";
     public String bmi = "";
     public String date = "";
+    @SerializedName("date_time")
     public String dateTime = "";
     public int day = 0;
     public String height = "";

@@ -1,7 +1,10 @@
 package app.android.heartrate.phoneapp.model.classes;
 
+import com.google.gson.annotations.SerializedName;
+
 public class WeightChartData {
     public String date = "";
+    @SerializedName("date_time")
     public String dateTime = "";
     public int day = 0;
     public int hour = 0;

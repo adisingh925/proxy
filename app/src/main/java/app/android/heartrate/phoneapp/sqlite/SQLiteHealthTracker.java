@@ -1268,41 +1268,55 @@ public class SQLiteHealthTracker {
         return arrayList;
     }
 
-    public int GetMaxBloodPressureValue(int i) {
-        int i2;
-        int i3;
-        int[] iArr = new int[2];
-        try {
-            sqLiteDatabase = sqLiteHelper.getReadableDatabase();
-            Cursor rawQuery = sqLiteDatabase.rawQuery("SELECT MAX(systolic) FROM blood_pressure_data WHERE user_id=" + i, null);
-            if (rawQuery == null || rawQuery.getCount() <= 0 || !rawQuery.moveToFirst()) {
-                i2 = 0;
-            } else {
-                do {
-                    i2 = rawQuery.getInt(0);
-                } while (rawQuery.moveToNext());
+    public float GetMaxBloodPressureValue(List<BloodPressureChartData> data) {
+
+        float highestWeight = Float.MIN_VALUE;
+
+        for (int i = 0; i < data.size(); i++) {
+            float s = data.get(i).systolic_value;
+            float d = data.get(i).diastolic_value;
+            float max = s+d;
+            if (max > highestWeight) {
+                highestWeight = max;
             }
-            Cursor rawQuery2 = sqLiteDatabase.rawQuery("SELECT MAX(diastolic) FROM blood_pressure_data WHERE user_id=" + i, null);
-            if (rawQuery2 == null || rawQuery2.getCount() <= 0 || !rawQuery2.moveToFirst()) {
-                i3 = 0;
-            } else {
-                do {
-                    i3 = rawQuery2.getInt(0);
-                } while (rawQuery2.moveToNext());
-            }
-            iArr[0] = i2;
-            iArr[1] = i3;
-            ArrayList arrayList = new ArrayList();
-            for (int i4 = 0; i4 < 2; i4++) {
-                arrayList.add(Integer.valueOf(iArr[i4]));
-            }
-            int intValue = ((Integer) Collections.max(arrayList)).intValue();
-            Log.e("Blood Pressure :", "Graph Max Y Axis :- " + intValue);
-            return intValue;
-        } catch (Exception e) {
-            e.printStackTrace();
-            return 0;
         }
+
+        return highestWeight;
+
+//        int i2;
+//        int i3;
+//        int[] iArr = new int[2];
+//        try {
+//            sqLiteDatabase = sqLiteHelper.getReadableDatabase();
+//            Cursor rawQuery = sqLiteDatabase.rawQuery("SELECT MAX(systolic) FROM blood_pressure_data WHERE user_id=" + i, null);
+//            if (rawQuery == null || rawQuery.getCount() <= 0 || !rawQuery.moveToFirst()) {
+//                i2 = 0;
+//            } else {
+//                do {
+//                    i2 = rawQuery.getInt(0);
+//                } while (rawQuery.moveToNext());
+//            }
+//            Cursor rawQuery2 = sqLiteDatabase.rawQuery("SELECT MAX(diastolic) FROM blood_pressure_data WHERE user_id=" + i, null);
+//            if (rawQuery2 == null || rawQuery2.getCount() <= 0 || !rawQuery2.moveToFirst()) {
+//                i3 = 0;
+//            } else {
+//                do {
+//                    i3 = rawQuery2.getInt(0);
+//                } while (rawQuery2.moveToNext());
+//            }
+//            iArr[0] = i2;
+//            iArr[1] = i3;
+//            ArrayList arrayList = new ArrayList();
+//            for (int i4 = 0; i4 < 2; i4++) {
+//                arrayList.add(Integer.valueOf(iArr[i4]));
+//            }
+//            int intValue = ((Integer) Collections.max(arrayList)).intValue();
+//            Log.e("Blood Pressure :", "Graph Max Y Axis :- " + intValue);
+//            return intValue;
+//        } catch (Exception e) {
+//            e.printStackTrace();
+//            return 0;
+//        }
     }
 
     public List GetBloodPressureDataByUserID(int i) {
@@ -4470,61 +4484,79 @@ public class SQLiteHealthTracker {
         }
     }
 
-    public int GetMaxCholesterolValue(int i) {
-        int i2;
-        int i3;
-        int i4;
-        int i5;
-        int[] iArr = new int[4];
-        try {
-            sqLiteDatabase = sqLiteHelper.getReadableDatabase();
-            Cursor rawQuery = sqLiteDatabase.rawQuery("SELECT MAX(cholesterol) FROM cholesterol_data WHERE user_id=" + i, null);
-            if (rawQuery == null || rawQuery.getCount() <= 0 || !rawQuery.moveToFirst()) {
-                i2 = 0;
-            } else {
-                do {
-                    i2 = rawQuery.getInt(0);
-                } while (rawQuery.moveToNext());
+    public float GetMaxCholesterolValue(List<CholesterolChartData> list) {
+
+
+        float highVlaue = Float.MIN_VALUE;
+
+        for (int i = 0; i < list.size(); i++) {
+            float ch = list.get(i).cholesterol_value;
+            float hdl = list.get(i).hdl_value;
+            float ldl = list.get(i).ldl_value;
+            float tri = list.get(i).triglyceride_value;
+            float max = ch+hdl+ldl+tri;
+            if (max > highVlaue) {
+                highVlaue = max;
             }
-            Cursor rawQuery2 = sqLiteDatabase.rawQuery("SELECT MAX(HDL) FROM cholesterol_data WHERE user_id=" + i, null);
-            if (rawQuery2 == null || rawQuery2.getCount() <= 0 || !rawQuery2.moveToFirst()) {
-                i3 = 0;
-            } else {
-                do {
-                    i3 = rawQuery2.getInt(0);
-                } while (rawQuery2.moveToNext());
-            }
-            Cursor rawQuery3 = sqLiteDatabase.rawQuery("SELECT MAX(LDL) FROM cholesterol_data WHERE user_id=" + i, null);
-            if (rawQuery3 == null || rawQuery3.getCount() <= 0 || !rawQuery3.moveToFirst()) {
-                i4 = 0;
-            } else {
-                do {
-                    i4 = rawQuery3.getInt(0);
-                } while (rawQuery3.moveToNext());
-            }
-            Cursor rawQuery4 = sqLiteDatabase.rawQuery("SELECT MAX(triglyceride) FROM cholesterol_data WHERE user_id=" + i, null);
-            if (rawQuery4 == null || rawQuery4.getCount() <= 0 || !rawQuery4.moveToFirst()) {
-                i5 = 0;
-            } else {
-                do {
-                    i5 = rawQuery4.getInt(0);
-                } while (rawQuery4.moveToNext());
-            }
-            iArr[0] = i2;
-            iArr[1] = i3;
-            iArr[2] = i4;
-            iArr[3] = i5;
-            ArrayList arrayList = new ArrayList();
-            for (int i6 = 0; i6 < 4; i6++) {
-                arrayList.add(Integer.valueOf(iArr[i6]));
-            }
-            int intValue = ((Integer) Collections.max(arrayList)).intValue();
-            Log.e("Cholesterol :", "Graph Max Y Axis :- " + intValue);
-            return intValue;
-        } catch (Exception e) {
-            e.printStackTrace();
-            return 0;
         }
+
+        return highVlaue;
+//
+//
+//        int i2;
+//        int i3;
+//        int i4;
+//        int i5;
+//        int[] iArr = new int[4];
+//        try {
+//            sqLiteDatabase = sqLiteHelper.getReadableDatabase();
+//            Cursor rawQuery = sqLiteDatabase.rawQuery("SELECT MAX(cholesterol) FROM cholesterol_data WHERE user_id=" + i, null);
+//            if (rawQuery == null || rawQuery.getCount() <= 0 || !rawQuery.moveToFirst()) {
+//                i2 = 0;
+//            } else {
+//                do {
+//                    i2 = rawQuery.getInt(0);
+//                } while (rawQuery.moveToNext());
+//            }
+//            Cursor rawQuery2 = sqLiteDatabase.rawQuery("SELECT MAX(HDL) FROM cholesterol_data WHERE user_id=" + i, null);
+//            if (rawQuery2 == null || rawQuery2.getCount() <= 0 || !rawQuery2.moveToFirst()) {
+//                i3 = 0;
+//            } else {
+//                do {
+//                    i3 = rawQuery2.getInt(0);
+//                } while (rawQuery2.moveToNext());
+//            }
+//            Cursor rawQuery3 = sqLiteDatabase.rawQuery("SELECT MAX(LDL) FROM cholesterol_data WHERE user_id=" + i, null);
+//            if (rawQuery3 == null || rawQuery3.getCount() <= 0 || !rawQuery3.moveToFirst()) {
+//                i4 = 0;
+//            } else {
+//                do {
+//                    i4 = rawQuery3.getInt(0);
+//                } while (rawQuery3.moveToNext());
+//            }
+//            Cursor rawQuery4 = sqLiteDatabase.rawQuery("SELECT MAX(triglyceride) FROM cholesterol_data WHERE user_id=" + i, null);
+//            if (rawQuery4 == null || rawQuery4.getCount() <= 0 || !rawQuery4.moveToFirst()) {
+//                i5 = 0;
+//            } else {
+//                do {
+//                    i5 = rawQuery4.getInt(0);
+//                } while (rawQuery4.moveToNext());
+//            }
+//            iArr[0] = i2;
+//            iArr[1] = i3;
+//            iArr[2] = i4;
+//            iArr[3] = i5;
+//            ArrayList arrayList = new ArrayList();
+//            for (int i6 = 0; i6 < 4; i6++) {
+//                arrayList.add(Integer.valueOf(iArr[i6]));
+//            }
+//            int intValue = ((Integer) Collections.max(arrayList)).intValue();
+//            Log.e("Cholesterol :", "Graph Max Y Axis :- " + intValue);
+//            return intValue;
+//        } catch (Exception e) {
+//            e.printStackTrace();
+//            return 0;
+//        }
     }
 
     public void deleteCholesterolByID(int i) {

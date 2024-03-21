@@ -802,7 +802,7 @@ public class TrackerStatisticsActivity extends AppCompatActivity {
         return arrayList2.subList(0, arrayList.size());
     }
 
-    private void SetBloodPressureAllChart(float MaxBloodPressure, List<BloodPressureChartData> bloodPressureChartDataList) {
+    private void SetBloodPressureAllChart(List<BloodPressureChartData> bloodPressureChartDataList) {
         Calendar instance = Calendar.getInstance();
         instance.setTime(new Date());
         instance.get(1);
@@ -880,14 +880,13 @@ public class TrackerStatisticsActivity extends AppCompatActivity {
         axisLeft.setTextSize(this.graph_left_axis_text_size);
         axisLeft.setTextColor(getResources().getColor(R.color.axis_label_color));
         axisLeft.setDrawGridLines(false);
-//        axisLeft.setAxisMaximum((float) (this.SQLite_health_tracker.GetMaxBloodPressureValue(i) + this.extra_y_axis_value));
-        axisLeft.setAxisMaximum((float) (MaxBloodPressure + this.extra_y_axis_value));
+        axisLeft.setAxisMaximum((float) (this.SQLite_health_tracker.GetMaxBloodPressureValue(bloodPressureChartDataList) + this.extra_y_axis_value));
         this.graph_view_all.getAxisRight().setEnabled(false);
         SetBloodPressureBarWidth(this.graph_view_all, barData, arrayList);
         this.graph_view_all.invalidate();
     }
 
-    private void SetBloodPressureTodayChart(float MaxBloodPressure, List<BloodPressureChartData> bloodPressureChartDataList) {
+    private void SetBloodPressureTodayChart(List<BloodPressureChartData> bloodPressureChartDataList) {
         Calendar instance = Calendar.getInstance();
         instance.setTime(new Date());
         int i2 = instance.get(1);
@@ -968,13 +967,14 @@ public class TrackerStatisticsActivity extends AppCompatActivity {
         axisLeft.setTextSize(this.graph_left_axis_text_size);
         axisLeft.setTextColor(getResources().getColor(R.color.axis_label_color));
         axisLeft.setDrawGridLines(false);
-        axisLeft.setAxisMaximum((float) (MaxBloodPressure + this.extra_y_axis_value));
+        axisLeft.setAxisMaximum((float) (this.SQLite_health_tracker.GetMaxBloodPressureValue(bloodPressureChartDataList) + this.extra_y_axis_value));
+        //axisLeft.setAxisMaximum((float) (MaxBloodPressure + this.extra_y_axis_value));
         this.graph_view_today.getAxisRight().setEnabled(false);
         SetBloodPressureBarWidth(this.graph_view_today, barData, arrayList);
         this.graph_view_today.invalidate();
     }
 
-    private void SetBloodPressureMonthlyChart(float MaxBloodPressure, List<BloodPressureChartData> bloodPressureChartDataList) {
+    private void SetBloodPressureMonthlyChart(List<BloodPressureChartData> bloodPressureChartDataList) {
         Calendar instance = Calendar.getInstance();
         instance.setTime(new Date());
         int i2 = instance.get(1);
@@ -1060,14 +1060,13 @@ public class TrackerStatisticsActivity extends AppCompatActivity {
         axisLeft.setTextSize(this.graph_left_axis_text_size);
         axisLeft.setTextColor(getResources().getColor(R.color.axis_label_color));
         axisLeft.setDrawGridLines(false);
-        axisLeft.setAxisMaximum((float) (MaxBloodPressure + this.extra_y_axis_value));
-//        axisLeft.setAxisMaximum((float) (this.SQLite_health_tracker.GetMaxBloodPressureValue(i) + this.extra_y_axis_value));
+        axisLeft.setAxisMaximum((float) (this.SQLite_health_tracker.GetMaxBloodPressureValue(bloodPressureChartDataList) + this.extra_y_axis_value));
         this.graph_view_monthly.getAxisRight().setEnabled(false);
         SetBloodPressureBarWidth(this.graph_view_monthly, barData, arrayList);
         this.graph_view_monthly.invalidate();
     }
 
-    private void SetBloodPressureYearlyChart(float MaxBloodPressure, List<BloodPressureChartData> bloodPressureChartDataList) {
+    private void SetBloodPressureYearlyChart(List<BloodPressureChartData> bloodPressureChartDataList) {
         Calendar instance = Calendar.getInstance();
         instance.setTime(new Date());
         int i2 = instance.get(1);
@@ -1154,13 +1153,13 @@ public class TrackerStatisticsActivity extends AppCompatActivity {
         axisLeft.setTextSize(this.graph_left_axis_text_size);
         axisLeft.setTextColor(getResources().getColor(R.color.axis_label_color));
         axisLeft.setDrawGridLines(false);
-        axisLeft.setAxisMaximum((float) (MaxBloodPressure + this.extra_y_axis_value));
+        axisLeft.setAxisMaximum((float) (this.SQLite_health_tracker.GetMaxBloodPressureValue(bloodPressureChartDataList) + this.extra_y_axis_value));
         this.graph_view_yearly.getAxisRight().setEnabled(false);
         SetBloodPressureBarWidth(this.graph_view_yearly, barData, arrayList);
         this.graph_view_yearly.invalidate();
     }
 
-    private void SetBloodPressureCustomChart(float MaxBloodPressure, List<BloodPressureChartData> bloodPressureChartDataList) {
+    private void SetBloodPressureCustomChart(List<BloodPressureChartData> bloodPressureChartDataList) {
         ArrayList<BloodPressureChartData> arrayList = (ArrayList) bloodPressureChartDataList;
 //                this.SQLite_health_tracker.GetBloodPressureChartCustomData(i, this.custom_start_date, this.custom_end_date);
         if (arrayList.size() == 0) {
@@ -1242,7 +1241,8 @@ public class TrackerStatisticsActivity extends AppCompatActivity {
         axisLeft.setTextSize(this.graph_left_axis_text_size);
         axisLeft.setTextColor(getResources().getColor(R.color.axis_label_color));
         axisLeft.setDrawGridLines(false);
-        axisLeft.setAxisMaximum((float) (MaxBloodPressure + this.extra_y_axis_value));
+        axisLeft.setAxisMaximum((float) (this.SQLite_health_tracker.GetMaxBloodPressureValue(bloodPressureChartDataList) + this.extra_y_axis_value));
+       // axisLeft.setAxisMaximum((float) (MaxBloodPressure + this.extra_y_axis_value));
         this.graph_view_custom.getAxisRight().setEnabled(false);
         SetBloodPressureBarWidth(this.graph_view_custom, barData, arrayList);
         this.graph_view_custom.invalidate();
@@ -2058,6 +2058,7 @@ public class TrackerStatisticsActivity extends AppCompatActivity {
         this.graph_view_yearly.invalidate();
     }
 
+
     private void SetBMICustomChart(List<BMIChartData> list) {
         ArrayList<BMIChartData> arrayList = (ArrayList) list;
 //                this.SQLite_health_tracker.GetBMIChartCustomData(i, this.custom_start_date, this.custom_end_date);
@@ -2334,7 +2335,7 @@ public class TrackerStatisticsActivity extends AppCompatActivity {
         ArrayList arrayList2 = new ArrayList();
         for (int i4 = 0; i4 < arrayList.size(); i4++) {
             try {
-                arrayList2.add(new SimpleDateFormat("HH:mm").format(new SimpleDateFormat("dd/MM/yyyy hh:mm:ss a").parse(String.valueOf(arrayList.get(i4).dateTime))).trim());
+                arrayList2.add(new SimpleDateFormat("HH:mm").format(new SimpleDateFormat("yyyy-MM-dd hh:mm:ss a").parse(String.valueOf(arrayList.get(i4).dateTime))).trim());
             } catch (ParseException e) {
                 e.printStackTrace();
             }
@@ -2429,7 +2430,7 @@ public class TrackerStatisticsActivity extends AppCompatActivity {
         for (int i3 = 0; i3 < arrayList.size(); i3++) {
             try {
                 arrayList.get(i3).name.trim();
-                Date parse = new SimpleDateFormat("dd/MM/yyyy hh:mm:ss a").parse(String.valueOf(arrayList.get(i3).dateTime));
+                Date parse = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss a").parse(String.valueOf(arrayList.get(i3).dateTime));
                 SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd-MM-yy");
                 SimpleDateFormat simpleDateFormat2 = new SimpleDateFormat("HH:mm");
                 String trim = simpleDateFormat.format(parse).trim();
@@ -2529,7 +2530,7 @@ public class TrackerStatisticsActivity extends AppCompatActivity {
         ArrayList arrayList2 = new ArrayList();
         for (int i3 = 0; i3 < arrayList.size(); i3++) {
             try {
-                Date parse = new SimpleDateFormat("dd/MM/yyyy hh:mm:ss a").parse(String.valueOf(arrayList.get(i3).dateTime));
+                Date parse = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss a").parse(String.valueOf(arrayList.get(i3).dateTime));
                 SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd-MM-yy");
                 SimpleDateFormat simpleDateFormat2 = new SimpleDateFormat("HH:mm");
                 String trim = simpleDateFormat.format(parse).trim();
@@ -2624,7 +2625,7 @@ public class TrackerStatisticsActivity extends AppCompatActivity {
         ArrayList arrayList2 = new ArrayList();
         for (int i2 = 0; i2 < arrayList.size(); i2++) {
             try {
-                Date parse = new SimpleDateFormat("dd/MM/yyyy hh:mm:ss a").parse(String.valueOf(arrayList.get(i2).dateTime));
+                Date parse = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss a").parse(String.valueOf(arrayList.get(i2).dateTime));
                 SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd-MM-yyyy");
                 SimpleDateFormat simpleDateFormat2 = new SimpleDateFormat("HH:mm a");
                 String trim = simpleDateFormat.format(parse).trim();
@@ -2698,7 +2699,7 @@ public class TrackerStatisticsActivity extends AppCompatActivity {
         return arrayList2.subList(0, arrayList.size());
     }
 
-    private void SetCholesterolAllChart(float i, List<CholesterolChartData> list) {
+    private void SetCholesterolAllChart(List<CholesterolChartData> list) {
         Calendar instance = Calendar.getInstance();
         instance.setTime(new Date());
         instance.get(1);
@@ -2790,13 +2791,13 @@ public class TrackerStatisticsActivity extends AppCompatActivity {
         axisLeft.setTextSize(this.graph_left_axis_text_size);
         axisLeft.setTextColor(getResources().getColor(R.color.axis_label_color));
         axisLeft.setDrawGridLines(false);
-        axisLeft.setAxisMaximum((float) (i + this.extra_y_axis_value));
+        axisLeft.setAxisMaximum((float) (SQLite_health_tracker.GetMaxCholesterolValue(list) + this.extra_y_axis_value));
         this.graph_view_all.getAxisRight().setEnabled(false);
         SetCholesterolBarWidth(this.graph_view_all, barData, arrayList);
         this.graph_view_all.invalidate();
     }
 
-    private void SetCholesterolTodayChart(float i, List<CholesterolChartData> list) {
+    private void SetCholesterolTodayChart(List<CholesterolChartData> list) {
         Calendar instance = Calendar.getInstance();
         instance.setTime(new Date());
         int i2 = instance.get(1);
@@ -2892,13 +2893,13 @@ public class TrackerStatisticsActivity extends AppCompatActivity {
         axisLeft.setTextSize(this.graph_left_axis_text_size);
         axisLeft.setTextColor(getResources().getColor(R.color.axis_label_color));
         axisLeft.setDrawGridLines(false);
-        axisLeft.setAxisMaximum((float) (i + this.extra_y_axis_value));
+        axisLeft.setAxisMaximum((float) (SQLite_health_tracker.GetMaxCholesterolValue(list) + this.extra_y_axis_value));
         this.graph_view_today.getAxisRight().setEnabled(false);
         SetCholesterolBarWidth(this.graph_view_today, barData, arrayList);
         this.graph_view_today.invalidate();
     }
 
-    private void SetCholesterolMonthlyChart(float i, List<CholesterolChartData> list) {
+    private void SetCholesterolMonthlyChart(List<CholesterolChartData> list) {
         Calendar instance = Calendar.getInstance();
         instance.setTime(new Date());
         int i2 = instance.get(1);
@@ -2999,13 +3000,13 @@ public class TrackerStatisticsActivity extends AppCompatActivity {
         axisLeft.setTextSize(this.graph_left_axis_text_size);
         axisLeft.setTextColor(getResources().getColor(R.color.axis_label_color));
         axisLeft.setDrawGridLines(false);
-        axisLeft.setAxisMaximum((float) (i + this.extra_y_axis_value));
+        axisLeft.setAxisMaximum((float) (SQLite_health_tracker.GetMaxCholesterolValue(list) + this.extra_y_axis_value));
         this.graph_view_monthly.getAxisRight().setEnabled(false);
         SetCholesterolBarWidth(this.graph_view_monthly, barData, arrayList);
         this.graph_view_monthly.invalidate();
     }
 
-    private void SetCholesterolYearlyChart(float i, List<CholesterolChartData> list) {
+    private void SetCholesterolYearlyChart(List<CholesterolChartData> list) {
         Calendar instance = Calendar.getInstance();
         instance.setTime(new Date());
         int i2 = instance.get(1);
@@ -3107,13 +3108,13 @@ public class TrackerStatisticsActivity extends AppCompatActivity {
         axisLeft.setTextSize(this.graph_left_axis_text_size);
         axisLeft.setTextColor(getResources().getColor(R.color.axis_label_color));
         axisLeft.setDrawGridLines(false);
-        axisLeft.setAxisMaximum((float) (i + this.extra_y_axis_value));
+        axisLeft.setAxisMaximum((float) (SQLite_health_tracker.GetMaxCholesterolValue(list) + this.extra_y_axis_value));
         this.graph_view_yearly.getAxisRight().setEnabled(false);
         SetCholesterolBarWidth(this.graph_view_yearly, barData, arrayList);
         this.graph_view_yearly.invalidate();
     }
 
-    private void SetCholesterolCustomChart(float i, List<CholesterolChartData> list) {
+    private void SetCholesterolCustomChart(List<CholesterolChartData> list) {
         ArrayList<CholesterolChartData> arrayList = (ArrayList<CholesterolChartData>) list;
         ;
 //                (ArrayList) this.SQLite_health_tracker.GetCholesterolChartCustomData(i, this.custom_start_date, this.custom_end_date);
@@ -3210,7 +3211,7 @@ public class TrackerStatisticsActivity extends AppCompatActivity {
         axisLeft.setTextSize(this.graph_left_axis_text_size);
         axisLeft.setTextColor(getResources().getColor(R.color.axis_label_color));
         axisLeft.setDrawGridLines(false);
-        axisLeft.setAxisMaximum((float) (i + this.extra_y_axis_value));
+        axisLeft.setAxisMaximum((float) (SQLite_health_tracker.GetMaxCholesterolValue(list) + this.extra_y_axis_value));
         this.graph_view_custom.getAxisRight().setEnabled(false);
         SetCholesterolBarWidth(this.graph_view_custom, barData, arrayList);
         this.graph_view_custom.invalidate();
@@ -4839,7 +4840,7 @@ public class TrackerStatisticsActivity extends AppCompatActivity {
                         @Override
                         public void onResponse(Call<BloodPressureChartResponse> call, Response<BloodPressureChartResponse> response) {
                             if (response.isSuccessful()) {
-                                getHighestBloodPressureValueAll(response.body().getData());
+                                SetBloodPressureAllChart(response.body().getData());
                             } else {
                                 showMessage("Failed");
 
@@ -4864,7 +4865,7 @@ public class TrackerStatisticsActivity extends AppCompatActivity {
                         @Override
                         public void onResponse(Call<BloodPressureChartResponse> call, Response<BloodPressureChartResponse> response) {
                             if (response.isSuccessful()) {
-                                getHighestBloodPressureValueToday(response.body().getData());
+                                SetBloodPressureTodayChart(response.body().getData());
                             } else {
                                 showMessage("Failed");
 
@@ -4889,7 +4890,7 @@ public class TrackerStatisticsActivity extends AppCompatActivity {
                         @Override
                         public void onResponse(Call<BloodPressureChartResponse> call, Response<BloodPressureChartResponse> response) {
                             if (response.isSuccessful()) {
-                                getHighestBloodPressureValueMonth(response.body().getData());
+                                SetBloodPressureMonthlyChart(response.body().getData());
                             } else {
                                 showMessage("Failed");
 
@@ -4914,7 +4915,7 @@ public class TrackerStatisticsActivity extends AppCompatActivity {
                         @Override
                         public void onResponse(Call<BloodPressureChartResponse> call, Response<BloodPressureChartResponse> response) {
                             if (response.isSuccessful()) {
-                                getHighestBloodPressureValueYear(response.body().getData());
+                                SetBloodPressureYearlyChart(response.body().getData());
                             } else {
                                 showMessage("Failed");
 
@@ -4939,7 +4940,7 @@ public class TrackerStatisticsActivity extends AppCompatActivity {
                         @Override
                         public void onResponse(Call<BloodPressureChartResponse> call, Response<BloodPressureChartResponse> response) {
                             if (response.isSuccessful()) {
-                                getHighestBloodPressureValueCustom(response.body().getData());
+                                SetBloodPressureCustomChart(response.body().getData());
                             } else {
                                 showMessage("Failed");
 
@@ -4955,70 +4956,6 @@ public class TrackerStatisticsActivity extends AppCompatActivity {
 
         }
     }
-
-
-    private void getHighestBloodPressureValueAll(List<BloodPressureChartData> dataArray) {
-        float highestBp = Float.MIN_VALUE;
-
-        for (int i = 0; i < dataArray.size(); i++) {
-            float bp = dataArray.get(i).pulse_pressure_value;
-            if (bp > highestBp) {
-                highestBp = bp;
-            }
-        }
-        SetBloodPressureAllChart(highestBp, dataArray);
-    }
-
-    private void getHighestBloodPressureValueToday(List<BloodPressureChartData> dataArray) {
-        float highestBp = Float.MIN_VALUE;
-
-        for (int i = 0; i < dataArray.size(); i++) {
-            float bp = dataArray.get(i).pulse_pressure_value;
-            if (bp > highestBp) {
-                highestBp = bp;
-            }
-        }
-        SetBloodPressureTodayChart(highestBp, dataArray);
-    }
-
-    private void getHighestBloodPressureValueMonth(List<BloodPressureChartData> dataArray) {
-        float highestBp = Float.MIN_VALUE;
-
-        for (int i = 0; i < dataArray.size(); i++) {
-            float bp = dataArray.get(i).pulse_pressure_value;
-            if (bp > highestBp) {
-                highestBp = bp;
-            }
-        }
-        SetBloodPressureMonthlyChart(highestBp, dataArray);
-    }
-
-
-    private void getHighestBloodPressureValueYear(List<BloodPressureChartData> dataArray) {
-        float highestBp = Float.MIN_VALUE;
-
-        for (int i = 0; i < dataArray.size(); i++) {
-            float bp = dataArray.get(i).pulse_pressure_value;
-            if (bp > highestBp) {
-                highestBp = bp;
-            }
-        }
-        SetBloodPressureYearlyChart(highestBp, dataArray);
-    }
-
-
-    private void getHighestBloodPressureValueCustom(List<BloodPressureChartData> dataArray) {
-        float highestBp = Float.MIN_VALUE;
-
-        for (int i = 0; i < dataArray.size(); i++) {
-            float bp = dataArray.get(i).pulse_pressure_value;
-            if (bp > highestBp) {
-                highestBp = bp;
-            }
-        }
-        SetBloodPressureCustomChart(highestBp, dataArray);
-    }
-
 
     //bs
     private void getBloodSugarChartAllData(BloodCountChartRequest bloodCountChartRequest) {
@@ -5221,7 +5158,7 @@ public class TrackerStatisticsActivity extends AppCompatActivity {
                         @Override
                         public void onResponse(Call<CholesterolChartResponse> call, Response<CholesterolChartResponse> response) {
                             if (response.isSuccessful()) {
-                                getChHighestValueAll(response.body().getData());
+                                SetCholesterolAllChart(response.body().getData());
                             } else {
                                 showMessage("Failed");
 
@@ -5246,7 +5183,7 @@ public class TrackerStatisticsActivity extends AppCompatActivity {
                         @Override
                         public void onResponse(Call<CholesterolChartResponse> call, Response<CholesterolChartResponse> response) {
                             if (response.isSuccessful()) {
-                                getChHighestValueToday(response.body().getData());
+                                SetCholesterolTodayChart(response.body().getData());
                             } else {
                                 showMessage("Failed");
 
@@ -5271,7 +5208,7 @@ public class TrackerStatisticsActivity extends AppCompatActivity {
                         @Override
                         public void onResponse(Call<CholesterolChartResponse> call, Response<CholesterolChartResponse> response) {
                             if (response.isSuccessful()) {
-                                getChHighestValueMonth(response.body().getData());
+                                SetCholesterolMonthlyChart(response.body().getData());
                             } else {
                                 showMessage("Failed");
 
@@ -5296,7 +5233,7 @@ public class TrackerStatisticsActivity extends AppCompatActivity {
                         @Override
                         public void onResponse(Call<CholesterolChartResponse> call, Response<CholesterolChartResponse> response) {
                             if (response.isSuccessful()) {
-                                getChHighestValueYear(response.body().getData());
+                                SetCholesterolYearlyChart(response.body().getData());
                             } else {
                                 showMessage("Failed");
 
@@ -5321,7 +5258,7 @@ public class TrackerStatisticsActivity extends AppCompatActivity {
                         @Override
                         public void onResponse(Call<CholesterolChartResponse> call, Response<CholesterolChartResponse> response) {
                             if (response.isSuccessful()) {
-                                getChHighestValueCustom(response.body().getData());
+                                SetCholesterolCustomChart(response.body().getData());
                             } else {
                                 showMessage("Failed");
 
@@ -5337,70 +5274,6 @@ public class TrackerStatisticsActivity extends AppCompatActivity {
 
         }
     }
-
-
-    private void getChHighestValueAll(List<CholesterolChartData> dataArray) {
-        float highestSugar = Float.MIN_VALUE;
-
-        for (int i = 0; i < dataArray.size(); i++) {
-            float max = dataArray.get(i).hdl_value;
-            if (max > highestSugar) {
-                highestSugar = max;
-            }
-        }
-        SetCholesterolAllChart(highestSugar, dataArray);
-    }
-
-    private void getChHighestValueToday(List<CholesterolChartData> dataArray) {
-        float highestSugar = Float.MIN_VALUE;
-
-        for (int i = 0; i < dataArray.size(); i++) {
-            float max = dataArray.get(i).hdl_value;
-            if (max > highestSugar) {
-                highestSugar = max;
-            }
-        }
-        SetCholesterolTodayChart(highestSugar, dataArray);
-    }
-
-    private void getChHighestValueMonth(List<CholesterolChartData> dataArray) {
-        float highestSugar = Float.MIN_VALUE;
-
-        for (int i = 0; i < dataArray.size(); i++) {
-            float max = dataArray.get(i).hdl_value;
-            if (max > highestSugar) {
-                highestSugar = max;
-            }
-        }
-        SetCholesterolMonthlyChart(highestSugar, dataArray);
-    }
-
-
-    private void getChHighestValueYear(List<CholesterolChartData> dataArray) {
-        float highestSugar = Float.MIN_VALUE;
-
-        for (int i = 0; i < dataArray.size(); i++) {
-            float max = dataArray.get(i).hdl_value;
-            if (max > highestSugar) {
-                highestSugar = max;
-            }
-        }
-        SetCholesterolYearlyChart(highestSugar, dataArray);
-    }
-
-
-    private void getChHighestValueCustom(List<CholesterolChartData> dataArray) {
-        float highestSugar = Float.MIN_VALUE;
-
-        for (int i = 0; i < dataArray.size(); i++) {
-            float max = dataArray.get(i).hdl_value;
-            if (max > highestSugar) {
-                highestSugar = max;
-            }
-        }
-        SetCholesterolCustomChart(highestSugar, dataArray);
-    }
-
 
     //bs
     private void getHrChartAllData(BloodCountChartRequest bloodCountChartRequest) {
