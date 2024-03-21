@@ -24,6 +24,7 @@ import android.widget.Spinner
 import android.widget.TextView
 import android.widget.TimePicker
 import android.widget.Toast
+import androidx.annotation.IntegerRes
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.ItemTouchHelper
 import app.android.heartrate.phoneapp.R
@@ -243,7 +244,7 @@ class AddBodyTempActivity() : AppCompatActivity() {
     @SuppressLint("NewApi")
     private fun SetBodyTempData() {
         if (AppConstants.selected_body_temp_data != null) {
-            this.celsiusIndex = AppConstants.selected_body_temp_data.celsius_index
+            this.celsiusIndex = Integer.valueOf(AppConstants.selected_body_temp_data.celsius)
             this.fahrenheitIndex = AppConstants.selected_body_temp_data.fahrenheit_index
             this.pulseIndex = AppConstants.selected_body_temp_data.pulse_index
             this.cel_value = AppConstants.selected_body_temp_data.celsius_value

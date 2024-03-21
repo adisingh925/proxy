@@ -96,8 +96,7 @@ class BodyTempDataActivity : AppCompatActivity() {
                     }
                     if (view.id == R.id.bt_row_rel_edit) {
                         AppConstants.is_body_temp_edit_mode = true
-                        AppConstants.selected_body_temp_data =
-                            array_temp_data[i]
+                        AppConstants.selected_body_temp_data = array_temp_data[i]
                         AddBodyTempScreen()
                     }
                 }
@@ -108,43 +107,7 @@ class BodyTempDataActivity : AppCompatActivity() {
             lbl_no_data!!.visibility = View.VISIBLE
         }
     }
-//    private val data_handler: Handler = object : Handler(Looper.getMainLooper()) {
-//        override fun handleMessage(message: Message) {
-//            val i = message.what
-//            if (i == 0) {
-//                recycler_temp_data!!.layoutManager = LinearLayoutManager(this@BodyTempDataActivity)
-//                recycler_temp_data!!.itemAnimator = DefaultItemAnimator()
-//                if (array_temp_data.size > 0) {
-//                    lbl_no_data!!.visibility = View.GONE
-//                    val bodyTempDataActivity = this@BodyTempDataActivity
-//                    bodyTempDataActivity.bodyTempAdapter = object : BodyTempDataAdapter(
-//                        bodyTempDataActivity.array_temp_data,
-//                        this@BodyTempDataActivity
-//                    ) {
-//                        override fun onBodyTempAdapterClickItem(i: Int, view: View) {
-//                            if (view.id == R.id.bt_row_rel_delete) {
-//                                this@BodyTempDataActivity.ConformDeleteDialog(
-//                                    array_temp_data[i].row_id
-//                                )
-//                            }
-//                            if (view.id == R.id.bt_row_rel_edit) {
-//                                AppConstants.is_body_temp_edit_mode = true
-//                                AppConstants.selected_body_temp_data =
-//                                    array_temp_data[i]
-//                                this@BodyTempDataActivity.AddBodyTempScreen()
-//                            }
-//                        }
-//                    }
-//                    recycler_temp_data!!.adapter = this@BodyTempDataActivity.bodyTempAdapter
-//                } else {
-//                    lbl_no_data!!.visibility = View.VISIBLE
-//                }
-//                this@BodyTempDataActivity.DismissProgressBar()
-//            } else if (i == 99) {
-//                this@BodyTempDataActivity.DismissProgressBar()
-//            }
-//        }
-//    }
+
     var spinner_profile_adapter: SpinnerProfileAdapter? = null
     var spinner_profiles: Spinner? = null
 
@@ -259,7 +222,7 @@ class BodyTempDataActivity : AppCompatActivity() {
 
     public override fun onResume() {
         super.onResume()
-        deleteData(18)
+        fetchData()
     }
 
     override fun onBackPressed() {
