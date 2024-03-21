@@ -9,7 +9,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import app.android.heartrate.phoneapp.activities.record.statistics.TrackerStatisticsActivity
-import app.android.heartrate.phoneapp.activities.record.TrackerToolsActivity
+import app.android.heartrate.phoneapp.activities.record.statistics.TrackerToolsActivity
 import app.android.heartrate.phoneapp.databinding.FragmentRecordBinding
 import app.android.heartrate.phoneapp.fragments.base.BaseFragment
 import app.android.heartrate.phoneapp.fragments.record.add.AddRecordActivity

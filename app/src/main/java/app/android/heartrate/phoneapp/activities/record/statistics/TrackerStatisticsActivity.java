@@ -48,6 +48,8 @@ import app.android.heartrate.phoneapp.model.bloodcount.chart.BloodCountChartRequ
 import app.android.heartrate.phoneapp.model.bloodcount.chart.BloodCountChartResponse;
 import app.android.heartrate.phoneapp.model.bloodpressure.BloodPressureChartResponse;
 import app.android.heartrate.phoneapp.model.bloodsugar.BloodSugarChartResponse;
+import app.android.heartrate.phoneapp.model.bmi.BMIChartResponse;
+import app.android.heartrate.phoneapp.model.cholesterol.CholesterolChartResponse;
 import app.android.heartrate.phoneapp.model.classes.BMIChartData;
 import app.android.heartrate.phoneapp.model.classes.BloodCountChartData;
 import app.android.heartrate.phoneapp.model.classes.BloodPressureChartData;
@@ -57,6 +59,10 @@ import app.android.heartrate.phoneapp.model.classes.CholesterolChartData;
 import app.android.heartrate.phoneapp.model.classes.HeartRateChartData;
 import app.android.heartrate.phoneapp.model.classes.WeightChartData;
 import app.android.heartrate.phoneapp.model.classes.WeightData;
+import app.android.heartrate.phoneapp.model.heartrate.HeartRateChartResponse;
+import app.android.heartrate.phoneapp.model.temperature.BodyTempChartResponse;
+import app.android.heartrate.phoneapp.model.weight.WeightChartRequest;
+import app.android.heartrate.phoneapp.model.weight.WeightChartResponse;
 import app.android.heartrate.phoneapp.retrofit.ApiClient;
 import app.android.heartrate.phoneapp.sharedpreferences.SharedPreferences;
 import app.android.heartrate.phoneapp.sqlite.SQLiteHealthTracker;
@@ -796,7 +802,7 @@ public class TrackerStatisticsActivity extends AppCompatActivity {
         return arrayList2.subList(0, arrayList.size());
     }
 
-    private void SetBloodPressureAllChart(float MaxBloodPressure, List<BloodPressureChartData> bloodPressureChartDataList) {
+    private void SetBloodPressureAllChart(List<BloodPressureChartData> bloodPressureChartDataList) {
         Calendar instance = Calendar.getInstance();
         instance.setTime(new Date());
         instance.get(1);
@@ -874,14 +880,13 @@ public class TrackerStatisticsActivity extends AppCompatActivity {
         axisLeft.setTextSize(this.graph_left_axis_text_size);
         axisLeft.setTextColor(getResources().getColor(R.color.axis_label_color));
         axisLeft.setDrawGridLines(false);
-//        axisLeft.setAxisMaximum((float) (this.SQLite_health_tracker.GetMaxBloodPressureValue(i) + this.extra_y_axis_value));
-        axisLeft.setAxisMaximum((float) (MaxBloodPressure + this.extra_y_axis_value));
+        axisLeft.setAxisMaximum((float) (this.SQLite_health_tracker.GetMaxBloodPressureValue(bloodPressureChartDataList) + this.extra_y_axis_value));
         this.graph_view_all.getAxisRight().setEnabled(false);
         SetBloodPressureBarWidth(this.graph_view_all, barData, arrayList);
         this.graph_view_all.invalidate();
     }
 
-    private void SetBloodPressureTodayChart(float MaxBloodPressure, List<BloodPressureChartData> bloodPressureChartDataList) {
+    private void SetBloodPressureTodayChart(List<BloodPressureChartData> bloodPressureChartDataList) {
         Calendar instance = Calendar.getInstance();
         instance.setTime(new Date());
         int i2 = instance.get(1);
@@ -962,13 +967,14 @@ public class TrackerStatisticsActivity extends AppCompatActivity {
         axisLeft.setTextSize(this.graph_left_axis_text_size);
         axisLeft.setTextColor(getResources().getColor(R.color.axis_label_color));
         axisLeft.setDrawGridLines(false);
-        axisLeft.setAxisMaximum((float) (MaxBloodPressure + this.extra_y_axis_value));
+        axisLeft.setAxisMaximum((float) (this.SQLite_health_tracker.GetMaxBloodPressureValue(bloodPressureChartDataList) + this.extra_y_axis_value));
+        //axisLeft.setAxisMaximum((float) (MaxBloodPressure + this.extra_y_axis_value));
         this.graph_view_today.getAxisRight().setEnabled(false);
         SetBloodPressureBarWidth(this.graph_view_today, barData, arrayList);
         this.graph_view_today.invalidate();
     }
 
-    private void SetBloodPressureMonthlyChart(float MaxBloodPressure, List<BloodPressureChartData> bloodPressureChartDataList) {
+    private void SetBloodPressureMonthlyChart(List<BloodPressureChartData> bloodPressureChartDataList) {
         Calendar instance = Calendar.getInstance();
         instance.setTime(new Date());
         int i2 = instance.get(1);
@@ -1054,14 +1060,13 @@ public class TrackerStatisticsActivity extends AppCompatActivity {
         axisLeft.setTextSize(this.graph_left_axis_text_size);
         axisLeft.setTextColor(getResources().getColor(R.color.axis_label_color));
         axisLeft.setDrawGridLines(false);
-        axisLeft.setAxisMaximum((float) (MaxBloodPressure + this.extra_y_axis_value));
-//        axisLeft.setAxisMaximum((float) (this.SQLite_health_tracker.GetMaxBloodPressureValue(i) + this.extra_y_axis_value));
+        axisLeft.setAxisMaximum((float) (this.SQLite_health_tracker.GetMaxBloodPressureValue(bloodPressureChartDataList) + this.extra_y_axis_value));
         this.graph_view_monthly.getAxisRight().setEnabled(false);
         SetBloodPressureBarWidth(this.graph_view_monthly, barData, arrayList);
         this.graph_view_monthly.invalidate();
     }
 
-    private void SetBloodPressureYearlyChart(float MaxBloodPressure, List<BloodPressureChartData> bloodPressureChartDataList) {
+    private void SetBloodPressureYearlyChart(List<BloodPressureChartData> bloodPressureChartDataList) {
         Calendar instance = Calendar.getInstance();
         instance.setTime(new Date());
         int i2 = instance.get(1);
@@ -1148,13 +1153,13 @@ public class TrackerStatisticsActivity extends AppCompatActivity {
         axisLeft.setTextSize(this.graph_left_axis_text_size);
         axisLeft.setTextColor(getResources().getColor(R.color.axis_label_color));
         axisLeft.setDrawGridLines(false);
-        axisLeft.setAxisMaximum((float) (MaxBloodPressure + this.extra_y_axis_value));
+        axisLeft.setAxisMaximum((float) (this.SQLite_health_tracker.GetMaxBloodPressureValue(bloodPressureChartDataList) + this.extra_y_axis_value));
         this.graph_view_yearly.getAxisRight().setEnabled(false);
         SetBloodPressureBarWidth(this.graph_view_yearly, barData, arrayList);
         this.graph_view_yearly.invalidate();
     }
 
-    private void SetBloodPressureCustomChart(float MaxBloodPressure, List<BloodPressureChartData> bloodPressureChartDataList) {
+    private void SetBloodPressureCustomChart(List<BloodPressureChartData> bloodPressureChartDataList) {
         ArrayList<BloodPressureChartData> arrayList = (ArrayList) bloodPressureChartDataList;
 //                this.SQLite_health_tracker.GetBloodPressureChartCustomData(i, this.custom_start_date, this.custom_end_date);
         if (arrayList.size() == 0) {
@@ -1236,7 +1241,8 @@ public class TrackerStatisticsActivity extends AppCompatActivity {
         axisLeft.setTextSize(this.graph_left_axis_text_size);
         axisLeft.setTextColor(getResources().getColor(R.color.axis_label_color));
         axisLeft.setDrawGridLines(false);
-        axisLeft.setAxisMaximum((float) (MaxBloodPressure + this.extra_y_axis_value));
+        axisLeft.setAxisMaximum((float) (this.SQLite_health_tracker.GetMaxBloodPressureValue(bloodPressureChartDataList) + this.extra_y_axis_value));
+       // axisLeft.setAxisMaximum((float) (MaxBloodPressure + this.extra_y_axis_value));
         this.graph_view_custom.getAxisRight().setEnabled(false);
         SetBloodPressureBarWidth(this.graph_view_custom, barData, arrayList);
         this.graph_view_custom.invalidate();
@@ -1724,13 +1730,14 @@ public class TrackerStatisticsActivity extends AppCompatActivity {
         return arrayList2.subList(0, arrayList.size());
     }
 
-    private void SetBMIAllChart(int i) {
+    private void SetBMIAllChart(List<BMIChartData> list) {
         Calendar instance = Calendar.getInstance();
         instance.setTime(new Date());
         instance.get(1);
         instance.get(2);
         instance.get(5);
-        ArrayList<BMIChartData> arrayList = (ArrayList) this.SQLite_health_tracker.GetBMIChartAllData(i);
+        ArrayList<BMIChartData> arrayList = (ArrayList) list;
+//                this.SQLite_health_tracker.GetBMIChartAllData(i);
         if (arrayList.size() == 0) {
             this.lbl_no_data.setVisibility(View.VISIBLE);
             this.lbl_no_data.setText("No data available for All!");
@@ -1794,18 +1801,19 @@ public class TrackerStatisticsActivity extends AppCompatActivity {
         axisLeft.setTextSize(this.graph_left_axis_text_size);
         axisLeft.setTextColor(getResources().getColor(R.color.axis_label_color));
         axisLeft.setDrawGridLines(false);
-        axisLeft.setAxisMaximum((float) (this.SQLite_health_tracker.GetMaxBMIValue(i) + this.extra_y_axis_value));
+        axisLeft.setAxisMaximum((float) (this.SQLite_health_tracker.GetMaxBMIValue(list) + this.extra_y_axis_value));
         this.graph_view_all.getAxisRight().setEnabled(false);
         SetBMIBarWidth(this.graph_view_all, barData, arrayList);
         this.graph_view_all.invalidate();
     }
 
-    private void SetBMITodayChart(int i) {
+    private void SetBMITodayChart(List<BMIChartData> list) {
         Calendar instance = Calendar.getInstance();
         instance.setTime(new Date());
         int i2 = instance.get(1);
         int i3 = instance.get(5);
-        ArrayList<BMIChartData> arrayList = (ArrayList) this.SQLite_health_tracker.GetBMIChartTodayData(i, i3, instance.get(2) + 1, i2);
+        ArrayList<BMIChartData> arrayList = (ArrayList) list;
+//                this.SQLite_health_tracker.GetBMIChartTodayData(i, i3, instance.get(2) + 1, i2);
         if (arrayList.size() == 0) {
             this.lbl_no_data.setVisibility(View.VISIBLE);
             this.lbl_no_data.setText("No data available for Today!");
@@ -1860,7 +1868,7 @@ public class TrackerStatisticsActivity extends AppCompatActivity {
         ArrayList arrayList2 = new ArrayList();
         for (int i4 = 0; i4 < arrayList.size(); i4++) {
             try {
-                arrayList2.add(new SimpleDateFormat("HH:mm").format(new SimpleDateFormat("dd/MM/yyyy hh:mm a").parse(String.valueOf(arrayList.get(i4).dateTime))).trim());
+                arrayList2.add(new SimpleDateFormat("HH:mm").format(new SimpleDateFormat("yyyy-MM-dd hh:mm a").parse(String.valueOf(arrayList.get(i4).dateTime))).trim());
             } catch (ParseException e) {
                 e.printStackTrace();
             }
@@ -1873,18 +1881,19 @@ public class TrackerStatisticsActivity extends AppCompatActivity {
         axisLeft.setTextSize(this.graph_left_axis_text_size);
         axisLeft.setTextColor(getResources().getColor(R.color.axis_label_color));
         axisLeft.setDrawGridLines(false);
-        axisLeft.setAxisMaximum((float) (this.SQLite_health_tracker.GetMaxBMIValue(i) + this.extra_y_axis_value));
+        axisLeft.setAxisMaximum((float) (this.SQLite_health_tracker.GetMaxBMIValue(list) + this.extra_y_axis_value));
         this.graph_view_today.getAxisRight().setEnabled(false);
         SetBMIBarWidth(this.graph_view_today, barData, arrayList);
         this.graph_view_today.invalidate();
     }
 
-    private void SetBMIMonthlyChart(int i) {
+    private void SetBMIMonthlyChart(List<BMIChartData> list) {
         Calendar instance = Calendar.getInstance();
         instance.setTime(new Date());
         int i2 = instance.get(1);
         instance.get(5);
-        ArrayList<BMIChartData> arrayList = (ArrayList) this.SQLite_health_tracker.GetBMIChartMonthlyData(i, instance.get(2) + 1, i2);
+        ArrayList<BMIChartData> arrayList = (ArrayList) list;
+//                this.SQLite_health_tracker.GetBMIChartMonthlyData(i, instance.get(2) + 1, i2);
         if (arrayList.size() == 0) {
             this.lbl_no_data.setVisibility(View.VISIBLE);
             this.lbl_no_data.setText("No Monthly data available!");
@@ -1939,8 +1948,8 @@ public class TrackerStatisticsActivity extends AppCompatActivity {
         ArrayList arrayList2 = new ArrayList();
         for (int i3 = 0; i3 < arrayList.size(); i3++) {
             try {
-                Date parse = new SimpleDateFormat("dd/MM/yyyy hh:mm a").parse(String.valueOf(arrayList.get(i3).dateTime));
-                SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd-MM-yy");
+                Date parse = new SimpleDateFormat("yyyy-MM-dd hh:mm a").parse(String.valueOf(arrayList.get(i3).dateTime));
+                SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd");
                 SimpleDateFormat simpleDateFormat2 = new SimpleDateFormat("HH:mm");
                 String trim = simpleDateFormat.format(parse).trim();
                 String trim2 = simpleDateFormat2.format(parse).trim();
@@ -1957,19 +1966,20 @@ public class TrackerStatisticsActivity extends AppCompatActivity {
         axisLeft.setTextSize(this.graph_left_axis_text_size);
         axisLeft.setTextColor(getResources().getColor(R.color.axis_label_color));
         axisLeft.setDrawGridLines(false);
-        axisLeft.setAxisMaximum((float) (this.SQLite_health_tracker.GetMaxBMIValue(i) + this.extra_y_axis_value));
+        axisLeft.setAxisMaximum((float) (this.SQLite_health_tracker.GetMaxBMIValue(list) + this.extra_y_axis_value));
         this.graph_view_monthly.getAxisRight().setEnabled(false);
         SetBMIBarWidth(this.graph_view_monthly, barData, arrayList);
         this.graph_view_monthly.invalidate();
     }
 
-    private void SetBMIYearlyChart(int i) {
+    private void SetBMIYearlyChart(List<BMIChartData> list) {
         Calendar instance = Calendar.getInstance();
         instance.setTime(new Date());
         int i2 = instance.get(1);
         instance.get(2);
         instance.get(5);
-        ArrayList<BMIChartData> arrayList = (ArrayList) this.SQLite_health_tracker.GetBMIChartYearlyData(i, i2);
+        ArrayList<BMIChartData> arrayList = (ArrayList) list;
+//                this.SQLite_health_tracker.GetBMIChartYearlyData(i, i2);
         if (arrayList.size() == 0) {
             this.lbl_no_data.setVisibility(View.VISIBLE);
             this.lbl_no_data.setText("No Yearly data available!");
@@ -2024,8 +2034,8 @@ public class TrackerStatisticsActivity extends AppCompatActivity {
         ArrayList arrayList2 = new ArrayList();
         for (int i3 = 0; i3 < arrayList.size(); i3++) {
             try {
-                Date parse = new SimpleDateFormat("dd/MM/yyyy hh:mm a").parse(String.valueOf(arrayList.get(i3).dateTime));
-                SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd-MM-yy");
+                Date parse = new SimpleDateFormat("yyyy-MM-dd hh:mm a").parse(String.valueOf(arrayList.get(i3).dateTime));
+                SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd");
                 SimpleDateFormat simpleDateFormat2 = new SimpleDateFormat("HH:mm");
                 String trim = simpleDateFormat.format(parse).trim();
                 simpleDateFormat2.format(parse).trim();
@@ -2042,14 +2052,16 @@ public class TrackerStatisticsActivity extends AppCompatActivity {
         axisLeft.setTextSize(this.graph_left_axis_text_size);
         axisLeft.setTextColor(getResources().getColor(R.color.axis_label_color));
         axisLeft.setDrawGridLines(false);
-        axisLeft.setAxisMaximum((float) (this.SQLite_health_tracker.GetMaxBMIValue(i) + this.extra_y_axis_value));
+        axisLeft.setAxisMaximum((float) (this.SQLite_health_tracker.GetMaxBMIValue(list) + this.extra_y_axis_value));
         this.graph_view_yearly.getAxisRight().setEnabled(false);
         SetBMIBarWidth(this.graph_view_yearly, barData, arrayList);
         this.graph_view_yearly.invalidate();
     }
 
-    private void SetBMICustomChart(int i) {
-        ArrayList<BMIChartData> arrayList = (ArrayList) this.SQLite_health_tracker.GetBMIChartCustomData(i, this.custom_start_date, this.custom_end_date);
+
+    private void SetBMICustomChart(List<BMIChartData> list) {
+        ArrayList<BMIChartData> arrayList = (ArrayList) list;
+//                this.SQLite_health_tracker.GetBMIChartCustomData(i, this.custom_start_date, this.custom_end_date);
         if (arrayList.size() == 0) {
             this.lbl_no_data.setVisibility(View.VISIBLE);
             this.lbl_no_data.setText("No Yearly data available!");
@@ -2117,7 +2129,7 @@ public class TrackerStatisticsActivity extends AppCompatActivity {
         axisLeft.setTextSize(this.graph_left_axis_text_size);
         axisLeft.setTextColor(getResources().getColor(R.color.axis_label_color));
         axisLeft.setDrawGridLines(false);
-        axisLeft.setAxisMaximum((float) (this.SQLite_health_tracker.GetMaxBMIValue(i) + this.extra_y_axis_value));
+        axisLeft.setAxisMaximum((float) (this.SQLite_health_tracker.GetMaxBMIValue(list) + this.extra_y_axis_value));
         this.graph_view_custom.getAxisRight().setEnabled(false);
         SetBMIBarWidth(this.graph_view_custom, barData, arrayList);
         this.graph_view_custom.invalidate();
@@ -2157,13 +2169,14 @@ public class TrackerStatisticsActivity extends AppCompatActivity {
         return arrayList2.subList(0, arrayList.size());
     }
 
-    private void SetBodyTempAllChart(int i) {
+    private void SetBodyTempAllChart(List<BodyTempChartAllData> list) {
         Calendar instance = Calendar.getInstance();
         instance.setTime(new Date());
         instance.get(1);
         instance.get(2);
         instance.get(5);
-        ArrayList<BodyTempChartAllData> arrayList = (ArrayList) this.SQLite_health_tracker.GetBodyTempChartAllData(i);
+        ArrayList<BodyTempChartAllData> arrayList = (ArrayList) list;
+//                this.SQLite_health_tracker.GetBodyTempChartAllData(i);
         if (arrayList.size() == 0) {
             this.lbl_no_data.setVisibility(View.VISIBLE);
             this.lbl_no_data.setText("No data available for All!");
@@ -2241,18 +2254,19 @@ public class TrackerStatisticsActivity extends AppCompatActivity {
         axisLeft.setTextSize(this.graph_left_axis_text_size);
         axisLeft.setTextColor(getResources().getColor(R.color.axis_label_color));
         axisLeft.setDrawGridLines(false);
-        axisLeft.setAxisMaximum((float) (this.SQLite_health_tracker.GetMaxBodyTempValue(i) + this.extra_y_axis_value));
+        axisLeft.setAxisMaximum((float) (this.SQLite_health_tracker.GetMaxBodyTempValue(list) + this.extra_y_axis_value));
         this.graph_view_all.getAxisRight().setEnabled(false);
         SetBodyTempBarWidth(this.graph_view_all, barData, arrayList);
         this.graph_view_all.invalidate();
     }
 
-    private void SetBodyTempTodayChart(int i) {
+    private void SetBodyTempTodayChart(List<BodyTempChartAllData> list) {
         Calendar instance = Calendar.getInstance();
         instance.setTime(new Date());
         int i2 = instance.get(1);
         int i3 = instance.get(5);
-        ArrayList<BodyTempChartAllData> arrayList = (ArrayList) this.SQLite_health_tracker.GetBodyTempChartTodayData(i, i3, instance.get(2) + 1, i2);
+        ArrayList<BodyTempChartAllData> arrayList = (ArrayList) list;
+//                this.SQLite_health_tracker.GetBodyTempChartTodayData(i, i3, instance.get(2) + 1, i2);
         if (arrayList.size() == 0) {
             this.lbl_no_data.setVisibility(View.VISIBLE);
             this.lbl_no_data.setText("No data available for Today!");
@@ -2321,7 +2335,7 @@ public class TrackerStatisticsActivity extends AppCompatActivity {
         ArrayList arrayList2 = new ArrayList();
         for (int i4 = 0; i4 < arrayList.size(); i4++) {
             try {
-                arrayList2.add(new SimpleDateFormat("HH:mm").format(new SimpleDateFormat("dd/MM/yyyy hh:mm:ss a").parse(String.valueOf(arrayList.get(i4).dateTime))).trim());
+                arrayList2.add(new SimpleDateFormat("HH:mm").format(new SimpleDateFormat("yyyy-MM-dd hh:mm:ss a").parse(String.valueOf(arrayList.get(i4).dateTime))).trim());
             } catch (ParseException e) {
                 e.printStackTrace();
             }
@@ -2334,18 +2348,19 @@ public class TrackerStatisticsActivity extends AppCompatActivity {
         axisLeft.setTextSize(this.graph_left_axis_text_size);
         axisLeft.setTextColor(getResources().getColor(R.color.axis_label_color));
         axisLeft.setDrawGridLines(false);
-        axisLeft.setAxisMaximum((float) (this.SQLite_health_tracker.GetMaxBodyTempValue(i) + this.extra_y_axis_value));
+        axisLeft.setAxisMaximum((float) (this.SQLite_health_tracker.GetMaxBodyTempValue(list) + this.extra_y_axis_value));
         this.graph_view_today.getAxisRight().setEnabled(false);
         SetBodyTempBarWidth(this.graph_view_today, barData, arrayList);
         this.graph_view_today.invalidate();
     }
 
-    private void SetBodyTempMonthlyChart(int i) {
+    private void SetBodyTempMonthlyChart(List<BodyTempChartAllData> list) {
         Calendar instance = Calendar.getInstance();
         instance.setTime(new Date());
         int i2 = instance.get(1);
         instance.get(5);
-        ArrayList<BodyTempChartAllData> arrayList = (ArrayList) this.SQLite_health_tracker.GetBodyTempChartMonthlyData(i, instance.get(2) + 1, i2);
+        ArrayList<BodyTempChartAllData> arrayList = (ArrayList) list;
+//                this.SQLite_health_tracker.GetBodyTempChartMonthlyData(i, instance.get(2) + 1, i2);
         if (arrayList.size() == 0) {
             this.lbl_no_data.setVisibility(View.VISIBLE);
             this.lbl_no_data.setText("No Monthly data available!");
@@ -2415,7 +2430,7 @@ public class TrackerStatisticsActivity extends AppCompatActivity {
         for (int i3 = 0; i3 < arrayList.size(); i3++) {
             try {
                 arrayList.get(i3).name.trim();
-                Date parse = new SimpleDateFormat("dd/MM/yyyy hh:mm:ss a").parse(String.valueOf(arrayList.get(i3).dateTime));
+                Date parse = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss a").parse(String.valueOf(arrayList.get(i3).dateTime));
                 SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd-MM-yy");
                 SimpleDateFormat simpleDateFormat2 = new SimpleDateFormat("HH:mm");
                 String trim = simpleDateFormat.format(parse).trim();
@@ -2433,19 +2448,20 @@ public class TrackerStatisticsActivity extends AppCompatActivity {
         axisLeft.setTextSize(this.graph_left_axis_text_size);
         axisLeft.setTextColor(getResources().getColor(R.color.axis_label_color));
         axisLeft.setDrawGridLines(false);
-        axisLeft.setAxisMaximum((float) (this.SQLite_health_tracker.GetMaxBodyTempValue(i) + this.extra_y_axis_value));
+        axisLeft.setAxisMaximum((float) (this.SQLite_health_tracker.GetMaxBodyTempValue(list) + this.extra_y_axis_value));
         this.graph_view_monthly.getAxisRight().setEnabled(false);
         SetBodyTempBarWidth(this.graph_view_monthly, barData, arrayList);
         this.graph_view_monthly.invalidate();
     }
 
-    private void SetBodyTempYearlyChart(int i) {
+    private void SetBodyTempYearlyChart(List<BodyTempChartAllData> list) {
         Calendar instance = Calendar.getInstance();
         instance.setTime(new Date());
         int i2 = instance.get(1);
         instance.get(2);
         instance.get(5);
-        ArrayList<BodyTempChartAllData> arrayList = (ArrayList) this.SQLite_health_tracker.GetBodyTempChartYearlyData(i, i2);
+        ArrayList<BodyTempChartAllData> arrayList = (ArrayList) list;
+//                this.SQLite_health_tracker.GetBodyTempChartYearlyData(i, i2);
         if (arrayList.size() == 0) {
             this.lbl_no_data.setVisibility(View.VISIBLE);
             this.lbl_no_data.setText("No Yearly data available!");
@@ -2514,7 +2530,7 @@ public class TrackerStatisticsActivity extends AppCompatActivity {
         ArrayList arrayList2 = new ArrayList();
         for (int i3 = 0; i3 < arrayList.size(); i3++) {
             try {
-                Date parse = new SimpleDateFormat("dd/MM/yyyy hh:mm:ss a").parse(String.valueOf(arrayList.get(i3).dateTime));
+                Date parse = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss a").parse(String.valueOf(arrayList.get(i3).dateTime));
                 SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd-MM-yy");
                 SimpleDateFormat simpleDateFormat2 = new SimpleDateFormat("HH:mm");
                 String trim = simpleDateFormat.format(parse).trim();
@@ -2532,14 +2548,15 @@ public class TrackerStatisticsActivity extends AppCompatActivity {
         axisLeft.setTextSize(this.graph_left_axis_text_size);
         axisLeft.setTextColor(getResources().getColor(R.color.axis_label_color));
         axisLeft.setDrawGridLines(false);
-        axisLeft.setAxisMaximum((float) (this.SQLite_health_tracker.GetMaxBodyTempValue(i) + this.extra_y_axis_value));
+        axisLeft.setAxisMaximum((float) (this.SQLite_health_tracker.GetMaxBodyTempValue(list) + this.extra_y_axis_value));
         this.graph_view_yearly.getAxisRight().setEnabled(false);
         SetBodyTempBarWidth(this.graph_view_yearly, barData, arrayList);
         this.graph_view_yearly.invalidate();
     }
 
-    private void SetBodyTempCustomChart(int i) {
-        ArrayList<BodyTempChartAllData> arrayList = (ArrayList) this.SQLite_health_tracker.GetBodyTempChartCustomData(i, this.custom_start_date, this.custom_end_date);
+    private void SetBodyTempCustomChart(List<BodyTempChartAllData> list) {
+        ArrayList<BodyTempChartAllData> arrayList = (ArrayList) list;
+//                this.SQLite_health_tracker.GetBodyTempChartCustomData(i, this.custom_start_date, this.custom_end_date);
         if (arrayList.size() == 0) {
             this.lbl_no_data.setVisibility(View.VISIBLE);
             this.lbl_no_data.setText("No Yearly data available!");
@@ -2608,7 +2625,7 @@ public class TrackerStatisticsActivity extends AppCompatActivity {
         ArrayList arrayList2 = new ArrayList();
         for (int i2 = 0; i2 < arrayList.size(); i2++) {
             try {
-                Date parse = new SimpleDateFormat("dd/MM/yyyy hh:mm:ss a").parse(String.valueOf(arrayList.get(i2).dateTime));
+                Date parse = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss a").parse(String.valueOf(arrayList.get(i2).dateTime));
                 SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd-MM-yyyy");
                 SimpleDateFormat simpleDateFormat2 = new SimpleDateFormat("HH:mm a");
                 String trim = simpleDateFormat.format(parse).trim();
@@ -2626,7 +2643,7 @@ public class TrackerStatisticsActivity extends AppCompatActivity {
         axisLeft.setTextSize(this.graph_left_axis_text_size);
         axisLeft.setTextColor(getResources().getColor(R.color.axis_label_color));
         axisLeft.setDrawGridLines(false);
-        axisLeft.setAxisMaximum((float) (this.SQLite_health_tracker.GetMaxBodyTempValue(i) + this.extra_y_axis_value));
+        axisLeft.setAxisMaximum((float) (this.SQLite_health_tracker.GetMaxBodyTempValue(list) + this.extra_y_axis_value));
         this.graph_view_custom.getAxisRight().setEnabled(false);
         SetBodyTempBarWidth(this.graph_view_custom, barData, arrayList);
         this.graph_view_custom.invalidate();
@@ -2682,13 +2699,14 @@ public class TrackerStatisticsActivity extends AppCompatActivity {
         return arrayList2.subList(0, arrayList.size());
     }
 
-    private void SetCholesterolAllChart(int i) {
+    private void SetCholesterolAllChart(List<CholesterolChartData> list) {
         Calendar instance = Calendar.getInstance();
         instance.setTime(new Date());
         instance.get(1);
         instance.get(2);
         instance.get(5);
-        ArrayList<CholesterolChartData> arrayList = (ArrayList) this.SQLite_health_tracker.GetCholesterolChartAllData(i);
+        ArrayList<CholesterolChartData> arrayList = (ArrayList<CholesterolChartData>) list;
+//                (ArrayList) this.SQLite_health_tracker.GetCholesterolChartAllData(i);
         if (arrayList.size() == 0) {
             this.lbl_no_data.setVisibility(View.VISIBLE);
             this.lbl_no_data.setText("No data available for All!");
@@ -2773,18 +2791,20 @@ public class TrackerStatisticsActivity extends AppCompatActivity {
         axisLeft.setTextSize(this.graph_left_axis_text_size);
         axisLeft.setTextColor(getResources().getColor(R.color.axis_label_color));
         axisLeft.setDrawGridLines(false);
-        axisLeft.setAxisMaximum((float) (this.SQLite_health_tracker.GetMaxCholesterolValue(i) + this.extra_y_axis_value));
+        axisLeft.setAxisMaximum((float) (SQLite_health_tracker.GetMaxCholesterolValue(list) + this.extra_y_axis_value));
         this.graph_view_all.getAxisRight().setEnabled(false);
         SetCholesterolBarWidth(this.graph_view_all, barData, arrayList);
         this.graph_view_all.invalidate();
     }
 
-    private void SetCholesterolTodayChart(int i) {
+    private void SetCholesterolTodayChart(List<CholesterolChartData> list) {
         Calendar instance = Calendar.getInstance();
         instance.setTime(new Date());
         int i2 = instance.get(1);
         int i3 = instance.get(5);
-        ArrayList<CholesterolChartData> arrayList = (ArrayList) this.SQLite_health_tracker.GetCholesterolChartTodayData(i, i3, instance.get(2) + 1, i2);
+        ArrayList<CholesterolChartData> arrayList = (ArrayList<CholesterolChartData>) list;
+        ;
+//                (ArrayList) this.SQLite_health_tracker.GetCholesterolChartTodayData(i, i3, instance.get(2) + 1, i2);
         if (arrayList.size() == 0) {
             this.lbl_no_data.setVisibility(View.VISIBLE);
             this.lbl_no_data.setText("No data available for Today!");
@@ -2860,7 +2880,7 @@ public class TrackerStatisticsActivity extends AppCompatActivity {
         ArrayList arrayList2 = new ArrayList();
         for (int i4 = 0; i4 < arrayList.size(); i4++) {
             try {
-                arrayList2.add(new SimpleDateFormat("HH:mm").format(new SimpleDateFormat("dd/MM/yyyy hh:mm a").parse(String.valueOf(arrayList.get(i4).dateTime))).trim());
+                arrayList2.add(new SimpleDateFormat("HH:mm").format(new SimpleDateFormat("yyyy-MM-dd hh:mm a").parse(String.valueOf(arrayList.get(i4).dateTime))).trim());
             } catch (ParseException e) {
                 e.printStackTrace();
             }
@@ -2873,18 +2893,20 @@ public class TrackerStatisticsActivity extends AppCompatActivity {
         axisLeft.setTextSize(this.graph_left_axis_text_size);
         axisLeft.setTextColor(getResources().getColor(R.color.axis_label_color));
         axisLeft.setDrawGridLines(false);
-        axisLeft.setAxisMaximum((float) (this.SQLite_health_tracker.GetMaxCholesterolValue(i) + this.extra_y_axis_value));
+        axisLeft.setAxisMaximum((float) (SQLite_health_tracker.GetMaxCholesterolValue(list) + this.extra_y_axis_value));
         this.graph_view_today.getAxisRight().setEnabled(false);
         SetCholesterolBarWidth(this.graph_view_today, barData, arrayList);
         this.graph_view_today.invalidate();
     }
 
-    private void SetCholesterolMonthlyChart(int i) {
+    private void SetCholesterolMonthlyChart(List<CholesterolChartData> list) {
         Calendar instance = Calendar.getInstance();
         instance.setTime(new Date());
         int i2 = instance.get(1);
         instance.get(5);
-        ArrayList<CholesterolChartData> arrayList = (ArrayList) this.SQLite_health_tracker.GetCholesterolChartMonthlyData(i, instance.get(2) + 1, i2);
+        ArrayList<CholesterolChartData> arrayList = (ArrayList<CholesterolChartData>) list;
+        ;
+        //    (ArrayList) this.SQLite_health_tracker.GetCholesterolChartMonthlyData(i, instance.get(2) + 1, i2);
         if (arrayList.size() == 0) {
             this.lbl_no_data.setVisibility(View.VISIBLE);
             this.lbl_no_data.setText("No Monthly data available!");
@@ -2960,8 +2982,8 @@ public class TrackerStatisticsActivity extends AppCompatActivity {
         ArrayList arrayList2 = new ArrayList();
         for (int i3 = 0; i3 < arrayList.size(); i3++) {
             try {
-                Date parse = new SimpleDateFormat("dd/MM/yyyy hh:mm a").parse(String.valueOf(arrayList.get(i3).dateTime));
-                SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd-MM-yy");
+                Date parse = new SimpleDateFormat("yyyy-MM-dd hh:mm a").parse(String.valueOf(arrayList.get(i3).dateTime));
+                SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd");
                 SimpleDateFormat simpleDateFormat2 = new SimpleDateFormat("HH:mm");
                 String trim = simpleDateFormat.format(parse).trim();
                 String trim2 = simpleDateFormat2.format(parse).trim();
@@ -2978,19 +3000,21 @@ public class TrackerStatisticsActivity extends AppCompatActivity {
         axisLeft.setTextSize(this.graph_left_axis_text_size);
         axisLeft.setTextColor(getResources().getColor(R.color.axis_label_color));
         axisLeft.setDrawGridLines(false);
-        axisLeft.setAxisMaximum((float) (this.SQLite_health_tracker.GetMaxCholesterolValue(i) + this.extra_y_axis_value));
+        axisLeft.setAxisMaximum((float) (SQLite_health_tracker.GetMaxCholesterolValue(list) + this.extra_y_axis_value));
         this.graph_view_monthly.getAxisRight().setEnabled(false);
         SetCholesterolBarWidth(this.graph_view_monthly, barData, arrayList);
         this.graph_view_monthly.invalidate();
     }
 
-    private void SetCholesterolYearlyChart(int i) {
+    private void SetCholesterolYearlyChart(List<CholesterolChartData> list) {
         Calendar instance = Calendar.getInstance();
         instance.setTime(new Date());
         int i2 = instance.get(1);
         instance.get(2);
         instance.get(5);
-        ArrayList<CholesterolChartData> arrayList = (ArrayList) this.SQLite_health_tracker.GetCholesterolChartYearlyData(i, i2);
+        ArrayList<CholesterolChartData> arrayList = (ArrayList<CholesterolChartData>) list;
+        ;
+//                (ArrayList) this.SQLite_health_tracker.GetCholesterolChartYearlyData(i, i2);
         if (arrayList.size() == 0) {
             this.lbl_no_data.setVisibility(View.VISIBLE);
             this.lbl_no_data.setText("No Yearly data available!");
@@ -3066,8 +3090,8 @@ public class TrackerStatisticsActivity extends AppCompatActivity {
         ArrayList arrayList2 = new ArrayList();
         for (int i3 = 0; i3 < arrayList.size(); i3++) {
             try {
-                Date parse = new SimpleDateFormat("dd/MM/yyyy hh:mm a").parse(String.valueOf(arrayList.get(i3).dateTime));
-                SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd-MM-yy");
+                Date parse = new SimpleDateFormat("yyyy-MM-dd hh:mm a").parse(String.valueOf(arrayList.get(i3).dateTime));
+                SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd");
                 SimpleDateFormat simpleDateFormat2 = new SimpleDateFormat("HH:mm");
                 String trim = simpleDateFormat.format(parse).trim();
                 simpleDateFormat2.format(parse).trim();
@@ -3084,14 +3108,16 @@ public class TrackerStatisticsActivity extends AppCompatActivity {
         axisLeft.setTextSize(this.graph_left_axis_text_size);
         axisLeft.setTextColor(getResources().getColor(R.color.axis_label_color));
         axisLeft.setDrawGridLines(false);
-        axisLeft.setAxisMaximum((float) (this.SQLite_health_tracker.GetMaxCholesterolValue(i) + this.extra_y_axis_value));
+        axisLeft.setAxisMaximum((float) (SQLite_health_tracker.GetMaxCholesterolValue(list) + this.extra_y_axis_value));
         this.graph_view_yearly.getAxisRight().setEnabled(false);
         SetCholesterolBarWidth(this.graph_view_yearly, barData, arrayList);
         this.graph_view_yearly.invalidate();
     }
 
-    private void SetCholesterolCustomChart(int i) {
-        ArrayList<CholesterolChartData> arrayList = (ArrayList) this.SQLite_health_tracker.GetCholesterolChartCustomData(i, this.custom_start_date, this.custom_end_date);
+    private void SetCholesterolCustomChart(List<CholesterolChartData> list) {
+        ArrayList<CholesterolChartData> arrayList = (ArrayList<CholesterolChartData>) list;
+        ;
+//                (ArrayList) this.SQLite_health_tracker.GetCholesterolChartCustomData(i, this.custom_start_date, this.custom_end_date);
         if (arrayList.size() == 0) {
             this.lbl_no_data.setVisibility(View.VISIBLE);
             this.lbl_no_data.setText("No Yearly data available!");
@@ -3167,8 +3193,8 @@ public class TrackerStatisticsActivity extends AppCompatActivity {
         ArrayList arrayList2 = new ArrayList();
         for (int i2 = 0; i2 < arrayList.size(); i2++) {
             try {
-                Date parse = new SimpleDateFormat("dd/MM/yyyy hh:mm a").parse(String.valueOf(arrayList.get(i2).dateTime));
-                SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd-MM-yyyy");
+                Date parse = new SimpleDateFormat("yyyy-MM-dd hh:mm a").parse(String.valueOf(arrayList.get(i2).dateTime));
+                SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd");
                 SimpleDateFormat simpleDateFormat2 = new SimpleDateFormat("HH:mm a");
                 String trim = simpleDateFormat.format(parse).trim();
                 simpleDateFormat2.format(parse).trim();
@@ -3185,7 +3211,7 @@ public class TrackerStatisticsActivity extends AppCompatActivity {
         axisLeft.setTextSize(this.graph_left_axis_text_size);
         axisLeft.setTextColor(getResources().getColor(R.color.axis_label_color));
         axisLeft.setDrawGridLines(false);
-        axisLeft.setAxisMaximum((float) (this.SQLite_health_tracker.GetMaxCholesterolValue(i) + this.extra_y_axis_value));
+        axisLeft.setAxisMaximum((float) (SQLite_health_tracker.GetMaxCholesterolValue(list) + this.extra_y_axis_value));
         this.graph_view_custom.getAxisRight().setEnabled(false);
         SetCholesterolBarWidth(this.graph_view_custom, barData, arrayList);
         this.graph_view_custom.invalidate();
@@ -3249,13 +3275,14 @@ public class TrackerStatisticsActivity extends AppCompatActivity {
         return arrayList2.subList(0, arrayList.size());
     }
 
-    private void SetHeartRateAllChart(int i) {
+    private void SetHeartRateAllChart(List<HeartRateChartData> data) {
         Calendar instance = Calendar.getInstance();
         instance.setTime(new Date());
         instance.get(1);
         instance.get(2);
         instance.get(5);
-        ArrayList<HeartRateChartData> arrayList = (ArrayList) this.SQLite_health_tracker.GetHeartRateChartAllData(i);
+        ArrayList<HeartRateChartData> arrayList = (ArrayList) data;
+//                this.SQLite_health_tracker.GetHeartRateChartAllData(i);
         if (arrayList.size() == 0) {
             this.lbl_no_data.setVisibility(View.VISIBLE);
             this.lbl_no_data.setText("No data available for All!");
@@ -3319,18 +3346,19 @@ public class TrackerStatisticsActivity extends AppCompatActivity {
         axisLeft.setTextSize(this.graph_left_axis_text_size);
         axisLeft.setTextColor(getResources().getColor(R.color.axis_label_color));
         axisLeft.setDrawGridLines(false);
-        axisLeft.setAxisMaximum((float) (this.SQLite_health_tracker.GetMaxHeartRateValue(i) + this.extra_y_axis_value));
+        axisLeft.setAxisMaximum((float) (this.SQLite_health_tracker.GetMaxHeartRateValue(data) + this.extra_y_axis_value));
         this.graph_view_all.getAxisRight().setEnabled(false);
         SetHeartRateBarWidth(this.graph_view_all, barData, arrayList);
         this.graph_view_all.invalidate();
     }
 
-    private void SetHeartRateTodayChart(int i) {
+    private void SetHeartRateTodayChart(List<HeartRateChartData> data) {
         Calendar instance = Calendar.getInstance();
         instance.setTime(new Date());
         int i2 = instance.get(1);
         int i3 = instance.get(5);
-        ArrayList<HeartRateChartData> arrayList = (ArrayList) this.SQLite_health_tracker.GetHeartRateChartTodayData(i, i3, instance.get(2) + 1, i2);
+        ArrayList<HeartRateChartData> arrayList = (ArrayList) data;
+//                this.SQLite_health_tracker.GetHeartRateChartTodayData(i, i3, instance.get(2) + 1, i2);
         if (arrayList.size() == 0) {
             this.lbl_no_data.setVisibility(View.VISIBLE);
             this.lbl_no_data.setText("No data available for Today!");
@@ -3385,7 +3413,7 @@ public class TrackerStatisticsActivity extends AppCompatActivity {
         ArrayList arrayList2 = new ArrayList();
         for (int i4 = 0; i4 < arrayList.size(); i4++) {
             try {
-                arrayList2.add(new SimpleDateFormat("HH:mm").format(new SimpleDateFormat("dd/MM/yyyy hh:mm a").parse(String.valueOf(arrayList.get(i4).dateTime))).trim());
+                arrayList2.add(new SimpleDateFormat("HH:mm").format(new SimpleDateFormat("yyyy-MM-dd hh:mm a").parse(String.valueOf(arrayList.get(i4).dateTime))).trim());
             } catch (ParseException e) {
                 e.printStackTrace();
             }
@@ -3398,18 +3426,19 @@ public class TrackerStatisticsActivity extends AppCompatActivity {
         axisLeft.setTextSize(this.graph_left_axis_text_size);
         axisLeft.setTextColor(getResources().getColor(R.color.axis_label_color));
         axisLeft.setDrawGridLines(false);
-        axisLeft.setAxisMaximum((float) (this.SQLite_health_tracker.GetMaxHeartRateValue(i) + this.extra_y_axis_value));
+        axisLeft.setAxisMaximum((float) (this.SQLite_health_tracker.GetMaxHeartRateValue(data) + this.extra_y_axis_value));
         this.graph_view_today.getAxisRight().setEnabled(false);
         SetHeartRateBarWidth(this.graph_view_today, barData, arrayList);
         this.graph_view_today.invalidate();
     }
 
-    private void SetHeartRateMonthlyChart(int i) {
+    private void SetHeartRateMonthlyChart(List<HeartRateChartData> data) {
         Calendar instance = Calendar.getInstance();
         instance.setTime(new Date());
         int i2 = instance.get(1);
         instance.get(5);
-        ArrayList<HeartRateChartData> arrayList = (ArrayList) this.SQLite_health_tracker.GetHeartRateChartMonthlyData(i, instance.get(2) + 1, i2);
+        ArrayList<HeartRateChartData> arrayList = (ArrayList) data;
+//                this.SQLite_health_tracker.GetHeartRateChartMonthlyData(i, instance.get(2) + 1, i2);
         if (arrayList.size() == 0) {
             this.lbl_no_data.setVisibility(View.VISIBLE);
             this.lbl_no_data.setText("No Monthly data available!");
@@ -3464,8 +3493,8 @@ public class TrackerStatisticsActivity extends AppCompatActivity {
         ArrayList arrayList2 = new ArrayList();
         for (int i3 = 0; i3 < arrayList.size(); i3++) {
             try {
-                Date parse = new SimpleDateFormat("dd/MM/yyyy hh:mm a").parse(String.valueOf(arrayList.get(i3).dateTime));
-                SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd-MM-yy");
+                Date parse = new SimpleDateFormat("yyyy-MM-dd hh:mm a").parse(String.valueOf(arrayList.get(i3).dateTime));
+                SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd");
                 SimpleDateFormat simpleDateFormat2 = new SimpleDateFormat("HH:mm");
                 String trim = simpleDateFormat.format(parse).trim();
                 String trim2 = simpleDateFormat2.format(parse).trim();
@@ -3482,19 +3511,20 @@ public class TrackerStatisticsActivity extends AppCompatActivity {
         axisLeft.setTextSize(this.graph_left_axis_text_size);
         axisLeft.setTextColor(getResources().getColor(R.color.axis_label_color));
         axisLeft.setDrawGridLines(false);
-        axisLeft.setAxisMaximum((float) (this.SQLite_health_tracker.GetMaxHeartRateValue(i) + this.extra_y_axis_value));
+        axisLeft.setAxisMaximum((float) (this.SQLite_health_tracker.GetMaxHeartRateValue(data) + this.extra_y_axis_value));
         this.graph_view_monthly.getAxisRight().setEnabled(false);
         SetHeartRateBarWidth(this.graph_view_monthly, barData, arrayList);
         this.graph_view_monthly.invalidate();
     }
 
-    private void SetHeartRateYearlyChart(int i) {
+    private void SetHeartRateYearlyChart(List<HeartRateChartData> data) {
         Calendar instance = Calendar.getInstance();
         instance.setTime(new Date());
         int i2 = instance.get(1);
         instance.get(2);
         instance.get(5);
-        ArrayList<HeartRateChartData> arrayList = (ArrayList) this.SQLite_health_tracker.GetHeartRateChartYearlyData(i, i2);
+        ArrayList<HeartRateChartData> arrayList = (ArrayList) data;
+//                this.SQLite_health_tracker.GetHeartRateChartYearlyData(i, i2);
         if (arrayList.size() == 0) {
             this.lbl_no_data.setVisibility(View.VISIBLE);
             this.lbl_no_data.setText("No Yearly data available!");
@@ -3549,8 +3579,8 @@ public class TrackerStatisticsActivity extends AppCompatActivity {
         ArrayList arrayList2 = new ArrayList();
         for (int i3 = 0; i3 < arrayList.size(); i3++) {
             try {
-                Date parse = new SimpleDateFormat("dd/MM/yyyy hh:mm a").parse(String.valueOf(arrayList.get(i3).dateTime));
-                SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd-MM-yy");
+                Date parse = new SimpleDateFormat("yyyy-MM-dd hh:mm a").parse(String.valueOf(arrayList.get(i3).dateTime));
+                SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd");
                 SimpleDateFormat simpleDateFormat2 = new SimpleDateFormat("HH:mm");
                 String trim = simpleDateFormat.format(parse).trim();
                 simpleDateFormat2.format(parse).trim();
@@ -3567,14 +3597,15 @@ public class TrackerStatisticsActivity extends AppCompatActivity {
         axisLeft.setTextSize(this.graph_left_axis_text_size);
         axisLeft.setTextColor(getResources().getColor(R.color.axis_label_color));
         axisLeft.setDrawGridLines(false);
-        axisLeft.setAxisMaximum((float) (this.SQLite_health_tracker.GetMaxHeartRateValue(i) + this.extra_y_axis_value));
+        axisLeft.setAxisMaximum((float) (this.SQLite_health_tracker.GetMaxHeartRateValue(data) + this.extra_y_axis_value));
         this.graph_view_yearly.getAxisRight().setEnabled(false);
         SetHeartRateBarWidth(this.graph_view_yearly, barData, arrayList);
         this.graph_view_yearly.invalidate();
     }
 
-    private void SetHeartRateCustomChart(int i) {
-        ArrayList<HeartRateChartData> arrayList = (ArrayList) this.SQLite_health_tracker.GetHeartRateChartCustomData(i, this.custom_start_date, this.custom_end_date);
+    private void SetHeartRateCustomChart(List<HeartRateChartData> data) {
+        ArrayList<HeartRateChartData> arrayList = (ArrayList) data;
+//                (ArrayList) this.SQLite_health_tracker.GetHeartRateChartCustomData(i, this.custom_start_date, this.custom_end_date);
         if (arrayList.size() == 0) {
             this.lbl_no_data.setVisibility(View.VISIBLE);
             this.lbl_no_data.setText("No Yearly data available!");
@@ -3642,7 +3673,7 @@ public class TrackerStatisticsActivity extends AppCompatActivity {
         axisLeft.setTextSize(this.graph_left_axis_text_size);
         axisLeft.setTextColor(getResources().getColor(R.color.axis_label_color));
         axisLeft.setDrawGridLines(false);
-        axisLeft.setAxisMaximum((float) (this.SQLite_health_tracker.GetMaxHeartRateValue(i) + this.extra_y_axis_value));
+        axisLeft.setAxisMaximum((float) (this.SQLite_health_tracker.GetMaxHeartRateValue(data) + this.extra_y_axis_value));
         this.graph_view_custom.getAxisRight().setEnabled(false);
         SetHeartRateBarWidth(this.graph_view_custom, barData, arrayList);
         this.graph_view_custom.invalidate();
@@ -3682,13 +3713,14 @@ public class TrackerStatisticsActivity extends AppCompatActivity {
         return arrayList2.subList(0, arrayList.size());
     }
 
-    private void SetWeightAllChart(int i) {
+    private void SetWeightAllChart(List<WeightChartData> data) {
         Calendar instance = Calendar.getInstance();
         instance.setTime(new Date());
         instance.get(1);
         instance.get(2);
         instance.get(5);
-        ArrayList<WeightChartData> arrayList = (ArrayList) this.SQLite_health_tracker.GetWeightChartAllData(i);
+        ArrayList<WeightChartData> arrayList = (ArrayList) data;
+//                this.SQLite_health_tracker.GetWeightChartAllData(i);
         if (arrayList.size() == 0) {
             this.lbl_no_data.setVisibility(View.VISIBLE);
             this.lbl_no_data.setText("No data available for All!");
@@ -3752,18 +3784,19 @@ public class TrackerStatisticsActivity extends AppCompatActivity {
         axisLeft.setTextSize(this.graph_left_axis_text_size);
         axisLeft.setTextColor(getResources().getColor(R.color.axis_label_color));
         axisLeft.setDrawGridLines(false);
-        axisLeft.setAxisMaximum((float) (this.SQLite_health_tracker.GetMaxWeightValue(i) + this.extra_y_axis_value));
+        axisLeft.setAxisMaximum((float) (this.SQLite_health_tracker.GetMaxWeightValue(data) + this.extra_y_axis_value));
         this.graph_view_all.getAxisRight().setEnabled(false);
         SetWeightBarWidth(this.graph_view_all, barData, arrayList);
         this.graph_view_all.invalidate();
     }
 
-    private void SetWeightTodayChart(int i) {
+    private void SetWeightTodayChart(List<WeightChartData> data) {
         Calendar instance = Calendar.getInstance();
         instance.setTime(new Date());
         int i2 = instance.get(1);
         int i3 = instance.get(5);
-        ArrayList<WeightChartData> arrayList = (ArrayList) this.SQLite_health_tracker.GetWeightChartTodayData(i, i3, instance.get(2) + 1, i2);
+        ArrayList<WeightChartData> arrayList = (ArrayList) data;
+//                this.SQLite_health_tracker.GetWeightChartTodayData(i, i3, instance.get(2) + 1, i2);
         if (arrayList.size() == 0) {
             this.lbl_no_data.setVisibility(View.VISIBLE);
             this.lbl_no_data.setText("No data available for Today!");
@@ -3818,7 +3851,7 @@ public class TrackerStatisticsActivity extends AppCompatActivity {
         ArrayList arrayList2 = new ArrayList();
         for (int i4 = 0; i4 < arrayList.size(); i4++) {
             try {
-                arrayList2.add(new SimpleDateFormat("HH:mm").format(new SimpleDateFormat("dd/MM/yyyy hh:mm a").parse(String.valueOf(arrayList.get(i4).dateTime))).trim());
+                arrayList2.add(new SimpleDateFormat("HH:mm").format(new SimpleDateFormat("yyyy-MM-dd hh:mm a").parse(String.valueOf(arrayList.get(i4).dateTime))).trim());
             } catch (ParseException e) {
                 e.printStackTrace();
             }
@@ -3831,18 +3864,19 @@ public class TrackerStatisticsActivity extends AppCompatActivity {
         axisLeft.setTextSize(this.graph_left_axis_text_size);
         axisLeft.setTextColor(getResources().getColor(R.color.axis_label_color));
         axisLeft.setDrawGridLines(false);
-        axisLeft.setAxisMaximum((float) (this.SQLite_health_tracker.GetMaxWeightValue(i) + this.extra_y_axis_value));
+        axisLeft.setAxisMaximum((float) (this.SQLite_health_tracker.GetMaxWeightValue(data) + this.extra_y_axis_value));
         this.graph_view_today.getAxisRight().setEnabled(false);
         SetWeightBarWidth(this.graph_view_today, barData, arrayList);
         this.graph_view_today.invalidate();
     }
 
-    private void SetWeightMonthlyChart(int i) {
+    private void SetWeightMonthlyChart(List<WeightChartData> data) {
         Calendar instance = Calendar.getInstance();
         instance.setTime(new Date());
         int i2 = instance.get(1);
         instance.get(5);
-        ArrayList<WeightChartData> arrayList = (ArrayList) this.SQLite_health_tracker.GetWeightChartMonthlyData(i, instance.get(2) + 1, i2);
+        ArrayList<WeightChartData> arrayList = (ArrayList) data;
+//                this.SQLite_health_tracker.GetWeightChartMonthlyData(i, instance.get(2) + 1, i2);
         if (arrayList.size() == 0) {
             this.lbl_no_data.setVisibility(View.VISIBLE);
             this.lbl_no_data.setText("No Monthly data available!");
@@ -3897,8 +3931,8 @@ public class TrackerStatisticsActivity extends AppCompatActivity {
         ArrayList arrayList2 = new ArrayList();
         for (int i3 = 0; i3 < arrayList.size(); i3++) {
             try {
-                Date parse = new SimpleDateFormat("dd/MM/yyyy hh:mm a").parse(String.valueOf(arrayList.get(i3).dateTime));
-                SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd-MM-yy");
+                Date parse = new SimpleDateFormat("yyyy-MM-dd hh:mm a").parse(String.valueOf(arrayList.get(i3).dateTime));
+                SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd");
                 SimpleDateFormat simpleDateFormat2 = new SimpleDateFormat("HH:mm");
                 String trim = simpleDateFormat.format(parse).trim();
                 String trim2 = simpleDateFormat2.format(parse).trim();
@@ -3915,19 +3949,20 @@ public class TrackerStatisticsActivity extends AppCompatActivity {
         axisLeft.setTextSize(this.graph_left_axis_text_size);
         axisLeft.setTextColor(getResources().getColor(R.color.axis_label_color));
         axisLeft.setDrawGridLines(false);
-        axisLeft.setAxisMaximum((float) (this.SQLite_health_tracker.GetMaxWeightValue(i) + this.extra_y_axis_value));
+        axisLeft.setAxisMaximum((float) (this.SQLite_health_tracker.GetMaxWeightValue(data) + this.extra_y_axis_value));
         this.graph_view_monthly.getAxisRight().setEnabled(false);
         SetWeightBarWidth(this.graph_view_monthly, barData, arrayList);
         this.graph_view_monthly.invalidate();
     }
 
-    private void SetWeightYearlyChart(int i) {
+    private void SetWeightYearlyChart(List<WeightChartData> data) {
         Calendar instance = Calendar.getInstance();
         instance.setTime(new Date());
         int i2 = instance.get(1);
         instance.get(2);
         instance.get(5);
-        ArrayList<WeightChartData> arrayList = (ArrayList) this.SQLite_health_tracker.GetWeightChartYearlyData(i, i2);
+        ArrayList<WeightChartData> arrayList = (ArrayList) data;
+//                this.SQLite_health_tracker.GetWeightChartYearlyData(i, i2);
         if (arrayList.size() == 0) {
             this.lbl_no_data.setVisibility(View.VISIBLE);
             this.lbl_no_data.setText("No Yearly data available!");
@@ -3982,8 +4017,8 @@ public class TrackerStatisticsActivity extends AppCompatActivity {
         ArrayList arrayList2 = new ArrayList();
         for (int i3 = 0; i3 < arrayList.size(); i3++) {
             try {
-                Date parse = new SimpleDateFormat("dd/MM/yyyy hh:mm a").parse(String.valueOf(arrayList.get(i3).dateTime));
-                SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd-MM-yy");
+                Date parse = new SimpleDateFormat("yyyy-MM-dd hh:mm a").parse(String.valueOf(arrayList.get(i3).dateTime));
+                SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd");
                 SimpleDateFormat simpleDateFormat2 = new SimpleDateFormat("HH:mm");
                 String trim = simpleDateFormat.format(parse).trim();
                 simpleDateFormat2.format(parse).trim();
@@ -4000,14 +4035,15 @@ public class TrackerStatisticsActivity extends AppCompatActivity {
         axisLeft.setTextSize(this.graph_left_axis_text_size);
         axisLeft.setTextColor(getResources().getColor(R.color.axis_label_color));
         axisLeft.setDrawGridLines(false);
-        axisLeft.setAxisMaximum((float) (this.SQLite_health_tracker.GetMaxWeightValue(i) + this.extra_y_axis_value));
+        axisLeft.setAxisMaximum((float) (this.SQLite_health_tracker.GetMaxWeightValue(data) + this.extra_y_axis_value));
         this.graph_view_yearly.getAxisRight().setEnabled(false);
         SetWeightBarWidth(this.graph_view_yearly, barData, arrayList);
         this.graph_view_yearly.invalidate();
     }
 
-    private void SetWeightCustomChart(int i) {
-        ArrayList<WeightChartData> arrayList = (ArrayList) this.SQLite_health_tracker.GetWeightChartCustomData(i, this.custom_start_date, this.custom_end_date);
+    private void SetWeightCustomChart(List<WeightChartData> data) {
+        ArrayList<WeightChartData> arrayList = (ArrayList) data;
+//                this.SQLite_health_tracker.GetWeightChartCustomData(i, this.custom_start_date, this.custom_end_date);
         if (arrayList.size() == 0) {
             this.lbl_no_data.setVisibility(View.VISIBLE);
             this.lbl_no_data.setText("No Yearly data available!");
@@ -4075,7 +4111,7 @@ public class TrackerStatisticsActivity extends AppCompatActivity {
         axisLeft.setTextSize(this.graph_left_axis_text_size);
         axisLeft.setTextColor(getResources().getColor(R.color.axis_label_color));
         axisLeft.setDrawGridLines(false);
-        axisLeft.setAxisMaximum((float) (this.SQLite_health_tracker.GetMaxWeightValue(i) + this.extra_y_axis_value));
+        axisLeft.setAxisMaximum((float) (this.SQLite_health_tracker.GetMaxWeightValue(data) + this.extra_y_axis_value));
         this.graph_view_custom.getAxisRight().setEnabled(false);
         SetWeightBarWidth(this.graph_view_custom, barData, arrayList);
         this.graph_view_custom.invalidate();
@@ -4318,7 +4354,7 @@ public class TrackerStatisticsActivity extends AppCompatActivity {
                 this.graph_view_custom.setVisibility(View.GONE);
                 this.graph_view_all.invalidate();
                 this.graph_view_all.clear();
-                SetBMIAllChart(i);
+                getBmiChartAllData(bloodCountChartRequest);
             } else if (str2.equalsIgnoreCase(getResources().getString(R.string.lbl_today))) {
                 this.graph_view_today.setVisibility(View.VISIBLE);
                 this.graph_view_monthly.setVisibility(View.GONE);
@@ -4327,7 +4363,7 @@ public class TrackerStatisticsActivity extends AppCompatActivity {
                 this.graph_view_custom.setVisibility(View.GONE);
                 this.graph_view_today.invalidate();
                 this.graph_view_today.clear();
-                SetBMITodayChart(i);
+                getBmiChartTodayData(bloodCountChartRequest);
             } else if (str2.equalsIgnoreCase(getResources().getString(R.string.lbl_month))) {
                 this.graph_view_today.setVisibility(View.GONE);
                 this.graph_view_monthly.setVisibility(View.VISIBLE);
@@ -4336,7 +4372,7 @@ public class TrackerStatisticsActivity extends AppCompatActivity {
                 this.graph_view_custom.setVisibility(View.GONE);
                 this.graph_view_monthly.invalidate();
                 this.graph_view_monthly.clear();
-                SetBMIMonthlyChart(i);
+                getBmiChartMonthlyData(bloodCountChartRequest);
             } else if (str2.equalsIgnoreCase(getResources().getString(R.string.lbl_year))) {
                 this.graph_view_today.setVisibility(View.GONE);
                 this.graph_view_monthly.setVisibility(View.GONE);
@@ -4345,7 +4381,7 @@ public class TrackerStatisticsActivity extends AppCompatActivity {
                 this.graph_view_custom.setVisibility(View.GONE);
                 this.graph_view_yearly.invalidate();
                 this.graph_view_yearly.clear();
-                SetBMIYearlyChart(i);
+                getBmiChartYearlyData(bloodCountChartRequest);
             } else if (str2.equalsIgnoreCase(getResources().getString(R.string.lbl_custom))) {
                 this.graph_view_today.setVisibility(View.GONE);
                 this.graph_view_monthly.setVisibility(View.GONE);
@@ -4354,7 +4390,7 @@ public class TrackerStatisticsActivity extends AppCompatActivity {
                 this.graph_view_custom.setVisibility(View.VISIBLE);
                 this.graph_view_custom.invalidate();
                 this.graph_view_custom.clear();
-                SetBMICustomChart(i);
+                getBmiChartCustomData(bloodCountChartRequest);
             }
         } else if (str.equalsIgnoreCase(getResources().getString(R.string.lbl_chart_body_temp))) {
             this.txt_chart_type.setText(getResources().getString(R.string.lbl_chart_body_temp));
@@ -4366,7 +4402,7 @@ public class TrackerStatisticsActivity extends AppCompatActivity {
                 this.graph_view_custom.setVisibility(View.GONE);
                 this.graph_view_all.invalidate();
                 this.graph_view_all.clear();
-                SetBodyTempAllChart(i);
+                getTempChartAllData(bloodCountChartRequest);
             } else if (str2.equalsIgnoreCase(getResources().getString(R.string.lbl_today))) {
                 this.graph_view_today.setVisibility(View.VISIBLE);
                 this.graph_view_monthly.setVisibility(View.GONE);
@@ -4375,7 +4411,7 @@ public class TrackerStatisticsActivity extends AppCompatActivity {
                 this.graph_view_custom.setVisibility(View.GONE);
                 this.graph_view_today.invalidate();
                 this.graph_view_today.clear();
-                SetBodyTempTodayChart(i);
+                getTempChartTodayData(bloodCountChartRequest);
             } else if (str2.equalsIgnoreCase(getResources().getString(R.string.lbl_month))) {
                 this.graph_view_today.setVisibility(View.GONE);
                 this.graph_view_monthly.setVisibility(View.VISIBLE);
@@ -4384,7 +4420,7 @@ public class TrackerStatisticsActivity extends AppCompatActivity {
                 this.graph_view_custom.setVisibility(View.GONE);
                 this.graph_view_monthly.invalidate();
                 this.graph_view_monthly.clear();
-                SetBodyTempMonthlyChart(i);
+                getTempChartMonthlyData(bloodCountChartRequest);
             } else if (str2.equalsIgnoreCase(getResources().getString(R.string.lbl_year))) {
                 this.graph_view_today.setVisibility(View.GONE);
                 this.graph_view_monthly.setVisibility(View.GONE);
@@ -4393,7 +4429,7 @@ public class TrackerStatisticsActivity extends AppCompatActivity {
                 this.graph_view_custom.setVisibility(View.GONE);
                 this.graph_view_yearly.invalidate();
                 this.graph_view_yearly.clear();
-                SetBodyTempYearlyChart(i);
+                getTempChartYearlyData(bloodCountChartRequest);
             } else if (str2.equalsIgnoreCase(getResources().getString(R.string.lbl_custom))) {
                 this.graph_view_today.setVisibility(View.GONE);
                 this.graph_view_monthly.setVisibility(View.GONE);
@@ -4402,7 +4438,7 @@ public class TrackerStatisticsActivity extends AppCompatActivity {
                 this.graph_view_custom.setVisibility(View.VISIBLE);
                 this.graph_view_custom.invalidate();
                 this.graph_view_custom.clear();
-                SetBodyTempCustomChart(i);
+                getTempChartCustomData(bloodCountChartRequest);
             }
         } else if (str.equalsIgnoreCase(getResources().getString(R.string.lbl_chart_cholesterol))) {
             String string4 = getResources().getString(R.string.lbl_mg_dl);
@@ -4416,7 +4452,7 @@ public class TrackerStatisticsActivity extends AppCompatActivity {
                 this.graph_view_custom.setVisibility(View.GONE);
                 this.graph_view_all.invalidate();
                 this.graph_view_all.clear();
-                SetCholesterolAllChart(i);
+                getCholesterolChartAllData(bloodCountChartRequest);
             } else if (str2.equalsIgnoreCase(getResources().getString(R.string.lbl_today))) {
                 this.graph_view_today.setVisibility(View.VISIBLE);
                 this.graph_view_monthly.setVisibility(View.GONE);
@@ -4425,7 +4461,7 @@ public class TrackerStatisticsActivity extends AppCompatActivity {
                 this.graph_view_custom.setVisibility(View.GONE);
                 this.graph_view_today.invalidate();
                 this.graph_view_today.clear();
-                SetCholesterolTodayChart(i);
+                getCholesterolChartTodayData(bloodCountChartRequest);
             } else if (str2.equalsIgnoreCase(getResources().getString(R.string.lbl_month))) {
                 this.graph_view_today.setVisibility(View.GONE);
                 this.graph_view_monthly.setVisibility(View.VISIBLE);
@@ -4434,7 +4470,7 @@ public class TrackerStatisticsActivity extends AppCompatActivity {
                 this.graph_view_custom.setVisibility(View.GONE);
                 this.graph_view_monthly.invalidate();
                 this.graph_view_monthly.clear();
-                SetCholesterolMonthlyChart(i);
+                getCholesterolChartMonthlyData(bloodCountChartRequest);
             } else if (str2.equalsIgnoreCase(getResources().getString(R.string.lbl_year))) {
                 this.graph_view_today.setVisibility(View.GONE);
                 this.graph_view_monthly.setVisibility(View.GONE);
@@ -4443,7 +4479,7 @@ public class TrackerStatisticsActivity extends AppCompatActivity {
                 this.graph_view_custom.setVisibility(View.GONE);
                 this.graph_view_yearly.invalidate();
                 this.graph_view_yearly.clear();
-                SetCholesterolYearlyChart(i);
+                getCholesterolChartYearlyData(bloodCountChartRequest);
             } else if (str2.equalsIgnoreCase(getResources().getString(R.string.lbl_custom))) {
                 this.graph_view_today.setVisibility(View.GONE);
                 this.graph_view_monthly.setVisibility(View.GONE);
@@ -4452,7 +4488,7 @@ public class TrackerStatisticsActivity extends AppCompatActivity {
                 this.graph_view_custom.setVisibility(View.VISIBLE);
                 this.graph_view_custom.invalidate();
                 this.graph_view_custom.clear();
-                SetCholesterolCustomChart(i);
+                getCholesterolChartCustomData(bloodCountChartRequest);
             }
         } else if (str.equalsIgnoreCase(getResources().getString(R.string.lbl_chart_heart_rate))) {
             String string5 = getResources().getString(R.string.lbl_bpm);
@@ -4466,7 +4502,7 @@ public class TrackerStatisticsActivity extends AppCompatActivity {
                 this.graph_view_custom.setVisibility(View.GONE);
                 this.graph_view_all.invalidate();
                 this.graph_view_all.clear();
-                SetHeartRateAllChart(i);
+                getHrChartAllData(bloodCountChartRequest);
             } else if (str2.equalsIgnoreCase(getResources().getString(R.string.lbl_today))) {
                 this.graph_view_today.setVisibility(View.VISIBLE);
                 this.graph_view_monthly.setVisibility(View.GONE);
@@ -4475,7 +4511,8 @@ public class TrackerStatisticsActivity extends AppCompatActivity {
                 this.graph_view_custom.setVisibility(View.GONE);
                 this.graph_view_today.invalidate();
                 this.graph_view_today.clear();
-                SetHeartRateTodayChart(i);
+                getHrChartTodayData(bloodCountChartRequest);
+//                SetHeartRateTodayChart(i);
             } else if (str2.equalsIgnoreCase(getResources().getString(R.string.lbl_month))) {
                 this.graph_view_today.setVisibility(View.GONE);
                 this.graph_view_monthly.setVisibility(View.VISIBLE);
@@ -4484,7 +4521,8 @@ public class TrackerStatisticsActivity extends AppCompatActivity {
                 this.graph_view_custom.setVisibility(View.GONE);
                 this.graph_view_monthly.invalidate();
                 this.graph_view_monthly.clear();
-                SetHeartRateMonthlyChart(i);
+                getHrChartMonthlyData(bloodCountChartRequest);
+//                SetHeartRateMonthlyChart(i);
             } else if (str2.equalsIgnoreCase(getResources().getString(R.string.lbl_year))) {
                 this.graph_view_today.setVisibility(View.GONE);
                 this.graph_view_monthly.setVisibility(View.GONE);
@@ -4493,7 +4531,9 @@ public class TrackerStatisticsActivity extends AppCompatActivity {
                 this.graph_view_custom.setVisibility(View.GONE);
                 this.graph_view_yearly.invalidate();
                 this.graph_view_yearly.clear();
-                SetHeartRateYearlyChart(i);
+                getHrChartYearlyData(bloodCountChartRequest);
+
+//                SetHeartRateYearlyChart(i);
             } else if (str2.equalsIgnoreCase(getResources().getString(R.string.lbl_custom))) {
                 this.graph_view_today.setVisibility(View.GONE);
                 this.graph_view_monthly.setVisibility(View.GONE);
@@ -4502,7 +4542,9 @@ public class TrackerStatisticsActivity extends AppCompatActivity {
                 this.graph_view_custom.setVisibility(View.VISIBLE);
                 this.graph_view_custom.invalidate();
                 this.graph_view_custom.clear();
-                SetHeartRateCustomChart(i);
+                getHrChartCustomData(bloodCountChartRequest);
+
+//                SetHeartRateCustomChart(i);
             }
         } else if (str.equalsIgnoreCase(getResources().getString(R.string.lbl_chart_weight))) {
             this.txt_chart_type.setText(getResources().getString(R.string.lbl_chart_weight));
@@ -4514,7 +4556,7 @@ public class TrackerStatisticsActivity extends AppCompatActivity {
                 this.graph_view_custom.setVisibility(View.GONE);
                 this.graph_view_all.invalidate();
                 this.graph_view_all.clear();
-                SetWeightAllChart(i);
+                getWeightChartAllData(bloodCountChartRequest);
             } else if (str2.equalsIgnoreCase(getResources().getString(R.string.lbl_today))) {
                 this.graph_view_today.setVisibility(View.VISIBLE);
                 this.graph_view_monthly.setVisibility(View.GONE);
@@ -4523,7 +4565,7 @@ public class TrackerStatisticsActivity extends AppCompatActivity {
                 this.graph_view_custom.setVisibility(View.GONE);
                 this.graph_view_today.invalidate();
                 this.graph_view_today.clear();
-                SetWeightTodayChart(i);
+                getWeightChartTodayData(bloodCountChartRequest);
             } else if (str2.equalsIgnoreCase(getResources().getString(R.string.lbl_month))) {
                 this.graph_view_today.setVisibility(View.GONE);
                 this.graph_view_monthly.setVisibility(View.VISIBLE);
@@ -4532,7 +4574,7 @@ public class TrackerStatisticsActivity extends AppCompatActivity {
                 this.graph_view_custom.setVisibility(View.GONE);
                 this.graph_view_monthly.invalidate();
                 this.graph_view_monthly.clear();
-                SetWeightMonthlyChart(i);
+                getWeightChartMonthlyData(bloodCountChartRequest);
             } else if (str2.equalsIgnoreCase(getResources().getString(R.string.lbl_year))) {
                 this.graph_view_today.setVisibility(View.GONE);
                 this.graph_view_monthly.setVisibility(View.GONE);
@@ -4541,7 +4583,7 @@ public class TrackerStatisticsActivity extends AppCompatActivity {
                 this.graph_view_custom.setVisibility(View.GONE);
                 this.graph_view_yearly.invalidate();
                 this.graph_view_yearly.clear();
-                SetWeightYearlyChart(i);
+                getWeightChartYearlyData(bloodCountChartRequest);
             } else if (str2.equalsIgnoreCase(getResources().getString(R.string.lbl_custom))) {
                 this.graph_view_today.setVisibility(View.GONE);
                 this.graph_view_monthly.setVisibility(View.GONE);
@@ -4550,7 +4592,7 @@ public class TrackerStatisticsActivity extends AppCompatActivity {
                 this.graph_view_custom.setVisibility(View.VISIBLE);
                 this.graph_view_custom.invalidate();
                 this.graph_view_custom.clear();
-                SetWeightCustomChart(i);
+                getWeightChartCustomData(bloodCountChartRequest);
             }
         }
     }
@@ -4798,7 +4840,7 @@ public class TrackerStatisticsActivity extends AppCompatActivity {
                         @Override
                         public void onResponse(Call<BloodPressureChartResponse> call, Response<BloodPressureChartResponse> response) {
                             if (response.isSuccessful()) {
-                                getHighestBloodPressureValueAll(response.body().getData());
+                                SetBloodPressureAllChart(response.body().getData());
                             } else {
                                 showMessage("Failed");
 
@@ -4823,7 +4865,7 @@ public class TrackerStatisticsActivity extends AppCompatActivity {
                         @Override
                         public void onResponse(Call<BloodPressureChartResponse> call, Response<BloodPressureChartResponse> response) {
                             if (response.isSuccessful()) {
-                                getHighestBloodPressureValueToday(response.body().getData());
+                                SetBloodPressureTodayChart(response.body().getData());
                             } else {
                                 showMessage("Failed");
 
@@ -4848,7 +4890,7 @@ public class TrackerStatisticsActivity extends AppCompatActivity {
                         @Override
                         public void onResponse(Call<BloodPressureChartResponse> call, Response<BloodPressureChartResponse> response) {
                             if (response.isSuccessful()) {
-                                getHighestBloodPressureValueMonth(response.body().getData());
+                                SetBloodPressureMonthlyChart(response.body().getData());
                             } else {
                                 showMessage("Failed");
 
@@ -4873,7 +4915,7 @@ public class TrackerStatisticsActivity extends AppCompatActivity {
                         @Override
                         public void onResponse(Call<BloodPressureChartResponse> call, Response<BloodPressureChartResponse> response) {
                             if (response.isSuccessful()) {
-                                getHighestBloodPressureValueYear(response.body().getData());
+                                SetBloodPressureYearlyChart(response.body().getData());
                             } else {
                                 showMessage("Failed");
 
@@ -4898,7 +4940,7 @@ public class TrackerStatisticsActivity extends AppCompatActivity {
                         @Override
                         public void onResponse(Call<BloodPressureChartResponse> call, Response<BloodPressureChartResponse> response) {
                             if (response.isSuccessful()) {
-                                getHighestBloodPressureValueCustom(response.body().getData());
+                                SetBloodPressureCustomChart(response.body().getData());
                             } else {
                                 showMessage("Failed");
 
@@ -4914,70 +4956,6 @@ public class TrackerStatisticsActivity extends AppCompatActivity {
 
         }
     }
-
-
-    private void getHighestBloodPressureValueAll(List<BloodPressureChartData> dataArray) {
-        float highestBp = Float.MIN_VALUE;
-
-        for (int i = 0; i < dataArray.size(); i++) {
-            float bp = dataArray.get(i).pulse_pressure_value;
-            if (bp > highestBp) {
-                highestBp = bp;
-            }
-        }
-        SetBloodPressureAllChart(highestBp, dataArray);
-    }
-
-    private void getHighestBloodPressureValueToday(List<BloodPressureChartData> dataArray) {
-        float highestBp = Float.MIN_VALUE;
-
-        for (int i = 0; i < dataArray.size(); i++) {
-            float bp = dataArray.get(i).pulse_pressure_value;
-            if (bp > highestBp) {
-                highestBp = bp;
-            }
-        }
-        SetBloodPressureTodayChart(highestBp, dataArray);
-    }
-
-    private void getHighestBloodPressureValueMonth(List<BloodPressureChartData> dataArray) {
-        float highestBp = Float.MIN_VALUE;
-
-        for (int i = 0; i < dataArray.size(); i++) {
-            float bp = dataArray.get(i).pulse_pressure_value;
-            if (bp > highestBp) {
-                highestBp = bp;
-            }
-        }
-        SetBloodPressureMonthlyChart(highestBp, dataArray);
-    }
-
-
-    private void getHighestBloodPressureValueYear(List<BloodPressureChartData> dataArray) {
-        float highestBp = Float.MIN_VALUE;
-
-        for (int i = 0; i < dataArray.size(); i++) {
-            float bp = dataArray.get(i).pulse_pressure_value;
-            if (bp > highestBp) {
-                highestBp = bp;
-            }
-        }
-        SetBloodPressureYearlyChart(highestBp, dataArray);
-    }
-
-
-    private void getHighestBloodPressureValueCustom(List<BloodPressureChartData> dataArray) {
-        float highestBp = Float.MIN_VALUE;
-
-        for (int i = 0; i < dataArray.size(); i++) {
-            float bp = dataArray.get(i).pulse_pressure_value;
-            if (bp > highestBp) {
-                highestBp = bp;
-            }
-        }
-        SetBloodPressureCustomChart(highestBp, dataArray);
-    }
-
 
     //bs
     private void getBloodSugarChartAllData(BloodCountChartRequest bloodCountChartRequest) {
@@ -5170,6 +5148,642 @@ public class TrackerStatisticsActivity extends AppCompatActivity {
         SetBloodSugarCustomChart(highestSugar, dataArray);
     }
 
+
+    //ch
+    private void getCholesterolChartAllData(BloodCountChartRequest bloodCountChartRequest) {
+        String token = sharedPreferencesUtils.read("token", "");
+        if (!token.equals("")) {
+            ApiClient.INSTANCE.getApiService().getCholesterolChartAllData(token, bloodCountChartRequest)
+                    .enqueue(new Callback<CholesterolChartResponse>() {
+                        @Override
+                        public void onResponse(Call<CholesterolChartResponse> call, Response<CholesterolChartResponse> response) {
+                            if (response.isSuccessful()) {
+                                SetCholesterolAllChart(response.body().getData());
+                            } else {
+                                showMessage("Failed");
+
+                            }
+                        }
+
+                        @Override
+                        public void onFailure(Call<CholesterolChartResponse> call, Throwable t) {
+                            showMessage("Failed ...");
+
+                        }
+                    });
+
+        }
+    }
+
+    private void getCholesterolChartTodayData(BloodCountChartRequest bloodCountChartRequest) {
+        String token = sharedPreferencesUtils.read("token", "");
+        if (!token.equals("")) {
+            ApiClient.INSTANCE.getApiService().getCholesterolChartTodayData(token, bloodCountChartRequest)
+                    .enqueue(new Callback<CholesterolChartResponse>() {
+                        @Override
+                        public void onResponse(Call<CholesterolChartResponse> call, Response<CholesterolChartResponse> response) {
+                            if (response.isSuccessful()) {
+                                SetCholesterolTodayChart(response.body().getData());
+                            } else {
+                                showMessage("Failed");
+
+                            }
+                        }
+
+                        @Override
+                        public void onFailure(Call<CholesterolChartResponse> call, Throwable t) {
+                            showMessage("Failed ...");
+
+                        }
+                    });
+
+        }
+    }
+
+    private void getCholesterolChartMonthlyData(BloodCountChartRequest bloodCountChartRequest) {
+        String token = sharedPreferencesUtils.read("token", "");
+        if (!token.equals("")) {
+            ApiClient.INSTANCE.getApiService().getCholesterolChartMonthlyData(token, bloodCountChartRequest)
+                    .enqueue(new Callback<CholesterolChartResponse>() {
+                        @Override
+                        public void onResponse(Call<CholesterolChartResponse> call, Response<CholesterolChartResponse> response) {
+                            if (response.isSuccessful()) {
+                                SetCholesterolMonthlyChart(response.body().getData());
+                            } else {
+                                showMessage("Failed");
+
+                            }
+                        }
+
+                        @Override
+                        public void onFailure(Call<CholesterolChartResponse> call, Throwable t) {
+                            showMessage("Failed ...");
+
+                        }
+                    });
+
+        }
+    }
+
+    private void getCholesterolChartYearlyData(BloodCountChartRequest bloodCountChartRequest) {
+        String token = sharedPreferencesUtils.read("token", "");
+        if (!token.equals("")) {
+            ApiClient.INSTANCE.getApiService().getCholesterolChartYearlyData(token, bloodCountChartRequest)
+                    .enqueue(new Callback<CholesterolChartResponse>() {
+                        @Override
+                        public void onResponse(Call<CholesterolChartResponse> call, Response<CholesterolChartResponse> response) {
+                            if (response.isSuccessful()) {
+                                SetCholesterolYearlyChart(response.body().getData());
+                            } else {
+                                showMessage("Failed");
+
+                            }
+                        }
+
+                        @Override
+                        public void onFailure(Call<CholesterolChartResponse> call, Throwable t) {
+                            showMessage("Failed ...");
+
+                        }
+                    });
+
+        }
+    }
+
+    private void getCholesterolChartCustomData(BloodCountChartRequest bloodCountChartRequest) {
+        String token = sharedPreferencesUtils.read("token", "");
+        if (!token.equals("")) {
+            ApiClient.INSTANCE.getApiService().getCholesterolChartCustomData(token, bloodCountChartRequest)
+                    .enqueue(new Callback<CholesterolChartResponse>() {
+                        @Override
+                        public void onResponse(Call<CholesterolChartResponse> call, Response<CholesterolChartResponse> response) {
+                            if (response.isSuccessful()) {
+                                SetCholesterolCustomChart(response.body().getData());
+                            } else {
+                                showMessage("Failed");
+
+                            }
+                        }
+
+                        @Override
+                        public void onFailure(Call<CholesterolChartResponse> call, Throwable t) {
+                            showMessage("Failed ...");
+
+                        }
+                    });
+
+        }
+    }
+
+    //bs
+    private void getHrChartAllData(BloodCountChartRequest bloodCountChartRequest) {
+        String token = sharedPreferencesUtils.read("token", "");
+        if (!token.equals("")) {
+            ApiClient.INSTANCE.getApiService().getHeartRateChartAllData(token, bloodCountChartRequest)
+                    .enqueue(new Callback<HeartRateChartResponse>() {
+                        @Override
+                        public void onResponse(Call<HeartRateChartResponse> call, Response<HeartRateChartResponse> response) {
+                            if (response.isSuccessful()) {
+                                SetHeartRateAllChart(response.body().getData());
+                            } else {
+                                showMessage("Failed");
+
+                            }
+                        }
+
+                        @Override
+                        public void onFailure(Call<HeartRateChartResponse> call, Throwable t) {
+                            showMessage("Failed ...");
+
+                        }
+                    });
+
+        }
+    }
+
+    private void getHrChartTodayData(BloodCountChartRequest bloodCountChartRequest) {
+        String token = sharedPreferencesUtils.read("token", "");
+        if (!token.equals("")) {
+            ApiClient.INSTANCE.getApiService().getHeartRateChartTodayData(token, bloodCountChartRequest)
+                    .enqueue(new Callback<HeartRateChartResponse>() {
+                        @Override
+                        public void onResponse(Call<HeartRateChartResponse> call, Response<HeartRateChartResponse> response) {
+                            if (response.isSuccessful()) {
+                                SetHeartRateTodayChart(response.body().getData());
+                            } else {
+                                showMessage("Failed");
+
+                            }
+                        }
+
+                        @Override
+                        public void onFailure(Call<HeartRateChartResponse> call, Throwable t) {
+                            showMessage("Failed ...");
+
+                        }
+                    });
+
+        }
+    }
+
+    private void getHrChartMonthlyData(BloodCountChartRequest bloodCountChartRequest) {
+        String token = sharedPreferencesUtils.read("token", "");
+        if (!token.equals("")) {
+            ApiClient.INSTANCE.getApiService().getHeartRateChartMonthlyData(token, bloodCountChartRequest)
+                    .enqueue(new Callback<HeartRateChartResponse>() {
+                        @Override
+                        public void onResponse(Call<HeartRateChartResponse> call, Response<HeartRateChartResponse> response) {
+                            if (response.isSuccessful()) {
+                                SetHeartRateMonthlyChart(response.body().getData());
+                            } else {
+                                showMessage("Failed");
+
+                            }
+                        }
+
+                        @Override
+                        public void onFailure(Call<HeartRateChartResponse> call, Throwable t) {
+                            showMessage("Failed ...");
+
+                        }
+                    });
+
+        }
+    }
+
+    private void getHrChartYearlyData(BloodCountChartRequest bloodCountChartRequest) {
+        String token = sharedPreferencesUtils.read("token", "");
+        if (!token.equals("")) {
+            ApiClient.INSTANCE.getApiService().getHeartRateChartYearlyData(token, bloodCountChartRequest)
+                    .enqueue(new Callback<HeartRateChartResponse>() {
+                        @Override
+                        public void onResponse(Call<HeartRateChartResponse> call, Response<HeartRateChartResponse> response) {
+                            if (response.isSuccessful()) {
+                                SetHeartRateYearlyChart(response.body().getData());
+                            } else {
+                                showMessage("Failed");
+
+                            }
+                        }
+
+                        @Override
+                        public void onFailure(Call<HeartRateChartResponse> call, Throwable t) {
+                            showMessage("Failed ...");
+
+                        }
+                    });
+
+        }
+    }
+
+    private void getHrChartCustomData(BloodCountChartRequest bloodCountChartRequest) {
+        String token = sharedPreferencesUtils.read("token", "");
+        if (!token.equals("")) {
+            ApiClient.INSTANCE.getApiService().getHeartRateChartCustomData(token, bloodCountChartRequest)
+                    .enqueue(new Callback<HeartRateChartResponse>() {
+                        @Override
+                        public void onResponse(Call<HeartRateChartResponse> call, Response<HeartRateChartResponse> response) {
+                            if (response.isSuccessful()) {
+                                SetHeartRateCustomChart(response.body().getData());
+                            } else {
+                                showMessage("Failed");
+
+                            }
+                        }
+
+                        @Override
+                        public void onFailure(Call<HeartRateChartResponse> call, Throwable t) {
+                            showMessage("Failed ...");
+
+                        }
+                    });
+
+        }
+    }
+
+
+    //weight
+    private void getWeightChartAllData(BloodCountChartRequest weightChartRequest) {
+        String token = sharedPreferencesUtils.read("token", "");
+        if (!token.equals("")) {
+            ApiClient.INSTANCE.getApiService().getWeightChartAllData(token, weightChartRequest)
+                    .enqueue(new Callback<WeightChartResponse>() {
+                        @Override
+                        public void onResponse(Call<WeightChartResponse> call, Response<WeightChartResponse> response) {
+                            if (response.isSuccessful()) {
+                                SetWeightAllChart(response.body().getData());
+                            } else {
+                                showMessage("Failed");
+
+                            }
+                        }
+
+                        @Override
+                        public void onFailure(Call<WeightChartResponse> call, Throwable t) {
+                            showMessage("Failed ...");
+
+                        }
+                    });
+
+        }
+    }
+
+    private void getWeightChartTodayData(BloodCountChartRequest weightChartRequest) {
+        String token = sharedPreferencesUtils.read("token", "");
+        if (!token.equals("")) {
+            ApiClient.INSTANCE.getApiService().getWeightChartTodayData(token, weightChartRequest)
+                    .enqueue(new Callback<WeightChartResponse>() {
+                        @Override
+                        public void onResponse(Call<WeightChartResponse> call, Response<WeightChartResponse> response) {
+                            if (response.isSuccessful()) {
+                                SetWeightTodayChart(response.body().getData());
+                            } else {
+                                showMessage("Failed");
+
+                            }
+                        }
+
+                        @Override
+                        public void onFailure(Call<WeightChartResponse> call, Throwable t) {
+                            showMessage("Failed ...");
+
+                        }
+                    });
+
+        }
+    }
+
+    private void getWeightChartMonthlyData(BloodCountChartRequest weightChartRequest) {
+        String token = sharedPreferencesUtils.read("token", "");
+        if (!token.equals("")) {
+            ApiClient.INSTANCE.getApiService().getWeightChartMonthlyData(token, weightChartRequest)
+                    .enqueue(new Callback<WeightChartResponse>() {
+                        @Override
+                        public void onResponse(Call<WeightChartResponse> call, Response<WeightChartResponse> response) {
+                            if (response.isSuccessful()) {
+                                SetWeightMonthlyChart(response.body().getData());
+                            } else {
+                                showMessage("Failed");
+
+                            }
+                        }
+
+                        @Override
+                        public void onFailure(Call<WeightChartResponse> call, Throwable t) {
+                            showMessage("Failed ...");
+
+                        }
+                    });
+
+        }
+    }
+
+    private void getWeightChartYearlyData(BloodCountChartRequest weightChartRequest) {
+        String token = sharedPreferencesUtils.read("token", "");
+        if (!token.equals("")) {
+            ApiClient.INSTANCE.getApiService().getWeightChartYearlyData(token, weightChartRequest)
+                    .enqueue(new Callback<WeightChartResponse>() {
+                        @Override
+                        public void onResponse(Call<WeightChartResponse> call, Response<WeightChartResponse> response) {
+                            if (response.isSuccessful()) {
+                                SetWeightYearlyChart(response.body().getData());
+                            } else {
+                                showMessage("Failed");
+
+                            }
+                        }
+
+                        @Override
+                        public void onFailure(Call<WeightChartResponse> call, Throwable t) {
+                            showMessage("Failed ...");
+
+                        }
+                    });
+
+        }
+    }
+
+    private void getWeightChartCustomData(BloodCountChartRequest weightChartRequest) {
+        String token = sharedPreferencesUtils.read("token", "");
+        if (!token.equals("")) {
+            ApiClient.INSTANCE.getApiService().getWeightChartCustomData(token, weightChartRequest)
+                    .enqueue(new Callback<WeightChartResponse>() {
+                        @Override
+                        public void onResponse(Call<WeightChartResponse> call, Response<WeightChartResponse> response) {
+                            if (response.isSuccessful()) {
+                                SetWeightCustomChart(response.body().getData());
+                            } else {
+                                showMessage("Failed");
+
+                            }
+                        }
+
+                        @Override
+                        public void onFailure(Call<WeightChartResponse> call, Throwable t) {
+                            showMessage("Failed ...");
+
+                        }
+                    });
+
+        }
+    }
+
+
+    //temp 1
+    private void getTempChartAllData(BloodCountChartRequest weightChartRequest) {
+        String token = sharedPreferencesUtils.read("token", "");
+        if (!token.equals("")) {
+            ApiClient.INSTANCE.getApiService().getBodyTempChartAllData(token, weightChartRequest)
+                    .enqueue(new Callback<BodyTempChartResponse>() {
+                        @Override
+                        public void onResponse(Call<BodyTempChartResponse> call, Response<BodyTempChartResponse> response) {
+                            if (response.isSuccessful()) {
+                                SetBodyTempAllChart(response.body().getData());
+                            } else {
+                                showMessage("Failed");
+
+                            }
+                        }
+
+                        @Override
+                        public void onFailure(Call<BodyTempChartResponse> call, Throwable t) {
+                            showMessage("Failed ...");
+
+                        }
+                    });
+
+        }
+    }
+
+    private void getTempChartTodayData(BloodCountChartRequest weightChartRequest) {
+        String token = sharedPreferencesUtils.read("token", "");
+        if (!token.equals("")) {
+            ApiClient.INSTANCE.getApiService().getBodyTempChartTodayData(token, weightChartRequest)
+                    .enqueue(new Callback<BodyTempChartResponse>() {
+                        @Override
+                        public void onResponse(Call<BodyTempChartResponse> call, Response<BodyTempChartResponse> response) {
+                            if (response.isSuccessful()) {
+                                SetBodyTempTodayChart(response.body().getData());
+                            } else {
+                                showMessage("Failed");
+
+                            }
+                        }
+
+                        @Override
+                        public void onFailure(Call<BodyTempChartResponse> call, Throwable t) {
+                            showMessage("Failed ...");
+
+                        }
+                    });
+
+        }
+    }
+
+    private void getTempChartMonthlyData(BloodCountChartRequest weightChartRequest) {
+        String token = sharedPreferencesUtils.read("token", "");
+        if (!token.equals("")) {
+            ApiClient.INSTANCE.getApiService().getBodyTempChartMonthlyData(token, weightChartRequest)
+                    .enqueue(new Callback<BodyTempChartResponse>() {
+                        @Override
+                        public void onResponse(Call<BodyTempChartResponse> call, Response<BodyTempChartResponse> response) {
+                            if (response.isSuccessful()) {
+                                SetBodyTempMonthlyChart(response.body().getData());
+                            } else {
+                                showMessage("Failed");
+
+                            }
+                        }
+
+                        @Override
+                        public void onFailure(Call<BodyTempChartResponse> call, Throwable t) {
+                            showMessage("Failed ...");
+
+                        }
+                    });
+
+        }
+    }
+
+    private void getTempChartYearlyData(BloodCountChartRequest weightChartRequest) {
+        String token = sharedPreferencesUtils.read("token", "");
+        if (!token.equals("")) {
+            ApiClient.INSTANCE.getApiService().getBodyTempChartYearlyData(token, weightChartRequest)
+                    .enqueue(new Callback<BodyTempChartResponse>() {
+                        @Override
+                        public void onResponse(Call<BodyTempChartResponse> call, Response<BodyTempChartResponse> response) {
+                            if (response.isSuccessful()) {
+                                SetBodyTempYearlyChart(response.body().getData());
+                            } else {
+                                showMessage("Failed");
+
+                            }
+                        }
+
+                        @Override
+                        public void onFailure(Call<BodyTempChartResponse> call, Throwable t) {
+                            showMessage("Failed ...");
+
+                        }
+                    });
+
+        }
+    }
+
+    private void getTempChartCustomData(BloodCountChartRequest weightChartRequest) {
+        String token = sharedPreferencesUtils.read("token", "");
+        if (!token.equals("")) {
+            ApiClient.INSTANCE.getApiService().getBodyTempChartCustomData(token, weightChartRequest)
+                    .enqueue(new Callback<BodyTempChartResponse>() {
+                        @Override
+                        public void onResponse(Call<BodyTempChartResponse> call, Response<BodyTempChartResponse> response) {
+                            if (response.isSuccessful()) {
+                                SetBodyTempCustomChart(response.body().getData());
+                            } else {
+                                showMessage("Failed");
+
+                            }
+                        }
+
+                        @Override
+                        public void onFailure(Call<BodyTempChartResponse> call, Throwable t) {
+                            showMessage("Failed ...");
+
+                        }
+                    });
+
+        }
+    }
+
+
+    //mbi
+    private void getBmiChartAllData(BloodCountChartRequest weightChartRequest) {
+        String token = sharedPreferencesUtils.read("token", "");
+        if (!token.equals("")) {
+            ApiClient.INSTANCE.getApiService().getBMIChartAllData(token, weightChartRequest)
+                    .enqueue(new Callback<BMIChartResponse>() {
+                        @Override
+                        public void onResponse(Call<BMIChartResponse> call, Response<BMIChartResponse> response) {
+                            if (response.isSuccessful()) {
+                                SetBMIAllChart(response.body().getData());
+                            } else {
+                                showMessage("Failed");
+
+                            }
+                        }
+
+                        @Override
+                        public void onFailure(Call<BMIChartResponse> call, Throwable t) {
+                            showMessage("Failed ...");
+
+                        }
+                    });
+
+        }
+    }
+
+    private void getBmiChartTodayData(BloodCountChartRequest weightChartRequest) {
+        String token = sharedPreferencesUtils.read("token", "");
+        if (!token.equals("")) {
+            ApiClient.INSTANCE.getApiService().getBMIChartTodayData(token, weightChartRequest)
+                    .enqueue(new Callback<BMIChartResponse>() {
+                        @Override
+                        public void onResponse(Call<BMIChartResponse> call, Response<BMIChartResponse> response) {
+                            if (response.isSuccessful()) {
+                                SetBMITodayChart(response.body().getData());
+                            } else {
+                                showMessage("Failed");
+
+                            }
+                        }
+
+                        @Override
+                        public void onFailure(Call<BMIChartResponse> call, Throwable t) {
+                            showMessage("Failed ...");
+
+                        }
+                    });
+
+        }
+    }
+
+    private void getBmiChartMonthlyData(BloodCountChartRequest weightChartRequest) {
+        String token = sharedPreferencesUtils.read("token", "");
+        if (!token.equals("")) {
+            ApiClient.INSTANCE.getApiService().getBMIChartMonthlyData(token, weightChartRequest)
+                    .enqueue(new Callback<BMIChartResponse>() {
+                        @Override
+                        public void onResponse(Call<BMIChartResponse> call, Response<BMIChartResponse> response) {
+                            if (response.isSuccessful()) {
+                                SetBMIMonthlyChart(response.body().getData());
+                            } else {
+                                showMessage("Failed");
+
+                            }
+                        }
+
+                        @Override
+                        public void onFailure(Call<BMIChartResponse> call, Throwable t) {
+                            showMessage("Failed ...");
+
+                        }
+                    });
+
+        }
+    }
+
+    private void getBmiChartYearlyData(BloodCountChartRequest weightChartRequest) {
+        String token = sharedPreferencesUtils.read("token", "");
+        if (!token.equals("")) {
+            ApiClient.INSTANCE.getApiService().getBMIChartYearlyData(token, weightChartRequest)
+                    .enqueue(new Callback<BMIChartResponse>() {
+                        @Override
+                        public void onResponse(Call<BMIChartResponse> call, Response<BMIChartResponse> response) {
+                            if (response.isSuccessful()) {
+                                SetBMIYearlyChart(response.body().getData());
+                            } else {
+                                showMessage("Failed");
+
+                            }
+                        }
+
+                        @Override
+                        public void onFailure(Call<BMIChartResponse> call, Throwable t) {
+                            showMessage("Failed ...");
+
+                        }
+                    });
+
+        }
+    }
+
+    private void getBmiChartCustomData(BloodCountChartRequest weightChartRequest) {
+        String token = sharedPreferencesUtils.read("token", "");
+        if (!token.equals("")) {
+            ApiClient.INSTANCE.getApiService().getBMIChartCustomData(token, weightChartRequest)
+                    .enqueue(new Callback<BMIChartResponse>() {
+                        @Override
+                        public void onResponse(Call<BMIChartResponse> call, Response<BMIChartResponse> response) {
+                            if (response.isSuccessful()) {
+                                SetBMICustomChart(response.body().getData());
+                            } else {
+                                showMessage("Failed");
+
+                            }
+                        }
+
+                        @Override
+                        public void onFailure(Call<BMIChartResponse> call, Throwable t) {
+                            showMessage("Failed ...");
+
+                        }
+                    });
+
+        }
+    }
+
+
+    //temp
 
     private void showMessage(String message) {
 

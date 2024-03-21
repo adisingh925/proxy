@@ -2,6 +2,7 @@ package app.android.heartrate.phoneapp.adapters;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
+import android.icu.text.SimpleDateFormat;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -14,8 +15,11 @@ import android.widget.TextView;
 
 import androidx.recyclerview.widget.RecyclerView;
 
+import java.text.ParseException;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
+import java.util.Locale;
 
 import app.android.heartrate.phoneapp.R;
 import app.android.heartrate.phoneapp.model.classes.CholesterolData;
@@ -62,10 +66,24 @@ public abstract class CholesterolDataAdapter extends RecyclerView.Adapter<Choles
         } else {
             cholesterolViewHolder.lin_note.setVisibility(View.VISIBLE);
         }
-        cholesterolViewHolder.txt_day.setText(trim);
-        TextView textView = cholesterolViewHolder.txt_month;
-        textView.setText(trim2 + ",");
-        cholesterolViewHolder.txt_year.setText(trim3);
+
+        SimpleDateFormat inputFormat = new SimpleDateFormat("yyyy-MM-dd", Locale.ENGLISH);
+        SimpleDateFormat outputFormat = new SimpleDateFormat("dd MMMM, yyyy", Locale.ENGLISH);
+        // Parse the input date string into a Date object
+        Date date = null;
+        try {
+            date = inputFormat.parse(cholesterolData.date);
+            // Format the Date object into the desired output format
+            String formattedDateStr = outputFormat.format(date);
+            cholesterolViewHolder.txt_day.setText(formattedDateStr);
+        } catch (ParseException e) {
+            throw new RuntimeException(e);
+        }
+
+//        cholesterolViewHolder.txt_day.setText(trim);
+//        TextView textView = cholesterolViewHolder.txt_month;
+//        textView.setText(trim2 + ",");
+//        cholesterolViewHolder.txt_year.setText(trim3);
         cholesterolViewHolder.txt_time.setText(trim4);
         cholesterolViewHolder.txt_cholesterol.setText(valueOf);
         cholesterolViewHolder.txt_hdl.setText(valueOf2);

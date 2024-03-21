@@ -158,7 +158,7 @@
             android:name=".fragments.wellness.fitness.FitnessActivity"
             android:exported="false" />
         <activity
-            android:name=".activities.record.AddProfileActivity"
+            android:name=".activities.record.profile.AddProfileActivity"
             android:exported="false" />
         <activity
             android:name=".activities.main.HomeActivity"
@@ -167,7 +167,7 @@
             android:theme="@style/Theme.PhoneApp.NoActionBar" />
 
         <activity
-            android:name=".activities.record.TrackerToolsActivity"
+            android:name=".activities.record.statistics.TrackerToolsActivity"
             android:exported="false" />
         <activity
             android:name=".activities.record.statistics.TrackerStatisticsActivity"
@@ -193,43 +193,43 @@
             android:name=".activities.record.blood_sugar.AddBloodSugarActivity"
             android:exported="false" />
         <activity
-            android:name=".activities.record.BMIDataActivity"
+            android:name=".activities.record.bmi.BMIDataActivity"
             android:exported="false" />
         <activity
-            android:name=".activities.record.BMIResultActivity"
+            android:name=".activities.record.bmi.BMIResultActivity"
             android:exported="false" />
         <activity
-            android:name=".activities.record.AddBMIDataActivity"
+            android:name=".activities.record.bmi.AddBMIDataActivity"
             android:exported="false" />
         <activity
-            android:name=".activities.record.BodyTempDataActivity"
+            android:name=".activities.record.body_temp.BodyTempDataActivity"
             android:exported="false" />
         <activity
-            android:name=".activities.record.AddBodyTempActivity"
+            android:name=".activities.record.body_temp.AddBodyTempActivity"
             android:exported="false" />
         <activity
-            android:name=".activities.record.CholesterolDataActivity"
+            android:name=".activities.record.cholestrol.CholesterolDataActivity"
             android:exported="false" />
         <activity
-            android:name=".activities.record.AddCholesterolActivity"
+            android:name=".activities.record.cholestrol.AddCholesterolActivity"
             android:exported="false" />
         <activity
-            android:name=".activities.record.HeartRateDataActivity"
+            android:name=".activities.record.heart_rate.HeartRateDataActivity"
             android:exported="false" />
         <activity
-            android:name=".activities.record.AddHeartRateActivity"
+            android:name=".activities.record.heart_rate.AddHeartRateActivity"
             android:exported="false" />
         <activity
-            android:name=".activities.record.WeightDataActivity"
+            android:name=".activities.record.weight.WeightDataActivity"
             android:exported="false" />
         <activity
-            android:name=".activities.record.AddWeightActivity"
+            android:name=".activities.record.weight.AddWeightActivity"
             android:exported="false" />
         <activity
-            android:name=".activities.record.MedicineDataActivity"
+            android:name=".activities.record.medicine.MedicineDataActivity"
             android:exported="false" />
         <activity
-            android:name=".activities.record.AddMedicinesActivity"
+            android:name=".activities.record.medicine.AddMedicinesActivity"
             android:exported="false" />
         <activity
             android:name=".activities.main.MainActivity"

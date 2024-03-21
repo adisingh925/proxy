@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:gravity="center">
@@ -58,9 +59,9 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_centerVertical="true"
-                            android:text="Day"
                             android:textColor="@color/app_text_color"
-                            android:textSize="@dimen/_12sdp" />
+                            android:textSize="@dimen/_12sdp"
+                            tools:text="Day" />
 
                         <TextView
                             android:id="@+id/row_hr_txt_month"
@@ -69,9 +70,9 @@
                             android:layout_centerVertical="true"
                             android:layout_marginLeft="@dimen/_5sdp"
                             android:layout_toRightOf="@+id/row_hr_txt_day"
-                            android:text="Month,"
                             android:textColor="@color/app_text_color"
-                            android:textSize="@dimen/_12sdp" />
+                            android:textSize="@dimen/_12sdp"
+                            tools:text="Month," />
 
                         <TextView
                             android:id="@+id/row_hr_txt_year"
@@ -81,9 +82,9 @@
                             android:layout_marginLeft="@dimen/_5sdp"
                             android:layout_marginRight="@dimen/_10sdp"
                             android:layout_toRightOf="@+id/row_hr_txt_month"
-                            android:text="Year"
                             android:textColor="@color/app_text_color"
-                            android:textSize="@dimen/_12sdp" />
+                            android:textSize="@dimen/_12sdp"
+                            tools:text="Year" />
                     </RelativeLayout>
                 </LinearLayout>
 
@@ -174,8 +175,7 @@
                 android:layout_marginBottom="@dimen/_5sdp"
                 android:background="@drawable/row_indicator_rounded_bg"
                 android:paddingLeft="@dimen/_5sdp"
-                android:paddingRight="@dimen/_5sdp"
-                >
+                android:paddingRight="@dimen/_5sdp">
 
                 <RelativeLayout
                     android:layout_width="match_parent"

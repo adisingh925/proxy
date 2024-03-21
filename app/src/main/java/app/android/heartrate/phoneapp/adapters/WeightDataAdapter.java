@@ -2,6 +2,7 @@ package app.android.heartrate.phoneapp.adapters;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
+import android.icu.text.SimpleDateFormat;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -13,8 +14,11 @@ import android.widget.TextView;
 
 import androidx.recyclerview.widget.RecyclerView;
 
+import java.text.ParseException;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
+import java.util.Locale;
 
 import app.android.heartrate.phoneapp.R;
 import app.android.heartrate.phoneapp.model.classes.WeightData;
@@ -58,11 +62,26 @@ public abstract class WeightDataAdapter extends RecyclerView.Adapter<WeightDataA
         } else {
             weightViewHolder.lin_note.setVisibility(View.VISIBLE);
         }
-        weightViewHolder.txt_day.setText(trim);
-        TextView textView = weightViewHolder.txt_month;
-        textView.setText(trim3 + ",");
-        weightViewHolder.txt_year.setText(trim2);
-        weightViewHolder.txt_time.setText(trim4);
+
+
+        SimpleDateFormat inputFormat = new SimpleDateFormat("yyyy-MM-dd", Locale.ENGLISH);
+        SimpleDateFormat outputFormat = new SimpleDateFormat("dd MMMM, yyyy", Locale.ENGLISH);
+        // Parse the input date string into a Date object
+        Date date = null;
+        try {
+            date = inputFormat.parse(weightData.date);
+            // Format the Date object into the desired output format
+            String formattedDateStr = outputFormat.format(date);
+            weightViewHolder.txt_day.setText(formattedDateStr);
+        } catch (ParseException e) {
+            throw new RuntimeException(e);
+        }
+
+//        weightViewHolder.txt_day.setText(trim);
+//        TextView textView = weightViewHolder.txt_month;
+//        textView.setText(trim3 + ",");
+//        weightViewHolder.txt_year.setText(trim2);
+//        weightViewHolder.txt_time.setText(trim4);
         weightViewHolder.txt_weight.setText(valueOf);
         weightViewHolder.txt_note.setText(str);
         weightViewHolder.rel_edit.setOnClickListener(new View.OnClickListener() {

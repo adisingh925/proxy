@@ -1,6 +1,5 @@
 package app.android.heartrate.phoneapp.fragments.medication
 
-import android.app.Dialog
 import android.content.ActivityNotFoundException
 import android.content.Intent
 import android.os.Build
@@ -9,15 +8,9 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Button
-import android.widget.TextView
-import app.android.heartrate.phoneapp.R
-import app.android.heartrate.phoneapp.activities.record.AddProfileActivity
-import app.android.heartrate.phoneapp.activities.record.MedicineDataActivity
+import app.android.heartrate.phoneapp.activities.record.medicine.MedicineDataActivity
 import app.android.heartrate.phoneapp.databinding.FragmentMedicationsBinding
 import app.android.heartrate.phoneapp.fragments.base.BaseFragment
-import app.android.heartrate.phoneapp.sqlite.SQLiteHealthTracker
-import app.android.heartrate.phoneapp.utils.AppConstants
 import com.gun0912.tedpermission.PermissionListener
 import com.gun0912.tedpermission.normal.TedPermission
 

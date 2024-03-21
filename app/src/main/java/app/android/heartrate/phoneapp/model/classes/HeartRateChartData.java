@@ -1,5 +1,7 @@
 package app.android.heartrate.phoneapp.model.classes;
 
+import com.google.gson.annotations.SerializedName;
+
 public class HeartRateChartData {
     public int age = 0;
     public String color = "";
@@ -8,11 +10,13 @@ public class HeartRateChartData {
     public String dateTime = "";
     public int day = 0;
     public String gender = "";
+    @SerializedName("heart_rate")
     public int heart_rate_value = 0;
     public int hour = 0;
     public int month = 0;
     public String month_string = "";
     public String notes = "";
+    @SerializedName("rate_range")
     public String range = "";
     public String result = "";
     public int row_id = 0;
