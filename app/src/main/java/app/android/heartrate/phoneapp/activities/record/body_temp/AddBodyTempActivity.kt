@@ -23,16 +23,25 @@ import android.widget.SeekBar.OnSeekBarChangeListener
 import android.widget.Spinner
 import android.widget.TextView
 import android.widget.TimePicker
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.ItemTouchHelper
 import app.android.heartrate.phoneapp.R
 import app.android.heartrate.phoneapp.adapters.SpinnerProfileAdapter
+import app.android.heartrate.phoneapp.databinding.ActivityAddBodyTempBinding
+import app.android.heartrate.phoneapp.model.bloodsugar.BloodSugarResponse
+import app.android.heartrate.phoneapp.model.classes.BloodSugarData
 import app.android.heartrate.phoneapp.model.classes.BodyTempData
+import app.android.heartrate.phoneapp.model.temperature.BodyTempResponse
+import app.android.heartrate.phoneapp.retrofit.ApiClient
 import app.android.heartrate.phoneapp.sharedpreferences.SharedPreferences
 import app.android.heartrate.phoneapp.sqlite.SQLiteHealthTracker
 import app.android.heartrate.phoneapp.utils.AppConstants
 import app.android.heartrate.phoneapp.utils.EUGeneralClass
 import app.android.heartrate.phoneapp.utils.StoredPreferencesValue
+import retrofit2.Call
+import retrofit2.Callback
+import retrofit2.Response
 import java.text.ParseException
 import java.text.SimpleDateFormat
 import java.util.Calendar
@@ -93,24 +102,24 @@ class AddBodyTempActivity() : AppCompatActivity() {
     private var save_entry_month = 0
     private var save_entry_year = 0
 
-    private var sharedPreferencesUtils: SharedPreferences? = null
+    private lateinit var sharedPreferencesUtils: SharedPreferences
+    private lateinit var binding: ActivityAddBodyTempBinding
 
     public override fun onCreate(bundle: Bundle?) {
         super.onCreate(bundle)
+        binding = ActivityAddBodyTempBinding.inflate(layoutInflater)
+        setContentView(binding.root)
         SetView()
-
-
         AppConstants.overridePendingTransitionEnter(this)
     }
 
     private fun SetView() {
-        setContentView(R.layout.activity_add_body_temp)
 
         this.mContext = this
         this.push_animation = AnimationUtils.loadAnimation(this, R.anim.view_push)
         setUpActionBar()
         sharedPreferencesUtils = SharedPreferences
-        this.simple_data_format = SimpleDateFormat("dd/MM/yyy hh:mm:ss aa")
+        this.simple_data_format = SimpleDateFormat("yyyy-MM-dd hh:mm:ss aa")
         val sQLiteHealthTracker = SQLiteHealthTracker(this)
         this.SQLite_health_tracker = sQLiteHealthTracker
         sQLiteHealthTracker.openToWrite()
@@ -179,7 +188,7 @@ class AddBodyTempActivity() : AppCompatActivity() {
                     OnDateSetListener { datePicker, i, i2, i3 ->
                         try {
                             save_txt_date.setText(
-                                SimpleDateFormat("dd/MM/yyyy").format(
+                                SimpleDateFormat("yyyy-MM-dd").format(
                                     SimpleDateFormat("dd/MM/yyyy").parse(
                                         (i3.toString() + "/" + (i2 + 1) + "/" + i).trim { it <= ' ' })
                                 )
@@ -277,11 +286,11 @@ class AddBodyTempActivity() : AppCompatActivity() {
     private fun SetCurrentDateTime() {
         try {
             val instance = Calendar.getInstance()
-            val simpleDateFormat = SimpleDateFormat("dd/MM/yyyy hh:mm:ss aa")
+            val simpleDateFormat = SimpleDateFormat("yyyy-MM-dd hh:mm:ss aa")
             val format = simpleDateFormat.format(instance.time)
             this.current_date_time = format
             val parse = simpleDateFormat.parse(format)
-            val simpleDateFormat2 = SimpleDateFormat("dd/MM/yyyy")
+            val simpleDateFormat2 = SimpleDateFormat("yyyy-MM-dd")
             val simpleDateFormat3 = SimpleDateFormat("hh:mm aa")
             val format2 = simpleDateFormat2.format(parse)
             simpleDateFormat3.format(parse)
@@ -295,16 +304,13 @@ class AddBodyTempActivity() : AppCompatActivity() {
 
     private fun SetEditDateTime(textView: TextView?, textView2: TextView?, str: String) {
         try {
-            val parse = SimpleDateFormat("dd/MM/yyyy hh:mm:ss aa").parse(str)
-            val simpleDateFormat = SimpleDateFormat("dd/MM/yyyy")
+            val parse = SimpleDateFormat("yyyy-MM-dd hh:mm:ss aa").parse(str)
+            val simpleDateFormat = SimpleDateFormat("yyyy-MM-dd")
             val simpleDateFormat2 = SimpleDateFormat("hh:mm aa")
             val simpleDateFormat3 = SimpleDateFormat("mm")
             val format = simpleDateFormat.format(parse)
             val format2 = simpleDateFormat2.format(parse)
             this.current_minute = simpleDateFormat3.format(parse)
-            Log.e("Current Date:", format)
-            Log.e("Current Time:", format2)
-            Log.e("Current Date Time:", this.current_date_time)
             textView!!.text = format
             textView2!!.text = format2
         } catch (e: ParseException) {
@@ -442,8 +448,9 @@ class AddBodyTempActivity() : AppCompatActivity() {
                 bodyTempData.year = this.year
                 bodyTempData.hour = this.hour
                 bodyTempData.tags = sharedPreferencesUtils!!.getUserName()
-                SQLite_health_tracker!!.InsertTemperatureData(bodyTempData)
-                EUGeneralClass.ShowSuccessToast(this, AppConstants.data_saved_messages)
+                insertData(bodyTempData)
+//                SQLite_health_tracker!!.InsertTemperatureData(bodyTempData)
+//                EUGeneralClass.ShowSuccessToast(this, AppConstants.data_saved_messages)
             } else {
                 val i = AppConstants.selected_body_temp_data.row_id
                 bodyTempData.user_id = sharedPreferencesUtils!!.getUserId()
@@ -472,11 +479,13 @@ class AddBodyTempActivity() : AppCompatActivity() {
                 bodyTempData.year = this.year
                 bodyTempData.hour = this.hour
                 bodyTempData.tags = sharedPreferencesUtils!!.getUserName()
-                SQLite_health_tracker!!.UpdateTemperatureData(
-                    i,
-                    sharedPreferencesUtils!!.getUserId(), bodyTempData
-                )
-                EUGeneralClass.ShowSuccessToast(this, AppConstants.data_updated_messages)
+                bodyTempData.row_id = i
+                updateData(bodyTempData)
+//                SQLite_health_tracker!!.UpdateTemperatureData(
+//                    i,
+//                    sharedPreferencesUtils!!.getUserId(), bodyTempData
+//                )
+//                EUGeneralClass.ShowSuccessToast(this, AppConstants.data_updated_messages)
             }
             StoredPreferencesValue.setDefaultCelsiusValue(this.cel_value, this)
             StoredPreferencesValue.setDefaultFahrenheitValue(this.fah_value, this)
@@ -505,13 +514,13 @@ class AddBodyTempActivity() : AppCompatActivity() {
     private fun GetDateTime(str: String, str2: String) {
         try {
             val str3 = "$str $str2"
-            val simpleDateFormat = SimpleDateFormat("dd/MM/yyyy")
+            val simpleDateFormat = SimpleDateFormat("yyyy-MM-dd")
             val simpleDateFormat2 = SimpleDateFormat("dd")
             val simpleDateFormat3 = SimpleDateFormat("MM")
             val simpleDateFormat4 = SimpleDateFormat("yyyy")
             val simpleDateFormat5 = SimpleDateFormat("hh:mm:ss aa")
             val simpleDateFormat6 = SimpleDateFormat("hh")
-            val parse = SimpleDateFormat("dd/MM/yyyy hh:mm aa").parse(str3)
+            val parse = SimpleDateFormat("yyyy-MM-dd hh:mm aa").parse(str3)
             this.date_time = simpleDateFormat.format(parse) + " " + simpleDateFormat5.format(parse)
             this.day = simpleDateFormat2.format(parse).toInt()
             this.month = simpleDateFormat3.format(parse).toInt()
@@ -610,4 +619,65 @@ class AddBodyTempActivity() : AppCompatActivity() {
         finish()
         AppConstants.overridePendingTransitionExit(this)
     }
+
+
+    private fun insertData(data: BodyTempData) {
+        val token = sharedPreferencesUtils.read("token", "")
+        if (!token.isNullOrEmpty()) {
+            val call = ApiClient.apiService.postBodyTemp(token, data)
+            call.enqueue(object : Callback<BodyTempResponse> {
+                override fun onResponse(
+                    call: Call<BodyTempResponse>,
+                    response: Response<BodyTempResponse>
+                ) {
+                    if (response.isSuccessful) {
+                        showMessage(response.body()?.msg ?: "Saved successfully ")
+                        onBackPressed()
+                        return
+                    } else {
+                        showMessage("An error occurred trying to save data")
+                    }
+                }
+
+                override fun onFailure(call: Call<BodyTempResponse>, t: Throwable) {
+                    showMessage("An error occurred trying to save data " + t.localizedMessage)
+
+                }
+
+            })
+        }
+    }
+
+    private fun updateData(data: BodyTempData) {
+        val token = sharedPreferencesUtils.read("token", "")
+        if (!token.isNullOrEmpty()) {
+            val call = ApiClient.apiService.updateBodyTemp(token, data)
+            call.enqueue(object : Callback<BodyTempResponse> {
+                override fun onResponse(
+                    call: Call<BodyTempResponse>,
+                    response: Response<BodyTempResponse>
+                ) {
+                    if (response.isSuccessful) {
+                        showMessage("Updated successfully!")
+                        onBackPressed()
+                    } else {
+                        showMessage("Unable to update")
+                    }
+                }
+
+                override fun onFailure(call: Call<BodyTempResponse>, t: Throwable) {
+                    showMessage("An error occurred updating. Try again later")
+                }
+
+            })
+        }
+
+    }
+
+
+    private fun showMessage(message: String) {
+        Toast.makeText(mContext, message, Toast.LENGTH_SHORT).show()
+    }
+
+
 }

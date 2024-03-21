@@ -14,19 +14,27 @@ import android.widget.Button
 import android.widget.ImageView
 import android.widget.Spinner
 import android.widget.TextView
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.DefaultItemAnimator
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import app.android.heartrate.phoneapp.R
-import app.android.heartrate.phoneapp.activities.record.bmi.AddBMIDataActivity
 import app.android.heartrate.phoneapp.adapters.BMIDataAdapter
 import app.android.heartrate.phoneapp.adapters.SpinnerProfileAdapter
+import app.android.heartrate.phoneapp.databinding.ActivityBmiDataListBinding
+import app.android.heartrate.phoneapp.model.bmi.BMIResponse
 import app.android.heartrate.phoneapp.model.classes.BMIData
+import app.android.heartrate.phoneapp.model.classes.BloodCountData
+import app.android.heartrate.phoneapp.model.classes.BloodCountResponse
+import app.android.heartrate.phoneapp.retrofit.ApiClient
 import app.android.heartrate.phoneapp.sharedpreferences.SharedPreferences
 import app.android.heartrate.phoneapp.sqlite.SQLiteHealthTracker
 import app.android.heartrate.phoneapp.utils.AppConstants
 import app.android.heartrate.phoneapp.utils.EUGeneralClass
+import retrofit2.Call
+import retrofit2.Callback
+import retrofit2.Response
 
 class BMIDataActivity : AppCompatActivity() {
     var SQLite_health_tracker: SQLiteHealthTracker? = null
@@ -42,19 +50,18 @@ class BMIDataActivity : AppCompatActivity() {
     var txt_no_data: TextView? = null
     var spinner_txt_name: TextView? = null
 
-    private var sharedPreferencesUtils: SharedPreferences? = null
-
+    private lateinit var sharedPreferencesUtils: SharedPreferences
+    private lateinit var binding: ActivityBmiDataListBinding
 
     public override fun onCreate(bundle: Bundle?) {
         super.onCreate(bundle)
+        binding = ActivityBmiDataListBinding.inflate(layoutInflater)
+        setContentView(binding.root)
         SetView()
-
-
         AppConstants.overridePendingTransitionEnter(this)
     }
 
     private fun SetView() {
-        setContentView(R.layout.activity_bmi_data_list)
 
         this.mContext = this
         this.push_animation = AnimationUtils.loadAnimation(this, R.anim.view_push)
@@ -102,10 +109,10 @@ class BMIDataActivity : AppCompatActivity() {
     }
 
 
-    private fun SetBMIDataList() {
+    private fun SetBMIDataList(data: List<BMIData>?) {
         array_bmi_data.clear()
-        val arrayList: ArrayList<BMIData> =
-            SQLite_health_tracker!!.GetBMIDataByUserID(sharedPreferencesUtils!!.getUserId()) as ArrayList<BMIData>
+        val arrayList: ArrayList<BMIData> = data as ArrayList<BMIData>
+      //      SQLite_health_tracker!!.GetBMIDataByUserID(sharedPreferencesUtils!!.getUserId()) as ArrayList<BMIData>
         this.array_bmi_data = arrayList
         if (arrayList.size > 0) {
             txt_no_data!!.visibility = View.GONE
@@ -156,12 +163,7 @@ class BMIDataActivity : AppCompatActivity() {
         button2.text = "Cancel"
         button.setOnClickListener {
             try {
-                SQLite_health_tracker!!.deleteBMIByID(i)
-                EUGeneralClass.ShowSuccessToast(
-                    this@BMIDataActivity,
-                    AppConstants.data_deleted_messages
-                )
-                this@BMIDataActivity.SetBMIDataList()
+                deleteData(i)
             } catch (e: ActivityNotFoundException) {
                 e.printStackTrace()
             }
@@ -207,7 +209,7 @@ class BMIDataActivity : AppCompatActivity() {
 
     public override fun onResume() {
         super.onResume()
-        SetBMIDataList()
+        fetchData()
     }
 
     override fun onBackPressed() {
@@ -219,4 +221,71 @@ class BMIDataActivity : AppCompatActivity() {
         finish()
         AppConstants.overridePendingTransitionExit(this)
     }
+
+
+    private fun fetchData() {
+        val token = sharedPreferencesUtils.read("token", "")
+        if (!token.isNullOrEmpty()) {
+            val call = ApiClient.apiService.getBMIsByUserId(token)
+            call.enqueue(object : Callback<BMIResponse> {
+                override fun onResponse(
+                    call: Call<BMIResponse>,
+                    response: Response<BMIResponse>
+                ) {
+                    if (response.isSuccessful) {
+                        val dResponse = response.body()
+
+                        if (dResponse?.code == 1) {
+                            SetBMIDataList(dResponse.data)
+                        } else {
+                            showMessage(dResponse?.msg ?: "An error occurred ")
+                        }
+                    } else {
+                        showMessage("Unable to ")
+                    }
+                }
+
+                override fun onFailure(call: Call<BMIResponse>, t: Throwable) {
+                    showMessage("Unable to fetch, Please try again later")
+                }
+
+            })
+        }
+
+    }
+
+    private fun deleteData(rowId: Int) {
+        val token = sharedPreferencesUtils.read("token", "")
+        if (!token.isNullOrEmpty()) {
+            val call = ApiClient.apiService.deleteBMI(token, rowId)
+            call.enqueue(object : Callback<BMIData> {
+                override fun onResponse(
+                    call: Call<BMIData>,
+                    response: Response<BMIData>
+                ) {
+                    if (response.isSuccessful) {
+                        EUGeneralClass.ShowSuccessToast(
+                            mContext,
+                            AppConstants.data_deleted_messages
+                        )
+
+                        fetchData()
+                    } else {
+                        showMessage("Unable to delete")
+                    }
+                }
+
+                override fun onFailure(call: Call<BMIData>, t: Throwable) {
+                    showMessage("Unable to delete, Please try again later ..")
+                }
+
+            })
+        }
+    }
+
+    private fun showMessage(message: String) {
+        Toast.makeText(mContext, message, Toast.LENGTH_SHORT).show()
+    }
+
+
 }

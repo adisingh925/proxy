@@ -13,19 +13,25 @@ import android.view.animation.AnimationUtils
 import android.widget.Button
 import android.widget.Spinner
 import android.widget.TextView
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.DefaultItemAnimator
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import app.android.heartrate.phoneapp.R
-import app.android.heartrate.phoneapp.activities.record.weight.AddWeightActivity
 import app.android.heartrate.phoneapp.adapters.SpinnerProfileAdapter
 import app.android.heartrate.phoneapp.adapters.WeightDataAdapter
+import app.android.heartrate.phoneapp.databinding.ActivityWeightDataListBinding
 import app.android.heartrate.phoneapp.model.classes.WeightData
+import app.android.heartrate.phoneapp.model.weight.WeightResponse
+import app.android.heartrate.phoneapp.retrofit.ApiClient
 import app.android.heartrate.phoneapp.sharedpreferences.SharedPreferences
 import app.android.heartrate.phoneapp.sqlite.SQLiteHealthTracker
 import app.android.heartrate.phoneapp.utils.AppConstants
 import app.android.heartrate.phoneapp.utils.EUGeneralClass
+import retrofit2.Call
+import retrofit2.Callback
+import retrofit2.Response
 
 class WeightDataActivity : AppCompatActivity() {
     var SQLite_health_tracker: SQLiteHealthTracker? = null
@@ -43,20 +49,20 @@ class WeightDataActivity : AppCompatActivity() {
     var txt_no_data: TextView? = null
     var spinner_txt_name: TextView? = null
 
-    private var sharedPreferencesUtils: SharedPreferences? = null
+    private lateinit var sharedPreferencesUtils: SharedPreferences
+
+    private lateinit var binding: ActivityWeightDataListBinding
 
 
     public override fun onCreate(bundle: Bundle?) {
         super.onCreate(bundle)
+        binding = ActivityWeightDataListBinding.inflate(layoutInflater)
+        setContentView(binding.root)
         SetView()
-
-
         AppConstants.overridePendingTransitionEnter(this)
     }
 
     private fun SetView() {
-        setContentView(R.layout.activity_weight_data_list)
-
         this.mContext = this
         this.push_animation = AnimationUtils.loadAnimation(this, R.anim.view_push)
         setUpActionBar()
@@ -86,10 +92,9 @@ class WeightDataActivity : AppCompatActivity() {
     }
 
 
-    private fun SetWeightList() {
+    private fun SetWeightList(data: List<WeightData>?) {
         array_weight_data.clear()
-        val arrayList: ArrayList<WeightData> =
-            SQLite_health_tracker!!.GetWeightDataByUserID(sharedPreferencesUtils!!.getUserId()) as ArrayList<WeightData>
+        val arrayList: ArrayList<WeightData> = data as ArrayList<WeightData>
         this.array_weight_data = arrayList
         if (arrayList.size > 0) {
             txt_no_data!!.visibility = View.GONE
@@ -99,7 +104,7 @@ class WeightDataActivity : AppCompatActivity() {
                         AppConstants.selected_weight_data =
                             array_weight_data[i]
                         AppConstants.is_weight_edit_mode = true
-                        this@WeightDataActivity.AddWeightScreen()
+                        AddWeightScreen()
                     }
                     if (view.id == R.id.row_weight_rel_delete) {
                         this@WeightDataActivity.ConformDeleteDialog(
@@ -130,12 +135,7 @@ class WeightDataActivity : AppCompatActivity() {
         button2.text = "Cancel"
         button.setOnClickListener {
             try {
-                SQLite_health_tracker!!.deleteWeightByID(i)
-                EUGeneralClass.ShowSuccessToast(
-                    this@WeightDataActivity,
-                    AppConstants.data_deleted_messages
-                )
-                this@WeightDataActivity.SetWeightList()
+               deleteData(i)
             } catch (e: ActivityNotFoundException) {
                 e.printStackTrace()
             }
@@ -180,11 +180,76 @@ class WeightDataActivity : AppCompatActivity() {
 
     public override fun onResume() {
         super.onResume()
-        SetWeightList()
+        fetchData()
     }
 
 
     override fun onBackPressed() {
         super.onBackPressed()
+    }
+
+
+    private fun fetchData() {
+        val token = sharedPreferencesUtils.read("token", "")
+        if (!token.isNullOrEmpty()) {
+            val call = ApiClient.apiService.getWeightsByUserId(token)
+            call.enqueue(object : Callback<WeightResponse> {
+                override fun onResponse(
+                    call: Call<WeightResponse>,
+                    response: Response<WeightResponse>
+                ) {
+                    if (response.isSuccessful) {
+                        val dResponse = response.body()
+
+                        if (dResponse?.code == 1) {
+                            SetWeightList(dResponse.data)
+                        } else {
+                            showMessage(dResponse?.msg ?: "An error occurred ")
+                        }
+                    } else {
+                        showMessage("Unable to fetch blood count")
+                    }
+                }
+
+                override fun onFailure(call: Call<WeightResponse>, t: Throwable) {
+                    showMessage("Unable to fetch blood count, Please try again later")
+                }
+
+            })
+        }
+
+    }
+
+    private fun deleteData(rowId: Int) {
+        val token = sharedPreferencesUtils.read("token", "")
+        if (!token.isNullOrEmpty()) {
+            val call = ApiClient.apiService.deleteWeight(token, rowId)
+            call.enqueue(object : Callback<WeightData> {
+                override fun onResponse(
+                    call: Call<WeightData>,
+                    response: Response<WeightData>
+                ) {
+                    if (response.isSuccessful) {
+                        EUGeneralClass.ShowSuccessToast(
+                            mContext,
+                            AppConstants.data_deleted_messages
+                        )
+
+                        fetchData()
+                    } else {
+                        showMessage("Unable to delete")
+                    }
+                }
+
+                override fun onFailure(call: Call<WeightData>, t: Throwable) {
+                    showMessage("Unable to delete this blood count, Please try again later ..")
+                }
+
+            })
+        }
+    }
+
+    private fun showMessage(message: String) {
+        Toast.makeText(mContext, message, Toast.LENGTH_SHORT).show()
     }
 }

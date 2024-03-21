@@ -451,7 +451,7 @@ interface ApiService {
     fun updateBodyTemp(
         @Header("Authorization") bearerToken: String,
         @Body bodyTempData: BodyTempData
-    ): Call<BodyTempData>
+    ): Call<BodyTempResponse>
 
     @DELETE("deleteBodyTempByID/{row_id}")
     fun deleteBodyTemp(

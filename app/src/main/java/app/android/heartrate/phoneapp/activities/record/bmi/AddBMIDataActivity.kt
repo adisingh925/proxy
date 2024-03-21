@@ -22,17 +22,26 @@ import android.widget.RelativeLayout
 import android.widget.Spinner
 import android.widget.TextView
 import android.widget.TimePicker
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import app.android.heartrate.phoneapp.R
 import app.android.heartrate.phoneapp.adapters.SpinnerProfileAdapter
+import app.android.heartrate.phoneapp.databinding.ActivityAddBmiBinding
+import app.android.heartrate.phoneapp.model.bmi.BMIResponse
 import app.android.heartrate.phoneapp.model.classes.BMICalcForKg
 import app.android.heartrate.phoneapp.model.classes.BMICalcForPound
 import app.android.heartrate.phoneapp.model.classes.BMIData
+import app.android.heartrate.phoneapp.model.classes.BodyTempData
 import app.android.heartrate.phoneapp.model.classes.IBMICalc
+import app.android.heartrate.phoneapp.model.temperature.BodyTempResponse
+import app.android.heartrate.phoneapp.retrofit.ApiClient
 import app.android.heartrate.phoneapp.sharedpreferences.SharedPreferences
 import app.android.heartrate.phoneapp.sqlite.SQLiteHealthTracker
 import app.android.heartrate.phoneapp.utils.AppConstants
 import app.android.heartrate.phoneapp.utils.EUGeneralClass
+import retrofit2.Call
+import retrofit2.Callback
+import retrofit2.Response
 import java.text.ParseException
 import java.text.SimpleDateFormat
 import java.util.Calendar
@@ -85,7 +94,13 @@ class AddBMIDataActivity() : AppCompatActivity() {
     private var save_entry_month = 0
     private var save_entry_year = 0
 
-    private var sharedPreferencesUtils: SharedPreferences? = null
+    private var IMPERIAL_SYSTEM_INDEX: Int = 2
+    private var METRIC_SYSTEM_INDEX: Int = 1
+    private lateinit var toastMessage: String
+
+    private lateinit var sharedPreferencesUtils: SharedPreferences
+
+    private lateinit var binding: ActivityAddBmiBinding
 
     fun CalculateADAG(d: Double): Double {
         return (d * 28.7) - 46.7
@@ -98,17 +113,16 @@ class AddBMIDataActivity() : AppCompatActivity() {
 
     public override fun onCreate(bundle: Bundle?) {
         super.onCreate(bundle)
+        binding = ActivityAddBmiBinding.inflate(layoutInflater)
+        setContentView(binding.root)
         SetView()
-
-
         AppConstants.overridePendingTransitionEnter(this)
     }
 
     private fun SetView() {
-        setContentView(R.layout.activity_add_bmi)
+
 
         this.mContext = this
-        activity_add_bmi = this
         this.push_animation = AnimationUtils.loadAnimation(this, R.anim.view_push)
         setUpActionBar()
         sharedPreferencesUtils = SharedPreferences
@@ -158,7 +172,7 @@ class AddBMIDataActivity() : AppCompatActivity() {
                     OnDateSetListener { datePicker, i, i2, i3 ->
                         try {
                             txt_date.setText(
-                                SimpleDateFormat("dd/MM/yyyy").format(
+                                SimpleDateFormat("yyyy-MM-dd").format(
                                     SimpleDateFormat("dd/MM/yyyy").parse(
                                         (i3.toString() + "/" + (i2 + 1) + "/" + i).trim { it <= ' ' })
                                 )
@@ -369,7 +383,7 @@ class AddBMIDataActivity() : AppCompatActivity() {
                         }
                         SetCurrentDateTime()
                         val format =
-                            SimpleDateFormat("dd/MM/yyyy").format(Calendar.getInstance().time)
+                            SimpleDateFormat("yyyy-MM-dd").format(Calendar.getInstance().time)
                         if (!AppConstants.is_bmi_edit_mode) {
                             bMIData.user_id = sharedPreferencesUtils!!.getUserId()
                             bMIData.date = date.trim { it <= ' ' }
@@ -395,14 +409,15 @@ class AddBMIDataActivity() : AppCompatActivity() {
                                 EUGeneralClass.ShowErrorToast(this, toastMessage)
                                 return
                             } else if (i2 != 0) {
-                                SQLite_health_tracker!!.InsertBMIData(bMIData)
-                                toastMessage = "BMI Data saved successfully!"
-                                EUGeneralClass.ShowSuccessToast(
-                                    this,
-                                    "BMI Data saved successfully!"
-                                )
-                                BMIResultScreen(countBMI)
-                                return
+                                insertData(bMIData)
+//                                SQLite_health_tracker!!.InsertBMIData(bMIData)
+//                                toastMessage = "BMI Data saved successfully!"
+//                                EUGeneralClass.ShowSuccessToast(
+//                                    this,
+//                                    "BMI Data saved successfully!"
+//                                )
+//                                BMIResultScreen(countBMI)
+//                                return
                             } else {
                                 toastMessage = "Wrong values are give so problem in update data!"
                                 EUGeneralClass.ShowErrorToast(
@@ -429,6 +444,7 @@ class AddBMIDataActivity() : AppCompatActivity() {
                             bMIData.month = this.month
                             bMIData.year = this.year
                             bMIData.hour = this.hour
+                            bMIData.row_id = i4
                             if (toastMessage.equals(
                                     AppConstants.values_not_natural,
                                     ignoreCase = true
@@ -437,17 +453,18 @@ class AddBMIDataActivity() : AppCompatActivity() {
                                 EUGeneralClass.ShowErrorToast(this, toastMessage)
                                 return
                             } else if (i2 != 0) {
-                                SQLite_health_tracker!!.UpdateBMIData(
-                                    i4,
-                                    sharedPreferencesUtils!!.getUserId(), bMIData
-                                )
-                                toastMessage = "BMI Data updated successfully!"
-                                EUGeneralClass.ShowSuccessToast(
-                                    this,
-                                    "BMI Data updated successfully!"
-                                )
-                                onBackPressed()
-                                return
+                                updateData(bMIData)
+//                                SQLite_health_tracker!!.UpdateBMIData(
+//                                    i4,
+//                                    sharedPreferencesUtils!!.getUserId(), bMIData
+//                                )
+//                                toastMessage = "BMI Data updated successfully!"
+//                                EUGeneralClass.ShowSuccessToast(
+//                                    this,
+//                                    "BMI Data updated successfully!"
+//                                )
+//                                onBackPressed()
+//                                return
                             } else {
                                 toastMessage = "Wrong values are give so problem in update data!"
                                 EUGeneralClass.ShowErrorToast(
@@ -504,11 +521,11 @@ class AddBMIDataActivity() : AppCompatActivity() {
     private fun SetCurrentDateTime() {
         try {
             val instance = Calendar.getInstance()
-            val simpleDateFormat = SimpleDateFormat("dd/MM/yyyy hh:mm:ss aa")
+            val simpleDateFormat = SimpleDateFormat("yyyy-MM-dd hh:mm:ss aa")
             val format = simpleDateFormat.format(instance.time)
             this.current_date_time = format
             val parse = simpleDateFormat.parse(format)
-            val simpleDateFormat2 = SimpleDateFormat("dd/MM/yyyy")
+            val simpleDateFormat2 = SimpleDateFormat("yyyy-MM-dd")
             val simpleDateFormat3 = SimpleDateFormat("hh:mm aa")
             this.current_date = simpleDateFormat2.format(parse)
             this.current_time = simpleDateFormat3.format(parse)
@@ -524,13 +541,13 @@ class AddBMIDataActivity() : AppCompatActivity() {
     private fun GetDateTime(str: String, str2: String) {
         try {
             val str3 = "$str $str2"
-            val simpleDateFormat = SimpleDateFormat("dd/MM/yyyy")
+            val simpleDateFormat = SimpleDateFormat("yyyy-MM-dd")
             val simpleDateFormat2 = SimpleDateFormat("dd")
             val simpleDateFormat3 = SimpleDateFormat("MM")
             val simpleDateFormat4 = SimpleDateFormat("yyyy")
             val simpleDateFormat5 = SimpleDateFormat("hh:mm aa")
             val simpleDateFormat6 = SimpleDateFormat("hh")
-            val parse = SimpleDateFormat("dd/MM/yyyy hh:mm aa").parse(str3)
+            val parse = SimpleDateFormat("yyyy-MM-dd hh:mm aa").parse(str3)
             this.date_time = simpleDateFormat.format(parse) + " " + simpleDateFormat5.format(parse)
             this.day = simpleDateFormat2.format(parse).toInt()
             this.month = simpleDateFormat3.format(parse).toInt()
@@ -585,10 +602,62 @@ class AddBMIDataActivity() : AppCompatActivity() {
         AppConstants.overridePendingTransitionExit(this)
     }
 
-    companion object {
-        val IMPERIAL_SYSTEM_INDEX: Int = 2
-        val METRIC_SYSTEM_INDEX: Int = 1
-        var activity_add_bmi: Activity? = null
-        var toastMessage: String = ""
+    private fun insertData(data: BMIData) {
+        val token = sharedPreferencesUtils.read("token", "")
+        if (!token.isNullOrEmpty()) {
+            val call = ApiClient.apiService.postBMI(token, data)
+            call.enqueue(object : Callback<BMIResponse> {
+                override fun onResponse(
+                    call: Call<BMIResponse>,
+                    response: Response<BMIResponse>
+                ) {
+                    if (response.isSuccessful) {
+                        showMessage(response.body()?.msg ?: "Saved successfully ")
+                        onBackPressed()
+                        return
+                    } else {
+                        showMessage("An error occurred trying to save data")
+                    }
+                }
+
+                override fun onFailure(call: Call<BMIResponse>, t: Throwable) {
+                    showMessage("An error occurred trying to save data " + t.localizedMessage)
+
+                }
+
+            })
+        }
     }
+
+    private fun updateData(data: BMIData) {
+        val token = sharedPreferencesUtils.read("token", "")
+        if (!token.isNullOrEmpty()) {
+            val call = ApiClient.apiService.updateBMI(token, data)
+            call.enqueue(object : Callback<BMIData> {
+                override fun onResponse(
+                    call: Call<BMIData>,
+                    response: Response<BMIData>
+                ) {
+                    if (response.isSuccessful) {
+                        showMessage("Updated successfully!")
+                        onBackPressed()
+                    } else {
+                        showMessage("Unable to update")
+                    }
+                }
+
+                override fun onFailure(call: Call<BMIData>, t: Throwable) {
+                    showMessage("An error occurred updating. Try again later")
+                }
+
+            })
+        }
+
+    }
+
+
+    private fun showMessage(message: String) {
+        Toast.makeText(mContext, message, Toast.LENGTH_SHORT).show()
+    }
+
 }

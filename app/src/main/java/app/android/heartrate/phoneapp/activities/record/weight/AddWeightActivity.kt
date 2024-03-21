@@ -22,15 +22,24 @@ import android.widget.RelativeLayout
 import android.widget.Spinner
 import android.widget.TextView
 import android.widget.TimePicker
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import app.android.heartrate.phoneapp.R
 import app.android.heartrate.phoneapp.adapters.SpinnerProfileAdapter
+import app.android.heartrate.phoneapp.databinding.ActivityAddWeightBinding
+import app.android.heartrate.phoneapp.model.classes.BodyTempData
 import app.android.heartrate.phoneapp.model.classes.WeightData
+import app.android.heartrate.phoneapp.model.temperature.BodyTempResponse
+import app.android.heartrate.phoneapp.model.weight.WeightResponse
+import app.android.heartrate.phoneapp.retrofit.ApiClient
 import app.android.heartrate.phoneapp.sharedpreferences.SharedPreferences
 import app.android.heartrate.phoneapp.sqlite.SQLiteHealthTracker
 import app.android.heartrate.phoneapp.utils.AppConstants
 import app.android.heartrate.phoneapp.utils.EUGeneralClass
 import com.shawnlin.numberpicker.NumberPicker
+import retrofit2.Call
+import retrofit2.Callback
+import retrofit2.Response
 import java.text.ParseException
 import java.text.SimpleDateFormat
 import java.util.Calendar
@@ -67,21 +76,19 @@ class AddWeightActivity() : AppCompatActivity() {
     private var save_entry_month = 0
     private var save_entry_year = 0
 
-    private var sharedPreferencesUtils: SharedPreferences? = null
+    private lateinit var sharedPreferencesUtils: SharedPreferences
+    private lateinit var binding: ActivityAddWeightBinding
 
     public override fun onCreate(bundle: Bundle?) {
         super.onCreate(bundle)
+        binding = ActivityAddWeightBinding.inflate(layoutInflater)
+        setContentView(binding.root)
         SetView()
-
-
         AppConstants.overridePendingTransitionEnter(this)
     }
 
     private fun SetView() {
-        setContentView(R.layout.activity_add_weight)
-
         this.mContext = this
-        activity_add_profile = this
         this.push_animation = AnimationUtils.loadAnimation(this, R.anim.view_push)
         setUpActionBar()
         sharedPreferencesUtils = SharedPreferences
@@ -116,7 +123,7 @@ class AddWeightActivity() : AppCompatActivity() {
                     OnDateSetListener { datePicker, i, i2, i3 ->
                         try {
                             txt_date.setText(
-                                SimpleDateFormat("dd/MM/yyyy").format(
+                                SimpleDateFormat("yyyy-MM-dd").format(
                                     SimpleDateFormat("dd/MM/yyyy").parse(
                                         (i3.toString() + "/" + (i2 + 1) + "/" + i).trim { it <= ' ' })
                                 )
@@ -279,10 +286,11 @@ class AddWeightActivity() : AppCompatActivity() {
                 weightData.month = this.month
                 weightData.year = this.year
                 weightData.hour = this.hour
-                SQLite_health_tracker!!.InsertWeightData(weightData)
-                EUGeneralClass.ShowSuccessToast(this, "Weight Data saved successfully!")
-                onBackPressed()
-                return
+                insertData(weightData)
+//                SQLite_health_tracker!!.InsertWeightData(weightData)
+//                EUGeneralClass.ShowSuccessToast(this, "Weight Data saved successfully!")
+//                onBackPressed()
+//                return
             }
             val i = AppConstants.selected_weight_data.row_id
             weightData.row_id = i
@@ -297,12 +305,14 @@ class AddWeightActivity() : AppCompatActivity() {
             weightData.month = this.month
             weightData.year = this.year
             weightData.hour = this.hour
-            SQLite_health_tracker!!.UpdateWeightData(
-                i,
-                sharedPreferencesUtils!!.getUserId(), weightData
-            )
-            EUGeneralClass.ShowSuccessToast(this, "Weight Data updated successfully!")
-            onBackPressed()
+            weightData.row_id = i
+            updateData(weightData)
+//            SQLite_health_tracker!!.UpdateWeightData(
+//                i,
+//                sharedPreferencesUtils!!.getUserId(), weightData
+//            )
+//            EUGeneralClass.ShowSuccessToast(this, "Weight Data updated successfully!")
+//            onBackPressed()
         } catch (e: Exception) {
             e.printStackTrace()
         }
@@ -311,11 +321,11 @@ class AddWeightActivity() : AppCompatActivity() {
     private fun SetCurrentDateTime() {
         try {
             val instance = Calendar.getInstance()
-            val simpleDateFormat = SimpleDateFormat("dd/MM/yyyy hh:mm:ss aa")
+            val simpleDateFormat = SimpleDateFormat("yyyy-MM-dd hh:mm:ss aa")
             val format = simpleDateFormat.format(instance.time)
             this.current_date_time = format
             val parse = simpleDateFormat.parse(format)
-            val simpleDateFormat2 = SimpleDateFormat("dd/MM/yyyy")
+            val simpleDateFormat2 = SimpleDateFormat("yyyy-MM-dd")
             val simpleDateFormat3 = SimpleDateFormat("hh:mm aa")
             val format2 = simpleDateFormat2.format(parse)
             simpleDateFormat3.format(parse)
@@ -330,13 +340,13 @@ class AddWeightActivity() : AppCompatActivity() {
     private fun GetDateTime(str: String, str2: String) {
         try {
             val str3 = "$str $str2"
-            val simpleDateFormat = SimpleDateFormat("dd/MM/yyyy")
+            val simpleDateFormat = SimpleDateFormat("yyyy-MM-dd")
             val simpleDateFormat2 = SimpleDateFormat("dd")
             val simpleDateFormat3 = SimpleDateFormat("MM")
             val simpleDateFormat4 = SimpleDateFormat("yyyy")
             val simpleDateFormat5 = SimpleDateFormat("hh:mm aa")
             val simpleDateFormat6 = SimpleDateFormat("hh")
-            val parse = SimpleDateFormat("dd/MM/yyyy hh:mm aa").parse(str3)
+            val parse = SimpleDateFormat("yyyy-MM-dd hh:mm aa").parse(str3)
             this.date_time = simpleDateFormat.format(parse) + " " + simpleDateFormat5.format(parse)
             this.day = simpleDateFormat2.format(parse).toInt()
             this.month = simpleDateFormat3.format(parse).toInt()
@@ -392,7 +402,63 @@ class AddWeightActivity() : AppCompatActivity() {
         AppConstants.overridePendingTransitionExit(this)
     }
 
-    companion object {
-        var activity_add_profile: Activity? = null
+
+    private fun insertData(data: WeightData) {
+        val token = sharedPreferencesUtils.read("token", "")
+        if (!token.isNullOrEmpty()) {
+            val call = ApiClient.apiService.postWeight(token, data)
+            call.enqueue(object : Callback<WeightResponse> {
+                override fun onResponse(
+                    call: Call<WeightResponse>,
+                    response: Response<WeightResponse>
+                ) {
+                    if (response.isSuccessful) {
+                        showMessage(response.body()?.msg ?: "Saved successfully ")
+                        onBackPressed()
+                        return
+                    } else {
+                        showMessage("An error occurred trying to save data")
+                    }
+                }
+
+                override fun onFailure(call: Call<WeightResponse>, t: Throwable) {
+                    showMessage("An error occurred trying to save data " + t.localizedMessage)
+
+                }
+
+            })
+        }
     }
+
+    private fun updateData(data: WeightData) {
+        val token = sharedPreferencesUtils.read("token", "")
+        if (!token.isNullOrEmpty()) {
+            val call = ApiClient.apiService.updateWeight(token, data)
+            call.enqueue(object : Callback<WeightData> {
+                override fun onResponse(
+                    call: Call<WeightData>,
+                    response: Response<WeightData>
+                ) {
+                    if (response.isSuccessful) {
+                        showMessage("Updated successfully!")
+                        onBackPressed()
+                    } else {
+                        showMessage("Unable to update")
+                    }
+                }
+
+                override fun onFailure(call: Call<WeightData>, t: Throwable) {
+                    showMessage("An error occurred updating. Try again later")
+                }
+
+            })
+        }
+
+    }
+
+
+    private fun showMessage(message: String) {
+        Toast.makeText(mContext, message, Toast.LENGTH_SHORT).show()
+    }
+
 }
