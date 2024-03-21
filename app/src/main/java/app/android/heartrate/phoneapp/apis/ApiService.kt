@@ -33,9 +33,25 @@ import app.android.heartrate.phoneapp.model.classes.HeartRateData
 import app.android.heartrate.phoneapp.model.heartrate.HeartRateChartRequest
 import app.android.heartrate.phoneapp.model.heartrate.HeartRateChartResponse
 
+import app.android.heartrate.phoneapp.model.weight.WeightResponse
+import app.android.heartrate.phoneapp.model.classes.WeightData
+import app.android.heartrate.phoneapp.model.weight.WeightChartRequest
+import app.android.heartrate.phoneapp.model.weight.WeightChartResponse
+
+import app.android.heartrate.phoneapp.model.temperature.BodyTempResponse
+import app.android.heartrate.phoneapp.model.classes.BodyTempData
+import app.android.heartrate.phoneapp.model.temperature.BodyTempChartRequest
+import app.android.heartrate.phoneapp.model.temperature.BodyTempChartResponse
+
+import app.android.heartrate.phoneapp.model.bmi.BMIResponse
+import app.android.heartrate.phoneapp.model.classes.BMIData
+import app.android.heartrate.phoneapp.model.bmi.BMIChartRequest
+import app.android.heartrate.phoneapp.model.bmi.BMIChartResponse
+
 import retrofit2.Call
 import retrofit2.http.Body
 import retrofit2.http.DELETE
+
 import retrofit2.http.GET
 import retrofit2.http.Header
 import retrofit2.http.POST
@@ -362,6 +378,178 @@ interface ApiService {
         @Header("Authorization") bearerToken: String,
         @Body heartRateChartRequest: BloodCountChartRequest
     ): Call<HeartRateChartResponse>
+
+    @POST("saveWeight")
+    fun postWeight(
+        @Header("Authorization") bearerToken: String,
+        @Body weightData: WeightData
+    ): Call<WeightResponse>
+
+    @GET("getWeightsByUserId")
+    fun getWeightsByUserId(
+        @Header("Authorization") bearerToken: String,
+    ): Call<WeightResponse>
+
+    @POST("updateWeight")
+    fun updateWeight(
+        @Header("Authorization") bearerToken: String,
+        @Body weightData: WeightData
+    ): Call<WeightData>
+
+    @DELETE("deleteWeightByID/{row_id}")
+    fun deleteWeight(
+        @Header("Authorization") bearerToken: String,
+        @Path("row_id") rowId: Int
+    ): Call<WeightData>
+
+    @POST("getWeightChartAllData")
+    fun getWeightChartAllData(
+        @Header("Authorization") bearerToken: String,
+        @Body weightChartRequest: WeightChartRequest
+    ): Call<WeightChartResponse>
+
+
+    @POST("getWeightChartTodayData")
+    fun getWeightChartTodayData(
+        @Header("Authorization") bearerToken: String,
+        @Body weightChartRequest: WeightChartRequest
+    ): Call<WeightChartResponse>
+
+
+    @POST("getWeightChartMonthlyData")
+    fun getWeightChartMonthlyData(
+        @Header("Authorization") bearerToken: String,
+        @Body weightChartRequest: WeightChartRequest
+    ): Call<WeightChartResponse>
+
+
+    @POST("getWeightChartYearlyData")
+    fun getWeightChartYearlyData(
+        @Header("Authorization") bearerToken: String,
+        @Body weightChartRequest: WeightChartRequest
+    ): Call<WeightChartResponse>
+
+
+    @POST("getWeightChartCustomData")
+    fun getWeightChartCustomData(
+        @Header("Authorization") bearerToken: String,
+        @Body weightChartRequest: WeightChartRequest
+    ): Call<WeightChartResponse>
+
+    @POST("saveBodyTemp")
+    fun postBodyTemp(
+        @Header("Authorization") bearerToken: String,
+        @Body bodyTempData: BodyTempData
+    ): Call<BodyTempResponse>
+
+    @GET("getBodyTempsByUserId")
+    fun getBodyTempsByUserId(
+        @Header("Authorization") bearerToken: String,
+    ): Call<BodyTempResponse>
+
+    @POST("updateBodyTemp")
+    fun updateBodyTemp(
+        @Header("Authorization") bearerToken: String,
+        @Body bodyTempData: BodyTempData
+    ): Call<BodyTempData>
+
+    @DELETE("deleteBodyTempByID/{row_id}")
+    fun deleteBodyTemp(
+        @Header("Authorization") bearerToken: String,
+        @Path("row_id") rowId: Int
+    ): Call<BodyTempData>
+
+    @POST("getBodyTempChartAllData")
+    fun getBodyTempChartAllData(
+        @Header("Authorization") bearerToken: String,
+        @Body bodyTempChartRequest: BodyTempChartRequest
+    ): Call<BodyTempChartResponse>
+
+
+    @POST("getBodyTempChartTodayData")
+    fun getBodyTempChartTodayData(
+        @Header("Authorization") bearerToken: String,
+        @Body bodyTempChartRequest: BodyTempChartRequest
+    ): Call<BodyTempChartResponse>
+
+
+    @POST("getBodyTempChartMonthlyData")
+    fun getBodyTempChartMonthlyData(
+        @Header("Authorization") bearerToken: String,
+        @Body bodyTempChartRequest: BodyTempChartRequest
+    ): Call<BodyTempChartResponse>
+
+
+    @POST("getBodyTempChartYearlyData")
+    fun getBodyTempChartYearlyData(
+        @Header("Authorization") bearerToken: String,
+        @Body bodyTempChartRequest: BodyTempChartRequest
+    ): Call<BodyTempChartResponse>
+
+
+    @POST("getBodyTempChartCustomData")
+    fun getBodyTempChartCustomData(
+        @Header("Authorization") bearerToken: String,
+        @Body bodyTempChartRequest: BodyTempChartRequest
+    ): Call<BodyTempChartResponse>
+
+    @POST("saveBMI")
+    fun postBMI(
+        @Header("Authorization") bearerToken: String,
+        @Body bodyTempData: BMIData
+    ): Call<BMIResponse>
+
+    @GET("getBMIsByUserId")
+    fun getBMIsByUserId(
+        @Header("Authorization") bearerToken: String,
+    ): Call<BMIResponse>
+
+    @POST("updateBMI")
+    fun updateBMI(
+        @Header("Authorization") bearerToken: String,
+        @Body bodyTempData: BMIData
+    ): Call<BMIData>
+
+    @DELETE("deleteBMIByID/{row_id}")
+    fun deleteBMI(
+        @Header("Authorization") bearerToken: String,
+        @Path("row_id") rowId: Int
+    ): Call<BMIData>
+
+    @POST("getBMIChartAllData")
+    fun getBMIChartAllData(
+        @Header("Authorization") bearerToken: String,
+        @Body bodyTempChartRequest: BMIChartRequest
+    ): Call<BMIChartResponse>
+
+
+    @POST("getBMIChartTodayData")
+    fun getBMIChartTodayData(
+        @Header("Authorization") bearerToken: String,
+        @Body bodyTempChartRequest: BMIChartRequest
+    ): Call<BMIChartResponse>
+
+
+    @POST("getBMIChartMonthlyData")
+    fun getBMIChartMonthlyData(
+        @Header("Authorization") bearerToken: String,
+        @Body bodyTempChartRequest: BMIChartRequest
+    ): Call<BMIChartResponse>
+
+
+    @POST("getBMIChartYearlyData")
+    fun getBMIChartYearlyData(
+        @Header("Authorization") bearerToken: String,
+        @Body bodyTempChartRequest: BMIChartRequest
+    ): Call<BMIChartResponse>
+
+
+    @POST("getBMIChartCustomData")
+    fun getBMIChartCustomData(
+        @Header("Authorization") bearerToken: String,
+        @Body bodyTempChartRequest: BMIChartRequest
+    ): Call<BMIChartResponse>
+
 
 
 }
