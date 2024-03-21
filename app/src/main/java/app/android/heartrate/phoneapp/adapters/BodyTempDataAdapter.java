@@ -2,6 +2,7 @@ package app.android.heartrate.phoneapp.adapters;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
+import android.icu.text.SimpleDateFormat;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -12,7 +13,10 @@ import android.widget.TextView;
 
 import androidx.recyclerview.widget.RecyclerView;
 
+import java.text.ParseException;
+import java.util.Date;
 import java.util.List;
+import java.util.Locale;
 
 import app.android.heartrate.phoneapp.R;
 import app.android.heartrate.phoneapp.model.classes.BodyTempData;
@@ -58,11 +62,25 @@ public abstract class BodyTempDataAdapter extends RecyclerView.Adapter<BodyTempD
         TextView textView = contactViewHolder.txt_fahrenheit;
         textView.setText(trim2 + " " + this.mContext.getResources().getString(R.string.lbl_deg_fahrenheit));
         contactViewHolder.txt_pulse.setText(trim3);
-        contactViewHolder.txt_day.setText(trim4);
-        TextView textView2 = contactViewHolder.txt_month;
-        textView2.setText(trim6 + ",");
-        contactViewHolder.txt_year.setText(trim5);
-        contactViewHolder.txt_time.setText(trim7);
+
+        SimpleDateFormat inputFormat = new SimpleDateFormat("yyyy-MM-dd", Locale.ENGLISH);
+        SimpleDateFormat outputFormat = new SimpleDateFormat("dd MMMM, yyyy", Locale.ENGLISH);
+        // Parse the input date string into a Date object
+        Date date = null;
+        try {
+            date = inputFormat.parse(bodyTempData.date);
+            // Format the Date object into the desired output format
+            String formattedDateStr = outputFormat.format(date);
+            contactViewHolder.txt_day.setText(formattedDateStr);
+        } catch (ParseException e) {
+            throw new RuntimeException(e);
+        }
+//
+//        contactViewHolder.txt_day.setText(trim4);
+//        TextView textView2 = contactViewHolder.txt_month;
+//        textView2.setText(trim6 + ",");
+//        contactViewHolder.txt_year.setText(trim5);
+//        contactViewHolder.txt_time.setText(trim7);
         if (parseFloat >= 36.5f && ((double) parseFloat) <= 37.5d) {
             contactViewHolder.txt_fever_status.setText(AppConstants.NORMAL);
             contactViewHolder.rel_fever_status.setBackgroundResource(R.drawable.rel_rounded_normal_bg);

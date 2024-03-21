@@ -46,12 +46,11 @@ class BodyTempDataActivity : AppCompatActivity() {
     var array_temp_data: ArrayList<BodyTempData> = ArrayList()
 
     var bodyTempAdapter: BodyTempDataAdapter? = null
-    var body_temp_Data_task: BodyTempDataTask? = null
     var is_user_interact: Boolean = false
     var lbl_no_data: TextView? = null
     var spinner_txt_name: TextView? = null
     var lottie_circular_loading: LottieAnimationView? = null
-    var recycler_temp_data: RecyclerView? = null
+    private lateinit var recycler_temp_data: RecyclerView
     private lateinit var array_celsius_range: Array<String?>
     private lateinit var array_fahrenheit_range: Array<String?>
     private lateinit var array_pulse_range: Array<String?>
@@ -61,43 +60,91 @@ class BodyTempDataActivity : AppCompatActivity() {
 
 
     private var sharedPreferencesUtils: SharedPreferences? = null
-    private val data_handler: Handler = object : Handler(Looper.getMainLooper()) {
-        override fun handleMessage(message: Message) {
-            val i = message.what
-            if (i == 0) {
-                recycler_temp_data!!.layoutManager = LinearLayoutManager(this@BodyTempDataActivity)
-                recycler_temp_data!!.itemAnimator = DefaultItemAnimator()
-                if (array_temp_data.size > 0) {
-                    lbl_no_data!!.visibility = View.GONE
-                    val bodyTempDataActivity = this@BodyTempDataActivity
-                    bodyTempDataActivity.bodyTempAdapter = object : BodyTempDataAdapter(
-                        bodyTempDataActivity.array_temp_data,
-                        this@BodyTempDataActivity
-                    ) {
-                        override fun onBodyTempAdapterClickItem(i: Int, view: View) {
-                            if (view.id == R.id.bt_row_rel_delete) {
-                                this@BodyTempDataActivity.ConformDeleteDialog(
-                                    array_temp_data[i].row_id
-                                )
-                            }
-                            if (view.id == R.id.bt_row_rel_edit) {
-                                AppConstants.is_body_temp_edit_mode = true
-                                AppConstants.selected_body_temp_data =
-                                    array_temp_data[i]
-                                this@BodyTempDataActivity.AddBodyTempScreen()
-                            }
-                        }
+
+    private fun SetTempData(tempList: List<BodyTempData>?){
+
+        array_celsius_range = arrayOfNulls(91)
+        array_fahrenheit_range = arrayOfNulls(91)
+        array_pulse_range =
+            arrayOfNulls(ItemTouchHelper.Callback.DEFAULT_SWIPE_ANIMATION_DURATION)
+        for (i in array_celsius_range.indices) {
+            val f = (((i) + 330).toFloat()) / 10.0f
+            array_celsius_range[i] = f.toString()
+            array_fahrenheit_range[i] = ((Math.round(
+                ((f * 1.8f) + 32.0f) * 10.0f
+            ).toFloat()) / 10.0f).toString()
+        }
+        var i2 = 0
+        while (i2 < array_pulse_range.size) {
+            val i3 = i2 + 1
+            array_pulse_range[i2] = i3.toString()
+            i2 = i3
+        }
+        array_temp_data.clear()
+        array_temp_data = tempList as ArrayList<BodyTempData>
+
+        recycler_temp_data.layoutManager = LinearLayoutManager(this)
+        recycler_temp_data.itemAnimator = DefaultItemAnimator()
+        if (array_temp_data.size > 0) {
+            lbl_no_data!!.visibility = View.GONE
+            var adapter = object : BodyTempDataAdapter(array_temp_data, this) {
+                override fun onBodyTempAdapterClickItem(i: Int, view: View) {
+                    if (view.id == R.id.bt_row_rel_delete) {
+                        ConformDeleteDialog(
+                            array_temp_data[i].row_id
+                        )
                     }
-                    recycler_temp_data!!.adapter = this@BodyTempDataActivity.bodyTempAdapter
-                } else {
-                    lbl_no_data!!.visibility = View.VISIBLE
+                    if (view.id == R.id.bt_row_rel_edit) {
+                        AppConstants.is_body_temp_edit_mode = true
+                        AppConstants.selected_body_temp_data =
+                            array_temp_data[i]
+                        AddBodyTempScreen()
+                    }
                 }
-                this@BodyTempDataActivity.DismissProgressBar()
-            } else if (i == 99) {
-                this@BodyTempDataActivity.DismissProgressBar()
             }
+            bodyTempAdapter = adapter
+            recycler_temp_data.adapter = bodyTempAdapter
+        } else {
+            lbl_no_data!!.visibility = View.VISIBLE
         }
     }
+//    private val data_handler: Handler = object : Handler(Looper.getMainLooper()) {
+//        override fun handleMessage(message: Message) {
+//            val i = message.what
+//            if (i == 0) {
+//                recycler_temp_data!!.layoutManager = LinearLayoutManager(this@BodyTempDataActivity)
+//                recycler_temp_data!!.itemAnimator = DefaultItemAnimator()
+//                if (array_temp_data.size > 0) {
+//                    lbl_no_data!!.visibility = View.GONE
+//                    val bodyTempDataActivity = this@BodyTempDataActivity
+//                    bodyTempDataActivity.bodyTempAdapter = object : BodyTempDataAdapter(
+//                        bodyTempDataActivity.array_temp_data,
+//                        this@BodyTempDataActivity
+//                    ) {
+//                        override fun onBodyTempAdapterClickItem(i: Int, view: View) {
+//                            if (view.id == R.id.bt_row_rel_delete) {
+//                                this@BodyTempDataActivity.ConformDeleteDialog(
+//                                    array_temp_data[i].row_id
+//                                )
+//                            }
+//                            if (view.id == R.id.bt_row_rel_edit) {
+//                                AppConstants.is_body_temp_edit_mode = true
+//                                AppConstants.selected_body_temp_data =
+//                                    array_temp_data[i]
+//                                this@BodyTempDataActivity.AddBodyTempScreen()
+//                            }
+//                        }
+//                    }
+//                    recycler_temp_data!!.adapter = this@BodyTempDataActivity.bodyTempAdapter
+//                } else {
+//                    lbl_no_data!!.visibility = View.VISIBLE
+//                }
+//                this@BodyTempDataActivity.DismissProgressBar()
+//            } else if (i == 99) {
+//                this@BodyTempDataActivity.DismissProgressBar()
+//            }
+//        }
+//    }
     var spinner_profile_adapter: SpinnerProfileAdapter? = null
     var spinner_profiles: Spinner? = null
 
@@ -143,11 +190,6 @@ class BodyTempDataActivity : AppCompatActivity() {
     }
 
 
-    private fun SetBodyTempDataList(bodyTempList: List<BodyTempData>?) {
-        val bodyTempDataTask = BodyTempDataTask(bodyTempList)
-        this.body_temp_Data_task = bodyTempDataTask
-        bodyTempDataTask.execute()
-    }
 
     fun ConformDeleteDialog(i: Int) {
         val dialog = Dialog(this, R.style.TransparentBackground)
@@ -217,7 +259,7 @@ class BodyTempDataActivity : AppCompatActivity() {
 
     public override fun onResume() {
         super.onResume()
-        fetchData()
+        deleteData(18)
     }
 
     override fun onBackPressed() {
@@ -231,53 +273,53 @@ class BodyTempDataActivity : AppCompatActivity() {
         AppConstants.overridePendingTransitionExit(this)
     }
 
-    inner class BodyTempDataTask(var tempList: List<BodyTempData>?) :
-        AsyncTask<Void?, Void?, Void?>() {
-
-
-        public override fun onPreExecute() {
-            super.onPreExecute()
-            this@BodyTempDataActivity.ShowProgressBar()
-        }
-
-        override fun doInBackground(vararg voidArr: Void?): Void? {
-            try {
-                array_celsius_range = arrayOfNulls(91)
-                array_fahrenheit_range = arrayOfNulls(91)
-                array_pulse_range =
-                    arrayOfNulls(ItemTouchHelper.Callback.DEFAULT_SWIPE_ANIMATION_DURATION)
-                for (i in array_celsius_range.indices) {
-                    val f = (((i) + 330).toFloat()) / 10.0f
-                    array_celsius_range[i] = f.toString()
-                    array_fahrenheit_range[i] = ((Math.round(
-                        ((f * 1.8f) + 32.0f) * 10.0f
-                    ).toFloat()) / 10.0f).toString()
-                }
-                var i2 = 0
-                while (i2 < array_pulse_range.size) {
-                    val i3 = i2 + 1
-                    array_pulse_range[i2] = i3.toString()
-                    i2 = i3
-                }
-                array_temp_data.clear()
-                val bodyTempDataActivity = this@BodyTempDataActivity
-                bodyTempDataActivity.array_temp_data = tempList as ArrayList<BodyTempData>
-//                    bodyTempDataActivity.SQLite_health_tracker!!.GetTemperatureDataByUserID(
-//                        sharedPreferencesUtils!!.getUserId()
-//                    ) as ArrayList<BodyTempData>
-                data_handler.sendMessage(data_handler.obtainMessage(0))
-                return null
-            } catch (e: Exception) {
-                e.printStackTrace()
-                data_handler.sendMessage(data_handler.obtainMessage(99))
-                return null
-            }
-        }
-
-        public override fun onPostExecute(r1: Void?) {
-            super.onPostExecute(null)
-        }
-    }
+//    inner class BodyTempDataTask(var tempList: List<BodyTempData>?) :
+//        AsyncTask<Void?, Void?, Void?>() {
+//
+//
+//        public override fun onPreExecute() {
+//            super.onPreExecute()
+//            ShowProgressBar()
+//        }
+//
+//        override fun doInBackground(vararg voidArr: Void?): Void? {
+//            try {
+//                array_celsius_range = arrayOfNulls(91)
+//                array_fahrenheit_range = arrayOfNulls(91)
+//                array_pulse_range =
+//                    arrayOfNulls(ItemTouchHelper.Callback.DEFAULT_SWIPE_ANIMATION_DURATION)
+//                for (i in array_celsius_range.indices) {
+//                    val f = (((i) + 330).toFloat()) / 10.0f
+//                    array_celsius_range[i] = f.toString()
+//                    array_fahrenheit_range[i] = ((Math.round(
+//                        ((f * 1.8f) + 32.0f) * 10.0f
+//                    ).toFloat()) / 10.0f).toString()
+//                }
+//                var i2 = 0
+//                while (i2 < array_pulse_range.size) {
+//                    val i3 = i2 + 1
+//                    array_pulse_range[i2] = i3.toString()
+//                    i2 = i3
+//                }
+//                array_temp_data.clear()
+//                val bodyTempDataActivity = this@BodyTempDataActivity
+//                bodyTempDataActivity.array_temp_data = tempList as ArrayList<BodyTempData>
+////                    bodyTempDataActivity.SQLite_health_tracker!!.GetTemperatureDataByUserID(
+////                        sharedPreferencesUtils!!.getUserId()
+////                    ) as ArrayList<BodyTempData>
+//                data_handler.sendMessage(data_handler.obtainMessage(0))
+//                return null
+//            } catch (e: Exception) {
+//                e.printStackTrace()
+//                data_handler.sendMessage(data_handler.obtainMessage(99))
+//                return null
+//            }
+//        }
+//
+//        public override fun onPostExecute(r1: Void?) {
+//            super.onPostExecute(null)
+//        }
+//    }
 
 
     private fun fetchData() {
@@ -293,7 +335,7 @@ class BodyTempDataActivity : AppCompatActivity() {
                         val dResponse = response.body()
 
                         if (dResponse?.code == 1) {
-                            SetBodyTempDataList(dResponse.data)
+                            SetTempData(dResponse.data)
                         } else {
                             showMessage(dResponse?.msg ?: "An error occurred ")
                         }

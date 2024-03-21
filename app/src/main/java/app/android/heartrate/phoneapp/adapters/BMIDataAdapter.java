@@ -2,6 +2,7 @@ package app.android.heartrate.phoneapp.adapters;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
+import android.icu.text.SimpleDateFormat;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -14,7 +15,9 @@ import android.widget.TextView;
 
 import androidx.recyclerview.widget.RecyclerView;
 
+import java.text.ParseException;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.Locale;
 
@@ -57,11 +60,26 @@ public abstract class BMIDataAdapter extends RecyclerView.Adapter<BMIDataAdapter
         String trim6 = bMIData.height.trim();
         String trim7 = bMIData.weight_unit.trim();
         String trim8 = bMIData.weight.trim();
-        bMIViewHolder.txt_day.setText(trim);
-        TextView textView = bMIViewHolder.txt_month;
-        textView.setText(trim2 + ",");
-        bMIViewHolder.txt_year.setText(trim3);
-        bMIViewHolder.txt_time.setText(trim4);
+//        bMIViewHolder.txt_day.setText(trim);
+//        TextView textView = bMIViewHolder.txt_month;
+//        textView.setText(trim2 + ",");
+//        bMIViewHolder.txt_year.setText(trim3);
+//        bMIViewHolder.txt_time.setText(trim4);
+
+        SimpleDateFormat inputFormat = new SimpleDateFormat("yyyy-MM-dd", Locale.ENGLISH);
+        SimpleDateFormat outputFormat = new SimpleDateFormat("dd MMMM, yyyy", Locale.ENGLISH);
+        // Parse the input date string into a Date object
+        Date date = null;
+        try {
+            date = inputFormat.parse(bMIData
+                    .date);
+            // Format the Date object into the desired output format
+            String formattedDateStr = outputFormat.format(date);
+            bMIViewHolder.txt_day.setText(formattedDateStr);
+        } catch (ParseException e) {
+            throw new RuntimeException(e);
+        }
+
         bMIViewHolder.txt_bmi_value.setText(String.format(Locale.US, "%.2f", Float.valueOf(parseFloat)));
         bMIViewHolder.txt_height_value.setText(trim6);
         TextView textView2 = bMIViewHolder.txt_height_unit;
