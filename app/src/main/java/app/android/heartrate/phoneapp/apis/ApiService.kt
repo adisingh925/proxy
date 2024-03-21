@@ -43,6 +43,11 @@ import app.android.heartrate.phoneapp.model.classes.BodyTempData
 import app.android.heartrate.phoneapp.model.temperature.BodyTempChartRequest
 import app.android.heartrate.phoneapp.model.temperature.BodyTempChartResponse
 
+import app.android.heartrate.phoneapp.model.bmi.BMIResponse
+import app.android.heartrate.phoneapp.model.classes.BMIData
+import app.android.heartrate.phoneapp.model.bmi.BMIChartRequest
+import app.android.heartrate.phoneapp.model.bmi.BMIChartResponse
+
 import retrofit2.Call
 import retrofit2.http.Body
 import retrofit2.http.DELETE
@@ -487,6 +492,64 @@ interface ApiService {
         @Header("Authorization") bearerToken: String,
         @Body bodyTempChartRequest: BodyTempChartRequest
     ): Call<BodyTempChartResponse>
+
+    @POST("saveBMI")
+    fun postBMI(
+        @Header("Authorization") bearerToken: String,
+        @Body bodyTempData: BMIData
+    ): Call<BMIResponse>
+
+    @GET("getBMIsByUserId")
+    fun getBMIsByUserId(
+        @Header("Authorization") bearerToken: String,
+    ): Call<BMIResponse>
+
+    @POST("updateBMI")
+    fun updateBMI(
+        @Header("Authorization") bearerToken: String,
+        @Body bodyTempData: BMIData
+    ): Call<BMIData>
+
+    @DELETE("deleteBMIByID/{row_id}")
+    fun deleteBMI(
+        @Header("Authorization") bearerToken: String,
+        @Path("row_id") rowId: Int
+    ): Call<BMIData>
+
+    @POST("getBMIChartAllData")
+    fun getBMIChartAllData(
+        @Header("Authorization") bearerToken: String,
+        @Body bodyTempChartRequest: BMIChartRequest
+    ): Call<BMIChartResponse>
+
+
+    @POST("getBMIChartTodayData")
+    fun getBMIChartTodayData(
+        @Header("Authorization") bearerToken: String,
+        @Body bodyTempChartRequest: BMIChartRequest
+    ): Call<BMIChartResponse>
+
+
+    @POST("getBMIChartMonthlyData")
+    fun getBMIChartMonthlyData(
+        @Header("Authorization") bearerToken: String,
+        @Body bodyTempChartRequest: BMIChartRequest
+    ): Call<BMIChartResponse>
+
+
+    @POST("getBMIChartYearlyData")
+    fun getBMIChartYearlyData(
+        @Header("Authorization") bearerToken: String,
+        @Body bodyTempChartRequest: BMIChartRequest
+    ): Call<BMIChartResponse>
+
+
+    @POST("getBMIChartCustomData")
+    fun getBMIChartCustomData(
+        @Header("Authorization") bearerToken: String,
+        @Body bodyTempChartRequest: BMIChartRequest
+    ): Call<BMIChartResponse>
+
 
 
 }
