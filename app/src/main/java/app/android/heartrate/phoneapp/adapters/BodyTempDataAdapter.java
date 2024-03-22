@@ -80,7 +80,7 @@ public abstract class BodyTempDataAdapter extends RecyclerView.Adapter<BodyTempD
 //        TextView textView2 = contactViewHolder.txt_month;
 //        textView2.setText(trim6 + ",");
 //        contactViewHolder.txt_year.setText(trim5);
-//        contactViewHolder.txt_time.setText(trim7);
+        contactViewHolder.txt_time.setText(trim7);
         if (parseFloat >= 36.5f && ((double) parseFloat) <= 37.5d) {
             contactViewHolder.txt_fever_status.setText(AppConstants.NORMAL);
             contactViewHolder.rel_fever_status.setBackgroundResource(R.drawable.rel_rounded_normal_bg);
